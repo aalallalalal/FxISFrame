@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+fx:controller="application.control.ProjectsController"
+	style="-fx-background-color:#ff0">
+	<top>
+		<Label text="工程列表界面" />
+	</top>
+</BorderPane>
+

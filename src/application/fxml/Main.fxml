@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.text.Font?>
+
+<!-- 主框架界面 -->
+<BorderPane style="-fx-background-color: #aaa;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.control.MainController">
+	<center>
+		<Pagination fx:id="mPagination"
+			BorderPane.alignment="CENTER">
+			<effect>
+				<InnerShadow radius="2"></InnerShadow>
+			</effect>
+		</Pagination>
+	</center>
+	<bottom>
+		<BorderPane prefHeight="45.0"
+			style="-fx-background-color: #ddd;-fx-padding: 10;"
+			BorderPane.alignment="CENTER">
+			<left>
+				<JFXButton text="上一步" BorderPane.alignment="CENTER"
+					buttonType="RAISED"
+					style="-fx-background-color: green;-fx-text-fill: white;-fx-padding:12;"
+					onAction="#prePage" textFill="WHITE">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</JFXButton>
+			</left>
+			<right>
+				<JFXButton text="下一步" BorderPane.alignment="CENTER"
+					buttonType="RAISED"
+					style="-fx-background-color: green;-fx-text-fill: white;-fx-padding:12;"
+					onAction="#nextPage" textFill="WHITE">
+					<font>
+						<Font name="System Bold" size="12.0" />
+					</font>
+				</JFXButton>
+			</right>
+		</BorderPane>
+	</bottom>
+</BorderPane>

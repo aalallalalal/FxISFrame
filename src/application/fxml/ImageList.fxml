@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import com.jfoenix.controls.JFXButton?>
+
+<!-- 图片列表界面 -->
+<BorderPane xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.control.ImageListController"
+	style="-fx-background-color:#ff0">
+	<top>
+		<Label text="工程详情界面" />
+	</top>
+</BorderPane>
