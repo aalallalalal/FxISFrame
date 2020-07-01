@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.*?>
+
+<BorderPane fx:id="root"
+	style="-fx-background:transparent;-fx-padding: 10;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="base.controller.MyDialogController">
+	<center>
+		<BorderPane
+			style="-fx-background-radius: 10; -fx-background-color: #ffaa1a;-fx-border-radius:10"
+			BorderPane.alignment="CENTER">
+			<effect>
+				<DropShadow />
+			</effect>
+			<top>
+				<HBox alignment="CENTER" spacing="5.0" fx:id="bar"
+					style="-fx-background-color:  #4169E1; -fx-pref-height: 30; -fx-padding: 10;"
+					BorderPane.alignment="CENTER">
+					<children>
+						<Label fx:id="bar_title" maxWidth="Infinity" text="TITLE"
+							style="-fx-font-weight: bold;-fx-font-size:14;"
+							HBox.hgrow="ALWAYS">
+						</Label>
+						<JFXButton onAction="#onClickClose">
+							<graphic>
+								<ImageView fitHeight="15.0" fitWidth="15.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/close.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+			</top>
+		</BorderPane>
+	</center>
+</BorderPane>

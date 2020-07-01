@@ -1,7 +1,9 @@
 package consts;
 
 public final class ConstSize {
-	public static final int Main_Frame_Width=820;
-	public static final int Main_Frame_Height=615;
+	public static final int Main_Frame_Width=800;
+	public static final int Main_Frame_Height=600;
+	public static final int Dialog_Frame_Width=480;
+	public static final int Dialog_Frame_Height=320;
 
 }

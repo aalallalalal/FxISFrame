@@ -3,6 +3,7 @@ package application.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
 /**
@@ -12,13 +13,34 @@ import javafx.fxml.Initializable;
  *
  */
 public class CreateProjectController implements Initializable {
-
+	private CreateProjectListener listener ;
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
 	}
 
 	public void test() {
-		System.out.println("CreateProjectController来自其他controller的调用");
+	}
+
+	@FXML
+	public void help() {
+		System.out.println("帮助界面");
+	}
+
+	@FXML
+	public void createProject() {
+		System.out.println("打开文件选择器");
+		if(listener!=null) {
+			listener.onCreateProject();
+		}
+	}
+	
+	public void setListener(CreateProjectListener listener) {
+		this.listener = listener;
+	}
+
+	public interface CreateProjectListener{
+		void onCreateProject();
 	}
 }

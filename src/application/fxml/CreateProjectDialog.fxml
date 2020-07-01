@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane
+	style="-fx-background-color: #fefefe; -fx-padding: 10;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.control.CreateProjectDialogController">
+	<center>
+		<VBox alignment="CENTER_LEFT" style="-fx-padding: 15;"
+			BorderPane.alignment="CENTER">
+			<children>
+				<HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="5.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="项目名称：" wrapText="true" />
+						<Label text="************" 
+							maxWidth="-Infinity" HBox.hgrow="ALWAYS" />
+					</children>
+				</HBox>
+				<HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="5.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="项目文件夹路径：" wrapText="true" />
+						<Label text="************" 
+							maxWidth="-Infinity" HBox.hgrow="ALWAYS" />
+						<JFXButton buttonType="RAISED" text="..." />
+					</children>
+				</HBox>
+				<HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="5.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="经纬度文件路径：" wrapText="true" />
+						<Label text="************" 
+							maxWidth="-Infinity" HBox.hgrow="ALWAYS" />
+						<JFXButton buttonType="RAISED" text="..." />
+						<JFXButton text="！" />
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+	</center>
+	<bottom>
+		<JFXButton buttonType="RAISED" onAction="#done"
+			style="-fx-background-color:#FFA500;-fx-text-fill: white;-fx-padding:12;"
+			text=" 完 成 " textFill="WHITE" BorderPane.alignment="CENTER">
+			<font>
+				<Font name="System Bold" size="14.0"
+					style="-fx-font-weight: bold;" />
+			</font>
+			<BorderPane.margin>
+				<Insets bottom="10.0" />
+			</BorderPane.margin>
+		</JFXButton>
+	</bottom>
+</BorderPane>

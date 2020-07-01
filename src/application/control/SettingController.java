@@ -7,14 +7,23 @@ import javafx.fxml.Initializable;
 
 /**
  * 设置其他参数界面controller
+ * 
  * @author DP
  *
  */
 public class SettingController implements Initializable {
+	private SettingListener listener;
+
+	public interface SettingListener {
+
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		Class<? extends SettingController> class1 = getClass();
+	}
+
+	public void setListener(SettingListener listener) {
+		this.listener = listener;
 	}
 
 }

@@ -1,13 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.*?>
 
-<BorderPane xmlns:fx="http://javafx.com/fxml/1"
-fx:controller="application.control.CreateProjectController"
-	style="-fx-background-color:#fff">
+<BorderPane fx:id="root" style="-fx-background-color:#fff"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.control.CreateProjectController">
 	<top>
-		<Label text="创建工程界面" />
+		<Label alignment="CENTER" contentDisplay="CENTER"
+			style="-fx-font-weight: bold;" BorderPane.alignment="CENTER">
+			<graphic>
+				<ImageView fitHeight="250" fitWidth="400.0"
+					pickOnBounds="true" preserveRatio="true">
+					<image>
+						<Image url="/resources/icon.png" />
+					</image>
+				</ImageView>
+			</graphic>
+			<BorderPane.margin>
+				<Insets top="30.0" />
+			</BorderPane.margin>
+		</Label>
 	</top>
+	<center>
+		<BorderPane prefHeight="200.0" prefWidth="200.0"
+			BorderPane.alignment="CENTER">
+			<left>
+				<JFXButton buttonType="RAISED" text="创建项目" prefWidth="220"
+					onAction="#createProject" prefHeight="90"
+					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;"
+					textFill="WHITE" BorderPane.alignment="CENTER">
+					<font>
+						<Font name="System Bold" size="22.0" />
+					</font>
+					<graphic>
+						<ImageView fitHeight="42.0" fitWidth="42.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="/resources/folder.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</JFXButton>
+			</left>
+			<right>
+				<JFXButton buttonType="RAISED" text="帮  助" prefWidth="220"
+					prefHeight="90" onAction="#help"
+					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;"
+					textFill="WHITE" BorderPane.alignment="CENTER">
+					<font>
+						<Font name="System Bold" size="22.0" />
+					</font>
+					<graphic>
+						<ImageView fitHeight="42.0" fitWidth="42.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="/resources/help.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</JFXButton>
+			</right>
+			<BorderPane.margin>
+				<Insets left="140.0" right="140.0" />
+			</BorderPane.margin>
+		</BorderPane>
+	</center>
 </BorderPane>
-

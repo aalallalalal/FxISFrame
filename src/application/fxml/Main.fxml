@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 
 <!-- 主框架界面 -->
-<BorderPane style="-fx-background-color: #aaa;"
+<BorderPane style="-fx-background-color: #aaa;" fx:id="root"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.MainController">
 	<center>
@@ -22,25 +22,27 @@
 	</center>
 	<bottom>
 		<BorderPane prefHeight="45.0"
-			style="-fx-background-color: #ddd;-fx-padding: 10;"
+			style="-fx-background-color:  #F5F5F5;-fx-padding: 10;"
 			BorderPane.alignment="CENTER">
 			<left>
-				<JFXButton text="上一步" BorderPane.alignment="CENTER"
+				<JFXButton text=" 上一步 " BorderPane.alignment="CENTER"
 					buttonType="RAISED"
-					style="-fx-background-color: green;-fx-text-fill: white;-fx-padding:12;"
+					style="-fx-background-color: #FFA500;-fx-text-fill: white;-fx-padding:12;"
 					onAction="#prePage" textFill="WHITE">
 					<font>
-						<Font name="System Bold" size="12.0" />
+						<Font name="System Bold" size="16.0"
+							style="-fx-font-weight: bold;" />
 					</font>
 				</JFXButton>
 			</left>
 			<right>
-				<JFXButton text="下一步" BorderPane.alignment="CENTER"
+				<JFXButton text=" 下一步 " BorderPane.alignment="CENTER"
 					buttonType="RAISED"
-					style="-fx-background-color: green;-fx-text-fill: white;-fx-padding:12;"
+					style="-fx-background-color: #FFA500;-fx-text-fill: white;-fx-padding:12;"
 					onAction="#nextPage" textFill="WHITE">
 					<font>
-						<Font name="System Bold" size="12.0" />
+						<Font name="System Bold" size="16.0"
+							style="-fx-font-weight: bold;" />
 					</font>
 				</JFXButton>
 			</right>
