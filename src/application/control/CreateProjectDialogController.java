@@ -1,5 +1,6 @@
 package application.control;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -10,6 +11,8 @@ import beans.ProjectBean;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import utils.FileChooserUtil;
+import utils.FileChooserUtil.Callback;
 import utils.ToastUtil;
 
 /**
@@ -40,13 +43,26 @@ public class CreateProjectDialogController implements Initializable {
 	@FXML
 	public void onClickSelectLocation() {
 		// TODO
-		System.out.println("跳转至文件选择界面");
+		FileChooserUtil.OpenFileChooserUtil("选择经纬度文件", labelLocation, new Callback() {
+			@Override
+			public void onResult(boolean isChoose, File file) {
+				if (isChoose) {
+					labelLocation.setText(file.getAbsolutePath());
+				}
+			}
+		});
 	}
 
 	@FXML
 	public void onClickSelectProject() {
-		// TODO
-		System.out.println("跳转至文件选择界面");
+		FileChooserUtil.OpenDirectoryChooserUtil("选择项目文件路径", labelProject, new Callback() {
+			@Override
+			public void onResult(boolean isChoose, File file) {
+				if (isChoose) {
+					labelProject.setText(file.getAbsolutePath());
+				}
+			}
+		});
 	}
 
 	@FXML

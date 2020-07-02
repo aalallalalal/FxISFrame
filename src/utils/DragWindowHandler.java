@@ -10,7 +10,6 @@ import javafx.stage.Stage;
  *
  */
 public class DragWindowHandler implements EventHandler<MouseEvent> {
-
 	private Stage primaryStage; // primaryStage为start方法头中的Stage
 	private double oldStageX;
 	private double oldStageY;

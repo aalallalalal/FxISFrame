@@ -56,11 +56,11 @@ public class FileChooserUtil
 	 * @param node		primaryStage即可
 	 * @param callback	回调（需要实现其中的result方法）
 	 */
-	public static void OpenDirectoryChooserUtil(String title, Stage stage, Callback callback)
+	public static void OpenDirectoryChooserUtil(String title, Node stage, Callback callback)
 	{
 		DirectoryChooser directoryChooser=new DirectoryChooser();
 		directoryChooser.setTitle(title);
-		File selectedFile = directoryChooser.showDialog(stage);
+		File selectedFile = directoryChooser.showDialog(stage.getScene().getWindow());
 		if (selectedFile == null) {
 			System.out.println("未选择文件");
 			if (callback != null) {

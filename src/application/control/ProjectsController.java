@@ -22,7 +22,6 @@ public class ProjectsController implements Initializable {
 	private ArrayList<ProjectBean> list = new ArrayList<ProjectBean>();
 
 	public interface ProjectsListener {
-
 	}
 
 	public void addProject(ProjectBean project) {
