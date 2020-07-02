@@ -68,7 +68,6 @@ public class CreateProjectDialogController implements Initializable {
 	@FXML
 	public void onClickHelp() {
 		// TODO
-		System.out.println("跳转至经纬度说明文件界面");
 	}
 
 	@FXML
