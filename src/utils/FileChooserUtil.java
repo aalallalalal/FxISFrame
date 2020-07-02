@@ -53,7 +53,7 @@ public class FileChooserUtil
 	/**
 	 * 文件夹选择器，用来选择项目的文件夹
 	 * @param title 	文件选择器的标题
-	 * @param node		任意一个stage
+	 * @param node		primaryStage即可
 	 * @param callback	回调（需要实现其中的result方法）
 	 */
 	public static void OpenDirectoryChooserUtil(String title, Stage stage, Callback callback)
