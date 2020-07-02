@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.InnerShadow?>
+<?import javafx.scene.text.Font?>
+<?import java.lang.String?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.image.*?>
+
+<BorderPane
+	style="-fx-background-color: #fefefe; -fx-padding: 10;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.control.CreateProjectDialogController">
+	<center>
+		<VBox alignment="CENTER_LEFT"
+			style="-fx-padding: 15;-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
+			BorderPane.alignment="CENTER">
+			<children>
+				<HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="8.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="项目名称：" wrapText="true" />
+						<JFXTextField fx:id="textField" focusColor="#FFA500"
+							labelFloat="true" maxWidth="-1" prefColumnCount="10"
+							prefHeight="30.0" prefWidth="280.0"
+							style="-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;
+							-fx-font-size: 14; -fx-padding:4;"
+							unFocusColor="#fafafa00" />
+					</children>
+				</HBox>
+				<HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="5.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="项目文件夹 路径：" wrapText="true" />
+						<Label maxWidth="-1" HBox.hgrow="ALWAYS" prefWidth="300"
+							prefHeight="30.0" fx:id="labelProject"
+							style="-fx-text-fill: #000; -fx-font-size: 14;-fx-border-color:#fafafa;-fx-border-width:2;
+							-fx-padding:4;-fx-border-style:solid;" />
+						<JFXButton buttonType="RAISED"
+							onAction="#onClickSelectProject">
+							<graphic>
+								<ImageView fitHeight="25.0" fitWidth="25.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/ellipsis.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+				<HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="5.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="经纬度文件路径：" wrapText="true" />
+						<Label maxWidth="-Infinity" prefWidth="300"
+							prefHeight="30.0" fx:id="labelLocation"
+							style="-fx-text-fill: #000; 
+							-fx-padding:4;-fx-font-size: 14;-fx-border-color:#fafafa;-fx-border-width:2;
+							-fx-border-style:solid;"
+							HBox.hgrow="ALWAYS" />
+						<JFXButton buttonType="RAISED"
+							onAction="#onClickSelectLocation">
+							<graphic>
+								<ImageView fitHeight="25.0" fitWidth="25.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/ellipsis.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+						<JFXButton onAction="#onClickHelp" buttonType="RAISED">
+							<graphic>
+								<ImageView fitHeight="25.0" fitWidth="25.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/help_dark.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+	</center>
+	<bottom>
+		<JFXButton fx:id="btnDone" buttonType="RAISED"
+			onAction="#done" text=" 完  成 "
+			BorderPane.alignment="CENTER">
+			<styleClass>
+				<String fx:value="btn-level-vip" />
+			</styleClass>
+			<BorderPane.margin>
+				<Insets bottom="10.0" />
+				<Insets top="10.0" />
+			</BorderPane.margin>
+		</JFXButton>
+	</bottom>
+</BorderPane>

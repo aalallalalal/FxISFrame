@@ -10,7 +10,6 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public abstract class BaseApplication extends Application {
-
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {

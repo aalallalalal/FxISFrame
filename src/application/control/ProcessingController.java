@@ -12,6 +12,12 @@ import javafx.fxml.Initializable;
  */
 public class ProcessingController implements Initializable {
 
+	private ProcessingListener listener;
+	
+	public interface ProcessingListener {
+
+	}
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
@@ -19,5 +25,9 @@ public class ProcessingController implements Initializable {
 
 	public void test() {
 		System.out.println("ProcessingController来自其他controller的调用");
+	}
+
+	public void setListener(ProcessingListener listener) {
+		this.listener = listener;
 	}
 }

@@ -8,29 +8,30 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
+<?import java.lang.String?>
 
 <BorderPane
-	style="-fx-background:transparent;-fx-padding: 10;"
-	fx:id="root" xmlns="http://javafx.com/javafx/8"
-	xmlns:fx="http://javafx.com/fxml/1"
+	style="-fx-background:transparent;-fx-padding: 10;" fx:id="root"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="base.controller.BaseBarController">
 	<center>
-		<BorderPane
-			style="-fx-background-radius: 10; -fx-background-color: #ffaa1a;-fx-border-radius:10"
-			BorderPane.alignment="CENTER">
+		<BorderPane BorderPane.alignment="CENTER">
+			<styleClass>
+				<String fx:value="frame-pane" />
+			</styleClass>
 			<effect>
 				<DropShadow />
 			</effect>
 			<top>
-				<HBox fx:id="bar" alignment="CENTER" spacing="5.0"
-					style="-fx-background-color: blue; -fx-pref-height: 60; -fx-padding: 10;"
+				<HBox fx:id="bar" alignment="CENTER"
 					BorderPane.alignment="CENTER">
+					<styleClass>
+						<String fx:value="bar-main" />
+					</styleClass>
 					<children>
-						<Label fx:id="bar_title" maxWidth="Infinity" text="TITLE"
+						<Label fx:id="bar_title" maxWidth="Infinity" text="图片拼接"
+							style="-fx-font-weight: bold;-fx-font-size:14;"
 							HBox.hgrow="ALWAYS">
-							<font>
-								<Font name="System Bold" size="14.0" />
-							</font>
 						</Label>
 						<JFXButton onAction="#onClickHide">
 							<graphic>
