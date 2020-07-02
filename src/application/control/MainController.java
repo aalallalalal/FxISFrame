@@ -4,6 +4,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import application.control.CreateProjectDialogController.CallBack;
+import beans.MyFxmlBean;
+import beans.ProjectBean;
 import consts.ConstSize;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,6 +17,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import utils.UIUtil;
+import javafx.scene.layout.FlowPane;
+import com.jfoenix.controls.JFXButton;
 
 /**
  * 主界面的controller
@@ -38,6 +42,14 @@ public class MainController implements Initializable {
 
 	private BorderPane createProjPane, projectsPane, settingPane, ProcessingPane;
 	private BorderPane currentPane;
+	@FXML
+	FlowPane bottomGroupPane;
+	@FXML
+	BorderPane bottomBtnsPane;
+	@FXML
+	JFXButton btn_pre;
+	@FXML
+	JFXButton btn_next;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -78,21 +90,31 @@ public class MainController implements Initializable {
 	 *
 	 */
 	private class CreateProjListener implements CreateProjectController.CreateProjectListener {
+		private MyFxmlBean openDialog;
+
 		@Override
 		public void onCreateProject() {
-			FXMLLoader openDialog = UIUtil.openDialog(getClass(), "/application/fxml/CreateProjectDialog.fxml",
+			openDialog = UIUtil.openDialog(getClass(), "/application/fxml/CreateProjectDialog.fxml",
 					ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "创建项目", getStage());
 			if (openDialog != null) {
-				CreateProjectDialogController controller = openDialog.getController();
+				CreateProjectDialogController controller = openDialog.getFxmlLoader().getController();
 				controller.setCallBack(new CallBack() {
-					public void onDone() {
-						//弹出框点击了完成！
+					@Override
+					public void onDone(ProjectBean project) {
 						System.out.println("接收到了完成！");
+						Stage dialog = openDialog.getStage();
+						if (dialog != null) {
+							dialog.close();
+						}
+						nextPage();
+						if (projectsController != null) {
+							projectsController.addProject(project);
+						}
 					}
 				});
 			}
 		}
-		
+
 	}
 
 	/**
@@ -191,11 +213,55 @@ public class MainController implements Initializable {
 		default:
 			break;
 		}
+
+		changeBottomView(pageIndex);
 		return currentPane;
 	}
 
-	@FXML
-	public void prePage() {
+	private void changeBottomView(Integer pageIndex) {
+		switch (pageIndex.intValue()) {
+		case 0:
+			bottomBtnsPane.setVisible(false);
+			bottomGroupPane.setVisible(true);
+			break;
+		case 1:
+			bottomBtnsPane.setVisible(true);
+			btn_pre.setVisible(false);
+			btn_next.setVisible(true);
+			btn_next.setText("下一步");
+			bottomGroupPane.setVisible(false);
+			break;
+		case 2:
+			bottomBtnsPane.setVisible(true);
+			btn_pre.setVisible(true);
+			btn_next.setVisible(true);
+			btn_next.setText(" 开 始 ");
+			bottomGroupPane.setVisible(false);
+			break;
+		case 3:
+			bottomBtnsPane.setVisible(true);
+			// TODO 根据情况显示：上一步；或不显示
+			btn_pre.setVisible(false);
+			btn_next.setVisible(true);
+			// TODO 根据情况显示：重新拼接；完成
+			btn_next.setText("  取 消  ");
+			bottomGroupPane.setVisible(false);
+			break;
+		default:
+			break;
+		}
+	}
+
+	private void nextPage() {
+		System.out.println("下一页");
+		int nextIndex = mPagination.getCurrentPageIndex() + 1;
+		if (nextIndex >= MAX_PAGE_SIZE) {
+			nextIndex = 0;
+		}
+		mPagination.setCurrentPageIndex(nextIndex);
+	}
+
+	private void prePage() {
 		System.out.println("上一页");
 		int nextIndex = mPagination.getCurrentPageIndex() - 1;
 		if (nextIndex < 0) {
@@ -205,13 +271,14 @@ public class MainController implements Initializable {
 	}
 
 	@FXML
-	public void nextPage() {
-		System.out.println("下一页");
-		int nextIndex = mPagination.getCurrentPageIndex() + 1;
-		if (nextIndex >= MAX_PAGE_SIZE) {
-			nextIndex = 0;
-		}
-		mPagination.setCurrentPageIndex(nextIndex);
+	public void leftBtn() {
+		//TODO
+		
+	}
+
+	@FXML
+	public void rightBtn() {
+		//TODO
 	}
 
 	public CreateProjectController getCreateProjectController() {

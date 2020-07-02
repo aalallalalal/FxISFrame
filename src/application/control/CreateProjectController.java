@@ -30,7 +30,6 @@ public class CreateProjectController implements Initializable {
 
 	@FXML
 	public void createProject() {
-		System.out.println("打开文件选择器");
 		if(listener!=null) {
 			listener.onCreateProject();
 		}

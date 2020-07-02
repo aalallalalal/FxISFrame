@@ -7,7 +7,7 @@
 fx:controller="application.control.ProjectsController"
 	style="-fx-background-color:#ff0">
 	<top>
-		<Label text="工程列表界面" />
+		<Label fx:id="label" text="工程列表界面" />
 	</top>
 </BorderPane>
 

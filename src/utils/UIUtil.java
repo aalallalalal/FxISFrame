@@ -49,7 +49,7 @@ public class UIUtil {
 	 * @param frameH 界面高
 	 * @param title  界面右上角显示title
 	 */
-	public static FXMLLoader openFrame(Class<?> clz, String uiPath, double frameW, double frameH, String title,
+	public static MyFxmlBean openFrame(Class<?> clz, String uiPath, double frameW, double frameH, String title,
 			boolean isWait) {
 		try {
 			BorderPane framePane = (BorderPane) FXMLLoader.load(clz.getResource(ConstRes.UI_Bar_No_Path));
@@ -66,8 +66,11 @@ public class UIUtil {
 			anotherStage.setScene(scene);
 			setFrameCanDrag(framePane, anotherStage);
 			transparentFrame(anotherStage, scene);
+			setFrameCss(clz, scene);
 			anotherStage.show();
-			return loadFxml.getFxmlLoader();
+			loadFxml.setScene(scene);
+			loadFxml.setStage(anotherStage);
+			return loadFxml;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,7 +86,7 @@ public class UIUtil {
 	 * @param frameH 界面高
 	 * @param title  界面右上角显示title
 	 */
-	public static FXMLLoader openDialog(Class<?> clz, String uiPath, double frameW, double frameH, String title,
+	public static MyFxmlBean openDialog(Class<?> clz, String uiPath, double frameW, double frameH, String title,
 			Stage ownStage) {
 		try {
 			BorderPane framePane = (BorderPane) FXMLLoader.load(clz.getResource(ConstRes.UI_Bar_Dialog_Path));
@@ -102,8 +105,11 @@ public class UIUtil {
 			anotherStage.setScene(scene);
 			transparentFrame(anotherStage, scene);
 			setFrameCanDrag(framePane, anotherStage);
+			setFrameCss(clz, scene);
 			anotherStage.show();
-			return loadFxml.getFxmlLoader();
+			loadFxml.setScene(scene);
+			loadFxml.setStage(anotherStage);
+			return loadFxml;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -141,4 +147,9 @@ public class UIUtil {
 		scene.setFill(null);
 		stage.initStyle(StageStyle.TRANSPARENT);// 设定窗口无边框
 	}
+
+	private static void setFrameCss(Class<?> clz, Scene scene) {
+		scene.getStylesheets().add(clz.getResource(ConstRes.CSS_Path).toExternalForm());
+	}
+
 }

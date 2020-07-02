@@ -35,11 +35,9 @@
 			<left>
 				<JFXButton buttonType="RAISED" text="创建项目" prefWidth="220"
 					onAction="#createProject" prefHeight="90"
-					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;"
-					textFill="WHITE" BorderPane.alignment="CENTER">
-					<font>
-						<Font name="System Bold" size="22.0" />
-					</font>
+					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;
+					-fx-font-size:22;-fx-font-weight:bold;"
+					BorderPane.alignment="CENTER">
 					<graphic>
 						<ImageView fitHeight="42.0" fitWidth="42.0"
 							pickOnBounds="true" preserveRatio="true">
@@ -53,11 +51,9 @@
 			<right>
 				<JFXButton buttonType="RAISED" text="帮  助" prefWidth="220"
 					prefHeight="90" onAction="#help"
-					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;"
-					textFill="WHITE" BorderPane.alignment="CENTER">
-					<font>
-						<Font name="System Bold" size="22.0" />
-					</font>
+					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;
+					-fx-font-size:22;-fx-font-weight:bold;"
+					BorderPane.alignment="CENTER">
 					<graphic>
 						<ImageView fitHeight="42.0" fitWidth="42.0"
 							pickOnBounds="true" preserveRatio="true">
