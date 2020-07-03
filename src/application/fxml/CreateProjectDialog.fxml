@@ -1,18 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
 <?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.InnerShadow?>
-<?import javafx.scene.text.Font?>
-<?import java.lang.String?>
-<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
 
 <BorderPane
 	style="-fx-background-color: #fefefe; -fx-padding: 10;"
@@ -23,26 +16,25 @@
 			style="-fx-padding: 15;-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
 			BorderPane.alignment="CENTER">
 			<children>
-				<HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="8.0">
+				<HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="8.0">
 					<children>
 						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
 							text="项目名称：" wrapText="true" />
 						<JFXTextField fx:id="textField" focusColor="#FFA500"
 							labelFloat="true" maxWidth="-1" prefColumnCount="10"
 							prefHeight="30.0" prefWidth="280.0"
-							style="-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;
-							-fx-font-size: 14; -fx-padding:4;"
+							style="-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;        -fx-font-size: 14; -fx-padding:4;"
 							unFocusColor="#fafafa00" />
 					</children>
 				</HBox>
-				<HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="5.0">
+				<HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="5.0">
 					<children>
 						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
 							text="项目文件夹 路径：" wrapText="true" />
-						<Label maxWidth="-1" HBox.hgrow="ALWAYS" prefWidth="300"
-							prefHeight="30.0" fx:id="labelProject"
-							style="-fx-text-fill: #000; -fx-font-size: 14;-fx-border-color:#fafafa;-fx-border-width:2;
-							-fx-padding:4;-fx-border-style:solid;" />
+						<Label fx:id="labelProject" maxWidth="-1" prefHeight="30.0"
+							prefWidth="300"
+							style="-fx-text-fill: #000; -fx-font-size: 14;-fx-border-color:#fafafa;-fx-border-width:2;        -fx-padding:4;-fx-border-style:solid;"
+							HBox.hgrow="ALWAYS" />
 						<JFXButton buttonType="RAISED"
 							onAction="#onClickSelectProject">
 							<graphic>
@@ -56,15 +48,29 @@
 						</JFXButton>
 					</children>
 				</HBox>
-				<HBox alignment="CENTER_LEFT" prefHeight="100.0" spacing="5.0">
+
+				<HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="5.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="经纬度输入方式：" wrapText="true" />
+						<JFXRadioButton text="图片中录入" selected="true"
+							selectedColor="#FFA500" fx:id="radioButton_img"
+							style="-fx-text-fill: #000; -fx-font-size: 14;-fx-spacing:4">
+						</JFXRadioButton>
+						<JFXRadioButton text="文件中录入" selected="false"
+							selectedColor="#FFA500" fx:id="radioButton_file"
+							style="-fx-text-fill: #000; -fx-font-size: 14;" />
+					</children>
+				</HBox>
+
+				<HBox fx:id="hbox_location" alignment="CENTER_LEFT"
+					prefHeight="60.0" spacing="5.0">
 					<children>
 						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
 							text="经纬度文件路径：" wrapText="true" />
-						<Label maxWidth="-Infinity" prefWidth="300"
-							prefHeight="30.0" fx:id="labelLocation"
-							style="-fx-text-fill: #000; 
-							-fx-padding:4;-fx-font-size: 14;-fx-border-color:#fafafa;-fx-border-width:2;
-							-fx-border-style:solid;"
+						<Label fx:id="labelLocation" maxWidth="-Infinity"
+							prefHeight="30.0" prefWidth="300"
+							style="-fx-text-fill: #000;         -fx-padding:4;-fx-font-size: 14;-fx-border-color:#fafafa;-fx-border-width:2;        -fx-border-style:solid;"
 							HBox.hgrow="ALWAYS" />
 						<JFXButton buttonType="RAISED"
 							onAction="#onClickSelectLocation">
@@ -77,7 +83,7 @@
 								</ImageView>
 							</graphic>
 						</JFXButton>
-						<JFXButton onAction="#onClickHelp" buttonType="RAISED">
+						<JFXButton buttonType="RAISED" onAction="#onClickHelp">
 							<graphic>
 								<ImageView fitHeight="25.0" fitWidth="25.0"
 									pickOnBounds="true" preserveRatio="true">
@@ -94,8 +100,7 @@
 	</center>
 	<bottom>
 		<JFXButton fx:id="btnDone" buttonType="RAISED"
-			onAction="#done" text=" 完  成 "
-			BorderPane.alignment="CENTER">
+			onAction="#done" text=" 完  成 " BorderPane.alignment="CENTER">
 			<styleClass>
 				<String fx:value="btn-level-vip" />
 			</styleClass>

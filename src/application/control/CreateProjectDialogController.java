@@ -5,12 +5,18 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
 import beans.ProjectBean;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.HBox;
 import utils.FileChooserUtil;
 import utils.FileChooserUtil.Callback;
 import utils.ToastUtil;
@@ -29,12 +35,38 @@ public class CreateProjectDialogController implements Initializable {
 	private Label labelLocation;
 	@FXML
 	private JFXButton btnDone;
+	@FXML
+	private HBox hbox_location;
+	@FXML
+	private JFXRadioButton radioButton_img;
+	@FXML
+	private JFXRadioButton radioButton_file;
 
 	private CallBack callBack;
 
+	private ToggleGroup group;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		group = new ToggleGroup();
+		radioButton_img.setToggleGroup(group);
+		radioButton_img.setUserData(0);
+		radioButton_file.setToggleGroup(group);
+		radioButton_file.setUserData(1);
+		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+			public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
+				if (group.getSelectedToggle() != null) {
+					int data = (int) group.getSelectedToggle().getUserData();
+					if (data == 0) {
+						// 选择图片录入
+						hbox_location.setDisable(true);
+					} else {
+						// 选择文件录入
+						hbox_location.setDisable(false);
+					}
+				}
+			}
+		});
 	}
 
 	public void test() {
@@ -80,7 +112,9 @@ public class CreateProjectDialogController implements Initializable {
 			ToastUtil.toast("请选择项目路径");
 			return;
 		}
-		ProjectBean project = new ProjectBean(textField.getText(), labelProject.getText(), labelLocation.getText());
+		int locationFrom = (int) group.getSelectedToggle().getUserData();
+		ProjectBean project = new ProjectBean(textField.getText(), labelProject.getText(), locationFrom,
+				labelLocation.getText());
 		if (callBack != null) {
 			callBack.onDone(project);
 		}
