@@ -64,7 +64,7 @@
 				</HBox>
 
 				<HBox fx:id="hbox_location" alignment="CENTER_LEFT"
-					prefHeight="60.0" spacing="5.0">
+					disable="true" prefHeight="60.0" spacing="5.0">
 					<children>
 						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
 							text="经纬度文件路径：" wrapText="true" />

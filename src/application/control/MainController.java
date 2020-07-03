@@ -110,6 +110,12 @@ public class MainController implements Initializable {
 						if (projectsController != null) {
 							projectsController.addProject(project);
 						}
+
+						// TODO TEST
+						MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml", ConstSize.Second_Frame_Width,
+								ConstSize.Second_Frame_Height, "项目" + project.getProjectName());
+						ImageListController controller = openFrame.getFxmlLoader().getController();
+						controller.setProjectInfo(project);
 					}
 				});
 			}
@@ -272,13 +278,14 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void leftBtn() {
-		//TODO
-		
+		// TODO
+		prePage();
 	}
 
 	@FXML
 	public void rightBtn() {
-		//TODO
+		// TODO
+		nextPage();
 	}
 
 	public CreateProjectController getCreateProjectController() {

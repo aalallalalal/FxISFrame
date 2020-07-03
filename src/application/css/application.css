@@ -17,3 +17,21 @@ visibility: hidden;
 .btn-level-vip{
 	-fx-background-color: #FFA500;-fx-text-fill: white;-fx-padding:12.0;-fx-font-weight:bold;-fx-font-size:14.0;
 }
+.btn-level-normal{
+	-fx-background-color: #4169E1;-fx-text-fill: white;-fx-padding:12.0;-fx-font-weight:bold;-fx-font-size:14.0;
+}
+
+/*******************************************************************************
+*                                                                              *
+* JFX Spinner                                                                  *
+*                                                                              *
+*******************************************************************************/
+.first-spinner .arc {
+    -fx-stroke-width: 3.0;-fx-stroke:#ffffff;
+}
+.second-spinner .arc {
+  -fx-stroke-width: 3.0;-fx-stroke: #ffffff;
+}
+.third-spinner .arc {
+    -fx-stroke-width: 3.0;-fx-stroke: #ffffff;
+}

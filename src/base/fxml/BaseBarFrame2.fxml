@@ -37,7 +37,7 @@
 							url="/resources/min.png" /> </image> </ImageView> </graphic> </JFXButton> -->
 						<JFXButton onAction="#onClickClose">
 							<graphic>
-								<ImageView fitHeight="15..0" fitWidth="15.0"
+								<ImageView fitHeight="15.0" fitWidth="15.0"
 									pickOnBounds="true" preserveRatio="true">
 									<image>
 										<Image url="/resources/close.png" />

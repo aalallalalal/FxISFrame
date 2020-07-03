@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.control.ProgressIndicator?>
+<?import javafx.scene.control.Label?>
+
+<VBox alignment="CENTER" spacing="5.0"
+	style="-fx-background: rgba(56,56,56,0.4); -fx-border-radius: 25; -fx-background-radius: 25; -fx-padding: 10;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="utils.ProgressTask.ProgressController">
+	<children>
+		<StackPane prefHeight="150.0" prefWidth="210.0">
+			<children>
+				<JFXSpinner radius="15.0" startingAngle="-0"
+					styleClass="first-spinner">
+				</JFXSpinner>
+				<JFXSpinner radius="28.0" startingAngle="200"
+					styleClass="second-spinner" />
+				<JFXSpinner radius="40.0" startingAngle="40"
+					styleClass="third-spinner" />
+			</children>
+		</StackPane>
+		<Label
+			style="-fx-font-size: 14; -fx-text-fill: #fff; -fx-pref-height: 10;"
+			text="正在加载中" />
+	</children>
+
+</VBox>
