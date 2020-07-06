@@ -1,29 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXNodesList?>
+<?import javafx.scene.control.TableView?>
 
-<BorderPane style="-fx-background-color:#ff0" fx:id="root"
+<BorderPane fx:id="root" style="-fx-background-color:#fff"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.ImageListController">
 	<center>
-		<JFXListView BorderPane.alignment="CENTER" />
+		<TableView fx:id="tableView" BorderPane.alignment="CENTER"
+			style="-fx-border-width: 2; -fx-border-color: #fafafa;">
+			<BorderPane.margin>
+				<Insets left="10.0" top="10.0" />
+			</BorderPane.margin>
+		</TableView>
 	</center>
 	<right>
 		<VBox fx:id="vbox_rightButtons" alignment="TOP_CENTER"
-			prefHeight="200.0" prefWidth="200.0"
+			prefHeight="200.0" prefWidth="140.0"
 			style="-fx-spacing: 10; -fx-padding: 10;"
 			BorderPane.alignment="CENTER">
 			<children>
-				<JFXButton text="删除图片" onAction="#onDeleteImg">
+				<JFXButton onAction="#onDeleteImg" text="删除图片">
 					<styleClass>
 						<String fx:value="btn-level-normal" />
 					</styleClass>
 				</JFXButton>
-				<JFXButton text="查看图片" onAction="#onSeeImg">
+				<JFXButton onAction="#onSeeImg" text="查看图片">
 					<styleClass>
 						<String fx:value="btn-level-normal" />
 					</styleClass>

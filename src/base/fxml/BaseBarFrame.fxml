@@ -30,23 +30,21 @@
 					</styleClass>
 					<children>
 						<Label fx:id="bar_title" maxWidth="Infinity" text="图片拼接"
-							style="-fx-font-weight: bold;-fx-font-size:14;"
+							style="-fx-font-weight: bold;-fx-font-size:18;"
 							HBox.hgrow="ALWAYS">
 						</Label>
-						<JFXButton onAction="#onClickHide">
+						<JFXButton onAction="#onClickHide" style="-fx-pref-width:26 ;-fx-focus-color: transparent;">
 							<graphic>
-								<ImageView fitHeight="15.0" fitWidth="15.0"
-									pickOnBounds="true" preserveRatio="true">
+								<ImageView fitWidth="24.0" preserveRatio="true">
 									<image>
 										<Image url="/resources/min.png" />
 									</image>
 								</ImageView>
 							</graphic>
 						</JFXButton>
-						<JFXButton onAction="#onClickClose">
+						<JFXButton onAction="#onClickClose"  style="-fx-pref-width:26 ；-fx-focus-color: transparent;">
 							<graphic>
-								<ImageView fitHeight="15.0" fitWidth="15.0"
-									pickOnBounds="true" preserveRatio="true">
+								<ImageView fitWidth="24.0" preserveRatio="true">
 									<image>
 										<Image url="/resources/close.png" />
 									</image>

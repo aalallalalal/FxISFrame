@@ -32,9 +32,10 @@
 							style="-fx-font-weight: bold;-fx-font-size:14;"
 							HBox.hgrow="ALWAYS">
 						</Label>
-						<JFXButton onAction="#onClickClose">
+						<JFXButton onAction="#onClickClose"
+							style="-fx-focus-color: transparent;">
 							<graphic>
-								<ImageView fitHeight="15.0" fitWidth="15.0"
+								<ImageView fitHeight="22" fitWidth="22"
 									pickOnBounds="true" preserveRatio="true">
 									<image>
 										<Image url="/resources/close.png" />

@@ -67,6 +67,7 @@ public class UIUtil {
 			setFrameCanDrag(framePane, anotherStage);
 			transparentFrame(anotherStage, scene);
 			anotherStage.show();
+			framePane.requestFocus();
 			loadFxml.setScene(scene);
 			loadFxml.setStage(anotherStage);
 			return loadFxml;
@@ -106,6 +107,7 @@ public class UIUtil {
 			transparentFrame(anotherStage, scene);
 			setFrameCanDrag(framePane, anotherStage);
 			anotherStage.show();
+			framePane.requestFocus();
 			loadFxml.setScene(scene);
 			loadFxml.setStage(anotherStage);
 			return loadFxml;

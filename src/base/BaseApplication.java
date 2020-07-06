@@ -14,12 +14,13 @@ public abstract class BaseApplication extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		try {
 			Pane uiPane = FXMLLoader.load(getClass().getResource(getUIPath()));
-			Scene scene = getScene(uiPane,primaryStage);
+			Scene scene = getScene(uiPane, primaryStage);
 			scene.setFill(null);
 			primaryStage.setScene(scene);
 			scene.getStylesheets().add(getClass().getResource(getCSSPath()).toExternalForm());
 			primaryStage.initStyle(StageStyle.TRANSPARENT);// 设定窗口无边框
 			primaryStage.show();
+			uiPane.requestFocus();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -35,8 +36,8 @@ public abstract class BaseApplication extends Application {
 
 	protected abstract String getUIPath();
 
-	protected abstract Scene getScene(Pane uiPane,Stage stage);
-	
+	protected abstract Scene getScene(Pane uiPane, Stage stage);
+
 	protected String getCSSPath() {
 		return ConstRes.CSS_Path;
 	}
