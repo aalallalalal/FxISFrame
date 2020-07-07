@@ -21,6 +21,24 @@ visibility: hidden;
 	-fx-background-color: #4169E1;-fx-text-fill: white;-fx-padding:12.0;-fx-font-weight:bold;-fx-font-size:14.0;
 }
 
+.list-cell{
+    -fx-font-family: Arial;
+    
+}
+.list-cell:even {
+    -fx-background-color: white;
+}
+.list-cell:odd {
+    -fx-background-color: white;
+}
+.list-cell:selected {
+    -fx-background-color: #919191;
+    -fx-text-fill: white;
+}
+.list-cell:empty {
+    -fx-background-color: white;
+}
+
 /*******************************************************************************
 *                                                                              *
 * JFX Spinner                                                                  *

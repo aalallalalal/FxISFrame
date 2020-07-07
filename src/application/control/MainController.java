@@ -112,10 +112,7 @@ public class MainController implements Initializable {
 						}
 
 						// TODO TEST
-						MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml", ConstSize.Second_Frame_Width,
-								ConstSize.Second_Frame_Height, "项目" + project.getProjectName());
-						ImageListController controller = openFrame.getFxmlLoader().getController();
-						controller.setProjectInfo(project);
+						
 					}
 				});
 			}
@@ -129,7 +126,40 @@ public class MainController implements Initializable {
 	 * @author DP
 	 *
 	 */
-	private class ProjectsListener implements ProjectsController.ProjectsListener {
+	private class ProjectsListener implements ProjectsController.ProjectsListener
+	{
+		private MyFxmlBean openDialog;
+		
+		@Override
+		public void onCreateProject()
+		{
+			openDialog = UIUtil.openDialog(getClass(), "/application/fxml/CreateProjectDialog.fxml",
+					ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "创建项目", getStage());
+			if (openDialog != null) {
+				CreateProjectDialogController controller = openDialog.getFxmlLoader().getController();
+				controller.setCallBack(new CallBack() {
+					@Override
+					public void onDone(ProjectBean project) {
+						System.out.println("接收到了完成！");
+						Stage dialog = openDialog.getStage();
+						if (dialog != null) {
+							dialog.close();
+						}
+						if (projectsController != null) {
+							projectsController.addProject(project);
+						}
+
+						// TODO TEST
+						//MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml", ConstSize.Second_Frame_Width,
+						//		ConstSize.Second_Frame_Height, "项目" + project.getProjectName());
+						//ImageListController controller = openFrame.getFxmlLoader().getController();
+						//controller.setProjectInfo(project);
+					}
+				});
+			}
+			
+		}
+		
 	}
 
 	/**
