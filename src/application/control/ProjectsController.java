@@ -105,11 +105,6 @@ public class ProjectsController implements Initializable {
 		});
 	}
 
-	private void refreshList() {
-		// TODO 刷新列表控件
-		
-	}
-
 	public void test() {
 		System.out.println("ProjectsController来自其他controller的调用");
 	}
