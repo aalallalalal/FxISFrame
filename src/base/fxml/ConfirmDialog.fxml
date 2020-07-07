@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root"
+	style="-fx-background:transparent;-fx-padding: 10;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="base.controller.ConfirmDialogController">
+	<center>
+		<BorderPane BorderPane.alignment="CENTER">
+			<styleClass>
+				<String fx:value="frame-pane" />
+			</styleClass>
+			<effect>
+				<DropShadow />
+			</effect>
+			<top>
+				<HBox fx:id="bar" alignment="CENTER"
+					BorderPane.alignment="CENTER">
+					<styleClass>
+						<String fx:value="bar-confirm-dialog" />
+					</styleClass>
+					<children>
+						<Label fx:id="bar_title" maxWidth="Infinity"
+							style="-fx-font-weight: bold;-fx-font-size:14;"
+							HBox.hgrow="ALWAYS">
+						</Label>
+						<JFXButton onAction="#onClickClose"
+							style="-fx-focus-color: transparent;">
+							<graphic>
+								<ImageView fitHeight="22" fitWidth="22"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/close.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+			</top>
+			<center>
+				<Label fx:id="label_content" prefHeight="200.0"
+					style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000; -fx-padding: 12;"
+					text="内容" wrapText="true" BorderPane.alignment="CENTER" />
+			</center>
+			<bottom>
+				<BorderPane prefHeight="50.0" prefWidth="200.0"
+				style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
+					BorderPane.alignment="CENTER">
+					<left>
+						<JFXButton onAction="#onCancel" text="取 消"
+							BorderPane.alignment="CENTER">
+							<styleClass>
+								<String fx:value="btn-level-vip" />
+							</styleClass>
+							<BorderPane.margin>
+								<Insets bottom="10.0" />
+								<Insets top="10.0" />
+								<Insets left="50.0" />
+							</BorderPane.margin>
+						</JFXButton>
+					</left>
+					<right>
+						<JFXButton onAction="#onConfirm" text="确 定"
+							BorderPane.alignment="CENTER">
+							<styleClass>
+								<String fx:value="btn-level-vip" />
+							</styleClass>
+							<BorderPane.margin>
+								<Insets bottom="10.0" />
+								<Insets top="10.0" />
+								<Insets right="50.0" />
+							</BorderPane.margin>
+						</JFXButton>
+					</right>
+				</BorderPane>
+			</bottom>
+		</BorderPane>
+	</center>
+</BorderPane>

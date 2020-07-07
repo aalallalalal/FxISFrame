@@ -6,23 +6,23 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
-<?import com.jfoenix.controls.JFXNodesList?>
 <?import javafx.scene.control.TableView?>
 
 <BorderPane fx:id="root" style="-fx-background-color:#fff"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.ImageListController">
 	<center>
-		<TableView fx:id="tableView" BorderPane.alignment="CENTER"
-			style="-fx-border-width: 2; -fx-border-color: #fafafa;">
+		<TableView fx:id="tableView"
+			style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;"
+			BorderPane.alignment="CENTER">
 			<BorderPane.margin>
 				<Insets left="10.0" top="10.0" />
 			</BorderPane.margin>
 		</TableView>
 	</center>
 	<right>
-		<VBox fx:id="vbox_rightButtons" alignment="TOP_CENTER"
-			prefHeight="200.0" prefWidth="140.0"
+		<VBox fx:id="vbox_rightButtons" disable="true"
+			alignment="TOP_CENTER" prefHeight="200.0" prefWidth="140.0"
 			style="-fx-spacing: 10; -fx-padding: 10;"
 			BorderPane.alignment="CENTER">
 			<children>
@@ -43,7 +43,7 @@
 		<VBox prefWidth="400.0" style="-fx-padding: 10;"
 			BorderPane.alignment="CENTER">
 			<children>
-				<HBox alignment="CENTER_LEFT" prefHeight="50.0" spacing="5.0">
+				<HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="5.0">
 					<children>
 						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
 							text="经纬度输入方式：" wrapText="true" />
@@ -59,7 +59,7 @@
 				</HBox>
 
 				<HBox fx:id="hbox_location" alignment="CENTER_LEFT"
-					prefHeight="50.0" spacing="5.0">
+					disable="true" prefHeight="40.0" spacing="5.0">
 					<children>
 						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
 							text="经纬度文件路径：" wrapText="true" />

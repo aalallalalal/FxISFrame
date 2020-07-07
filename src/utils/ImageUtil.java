@@ -20,10 +20,15 @@ public class ImageUtil {
 	 * @throws IOException
 	 * @throws ImageProcessingException
 	 */
-	public static void printImageTags(File imgPath, ImageBean imageBean) throws ImageProcessingException, IOException {
+	public static void printImageTags(String imgPath, ImageBean imageBean)
+			throws ImageProcessingException, IOException {
+		File img = new File(imgPath);
+		if (img == null || !img.exists() || img.isDirectory()) {
+			return;
+		}
 		Metadata metadata;
-		System.out.println(imgPath.getAbsolutePath());
-		metadata = ImageMetadataReader.readMetadata(imgPath);
+		System.out.println(img.getAbsolutePath());
+		metadata = ImageMetadataReader.readMetadata(img);
 		Collection<GpsDirectory> gps = metadata.getDirectoriesOfType(GpsDirectory.class);
 		if (gps == null || gps.size() <= 0) {
 			return;

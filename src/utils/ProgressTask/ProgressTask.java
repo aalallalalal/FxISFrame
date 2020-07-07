@@ -24,34 +24,35 @@ import utils.UIUtil;
  */
 public class ProgressTask {
 
-	private Stage dialogStage;
+	private static Stage dialogStage ;
+	static Pane uiPane;
 	private Thread inner;
 	private Timer time;
+	static Scene scene;
 
-	public ProgressTask(final MyTask task, Stage primaryStage) {
-
-		dialogStage = new Stage();
-
+	static {
 		// 窗口父子关系
-		dialogStage.initOwner(primaryStage);
+		dialogStage = new Stage();
 		dialogStage.setWidth(180);
 		dialogStage.setHeight(160);
 		dialogStage.initStyle(StageStyle.UNDECORATED);
 		dialogStage.initStyle(StageStyle.TRANSPARENT);
 		dialogStage.initModality(Modality.APPLICATION_MODAL);
-
-		Pane uiPane;
 		try {
-			uiPane = FXMLLoader.load(getClass().getResource("/utils/ProgressTask/ProgressTask.fxml"));
-			Scene scene = new Scene(uiPane);
-			UIUtil.setFrameCss(getClass(), scene);
-			scene.setFill(null);
-			dialogStage.setScene(scene);
+			uiPane = FXMLLoader.load(ProgressTask.class.getResource("/utils/ProgressTask/ProgressTask.fxml"));
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		scene = new Scene(uiPane);
+		UIUtil.setFrameCss(ProgressTask.class, scene);
+		scene.setFill(null);
+		dialogStage.setScene(scene);
+	}
+	
+	public ProgressTask(final MyTask task, Stage primaryStage) {
+//		dialogStage.initOwner(primaryStage);
+	
 		inner = new Thread(task);
-
 		// 根据实际需要处理消息值
 		task.messageProperty().addListener(new ChangeListener<String>() {
 			@Override

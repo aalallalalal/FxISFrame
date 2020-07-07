@@ -9,4 +9,6 @@ public final class ConstRes {
 	public static final String UI_Bar_No_Path = "/base/fxml/BaseBarFrame2.fxml" ;
 	//含有bar的界面路径,用于dialog类型界面
 	public static final String UI_Bar_Dialog_Path = "/base/fxml/MyDialog.fxml" ;
+	//含有bar的界面路径,用于确认dialog类型界面
+	public static final String UI_Bar_Confirm_Dialog_Path = "/base/fxml/ConfirmDialog.fxml" ;
 }
