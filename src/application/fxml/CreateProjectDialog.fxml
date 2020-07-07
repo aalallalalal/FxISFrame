@@ -69,9 +69,8 @@
 						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
 							text="经纬度文件路径：" wrapText="true" />
 						<Label fx:id="labelLocation" maxWidth="-Infinity"
-							prefHeight="30.0" prefWidth="300"
-							style="-fx-text-fill: #000;         -fx-padding:4;-fx-font-size: 14;-fx-border-color:#fafafa;-fx-border-width:2;        -fx-border-style:solid;"
-							HBox.hgrow="ALWAYS" />
+							prefHeight="30.0" prefWidth="250"
+							style="-fx-text-fill: #000;-fx-padding:4;-fx-font-size: 14;-fx-border-color:#fafafa;-fx-border-width:2;        -fx-border-style:solid;" />
 						<JFXButton buttonType="RAISED"
 							onAction="#onClickSelectLocation">
 							<graphic>

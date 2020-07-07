@@ -29,15 +29,15 @@
 					</styleClass>
 					<children>
 						<Label fx:id="bar_title" maxWidth="Infinity" text="图片拼接"
-							style="-fx-font-weight: bold;-fx-font-size:14;"
+							style="-fx-font-weight: bold;-fx-font-size:16;"
 							HBox.hgrow="ALWAYS">
 						</Label>
 						<!-- <JFXButton onAction="#onClickHide"> <graphic> <ImageView fitHeight="18.0" 
 							fitWidth="18.0" pickOnBounds="true" preserveRatio="true"> <image> <Image 
 							url="/resources/min.png" /> </image> </ImageView> </graphic> </JFXButton> -->
-						<JFXButton onAction="#onClickClose">
+						<JFXButton onAction="#onClickClose" style="-fx-focus-color: transparent;">
 							<graphic>
-								<ImageView fitHeight="15.0" fitWidth="15.0"
+								<ImageView fitHeight="25.0" fitWidth="25.0"
 									pickOnBounds="true" preserveRatio="true">
 									<image>
 										<Image url="/resources/close.png" />

@@ -3,6 +3,8 @@ package utils;
 import java.io.IOException;
 import java.net.URL;
 
+import base.controller.ConfirmDialogController;
+import base.controller.ConfirmDialogController.CallBack;
 import beans.MyFxmlBean;
 import consts.ConstRes;
 import javafx.fxml.FXMLLoader;
@@ -67,6 +69,7 @@ public class UIUtil {
 			setFrameCanDrag(framePane, anotherStage);
 			transparentFrame(anotherStage, scene);
 			anotherStage.show();
+			framePane.requestFocus();
 			loadFxml.setScene(scene);
 			loadFxml.setStage(anotherStage);
 			return loadFxml;
@@ -106,8 +109,51 @@ public class UIUtil {
 			transparentFrame(anotherStage, scene);
 			setFrameCanDrag(framePane, anotherStage);
 			anotherStage.show();
+			framePane.requestFocus();
 			loadFxml.setScene(scene);
 			loadFxml.setStage(anotherStage);
+			return loadFxml;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 打开确认对话框
+	 * @param clz
+	 * @param frameW
+	 * @param frameH
+	 * @param title
+	 * @param content
+	 * @param ownStage
+	 * @param callback
+	 * @return
+	 */
+	public static MyFxmlBean openConfirmDialog(Class<?> clz, double frameW, double frameH, String title, String content,
+			Stage ownStage, CallBack callback) {
+		try {
+			MyFxmlBean loadFxml = loadFxml(clz, ConstRes.UI_Bar_Confirm_Dialog_Path);
+			Pane root = loadFxml.getPane();
+			// 将子界面加入框架中
+			Scene scene = new Scene(root, frameW, frameH);
+			Stage anotherStage = new Stage();
+			setFrameIsModal(anotherStage, ownStage);
+
+			setFrameCss(clz, scene);
+			anotherStage.setScene(scene);
+			transparentFrame(anotherStage, scene);
+			setFrameCanDrag(root, anotherStage);
+			anotherStage.show();
+			root.requestFocus();
+			loadFxml.setScene(scene);
+			loadFxml.setStage(anotherStage);
+			ConfirmDialogController controller = loadFxml.getFxmlLoader().getController();
+			if (controller != null) {
+				controller.setTitle(title);
+				controller.setContent(content);
+				controller.setCallback(callback);
+			}
 			return loadFxml;
 		} catch (Exception e) {
 			e.printStackTrace();
