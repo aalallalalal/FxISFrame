@@ -144,6 +144,8 @@ public class ProjectsController implements Initializable {
 	void onRemove() {
 		int index = projectListView.getSelectionModel().getSelectedIndex();
 		projectListData.remove(index);
+		String bottomtext = "共有" + projectListData.size() + "个项目";
+		bottomLabel.setText(bottomtext);
 		
 	}
 	public void setListener(ProjectsListener listener) {
