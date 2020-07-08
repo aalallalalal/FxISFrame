@@ -3,6 +3,7 @@ package application.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import beans.FinalDataBean;
 import javafx.fxml.Initializable;
 
 /**
@@ -14,6 +15,13 @@ import javafx.fxml.Initializable;
 public class ProcessingController extends BaseController implements Initializable {
 
 	private ProcessingListener listener;
+
+	private FinalDataBean finalData;
+
+	public void startExec(FinalDataBean finalData) {
+		this.finalData = finalData;
+		System.out.println("ProcessingController startExec：" + finalData);
+	}
 
 	public interface ProcessingListener {
 

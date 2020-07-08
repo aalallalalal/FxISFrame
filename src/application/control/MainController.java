@@ -6,9 +6,11 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import application.control.CreateProjectDialogController.CallBack;
+import beans.FinalDataBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
 import consts.ConstSize;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -54,35 +56,6 @@ public class MainController implements Initializable {
 	@FXML
 	JFXButton btn_next;
 	private Label title;
-
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		initPagination();
-	}
-
-	/**
-	 * 初始化分页控件
-	 */
-	private void initPagination() {
-		mPagination.setPageCount(MAX_PAGE_SIZE);
-		mPagination.getStylesheets().add(getClass().getResource("/application/css/application.css").toExternalForm());
-		mPagination.setPageFactory(new Callback<Integer, Node>() {
-			@Override
-			public Node call(Integer pageIndex) {
-				if (pageIndex >= MAX_PAGE_SIZE) {
-					return null;
-				} else {
-					try {
-						title = (Label) root.getParent().lookup("#bar_title");// 因为一开始root还没加入parent里，parent为空。写到这里已经加入parent了。
-						return createPage(pageIndex);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					return null;
-				}
-			}
-		});
-	}
 
 	/**
 	 * createProject小界面的操作回调
@@ -147,13 +120,18 @@ public class MainController implements Initializable {
 						if (projectsController != null) {
 							projectsController.addProject(project);
 						}
-
 					}
 				});
 			}
-
 		}
 
+		@Override
+		public void onClickRightBtn(ObservableList<ProjectBean> projectListData) {
+			nextPage();
+			if (settingController != null) {
+				settingController.setProjectsInfo(projectListData);
+			}
+		}
 	}
 
 	/**
@@ -163,6 +141,19 @@ public class MainController implements Initializable {
 	 *
 	 */
 	private class SettingListener implements SettingController.SettingListener {
+
+		@Override
+		public void onClickStart(FinalDataBean finalData) {
+			nextPage();
+			if (processingController != null) {
+				processingController.startExec(finalData);
+			}
+		}
+
+		@Override
+		public void onClickLeftBtn() {
+			prePage();
+		}
 	}
 
 	/**
@@ -197,8 +188,8 @@ public class MainController implements Initializable {
 			if (createProjectController == null) {
 				createProjectController = fxmlLoader.getController();
 				createProjectController.setListener(new CreateProjListener());
-				currentController = createProjectController;
 			}
+			currentController = createProjectController;
 			currentPane = createProjPane;
 			System.out.println("donknow:+" + pageIndex);
 			break;
@@ -211,8 +202,8 @@ public class MainController implements Initializable {
 			if (projectsController == null) {
 				projectsController = fxmlLoader.getController();
 				projectsController.setListener(new ProjectsListener());
-				currentController = projectsController;
 			}
+			currentController = projectsController;
 			currentPane = projectsPane;
 			System.out.println("donknow:+" + pageIndex);
 			break;
@@ -225,8 +216,8 @@ public class MainController implements Initializable {
 			if (settingController == null) {
 				settingController = fxmlLoader.getController();
 				settingController.setListener(new SettingListener());
-				currentController = settingController;
 			}
+			currentController = settingController;
 			currentPane = settingPane;
 			System.out.println("donknow:+" + pageIndex);
 			break;
@@ -239,8 +230,8 @@ public class MainController implements Initializable {
 			if (processingController == null) {
 				processingController = fxmlLoader.getController();
 				processingController.setListener(new ProcessingListener());
-				currentController = processingController;
 			}
+			currentController = processingController;
 			currentPane = ProcessingPane;
 			System.out.println("donknow:+" + pageIndex);
 			break;
@@ -308,6 +299,35 @@ public class MainController implements Initializable {
 	@FXML
 	public void rightBtn() {
 		currentController.onClickRightBtn();
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
+		initPagination();
+	}
+
+	/**
+	 * 初始化分页控件
+	 */
+	private void initPagination() {
+		mPagination.setPageCount(MAX_PAGE_SIZE);
+		mPagination.getStylesheets().add(getClass().getResource("/application/css/application.css").toExternalForm());
+		mPagination.setPageFactory(new Callback<Integer, Node>() {
+			@Override
+			public Node call(Integer pageIndex) {
+				if (pageIndex >= MAX_PAGE_SIZE) {
+					return null;
+				} else {
+					try {
+						title = (Label) root.getParent().lookup("#bar_title");// 因为一开始root还没加入parent里，parent为空。写到这里已经加入parent了。
+						return createPage(pageIndex);
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+					return null;
+				}
+			}
+		});
 	}
 
 	public CreateProjectController getCreateProjectController() {

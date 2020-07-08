@@ -15,7 +15,8 @@
 		<VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0"
 			style="-fx-padding: 10;" BorderPane.alignment="CENTER">
 			<children>
-				<JFXCheckBox fx:id="checkBox_SaveMiddle" text="保存中间中间结果" selected="false">
+				<JFXCheckBox fx:id="checkBox_SaveMiddle" text="保存中间中间结果"
+					selected="false">
 					<styleClass>
 						<String fx:value="custom-jfx-check-box" />
 					</styleClass>
@@ -37,7 +38,8 @@
 												<String fx:value="label-leve-normal" />
 											</styleClass>
 										</Label>
-										<JFXTextArea fx:id="textArea_width">
+										<JFXTextArea fx:id="textArea_width"
+											prefHeight="30.0">
 											<styleClass>
 												<String fx:value="custom-text-area" />
 											</styleClass>
@@ -52,7 +54,8 @@
 												<String fx:value="label-leve-normal" />
 											</styleClass>
 										</Label>
-										<JFXTextArea fx:id="textArea_hight">
+										<JFXTextArea fx:id="textArea_hight"
+											prefHeight="30.0">
 											<styleClass>
 												<String fx:value="custom-text-area" />
 											</styleClass>
@@ -77,7 +80,8 @@
 								<String fx:value="label-leve-normal" />
 							</styleClass>
 						</Label>
-						<JFXTextArea fx:id="textArea_flyHeight">
+						<JFXTextArea fx:id="textArea_flyHeight"
+							prefHeight="30.0">
 							<styleClass>
 								<String fx:value="custom-text-area" />
 							</styleClass>
@@ -87,7 +91,8 @@
 								<String fx:value="label-leve-normal" />
 							</styleClass>
 						</Label>
-						<JFXTextArea fx:id="textArea_cameraSize">
+						<JFXTextArea fx:id="textArea_cameraSize"
+							prefHeight="30.0">
 							<styleClass>
 								<String fx:value="custom-text-area" />
 							</styleClass>

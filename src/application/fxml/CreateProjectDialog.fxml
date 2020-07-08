@@ -21,10 +21,9 @@
 						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
 							text="项目名称：" wrapText="true" />
 						<JFXTextField fx:id="textField" focusColor="#FFA500"
-							labelFloat="true" maxWidth="-1" prefColumnCount="10"
-							prefHeight="30.0" prefWidth="280.0"
-							style="-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;        -fx-font-size: 14; -fx-padding:4;"
-							unFocusColor="#fafafa00" />
+							unFocusColor="#fafafa00" labelFloat="true" prefColumnCount="10"
+							prefHeight="30.0" prefWidth="280.0" maxWidth="-1"
+							style="-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;        -fx-font-size: 14; -fx-padding:4;" />
 					</children>
 				</HBox>
 				<HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="5.0">

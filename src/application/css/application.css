@@ -34,6 +34,7 @@ visibility: hidden;
 .custom-jfx-check-box{
    -jfx-checked-color: #FFA500;  
    -jfx-unchecked-color: BLACK;
+   -fx-text-fill: #000; -fx-font-size: 14.0; -fx-wrap-text:true 
 }
 
 .label-leve-normal{
@@ -42,7 +43,8 @@ visibility: hidden;
 
 .custom-text-area{
 	-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2.0;-fx-border-style:solid;
-	-fx-font-size: 14.0; -fx-padding:4.0;
+	-fx-font-size: 14.0; -fx-padding:4.0;-jfx-focus-color:#FFA500;-jfx-unfocus-color:#fafafa00;
+	-jfx-label-float:true;-fx-pref-column-count:10;
 }
 
 .list-cell{
