@@ -3,6 +3,8 @@ package application.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+
 import application.control.CreateProjectDialogController.CallBack;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
@@ -12,13 +14,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Node;
+import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import utils.UIUtil;
-import javafx.scene.layout.FlowPane;
-import com.jfoenix.controls.JFXButton;
 
 /**
  * 主界面的controller
@@ -37,6 +39,7 @@ public class MainController implements Initializable {
 	private ProjectsController projectsController;
 	private SettingController settingController;
 	private ProcessingController processingController;
+	private BaseController currentController;
 
 	private final int MAX_PAGE_SIZE = 4;
 
@@ -50,6 +53,7 @@ public class MainController implements Initializable {
 	JFXButton btn_pre;
 	@FXML
 	JFXButton btn_next;
+	private Label title;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -60,7 +64,6 @@ public class MainController implements Initializable {
 	 * 初始化分页控件
 	 */
 	private void initPagination() {
-
 		mPagination.setPageCount(MAX_PAGE_SIZE);
 		mPagination.getStylesheets().add(getClass().getResource("/application/css/application.css").toExternalForm());
 		mPagination.setPageFactory(new Callback<Integer, Node>() {
@@ -70,6 +73,7 @@ public class MainController implements Initializable {
 					return null;
 				} else {
 					try {
+						title = (Label) root.getParent().lookup("#bar_title");// 因为一开始root还没加入parent里，parent为空。写到这里已经加入parent了。
 						return createPage(pageIndex);
 					} catch (Exception e) {
 						e.printStackTrace();
@@ -78,9 +82,6 @@ public class MainController implements Initializable {
 				}
 			}
 		});
-	}
-
-	public MainController() {
 	}
 
 	/**
@@ -112,7 +113,7 @@ public class MainController implements Initializable {
 						}
 
 						// TODO TEST
-						
+
 					}
 				});
 			}
@@ -126,13 +127,11 @@ public class MainController implements Initializable {
 	 * @author DP
 	 *
 	 */
-	private class ProjectsListener implements ProjectsController.ProjectsListener
-	{
+	private class ProjectsListener implements ProjectsController.ProjectsListener {
 		private MyFxmlBean openDialog;
-		
+
 		@Override
-		public void onCreateProject()
-		{
+		public void onCreateProject() {
 			openDialog = UIUtil.openDialog(getClass(), "/application/fxml/CreateProjectDialog.fxml",
 					ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "创建项目", getStage());
 			if (openDialog != null) {
@@ -149,17 +148,12 @@ public class MainController implements Initializable {
 							projectsController.addProject(project);
 						}
 
-						// TODO TEST
-						//MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml", ConstSize.Second_Frame_Width,
-						//		ConstSize.Second_Frame_Height, "项目" + project.getProjectName());
-						//ImageListController controller = openFrame.getFxmlLoader().getController();
-						//controller.setProjectInfo(project);
 					}
 				});
 			}
-			
+
 		}
-		
+
 	}
 
 	/**
@@ -203,6 +197,7 @@ public class MainController implements Initializable {
 			if (createProjectController == null) {
 				createProjectController = fxmlLoader.getController();
 				createProjectController.setListener(new CreateProjListener());
+				currentController = createProjectController;
 			}
 			currentPane = createProjPane;
 			System.out.println("donknow:+" + pageIndex);
@@ -216,6 +211,7 @@ public class MainController implements Initializable {
 			if (projectsController == null) {
 				projectsController = fxmlLoader.getController();
 				projectsController.setListener(new ProjectsListener());
+				currentController = projectsController;
 			}
 			currentPane = projectsPane;
 			System.out.println("donknow:+" + pageIndex);
@@ -229,6 +225,7 @@ public class MainController implements Initializable {
 			if (settingController == null) {
 				settingController = fxmlLoader.getController();
 				settingController.setListener(new SettingListener());
+				currentController = settingController;
 			}
 			currentPane = settingPane;
 			System.out.println("donknow:+" + pageIndex);
@@ -242,6 +239,7 @@ public class MainController implements Initializable {
 			if (processingController == null) {
 				processingController = fxmlLoader.getController();
 				processingController.setListener(new ProcessingListener());
+				currentController = processingController;
 			}
 			currentPane = ProcessingPane;
 			System.out.println("donknow:+" + pageIndex);
@@ -250,11 +248,18 @@ public class MainController implements Initializable {
 			break;
 		}
 
-		changeBottomView(pageIndex);
+		changeBottomBtnsView(currentController, pageIndex);
 		return currentPane;
 	}
 
-	private void changeBottomView(Integer pageIndex) {
+	/**
+	 * 设置界面bottom部分的显示与按钮的显示内容等。
+	 * 
+	 * @param currentController
+	 * @param pageIndex
+	 */
+	private void changeBottomBtnsView(BaseController currentController, Integer pageIndex) {
+		currentController.onInitBottomBtnsAndTitle(btn_pre, btn_next, title);
 		switch (pageIndex.intValue()) {
 		case 0:
 			bottomBtnsPane.setVisible(false);
@@ -262,25 +267,14 @@ public class MainController implements Initializable {
 			break;
 		case 1:
 			bottomBtnsPane.setVisible(true);
-			btn_pre.setVisible(false);
-			btn_next.setVisible(true);
-			btn_next.setText("下一步");
 			bottomGroupPane.setVisible(false);
 			break;
 		case 2:
 			bottomBtnsPane.setVisible(true);
-			btn_pre.setVisible(true);
-			btn_next.setVisible(true);
-			btn_next.setText(" 开 始 ");
 			bottomGroupPane.setVisible(false);
 			break;
 		case 3:
 			bottomBtnsPane.setVisible(true);
-			// TODO 根据情况显示：上一步；或不显示
-			btn_pre.setVisible(false);
-			btn_next.setVisible(true);
-			// TODO 根据情况显示：重新拼接；完成
-			btn_next.setText("  取 消  ");
 			bottomGroupPane.setVisible(false);
 			break;
 		default:
@@ -308,14 +302,12 @@ public class MainController implements Initializable {
 
 	@FXML
 	public void leftBtn() {
-		// TODO
-		prePage();
+		currentController.onClickLeftBtn();
 	}
 
 	@FXML
 	public void rightBtn() {
-		// TODO
-		nextPage();
+		currentController.onClickRightBtn();
 	}
 
 	public CreateProjectController getCreateProjectController() {

@@ -31,6 +31,20 @@ visibility: hidden;
 	-fx-background-color: #4169E1;-fx-text-fill: white;-fx-padding:12.0;-fx-font-weight:bold;-fx-font-size:14.0;
 }
 
+.custom-jfx-check-box{
+   -jfx-checked-color: #FFA500;  
+   -jfx-unchecked-color: BLACK;
+}
+
+.label-leve-normal{
+	-fx-text-fill: #000; -fx-font-size: 14.0; -fx-wrap-text:true 
+}
+
+.custom-text-area{
+	-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2.0;-fx-border-style:solid;
+	-fx-font-size: 14.0; -fx-padding:4.0;
+}
+
 .list-cell{
     -fx-font-family: Arial;
     
@@ -125,7 +139,7 @@ visibility: hidden;
 }
 .table-row-cell:selected {
     -fx-background-color: #87CEEB;
-    -fx-background-insets: 0;
-    -fx-background-radius: 1;
+    -fx-background-insets: 0.0;
+    -fx-background-radius: 1.0;
 }
 

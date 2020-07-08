@@ -36,7 +36,7 @@ import utils.UIUtil;
  * @author DP
  *
  */
-public class ProjectsController implements Initializable {
+public class ProjectsController  extends BaseController  implements Initializable {
 	private ProjectsListener listener;
 	@FXML
 	VBox Lvbox = new VBox();
@@ -174,6 +174,25 @@ public class ProjectsController implements Initializable {
 				this.setText(item.getProjectName());
 			}
 		}
+		
+	}
+	@Override
+	protected void onSetBottomBtnsAndTitle() {
+		leftBtn.setVisible(false);
+		rightBtn.setVisible(true);
+		rightBtn.setText("下一步");		
+		title.setText("项目");
+	}
+
+	@Override
+	protected void onClickLeftBtn() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	protected void onClickRightBtn() {
+		// TODO Auto-generated method stub
 		
 	}
 	

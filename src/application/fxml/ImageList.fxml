@@ -40,7 +40,7 @@
 		</VBox>
 	</right>
 	<bottom>
-		<VBox prefWidth="400.0" style="-fx-padding: 10;"
+		<VBox prefWidth="340.0" style="-fx-padding: 10;"
 			BorderPane.alignment="CENTER">
 			<children>
 				<HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="5.0">

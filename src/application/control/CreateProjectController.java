@@ -3,6 +3,8 @@ package application.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
@@ -12,9 +14,9 @@ import javafx.fxml.Initializable;
  * @author DP
  *
  */
-public class CreateProjectController implements Initializable {
-	private CreateProjectListener listener ;
-	
+public class CreateProjectController extends BaseController implements Initializable {
+	private CreateProjectListener listener;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 
@@ -30,16 +32,35 @@ public class CreateProjectController implements Initializable {
 
 	@FXML
 	public void createProject() {
-		if(listener!=null) {
+		if (listener != null) {
 			listener.onCreateProject();
 		}
 	}
-	
+
 	public void setListener(CreateProjectListener listener) {
 		this.listener = listener;
 	}
 
-	public interface CreateProjectListener{
+	public interface CreateProjectListener {
 		void onCreateProject();
+	}
+
+	@Override
+	protected void onClickLeftBtn() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void onClickRightBtn() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void onSetBottomBtnsAndTitle() {
+		if(title!=null) {
+			title.setText("图片拼接");
+		}
 	}
 }
