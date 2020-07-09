@@ -146,7 +146,7 @@ public class MainController implements Initializable {
 		public void onClickStart(FinalDataBean finalData) {
 			nextPage();
 			if (processingController != null) {
-				processingController.startExec(finalData);
+					processingController.startExec(finalData);
 			}
 		}
 
@@ -163,6 +163,30 @@ public class MainController implements Initializable {
 	 *
 	 */
 	private class ProcessingListener implements ProcessingController.ProcessingListener {
+
+		@Override
+		public void uplevel()
+		{
+			// TODO Auto-generated method stub
+			prePage();
+		}
+
+		@Override
+		public void tofirstpage()
+		{
+			// TODO Auto-generated method stub
+			mPagination.setCurrentPageIndex(0);
+		}
+
+		@Override
+		public void updatePage()
+		{
+			// TODO Auto-generated method stub
+			System.out.println("更新界面");
+			changeBottomBtnsView(currentController, 3);
+		}
+
+		
 	}
 
 	/**

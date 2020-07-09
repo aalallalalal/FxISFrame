@@ -48,7 +48,7 @@ visibility: hidden;
 }
 
 .list-cell{
-    -fx-font-family: Arial;
+    -fx-font-family: KaiTi;
     
 }
 .list-cell:even {
@@ -64,7 +64,6 @@ visibility: hidden;
 .list-cell:empty {
     -fx-background-color: white;
 }
-
 /*******************************************************************************
 *                                                                              *
 * JFX Spinner                                                                  *
