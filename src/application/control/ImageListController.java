@@ -4,17 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.drew.imaging.ImageProcessingException;
 import com.jfoenix.controls.JFXRadioButton;
 
 import base.controller.ConfirmDialogController.CallBack;
 import beans.ImageBean;
+import beans.MyFxmlBean;
 import beans.ProjectBean;
+import consts.ConstRes;
 import consts.ConstSize;
-import javafx.application.Platform;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -26,6 +26,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -67,8 +68,8 @@ public class ImageListController implements Initializable {
 
 	private ProjectBean project;
 	private ProgressTask task;
-	private TableColumn<ImageBean, Double> longtitudeCol;
-	private TableColumn<ImageBean, Double> latitudeCol;
+	private TableColumn<ImageBean, String> longtitudeCol;
+	private TableColumn<ImageBean, String> latitudeCol;
 	private TableColumn<ImageBean, String> heightCol;
 
 	@Override
@@ -96,7 +97,11 @@ public class ImageListController implements Initializable {
 	 * 刷新图片数据。 TODO 读取文件数据
 	 */
 	private void refreshListData() {
-		listData.clear();
+		try {
+			listData.clear();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		task = new ProgressTask(new ProgressTask.MyTask() {
 			@Override
 			protected void succeeded() {
@@ -166,6 +171,8 @@ public class ImageListController implements Initializable {
 
 	@FXML
 	public void onClickHelp() {
+		UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
+				"提示", ConstRes.Text_LocationFile_Notice, (Stage) root.getScene().getWindow());
 	}
 
 	@FXML
@@ -209,8 +216,8 @@ public class ImageListController implements Initializable {
 	@SuppressWarnings("unchecked")
 	private void initTableView() {
 		TableColumn<ImageBean, String> path = new TableColumn<ImageBean, String>("名称");
-		longtitudeCol = new TableColumn<ImageBean, Double>("经度");
-		latitudeCol = new TableColumn<ImageBean, Double>("纬度");
+		longtitudeCol = new TableColumn<ImageBean, String>("经度");
+		latitudeCol = new TableColumn<ImageBean, String>("纬度");
 		heightCol = new TableColumn<ImageBean, String>("高度");
 		tableView.getColumns().addAll(path, latitudeCol, longtitudeCol, heightCol);
 		path.setPrefWidth(120);
@@ -227,8 +234,24 @@ public class ImageListController implements Initializable {
 		latitudeCol.setSortable(false);
 		heightCol.setSortable(false);
 		path.setCellValueFactory(new PropertyValueFactory<ImageBean, String>("name"));
-		longtitudeCol.setCellValueFactory(new PropertyValueFactory<ImageBean, Double>("longitude"));
-		latitudeCol.setCellValueFactory(new PropertyValueFactory<ImageBean, Double>("latitude"));
+		longtitudeCol.setCellValueFactory(
+				new javafx.util.Callback<TableColumn.CellDataFeatures<ImageBean, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<ImageBean, String> arg0) {
+						SimpleStringProperty re = new SimpleStringProperty();
+						re.set(arg0.getValue().getLongitudeRef() + ":" + arg0.getValue().getLongitude());
+						return re;
+					}
+				});
+		latitudeCol.setCellValueFactory(
+				new javafx.util.Callback<TableColumn.CellDataFeatures<ImageBean, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<ImageBean, String> arg0) {
+						SimpleStringProperty re = new SimpleStringProperty();
+						re.set(arg0.getValue().getLatitudeRef() + ":" + arg0.getValue().getLatitude());
+						return re;
+					}
+				});
 		heightCol.setCellValueFactory(new PropertyValueFactory<ImageBean, String>("height"));
 		tableView.setItems(listData);
 
@@ -299,5 +322,13 @@ public class ImageListController implements Initializable {
 	 */
 	private void setImageDataFromFile() {
 		// TODO 文件中读取。先不做
+	}
+
+	@FXML
+	public void onSeeLine() {
+		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/FlightLine.fxml",
+				ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height, project.getProjectName() + "飞行路径");
+		FlightLineController controller = openFrame.getFxmlLoader().getController();
+		controller.setData(listData);
 	}
 }

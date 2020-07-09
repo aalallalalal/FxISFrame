@@ -36,6 +36,11 @@
 						<String fx:value="btn-level-normal" />
 					</styleClass>
 				</JFXButton>
+				<JFXButton onAction="#onSeeLine" text="查看飞行路线">
+					<styleClass>
+						<String fx:value="btn-level-normal" />
+					</styleClass>
+				</JFXButton>
 			</children>
 		</VBox>
 	</right>

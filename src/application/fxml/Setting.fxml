@@ -7,101 +7,101 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
+<?import com.jfoenix.controls.JFXTextField?>
 
-<BorderPane style="-fx-background-color:#fff" fx:id="root"
-	xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
+<BorderPane fx:id="root" style="-fx-background-color:#fff"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.SettingController">
 	<center>
-		<VBox prefHeight="200.0" prefWidth="100.0" spacing="10.0"
-			style="-fx-padding: 10;" BorderPane.alignment="CENTER">
+		<VBox spacing="20.0"
+			style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;-fx-padding: 10;"
+			BorderPane.alignment="CENTER">
 			<children>
-				<JFXCheckBox fx:id="checkBox_SaveMiddle" text="保存中间中间结果"
-					selected="false">
-					<styleClass>
-						<String fx:value="custom-jfx-check-box" />
-					</styleClass>
-				</JFXCheckBox>
-				<HBox prefHeight="100.0" prefWidth="200.0" spacing="6.0">
+				<HBox spacing="16.0">
 					<children>
 						<Label text="图像划分网格大小:">
 							<styleClass>
 								<String fx:value="label-leve-normal" />
 							</styleClass>
 						</Label>
-						<VBox prefHeight="200.0" prefWidth="100.0">
+						<VBox spacing="10.0">
 							<children>
-								<HBox alignment="CENTER_LEFT" prefHeight="60.0"
-									prefWidth="200.0">
+								<HBox alignment="CENTER_LEFT" prefHeight="15.0">
 									<children>
 										<Label text="宽(像素):">
 											<styleClass>
 												<String fx:value="label-leve-normal" />
 											</styleClass>
 										</Label>
-										<JFXTextArea fx:id="textArea_width"
-											prefHeight="30.0">
+										<JFXTextField fx:id="textArea_width"
+											maxWidth="-1" prefColumnCount="10" prefHeight="10.0">
 											<styleClass>
-												<String fx:value="custom-text-area" />
+												<String fx:value="custom-text-field" />
 											</styleClass>
-										</JFXTextArea>
+										</JFXTextField>
 									</children>
 								</HBox>
-								<HBox alignment="CENTER_LEFT" prefHeight="60.0"
-									prefWidth="200.0">
+								<HBox alignment="CENTER_LEFT" prefHeight="15.0">
 									<children>
 										<Label text="高(像素):">
 											<styleClass>
 												<String fx:value="label-leve-normal" />
 											</styleClass>
 										</Label>
-										<JFXTextArea fx:id="textArea_hight"
-											prefHeight="30.0">
+										<JFXTextField fx:id="textArea_hight"
+											prefColumnCount="10" prefHeight="10">
 											<styleClass>
-												<String fx:value="custom-text-area" />
+												<String fx:value="custom-text-field" />
 											</styleClass>
-										</JFXTextArea>
+										</JFXTextField>
 									</children>
 								</HBox>
 							</children>
 						</VBox>
 					</children>
 				</HBox>
-				<JFXCheckBox text="进行重叠率先验约束" fx:id="checkBox_preCheck"
-					selected="false">
+				<JFXCheckBox fx:id="checkBox_preCheck" selected="false"
+					text="进行重叠率先验约束">
 					<styleClass>
 						<String fx:value="custom-jfx-check-box" />
 					</styleClass>
 				</JFXCheckBox>
-				<HBox alignment="CENTER_LEFT" prefHeight="60.0" disable="true"
-					fx:id="hbox_preCheckDetail" prefWidth="200.0" spacing="6.0">
+				<HBox fx:id="hbox_preCheckDetail" alignment="CENTER_LEFT"
+					disable="true" prefHeight="10.0" spacing="6.0">
 					<children>
 						<Label text="无人机飞行高度(米):">
 							<styleClass>
 								<String fx:value="label-leve-normal" />
 							</styleClass>
 						</Label>
-						<JFXTextArea fx:id="textArea_flyHeight"
-							prefHeight="30.0">
+						<JFXTextField fx:id="textArea_flyHeight"
+							prefHeight="10.0">
 							<styleClass>
-								<String fx:value="custom-text-area" />
+								<String fx:value="custom-text-field" />
 							</styleClass>
-						</JFXTextArea>
+						</JFXTextField>
 						<Label text="相机像元大小(微米):">
 							<styleClass>
 								<String fx:value="label-leve-normal" />
 							</styleClass>
 						</Label>
-						<JFXTextArea fx:id="textArea_cameraSize"
-							prefHeight="30.0">
+						<JFXTextField fx:id="textArea_cameraSize"
+							prefHeight="10.0">
 							<styleClass>
-								<String fx:value="custom-text-area" />
+								<String fx:value="custom-text-field" />
 							</styleClass>
-						</JFXTextArea>
+						</JFXTextField>
 					</children>
 				</HBox>
+				<JFXCheckBox fx:id="checkBox_SaveMiddle"
+					selected="false" text="保存中间中间结果">
+					<styleClass>
+						<String fx:value="custom-jfx-check-box" />
+					</styleClass>
+				</JFXCheckBox>
 			</children>
 			<BorderPane.margin>
-				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+				<Insets bottom="35.0" left="35.0" right="35.0" top="35.0" />
 			</BorderPane.margin>
 		</VBox>
 	</center>

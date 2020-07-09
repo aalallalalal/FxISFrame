@@ -11,6 +11,7 @@
 <?import javafx.scene.text.Font?>
 <?import java.lang.String?>
 <?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
 
 <!-- 主框架界面 -->
 
@@ -48,6 +49,14 @@
 					<left>
 						<JFXButton fx:id="btn_pre" buttonType="RAISED"
 							onAction="#leftBtn" text=" 上一步 " BorderPane.alignment="CENTER">
+							<graphic>
+								<ImageView fitHeight="16.0" fitWidth="16.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/arrow-left.png" />
+									</image>
+								</ImageView>
+							</graphic>
 							<styleClass>
 								<String fx:value="btn-level-vip" />
 							</styleClass>

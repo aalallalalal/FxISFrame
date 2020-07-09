@@ -26,11 +26,11 @@ public abstract class BaseApplication extends Application {
 		}
 	}
 
-	protected int frameWidth() {
+	protected double frameWidth() {
 		return ConstSize.Main_Frame_Width;
 	}
 
-	protected int frameHeight() {
+	protected double frameHeight() {
 		return ConstSize.Main_Frame_Height;
 	}
 

@@ -72,32 +72,6 @@ public class ProcessingController extends BaseController implements Initializabl
 		return true;
 	}
 	
-	public boolean isEnd() throws InterruptedException
-	{
-		Thread t = new Thread();
-		t.sleep(5000);
-		return true;
-	}
-	
-	/**
-	 * 更新属性
-	 * @throws Exception
-	 */
-	public void updateAttributes() throws Exception
-	{
-		while(true) {
-			Thread temp = new Thread();
-			temp.sleep(5000);
-			System.out.println("5秒");
-			if(isEnd())
-			{
-				System.out.println("更新属性");
-				this.result = getresult();
-				this.state = false;
-				break;
-			}
-		}
-	}
 	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {

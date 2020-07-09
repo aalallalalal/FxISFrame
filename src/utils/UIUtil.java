@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 
 import base.controller.ConfirmDialogController;
-import base.controller.ConfirmDialogController.CallBack;
+import base.controller.NoticeDialogController;
 import beans.MyFxmlBean;
 import consts.ConstRes;
 import javafx.fxml.FXMLLoader;
@@ -120,7 +120,50 @@ public class UIUtil {
 	}
 
 	/**
+	 * 打开提示对话框
+	 * 
+	 * @param clz
+	 * @param frameW
+	 * @param frameH
+	 * @param title
+	 * @param content
+	 * @param ownStage
+	 * @param callback
+	 * @return
+	 */
+	public static MyFxmlBean openNoticeDialog(Class<?> clz, double frameW, double frameH, String title, String content,
+			Stage ownStage) {
+		try {
+			MyFxmlBean loadFxml = loadFxml(clz, ConstRes.UI_Bar_Notice_Dialog_Path);
+			Pane root = loadFxml.getPane();
+			// 将子界面加入框架中
+			Scene scene = new Scene(root, frameW, frameH);
+			Stage anotherStage = new Stage();
+			setFrameIsModal(anotherStage, ownStage);
+
+			setFrameCss(clz, scene);
+			anotherStage.setScene(scene);
+			transparentFrame(anotherStage, scene);
+			setFrameCanDrag(root, anotherStage);
+			anotherStage.show();
+			root.requestFocus();
+			loadFxml.setScene(scene);
+			loadFxml.setStage(anotherStage);
+			NoticeDialogController controller = loadFxml.getFxmlLoader().getController();
+			if (controller != null) {
+				controller.setTitle(title);
+				controller.setContent(content);
+			}
+			return loadFxml;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
 	 * 打开确认对话框
+	 * 
 	 * @param clz
 	 * @param frameW
 	 * @param frameH
@@ -131,7 +174,7 @@ public class UIUtil {
 	 * @return
 	 */
 	public static MyFxmlBean openConfirmDialog(Class<?> clz, double frameW, double frameH, String title, String content,
-			Stage ownStage, CallBack callback) {
+			Stage ownStage, ConfirmDialogController.CallBack callback) {
 		try {
 			MyFxmlBean loadFxml = loadFxml(clz, ConstRes.UI_Bar_Confirm_Dialog_Path);
 			Pane root = loadFxml.getPane();
