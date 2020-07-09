@@ -4,7 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXCheckBox;
-import com.jfoenix.controls.JFXTextArea;
+import com.jfoenix.controls.JFXTextField;
 
 import beans.FinalDataBean;
 import beans.ProjectBean;
@@ -30,13 +30,13 @@ public class SettingController extends BaseController implements Initializable {
 	@FXML
 	JFXCheckBox checkBox_preCheck;
 	@FXML
-	JFXTextArea textArea_width;
+	JFXTextField textArea_width;
 	@FXML
-	JFXTextArea textArea_hight;
+	JFXTextField textArea_hight;
 	@FXML
-	JFXTextArea textArea_flyHeight;
+	JFXTextField textArea_flyHeight;
 	@FXML
-	JFXTextArea textArea_cameraSize;
+	JFXTextField textArea_cameraSize;
 	@FXML
 	HBox hbox_preCheckDetail;
 	@FXML

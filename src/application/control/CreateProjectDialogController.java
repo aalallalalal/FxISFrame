@@ -9,6 +9,8 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
 import beans.ProjectBean;
+import consts.ConstRes;
+import consts.ConstSize;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -16,10 +18,13 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 import utils.FileChooserUtil;
 import utils.FileChooserUtil.Callback;
 import utils.ToastUtil;
+import utils.UIUtil;
 
 /**
  * 创建项目dialog界面controller
@@ -27,6 +32,8 @@ import utils.ToastUtil;
  * @author DP
  */
 public class CreateProjectDialogController implements Initializable {
+	@FXML
+	BorderPane root;
 	@FXML
 	private JFXTextField textField;
 	@FXML
@@ -99,7 +106,8 @@ public class CreateProjectDialogController implements Initializable {
 
 	@FXML
 	public void onClickHelp() {
-		// TODO
+		UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
+				"提示", ConstRes.Text_LocationFile_Notice, (Stage) root.getScene().getWindow());
 	}
 
 	@FXML

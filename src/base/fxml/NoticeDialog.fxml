@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXTextArea?>
+
+<BorderPane fx:id="root"
+	style="-fx-background:transparent;-fx-padding: 10;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="base.controller.NoticeDialogController">
+	<center>
+		<BorderPane BorderPane.alignment="CENTER">
+			<styleClass>
+				<String fx:value="frame-pane" />
+			</styleClass>
+			<effect>
+				<DropShadow />
+			</effect>
+			<top>
+				<HBox fx:id="bar" alignment="CENTER"
+					BorderPane.alignment="CENTER">
+					<styleClass>
+						<String fx:value="bar-notice-dialog" />
+					</styleClass>
+					<children>
+						<Label fx:id="bar_title" maxWidth="Infinity"
+							style="-fx-font-weight: bold;-fx-font-size:14;"
+							HBox.hgrow="ALWAYS">
+						</Label>
+						<JFXButton onAction="#onClickClose"
+							style="-fx-focus-color: transparent;">
+							<graphic>
+								<ImageView fitHeight="22" fitWidth="22"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/close.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+			</top>
+			<center>
+				<JFXTextArea fx:id="textArea_content" prefHeight="200.0"
+					editable="false"
+					style="-fx-font-weight: bold; -fx-font-size: 14; -fx-text-fill: #000; -fx-padding: 12;"
+					text="内容" wrapText="true" BorderPane.alignment="CENTER" />
+			</center>
+			<bottom>
+				<BorderPane prefHeight="50.0" prefWidth="200.0"
+					style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
+					BorderPane.alignment="CENTER">
+					<center>
+						<JFXButton onAction="#onConfirm" text="好 的"
+							BorderPane.alignment="CENTER">
+							<styleClass>
+								<String fx:value="btn-level-vip" />
+							</styleClass>
+							<BorderPane.margin>
+								<Insets bottom="10.0" />
+								<Insets top="10.0" />
+							</BorderPane.margin>
+						</JFXButton>
+					</center>
+				</BorderPane>
+			</bottom>
+		</BorderPane>
+	</center>
+</BorderPane>

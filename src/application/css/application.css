@@ -21,6 +21,9 @@ visibility: hidden;
 .bar-confirm-dialog{
 	-fx-background-color:  #4169E1; -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
 }
+.bar-notice-dialog{
+	-fx-background-color:  #4169E1; -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
+}
 .frame-pane{
 	-fx-background-radius: 10.0; -fx-background-color: #ffffff;-fx-border-radius:10.0;
 }
@@ -33,7 +36,7 @@ visibility: hidden;
 
 .custom-jfx-check-box{
    -jfx-checked-color: #FFA500;  
-   -jfx-unchecked-color: BLACK;
+   -jfx-unchecked-color: #4169E1;
    -fx-text-fill: #000; -fx-font-size: 14.0; -fx-wrap-text:true 
 }
 
@@ -41,10 +44,9 @@ visibility: hidden;
 	-fx-text-fill: #000; -fx-font-size: 14.0; -fx-wrap-text:true 
 }
 
-.custom-text-area{
+.custom-text-field{
 	-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2.0;-fx-border-style:solid;
-	-fx-font-size: 14.0; -fx-padding:4.0;-jfx-focus-color:#FFA500;-jfx-unfocus-color:#fafafa00;
-	-jfx-label-float:true;-fx-pref-column-count:10;
+	-fx-font-size: 14.0; -fx-padding:2.0;-jfx-focus-color:#FFA500;-jfx-unfocus-color:#fafafa00;
 }
 
 .list-cell{
@@ -65,6 +67,13 @@ visibility: hidden;
     -fx-background-color: white;
 }
 
+/*
+ * 隐藏 text area 竖向滚动条
+ */
+.text-area .scroll-bar:vertical {
+	-fx-pref-width: 1.0;
+    -fx-opacity: 0.0;
+}
 /*******************************************************************************
 *                                                                              *
 * JFX Spinner                                                                  *
@@ -79,14 +88,13 @@ visibility: hidden;
 .third-spinner .arc {
     -fx-stroke-width: 3.0;-fx-stroke: #ffffff;
 }
-
+ /**
+ * tableview css 设置
+ */
 .table-view {
  -fx-background-color:#fff;
 } 
  
- /**
- * 表头背景颜色变化
- */
 .table-column .label{
     -fx-background-color: #fff;
     -fx-text-fill: #000 ;

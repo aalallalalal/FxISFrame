@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import com.drew.imaging.ImageProcessingException;
 import com.jfoenix.controls.JFXRadioButton;
@@ -13,8 +11,8 @@ import com.jfoenix.controls.JFXRadioButton;
 import base.controller.ConfirmDialogController.CallBack;
 import beans.ImageBean;
 import beans.ProjectBean;
+import consts.ConstRes;
 import consts.ConstSize;
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -96,7 +94,11 @@ public class ImageListController implements Initializable {
 	 * 刷新图片数据。 TODO 读取文件数据
 	 */
 	private void refreshListData() {
-		listData.clear();
+		try {
+			listData.clear();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		task = new ProgressTask(new ProgressTask.MyTask() {
 			@Override
 			protected void succeeded() {
@@ -166,6 +168,8 @@ public class ImageListController implements Initializable {
 
 	@FXML
 	public void onClickHelp() {
+		UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
+				"提示", ConstRes.Text_LocationFile_Notice, (Stage) root.getScene().getWindow());
 	}
 
 	@FXML
