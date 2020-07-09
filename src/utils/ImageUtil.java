@@ -27,15 +27,23 @@ public class ImageUtil {
 			return;
 		}
 		Metadata metadata;
-		System.out.println(img.getAbsolutePath());
 		metadata = ImageMetadataReader.readMetadata(img);
 		Collection<GpsDirectory> gps = metadata.getDirectoriesOfType(GpsDirectory.class);
 		if (gps == null || gps.size() <= 0) {
 			return;
 		}
 		for (GpsDirectory item : gps) {
+			System.out.println(item);
 			Collection<Tag> tags = item.getTags();
 			for (Tag itemTag : tags) {
+				System.out.println(itemTag.getTagName()+"---------->"+itemTag.getDescription());
+				
+				if ("GPS Latitude Ref".equals(itemTag.getTagName())) {
+					imageBean.setLatitudeRef(itemTag.getDescription());
+				}
+				if ("GPS Longitude Ref".equals(itemTag.getTagName())) {
+					imageBean.setLongitudeRef(itemTag.getDescription());
+				}
 				if ("GPS Latitude".equals(itemTag.getTagName())) {
 					imageBean.setLatitude(pointToLatlong(itemTag.getDescription()));
 				}
