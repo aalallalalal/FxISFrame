@@ -9,25 +9,22 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
+<?import java.lang.String?>
 
 <BorderPane style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.ProjectsController">
    <center>
       <VBox fx:id="Lvbox" prefHeight="480.0" prefWidth="540.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="Label" prefHeight="48.0" prefWidth="500.0" textFill="#ff6f00">
-               <font>
-                  <Font size="18.0" />
-               </font>
-            </Label>
-            <ListView fx:id="projectListView" fixedCellSize="46.0" prefHeight="368.0" />
+            <TableView fx:id="projectTableView" prefHeight="405.0" prefWidth="540.0" 
+            	style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;" />
             <HBox prefHeight="64.0" prefWidth="200.0">
                <children>
                   <Label fx:id="bottomLabel" prefHeight="30.0" prefWidth="500.0" text="Lable" textFill="#000000">
                      <font>
-                        <Font size="18.0" />
+                        <Font size="16.0" />
                      </font>
                      <HBox.margin>
-                        <Insets bottom="34.0" />
+                        <Insets bottom="34.0" top="10.0" />
                      </HBox.margin>
                   </Label>
                </children>
@@ -38,25 +35,31 @@
    <right>
       <VBox fx:id="Rvbox" alignment="BASELINE_CENTER" prefHeight="480.0" prefWidth="180.0" spacing="15.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="addProject" buttonType="RAISED" maxHeight="50.0" onAction="#createProject" prefHeight="41.0" prefWidth="120.0" ripplerFill="WHITE" style="-fx-background-color: #4169E1;" text="添加工程" textAlignment="CENTER" textFill="WHITE">
+            <JFXButton fx:id="addProject" onAction="#createProject" text="添加工程">
                <VBox.margin>
-                  <Insets top="50.0" />
+                  <Insets />
                </VBox.margin>
-               <font>
-                  <Font size="20.0" />
-               </font>
+               <styleClass>
+               		<String fx:value="btn-level-projects" />
+               </styleClass>
             </JFXButton>
-            <JFXButton fx:id="seeProject" buttonType="RAISED" maxHeight="50.0" onAction="#onDetailProject" prefHeight="30.0" prefWidth="120.0" ripplerFill="WHITE" style="-fx-background-color: #4169E1;" text="查看工程" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="20.0" />
-               </font>
+            <JFXButton fx:id="seeProject" onAction="#onDetailProject" text="查看工程">
+               <styleClass>
+               		<String fx:value="btn-level-projects" />
+               </styleClass>
             </JFXButton>
-            <JFXButton fx:id="removeProject" buttonType="RAISED" maxHeight="50.0" onAction="#onRemove" prefHeight="30.0" prefWidth="120.0" ripplerFill="WHITE" style="-fx-background-color: #4169E1;" text="删除工程" textAlignment="CENTER" textFill="WHITE">
-               <font>
-                  <Font size="20.0" />
-               </font>
+            <JFXButton fx:id="removeProject" onAction="#onRemove" text="删除工程">
+               <styleClass>
+               		<String fx:value="btn-level-projects" />
+               </styleClass>
             </JFXButton>
          </children>
       </VBox>
    </right>
+   <left>
+      <VBox prefHeight="480.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
+   </left>
+   <top>
+      <HBox prefHeight="34.0" prefWidth="739.0" BorderPane.alignment="CENTER" />
+   </top>
 </BorderPane>

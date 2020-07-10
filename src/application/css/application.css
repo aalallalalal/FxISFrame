@@ -33,6 +33,9 @@ visibility: hidden;
 .btn-level-normal{
 	-fx-background-color: #4169E1;-fx-text-fill: white;-fx-padding:12.0;-fx-font-weight:bold;-fx-font-size:14.0;
 }
+.btn-level-projects{
+	-fx-background-color: #4169E1;-fx-text-fill: white;-fx-padding:12.0;-fx-font-weight:bold;-fx-font-size:18.0;
+}
 
 .custom-jfx-check-box{
    -jfx-checked-color: #FFA500;  
@@ -48,23 +51,7 @@ visibility: hidden;
 	-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2.0;-fx-border-style:solid;
 	-fx-font-size: 14.0; -fx-padding:2.0;-jfx-focus-color:#FFA500;-jfx-unfocus-color:#fafafa00;
 }
-.list-cell{
-    -fx-font-family: KaiTi;
-    
-}
-.list-cell:even {
-    -fx-background-color: white;
-}
-.list-cell:odd {
-    -fx-background-color: white;
-}
-.list-cell:selected {
-    -fx-background-color: #919191;
-    -fx-text-fill: white;
-}
-.list-cell:empty {
-    -fx-background-color: white;
-}
+
 .text-area .scroll-bar:vertical {
 	-fx-pref-width: 1.0;
     -fx-opacity: 0.0;

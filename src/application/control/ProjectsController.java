@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import beans.ImageBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
 import consts.ConstSize;
@@ -16,7 +17,10 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
@@ -36,7 +40,10 @@ public class ProjectsController extends BaseController implements Initializable 
 	@FXML
 	Label Label;
 	@FXML
-	private ListView<ProjectBean> projectListView = new ListView<ProjectBean>();
+	private TableView<ProjectBean> projectTableView;
+	private TableColumn<ProjectBean, String> name_projects;
+	private TableColumn<ProjectBean, String> path_projects;
+	private TableColumn<ProjectBean, String> time_createProject;
 	@FXML
 	VBox Rvbox = new VBox();
 	@FXML
@@ -66,17 +73,9 @@ public class ProjectsController extends BaseController implements Initializable 
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		projectListView.setItems(projectListData);
-		projectListView.setCellFactory(new Callback<ListView<ProjectBean>, ListCell<ProjectBean>>() {
+		initTableView();
 
-			@Override
-			public ListCell<ProjectBean> call(ListView<ProjectBean> param) {
-				// TODO Auto-generated method stub
-				return new MyListCell();
-			}
-		});
-
-		projectListView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		projectTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 
 			@Override
 			public void handle(MouseEvent event) {
@@ -84,6 +83,29 @@ public class ProjectsController extends BaseController implements Initializable 
 				onTestMouse(event);
 			}
 		});
+	}
+
+	@SuppressWarnings("unchecked")
+	private void initTableView()
+	{
+		// TODO Auto-generated method stub
+		name_projects = new TableColumn<ProjectBean, String>("工程名称");
+		path_projects = new TableColumn<ProjectBean, String>("路径");
+		time_createProject = new TableColumn<ProjectBean, String>("创建时间");
+		projectTableView.getColumns().addAll(name_projects, path_projects, time_createProject);
+		projectTableView.setItems(projectListData);
+		
+		name_projects.setPrefWidth(150);
+		path_projects.setPrefWidth(250);
+		time_createProject.setPrefWidth(140);
+		path_projects.setSortable(false);
+		
+		name_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectName"));
+		time_createProject.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("createTime"));
+		path_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectDir"));
+		
+		
+		
 	}
 
 	public void test() {
@@ -109,7 +131,7 @@ public class ProjectsController extends BaseController implements Initializable 
 	// 查看工程的事件响应
 	@FXML
 	void onDetailProject() {
-		int index = projectListView.getSelectionModel().getSelectedIndex();
+		int index = projectTableView.getSelectionModel().getSelectedIndex();
 		ProjectBean project = projectListData.get(index);
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml",
 				ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height, "项目" + project.getProjectName());
@@ -119,7 +141,7 @@ public class ProjectsController extends BaseController implements Initializable 
 
 	@FXML
 	void onRemove() {
-		int index = projectListView.getSelectionModel().getSelectedIndex();
+		int index = projectTableView.getSelectionModel().getSelectedIndex();
 		projectListData.remove(index);
 		String bottomtext = "共有" + projectListData.size() + "个项目";
 		bottomLabel.setText(bottomtext);
@@ -176,10 +198,10 @@ public class ProjectsController extends BaseController implements Initializable 
 	protected void onClickLeftBtn() {
 	}
 
-	public void clearData() {
-		if (projectListData != null) {
-			projectListData.clear();
-		}
+	public void clearData()
+	{
+		// TODO Auto-generated method stub
+		
 	}
 
 }

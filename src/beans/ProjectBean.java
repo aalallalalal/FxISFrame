@@ -1,5 +1,8 @@
 package beans;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * 项目实体类
  * 
@@ -10,6 +13,8 @@ public class ProjectBean {
 	private String projectName;
 	private String projectDir;
 	private String projectLocationFile;
+	private String createTime;
+	
 	private int locationFrom; // 0:从图片，1：从文件
 
 	public ProjectBean(String projectName, String projectDir, int locationFrom, String projectLocationFile) {
@@ -18,6 +23,8 @@ public class ProjectBean {
 		this.projectDir = projectDir;
 		this.setLocationFrom(locationFrom);
 		this.projectLocationFile = projectLocationFile;
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        this.createTime = df.format(new Date());// new Date()为获取当前系统时间
 	}
 
 	public String getProjectName() {
@@ -39,6 +46,17 @@ public class ProjectBean {
 	public String getProjectLocationFile() {
 		return projectLocationFile;
 	}
+	
+	public String getCreateTime()
+	{
+		return createTime;
+	}
+
+	public void setCreateTime(String createTime)
+	{
+		this.createTime = createTime;
+	}
+
 
 	public void setProjectLocationFile(String projectLocationFile) {
 		this.projectLocationFile = projectLocationFile;
