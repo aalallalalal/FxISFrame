@@ -11,55 +11,74 @@
 <?import javafx.scene.control.Label?>
 <?import java.lang.String?>
 
-<BorderPane style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.ProjectsController">
-   <center>
-      <VBox fx:id="Lvbox" prefHeight="480.0" prefWidth="540.0" BorderPane.alignment="CENTER">
-         <children>
-            <TableView fx:id="projectTableView" prefHeight="405.0" prefWidth="540.0" 
-            	style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;" />
-            <HBox prefHeight="64.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="bottomLabel" prefHeight="30.0" prefWidth="500.0" text="Lable" textFill="#000000">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets bottom="34.0" top="10.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-         </children>
-      </VBox>
-   </center>
-   <right>
-      <VBox fx:id="Rvbox" alignment="BASELINE_CENTER" prefHeight="480.0" prefWidth="180.0" spacing="15.0" BorderPane.alignment="CENTER">
-         <children>
-            <JFXButton fx:id="addProject" onAction="#createProject" text="添加工程">
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
-               <styleClass>
-               		<String fx:value="btn-level-projects" />
-               </styleClass>
-            </JFXButton>
-            <JFXButton fx:id="seeProject" onAction="#onDetailProject" text="查看工程">
-               <styleClass>
-               		<String fx:value="btn-level-projects" />
-               </styleClass>
-            </JFXButton>
-            <JFXButton fx:id="removeProject" onAction="#onRemove" text="删除工程">
-               <styleClass>
-               		<String fx:value="btn-level-projects" />
-               </styleClass>
-            </JFXButton>
-         </children>
-      </VBox>
-   </right>
-   <left>
-      <VBox prefHeight="480.0" prefWidth="19.0" BorderPane.alignment="CENTER" />
-   </left>
-   <top>
-      <HBox prefHeight="34.0" prefWidth="739.0" BorderPane.alignment="CENTER" />
-   </top>
+<BorderPane style="-fx-background-color: #ffffff;"
+	fx:id="root" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.control.ProjectsController">
+	<center>
+		<VBox fx:id="Lvbox" prefHeight="480.0" prefWidth="540.0"
+			BorderPane.alignment="CENTER">
+			<children>
+				<TableView fx:id="projectTableView" prefHeight="405.0"
+					prefWidth="560.0"
+					style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;" />
+				<HBox prefHeight="64.0" prefWidth="200.0">
+					<children>
+						<Label fx:id="bottomLabel" prefHeight="30.0"
+							prefWidth="500.0" text="Lable" textFill="#000000">
+							<font>
+								<Font size="16.0" />
+							</font>
+							<HBox.margin>
+								<Insets bottom="34.0" top="10.0" />
+							</HBox.margin>
+						</Label>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+	</center>
+	<right>
+		<VBox alignment="BASELINE_CENTER" prefWidth="160.0"
+			spacing="15.0" BorderPane.alignment="CENTER">
+			<children>
+				<JFXButton fx:id="addProject" onAction="#createProject"
+					text="新建工程">
+					<styleClass>
+						<String fx:value="btn-level-projects" />
+					</styleClass>
+				</JFXButton>
+				<JFXButton onAction="#openProject" text="添加工程">
+					<styleClass>
+						<String fx:value="btn-level-projects" />
+					</styleClass>
+				</JFXButton>
+				<VBox fx:id="Rvbox" alignment="BASELINE_CENTER" spacing="15.0"
+					disable="true" BorderPane.alignment="CENTER">
+					<children>
+						<JFXButton fx:id="seeProject"
+							onAction="#onDetailProject" text="查看工程">
+							<styleClass>
+								<String fx:value="btn-level-projects" />
+							</styleClass>
+						</JFXButton>
+						<JFXButton fx:id="removeProject" onAction="#onRemove"
+							text="移除工程">
+							<styleClass>
+								<String fx:value="btn-level-projects" />
+							</styleClass>
+						</JFXButton>
+					</children>
+				</VBox>
+			</children>
+		</VBox>
+	</right>
+	<left>
+		<VBox prefHeight="480.0" prefWidth="19.0"
+			BorderPane.alignment="CENTER" />
+	</left>
+	<top>
+		<HBox prefHeight="34.0" prefWidth="739.0"
+			BorderPane.alignment="CENTER" />
+	</top>
 </BorderPane>

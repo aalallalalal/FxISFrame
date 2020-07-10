@@ -47,4 +47,5 @@ public class FileUtil {
 		File deletedImg = new File(deleteDir, imgFile.getName());
 		imgFile.renameTo(deletedImg);
 	}
+	
 }

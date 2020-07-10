@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="root"
+	style="-fx-background-color: #fefefe; -fx-padding: 10;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.control.OpenProjectDialogController">
+	<center>
+		<TableView fx:id="projectTableView"
+			style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;" />
+	</center>
+	<bottom>
+		<JFXButton fx:id="btnDone" buttonType="RAISED"
+			onAction="#done" text=" 打 开 " BorderPane.alignment="CENTER">
+			<styleClass>
+				<String fx:value="btn-level-vip" />
+			</styleClass>
+			<BorderPane.margin>
+				<Insets bottom="10.0" />
+				<Insets top="10.0" />
+			</BorderPane.margin>
+		</JFXButton>
+	</bottom>
+</BorderPane>

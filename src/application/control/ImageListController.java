@@ -19,6 +19,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -28,6 +29,8 @@ import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -266,7 +269,24 @@ public class ImageListController implements Initializable {
 				}
 			}
 		});
+		tableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				onTestMouse(event);
+			}
+		});
 		refreshTabViewColumn();
+	}
+
+	/**
+	 * 列表双击事件
+	 * 
+	 * @param event
+	 */
+	protected void onTestMouse(MouseEvent event) {
+		if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+			onSeeImg();
+		}
 	}
 
 	/**

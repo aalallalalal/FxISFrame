@@ -64,32 +64,10 @@ public class MainController implements Initializable {
 	 *
 	 */
 	private class CreateProjListener implements CreateProjectController.CreateProjectListener {
-		private MyFxmlBean openDialog;
 
 		@Override
 		public void onCreateProject() {
-			openDialog = UIUtil.openDialog(getClass(), "/application/fxml/CreateProjectDialog.fxml",
-					ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "创建项目", getStage());
-			if (openDialog != null) {
-				CreateProjectDialogController controller = openDialog.getFxmlLoader().getController();
-				controller.setCallBack(new CallBack() {
-					@Override
-					public void onDone(ProjectBean project) {
-						System.out.println("接收到了完成！");
-						Stage dialog = openDialog.getStage();
-						if (dialog != null) {
-							dialog.close();
-						}
-						nextPage();
-						if (projectsController != null) {
-							projectsController.addProject(project);
-						}
-
-						// TODO TEST
-
-					}
-				});
-			}
+			openCreateProjectDialog(true);
 		}
 
 		@Override
@@ -99,6 +77,10 @@ public class MainController implements Initializable {
 			}
 		}
 
+		@Override
+		public void onOpenProject() {
+			openOpenProjectDialog(true);
+		}
 	}
 
 	/**
@@ -108,28 +90,9 @@ public class MainController implements Initializable {
 	 *
 	 */
 	private class ProjectsListener implements ProjectsController.ProjectsListener {
-		private MyFxmlBean openDialog;
-
 		@Override
 		public void onCreateProject() {
-			openDialog = UIUtil.openDialog(getClass(), "/application/fxml/CreateProjectDialog.fxml",
-					ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "创建项目", getStage());
-			if (openDialog != null) {
-				CreateProjectDialogController controller = openDialog.getFxmlLoader().getController();
-				controller.setCallBack(new CallBack() {
-					@Override
-					public void onDone(ProjectBean project) {
-						System.out.println("接收到了完成！");
-						Stage dialog = openDialog.getStage();
-						if (dialog != null) {
-							dialog.close();
-						}
-						if (projectsController != null) {
-							projectsController.addProject(project);
-						}
-					}
-				});
-			}
+			openCreateProjectDialog(false);
 		}
 
 		@Override
@@ -138,6 +101,11 @@ public class MainController implements Initializable {
 			if (settingController != null) {
 				settingController.setProjectsInfo(projectListData);
 			}
+		}
+
+		@Override
+		public void onOpenProject() {
+			openOpenProjectDialog(false);
 		}
 	}
 
@@ -390,4 +358,59 @@ public class MainController implements Initializable {
 		}
 		return stage;
 	}
+
+	/**
+	 * 打开创建项目dialog
+	 */
+	private void openOpenProjectDialog(boolean isToNextPage) {
+		MyFxmlBean openDialog;
+		openDialog = UIUtil.openDialog(getClass(), "/application/fxml/OpenProjectDialog.fxml",
+				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "打开项目", getStage());
+		if (openDialog != null) {
+			OpenProjectDialogController controller = openDialog.getFxmlLoader().getController();
+			controller.setCallBack(new OpenProjectDialogController.CallBack() {
+				@Override
+				public void onDone(ProjectBean project) {
+					Stage dialog = openDialog.getStage();
+					if (dialog != null) {
+						dialog.close();
+					}
+					if (isToNextPage) {
+						nextPage();
+					}
+					if (projectsController != null) {
+						projectsController.addProject(project);
+					}
+				}
+			});
+		}
+	}
+
+	/**
+	 * 打开新建项目dialog
+	 */
+	private void openCreateProjectDialog(boolean isToNextPage) {
+		MyFxmlBean createDialog;
+		createDialog = UIUtil.openDialog(getClass(), "/application/fxml/CreateProjectDialog.fxml",
+				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "创建项目", getStage());
+		if (createDialog != null) {
+			CreateProjectDialogController controller = createDialog.getFxmlLoader().getController();
+			controller.setCallBack(new CallBack() {
+				@Override
+				public void onDone(ProjectBean project) {
+					Stage dialog = createDialog.getStage();
+					if (dialog != null) {
+						dialog.close();
+					}
+					if (isToNextPage) {
+						nextPage();
+					}
+					if (projectsController != null) {
+						projectsController.addProject(project);
+					}
+				}
+			});
+		}
+	}
+
 }

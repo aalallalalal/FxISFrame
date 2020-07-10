@@ -1,5 +1,6 @@
 package beans;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -9,7 +10,12 @@ import java.util.Date;
  * @author DP
  *
  */
-public class ProjectBean {
+public class ProjectBean implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private long id;
 	private String projectName;
 	private String projectDir;
 	private String projectLocationFile;
@@ -23,6 +29,7 @@ public class ProjectBean {
 		this.projectDir = projectDir;
 		this.setLocationFrom(locationFrom);
 		this.projectLocationFile = projectLocationFile;
+		this.id = System.currentTimeMillis();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
         this.createTime = df.format(new Date());// new Date()为获取当前系统时间
 	}
@@ -74,5 +81,9 @@ public class ProjectBean {
 
 	public void setLocationFrom(int locationFrom) {
 		this.locationFrom = locationFrom;
+	}
+
+	public long getId() {
+		return id;
 	}
 }

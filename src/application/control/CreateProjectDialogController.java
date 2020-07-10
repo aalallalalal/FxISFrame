@@ -23,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import utils.FileChooserUtil;
 import utils.FileChooserUtil.Callback;
+import utils.SaveUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
 
@@ -120,9 +121,14 @@ public class CreateProjectDialogController implements Initializable {
 			ToastUtil.toast("请选择项目路径");
 			return;
 		}
+		if (radioButton_file.isSelected() && "".equals(labelLocation.getText())) {
+			ToastUtil.toast("请选择经纬度文件路径");
+			return;
+		}
 		int locationFrom = (int) group.getSelectedToggle().getUserData();
 		ProjectBean project = new ProjectBean(textField.getText(), labelProject.getText(), locationFrom,
 				labelLocation.getText());
+		SaveUtil.saveProject(project);
 		if (callBack != null) {
 			callBack.onDone(project);
 		}

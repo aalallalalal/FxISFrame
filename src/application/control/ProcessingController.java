@@ -23,48 +23,47 @@ public class ProcessingController extends BaseController implements Initializabl
 	private ProcessingListener listener;
 
 	private FinalDataBean finalData;
-	
-	private boolean result;//运行结果
-	
-	private boolean state = true;//当前状态（是否运行完）
-	
+
+	private boolean result;// 运行结果
+
+	private boolean state = true;// 当前状态（是否运行完）
+
 	Image image = new Image("resources/timg.gif");
 	@FXML
 	ImageView imageView = new ImageView(image);
 
-	
 	/**
 	 * 开始执行程序，程序运行结束后改变当前状态并且设置程序运行结果
+	 * 
 	 * @param finalData
-	 * @throws Exception 
+	 * @throws Exception
 	 */
 	public void startExec(FinalDataBean finalData) {
 		this.finalData = finalData;
 		System.out.println("ProcessingController startExec：" + finalData);
 		Task<Boolean> task = new Task<Boolean>() {
-	        @Override
-	        public Boolean call() throws Exception {
-	            // process long-running computation, data retrieval, etc...
-	        	Thread t = new Thread();
-	        	t.sleep(5000);
-	            Boolean result = true; // result of computation
-	            return false;
-	        }
-	    };
-	    task.setOnSucceeded(e -> {
-	        this.result = task.getValue();
-	        // update UI with result
+			@Override
+			public Boolean call() throws Exception {
+				// process long-running computation, data retrieval, etc...
+				Thread t = new Thread();
+				t.sleep(5000);
+				Boolean result = true; // result of computation
+				return false;
+			}
+		};
+		task.setOnSucceeded(e -> {
+			this.result = task.getValue();
+			// update UI with result
 			this.state = false;
-	        listener.updatePage();
-	    });
-	    
-	    new Thread(task).start();
+			listener.updatePage();
+		});
+
+		new Thread(task).start();
 	}
-	
-	
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		
+
 	}
 
 	public void test() {
@@ -74,29 +73,24 @@ public class ProcessingController extends BaseController implements Initializabl
 	public void setListener(ProcessingListener listener) {
 		this.listener = listener;
 	}
-	
+
 	@Override
 	protected void onSetBottomBtnsAndTitle() {
-		if(state)
-		{
+		if (state) {
 			title.setText("拼接中");
 			// TODO 根据情况显示：上一步；或不显示
 			leftBtn.setVisible(false);
 			rightBtn.setVisible(true);
 			// TODO 根据情况显示：重新拼接；完成
 			rightBtn.setText("  取 消  ");
-		}
-		else if(result)
-		{
+		} else if (result) {
 			title.setText("拼接成功");
 			// TODO 根据情况显示：上一步；或不显示
 			leftBtn.setVisible(false);
 			rightBtn.setVisible(true);
 			// TODO 根据情况显示：重新拼接；完成
 			rightBtn.setText("返回主界面");
-		}
-		else
-		{
+		} else {
 			title.setText("拼接失败");
 			// TODO 根据情况显示：上一步；或不显示
 			leftBtn.setVisible(true);
@@ -105,7 +99,7 @@ public class ProcessingController extends BaseController implements Initializabl
 			// TODO 根据情况显示：重新拼接；完成
 			rightBtn.setText("返回主界面");
 		}
-		
+
 	}
 
 	@Override
@@ -115,24 +109,22 @@ public class ProcessingController extends BaseController implements Initializabl
 	}
 
 	@Override
-	protected void onClickRightBtn()
-	{
+	protected void onClickRightBtn() {
 		// TODO Auto-generated method stub
-		if(!state)
-		{
+		if (!state) {
 			listener.tofirstpage();
-		}
-		else
-		{
+		} else {
 			listener.toprojects();
 		}
-		
+
 	}
 
 	public interface ProcessingListener {
 		void toprojects();
+
 		void tofirstpage();
+
 		void updatePage();
 	}
-	
+
 }

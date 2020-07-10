@@ -14,20 +14,39 @@
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.CreateProjectController">
 	<top>
-		<Label alignment="CENTER" contentDisplay="CENTER"
-			style="-fx-font-weight: bold;" BorderPane.alignment="CENTER">
-			<graphic>
-				<ImageView fitHeight="250" fitWidth="400.0"
-					pickOnBounds="true" preserveRatio="true">
-					<image>
-						<Image url="/resources/icon.png" />
-					</image>
-				</ImageView>
-			</graphic>
-			<BorderPane.margin>
-				<Insets top="30.0" />
-			</BorderPane.margin>
-		</Label>
+		<BorderPane BorderPane.alignment="CENTER">
+			<center>
+				<Label alignment="CENTER" contentDisplay="CENTER"
+					style="-fx-font-weight: bold;" BorderPane.alignment="CENTER">
+					<graphic>
+						<ImageView fitHeight="250" fitWidth="400.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="/resources/icon.png" />
+							</image>
+						</ImageView>
+					</graphic>
+					<BorderPane.margin>
+						<Insets top="30.0" />
+					</BorderPane.margin>
+				</Label>
+			</center>
+			<right>
+				<JFXButton buttonType="RAISED" onAction="#onClickHelp">
+					<graphic>
+						<ImageView fitHeight="25.0" fitWidth="25.0"
+							pickOnBounds="true" preserveRatio="true">
+							<image>
+								<Image url="/resources/help_dark.png" />
+							</image>
+						</ImageView>
+					</graphic>
+					<BorderPane.margin>
+						<Insets top="30.0" />
+					</BorderPane.margin>
+				</JFXButton>
+			</right>
+		</BorderPane>
 	</top>
 	<center>
 		<BorderPane prefHeight="200.0" prefWidth="200.0"
@@ -42,15 +61,15 @@
 						<ImageView fitHeight="42.0" fitWidth="42.0"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="/resources/folder.png" />
+								<Image url="/resources/editor.png" />
 							</image>
 						</ImageView>
 					</graphic>
 				</JFXButton>
 			</left>
 			<right>
-				<JFXButton buttonType="RAISED" text="帮  助" prefWidth="220"
-					prefHeight="90" onAction="#help"
+				<JFXButton buttonType="RAISED" text="打开项目" prefWidth="220"
+					prefHeight="90" onAction="#openProject"
 					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;
 					-fx-font-size:22;-fx-font-weight:bold;"
 					BorderPane.alignment="CENTER">
@@ -58,7 +77,7 @@
 						<ImageView fitHeight="42.0" fitWidth="42.0"
 							pickOnBounds="true" preserveRatio="true">
 							<image>
-								<Image url="/resources/help.png" />
+								<Image url="/resources/folder.png" />
 							</image>
 						</ImageView>
 					</graphic>
