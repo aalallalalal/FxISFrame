@@ -36,8 +36,8 @@ public class ImageUtil {
 			System.out.println(item);
 			Collection<Tag> tags = item.getTags();
 			for (Tag itemTag : tags) {
-				System.out.println(itemTag.getTagName()+"---------->"+itemTag.getDescription());
-				
+				System.out.println(itemTag.getTagName() + "---------->" + itemTag.getDescription());
+
 				if ("GPS Latitude Ref".equals(itemTag.getTagName())) {
 					imageBean.setLatitudeRef(itemTag.getDescription());
 				}
@@ -51,7 +51,13 @@ public class ImageUtil {
 					imageBean.setLongitude(pointToLatlong(itemTag.getDescription()));
 				}
 				if ("GPS Altitude".equals(itemTag.getTagName())) {
-					imageBean.setHeight(itemTag.getDescription());
+					String height = itemTag.getDescription();
+					if (height != null && !"".equals(height)) {
+						if (height.contains("metres")) {
+							height = height.replace("metres", "");
+						}
+					}
+					imageBean.setHeight(height);
 				}
 			}
 		}

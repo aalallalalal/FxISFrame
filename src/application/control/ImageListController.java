@@ -218,14 +218,14 @@ public class ImageListController implements Initializable {
 		TableColumn<ImageBean, String> path = new TableColumn<ImageBean, String>("名称");
 		longtitudeCol = new TableColumn<ImageBean, String>("经度");
 		latitudeCol = new TableColumn<ImageBean, String>("纬度");
-		heightCol = new TableColumn<ImageBean, String>("高度");
+		heightCol = new TableColumn<ImageBean, String>("海拔高度(米)");
 		tableView.getColumns().addAll(path, latitudeCol, longtitudeCol, heightCol);
 		path.setPrefWidth(120);
 		path.setMinWidth(120);
-		longtitudeCol.setPrefWidth(100);
-		longtitudeCol.setMinWidth(100);
-		latitudeCol.setPrefWidth(100);
-		latitudeCol.setMinWidth(100);
+		longtitudeCol.setPrefWidth(120);
+		longtitudeCol.setMinWidth(120);
+		latitudeCol.setPrefWidth(120);
+		latitudeCol.setMinWidth(120);
 		heightCol.setPrefWidth(100);
 		heightCol.setMinWidth(100);
 

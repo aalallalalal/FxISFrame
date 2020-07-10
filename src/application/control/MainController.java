@@ -92,6 +92,13 @@ public class MainController implements Initializable {
 			}
 		}
 
+		@Override
+		public void onClearData() {
+			if (projectsController != null) {
+				projectsController.clearData();
+			}
+		}
+
 	}
 
 	/**
@@ -146,7 +153,7 @@ public class MainController implements Initializable {
 		public void onClickStart(FinalDataBean finalData) {
 			nextPage();
 			if (processingController != null) {
-					processingController.startExec(finalData);
+				processingController.startExec(finalData);
 			}
 		}
 
@@ -165,28 +172,24 @@ public class MainController implements Initializable {
 	private class ProcessingListener implements ProcessingController.ProcessingListener {
 
 		@Override
-		public void toprojects()
-		{
+		public void toprojects() {
 			// TODO Auto-generated method stub
 			mPagination.setCurrentPageIndex(1);
 		}
 
 		@Override
-		public void tofirstpage()
-		{
+		public void tofirstpage() {
 			// TODO Auto-generated method stub
 			mPagination.setCurrentPageIndex(0);
 		}
 
 		@Override
-		public void updatePage()
-		{
+		public void updatePage() {
 			// TODO Auto-generated method stub
 			System.out.println("更新界面");
 			changeBottomBtnsView(currentController, 3);
 		}
 
-		
 	}
 
 	/**

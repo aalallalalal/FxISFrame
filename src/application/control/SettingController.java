@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import utils.ToastUtil;
 
 /**
  * 设置其他参数界面controller
@@ -114,6 +115,16 @@ public class SettingController extends BaseController implements Initializable {
 
 	@Override
 	protected void onClickRightBtn() {
+		if ("".equals(textArea_width.getText()) || "".equals(textArea_hight.getText())) {
+			ToastUtil.toast("网格大小数据不能为空");
+			return;
+		}
+		if (checkBox_preCheck.isSelected()
+				&& ("".equals(textArea_flyHeight.getText()) || "".equals(textArea_cameraSize.getText()))) {
+			ToastUtil.toast("选择进行先验约束，对应数据不能为空");
+			return;
+		}
+
 		SettingsBean setting = new SettingsBean();
 		setting.setSaveMiddle(checkBox_SaveMiddle.isSelected());
 		setting.setNetWidth(textArea_width.getText());

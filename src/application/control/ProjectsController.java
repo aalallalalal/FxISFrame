@@ -176,4 +176,10 @@ public class ProjectsController extends BaseController implements Initializable 
 	protected void onClickLeftBtn() {
 	}
 
+	public void clearData() {
+		if (projectListData != null) {
+			projectListData.clear();
+		}
+	}
+
 }

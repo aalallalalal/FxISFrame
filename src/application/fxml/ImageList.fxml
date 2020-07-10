@@ -21,21 +21,24 @@
 		</TableView>
 	</center>
 	<right>
-		<VBox fx:id="vbox_rightButtons" disable="true"
-			alignment="TOP_CENTER" prefHeight="200.0" prefWidth="140.0"
+		<VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="140.0"
 			style="-fx-spacing: 10; -fx-padding: 10;"
 			BorderPane.alignment="CENTER">
 			<children>
-				<JFXButton onAction="#onDeleteImg" text="删除图片">
-					<styleClass>
-						<String fx:value="btn-level-normal" />
-					</styleClass>
-				</JFXButton>
-				<JFXButton onAction="#onSeeImg" text="查看图片">
-					<styleClass>
-						<String fx:value="btn-level-normal" />
-					</styleClass>
-				</JFXButton>
+				<VBox fx:id="vbox_rightButtons" disable="true"
+					alignment="TOP_CENTER" style="-fx-spacing: 10; "
+					BorderPane.alignment="CENTER">
+					<JFXButton onAction="#onDeleteImg" text="删除图片">
+						<styleClass>
+							<String fx:value="btn-level-normal" />
+						</styleClass>
+					</JFXButton>
+					<JFXButton onAction="#onSeeImg" text="查看图片">
+						<styleClass>
+							<String fx:value="btn-level-normal" />
+						</styleClass>
+					</JFXButton>
+				</VBox>
 				<JFXButton onAction="#onSeeLine" text="查看飞行路线">
 					<styleClass>
 						<String fx:value="btn-level-normal" />

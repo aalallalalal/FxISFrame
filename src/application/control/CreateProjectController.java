@@ -19,7 +19,9 @@ public class CreateProjectController extends BaseController implements Initializ
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-
+		if (listener != null) {
+			listener.onClearData();
+		}
 	}
 
 	public void test() {
@@ -43,6 +45,8 @@ public class CreateProjectController extends BaseController implements Initializ
 
 	public interface CreateProjectListener {
 		void onCreateProject();
+
+		void onClearData();
 	}
 
 	@Override
