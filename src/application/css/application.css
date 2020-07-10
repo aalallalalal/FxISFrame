@@ -21,6 +21,9 @@ visibility: hidden;
 .bar-confirm-dialog{
 	-fx-background-color:  #4169E1; -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
 }
+.bar-notice-dialog{
+	-fx-background-color:  #4169E1; -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
+}
 .frame-pane{
 	-fx-background-radius: 10.0; -fx-background-color: #ffffff;-fx-border-radius:10.0;
 }
@@ -33,7 +36,7 @@ visibility: hidden;
 
 .custom-jfx-check-box{
    -jfx-checked-color: #FFA500;  
-   -jfx-unchecked-color: BLACK;
+   -jfx-unchecked-color: #4169E1;
    -fx-text-fill: #000; -fx-font-size: 14.0; -fx-wrap-text:true 
 }
 
@@ -63,6 +66,10 @@ visibility: hidden;
 }
 .list-cell:empty {
     -fx-background-color: white;
+}
+.text-area .scroll-bar:vertical {
+	-fx-pref-width: 1;
+    -fx-opacity: 0;
 }
 /*******************************************************************************
 *                                                                              *
