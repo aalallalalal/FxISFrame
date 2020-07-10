@@ -48,28 +48,17 @@ public class ProcessingController extends BaseController implements Initializabl
 	        	Thread t = new Thread();
 	        	t.sleep(5000);
 	            Boolean result = true; // result of computation
-	            return true;
+	            return false;
 	        }
 	    };
 	    task.setOnSucceeded(e -> {
 	        this.result = task.getValue();
 	        // update UI with result
-	        this.result = getresult();
 			this.state = false;
 	        listener.updatePage();
 	    });
 	    
 	    new Thread(task).start();
-	}
-
-	/**
-	 * 获取程序运行结果
-	 * @return
-	 * @throws InterruptedException 
-	 */
-	public boolean getresult() 
-	{
-		return true;
 	}
 	
 	
@@ -111,6 +100,7 @@ public class ProcessingController extends BaseController implements Initializabl
 			title.setText("拼接失败");
 			// TODO 根据情况显示：上一步；或不显示
 			leftBtn.setVisible(true);
+			leftBtn.setText("项目列表");
 			rightBtn.setVisible(true);
 			// TODO 根据情况显示：重新拼接；完成
 			rightBtn.setText("返回主界面");
@@ -121,7 +111,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	@Override
 	protected void onClickLeftBtn() {
 		// TODO Auto-generated method stub
-		listener.uplevel();
+		listener.toprojects();
 	}
 
 	@Override
@@ -134,13 +124,13 @@ public class ProcessingController extends BaseController implements Initializabl
 		}
 		else
 		{
-			listener.uplevel();
+			listener.toprojects();
 		}
 		
 	}
 
 	public interface ProcessingListener {
-		void uplevel();
+		void toprojects();
 		void tofirstpage();
 		void updatePage();
 	}

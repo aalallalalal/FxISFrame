@@ -165,10 +165,10 @@ public class MainController implements Initializable {
 	private class ProcessingListener implements ProcessingController.ProcessingListener {
 
 		@Override
-		public void uplevel()
+		public void toprojects()
 		{
 			// TODO Auto-generated method stub
-			prePage();
+			mPagination.setCurrentPageIndex(1);
 		}
 
 		@Override
