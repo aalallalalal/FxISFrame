@@ -121,7 +121,15 @@ public class MainController implements Initializable {
 		public void onClickStart(FinalDataBean finalData) {
 			nextPage();
 			if (processingController != null) {
-				processingController.startExec(finalData);
+				try
+				{
+					FinalDataBean.para_Exe = finalData.toParameter();
+					processingController.startExec(finalData);
+				} catch (Exception e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		}
 
