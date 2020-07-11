@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.Iterator;
+
 import javafx.collections.ObservableList;
 
 /**
@@ -34,4 +36,17 @@ public class FinalDataBean {
 		this.settings = settings;
 	}
 
+	
+	//将最后的数据转换成参数
+	public String toParameter()
+	{
+		String projectPath = "";
+		Iterator<ProjectBean> iter =  this.projectListData.iterator();
+		while(iter.hasNext())
+		{
+			ProjectBean temp = iter.next();
+			projectPath += temp.getProjectDir();
+		}
+		return projectPath;
+	}
 }

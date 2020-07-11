@@ -1,5 +1,7 @@
 package application.control;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -9,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import utils.WatchThread;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 
@@ -38,27 +41,45 @@ public class ProcessingController extends BaseController implements Initializabl
 	 * @param finalData
 	 * @throws Exception
 	 */
-	public void startExec(FinalDataBean finalData) {
+	public void startExec(FinalDataBean finalData) throws Exception {
 		this.finalData = finalData;
 		System.out.println("ProcessingController startExec：" + finalData);
-		Task<Boolean> task = new Task<Boolean>() {
-			@Override
-			public Boolean call() throws Exception {
-				// process long-running computation, data retrieval, etc...
-				Thread t = new Thread();
-				t.sleep(5000);
-				Boolean result = true; // result of computation
-				return false;
+		
+		Task<BufferedReader> task = new Task<BufferedReader>() {
+	        @Override
+	        public BufferedReader call() throws Exception {
+	            // process long-running computation, data retrieval, etc...
+	        	String[] cmds = {"D:/eclipse/project/GitHub/FxISFrame/ImageStitching/ImageStitching.exe" ,
+								"D:/eclipse/project/GitHub/FxISFrame/ImageStitching/18"};
+	        	System.out.println("程序运行");
+	        	final Process proc = new ProcessBuilder(cmds).start();
+	        	System.out.println(proc.isAlive()); 
+	        	WatchThread wt = new WatchThread(proc);
+	        	wt.start();
+	        	proc.waitFor();
+	            wt.setOver(true);
+	            System.out.println(proc.isAlive());
+	        	BufferedReader	stdout = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+				return stdout;
+	        }
+	    };
+	    task.setOnSucceeded(e -> {
+	    	String l;
+			l = task.getValue().toString();
+			System.out.println("读取：" + l);
+			if(l != null)
+			{
+				this.result = true;
+			}else {
+				this.result = false;
 			}
-		};
-		task.setOnSucceeded(e -> {
-			this.result = task.getValue();
 			// update UI with result
 			this.state = false;
 			listener.updatePage();
-		});
-
-		new Thread(task).start();
+	        
+	    });
+	    
+	    new Thread(task).start();
 	}
 
 	@Override
