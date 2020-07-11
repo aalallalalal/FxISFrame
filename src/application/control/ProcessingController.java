@@ -11,6 +11,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import utils.ExeProcedureUtil;
 import utils.WatchThread;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -45,22 +46,13 @@ public class ProcessingController extends BaseController implements Initializabl
 		this.finalData = finalData;
 		System.out.println("ProcessingController startExec：" + finalData);
 		
-		Task<BufferedReader> task = new Task<BufferedReader>() {
+		Task<String> task = new Task<String>() {
 	        @Override
-	        public BufferedReader call() throws Exception {
+	        public String call() throws Exception {
 	            // process long-running computation, data retrieval, etc...
-	        	String[] cmds = {"D:/eclipse/project/GitHub/FxISFrame/ImageStitching/ImageStitching.exe" ,
-								"D:/eclipse/project/GitHub/FxISFrame/ImageStitching/18"};
-	        	System.out.println("程序运行");
-	        	final Process proc = new ProcessBuilder(cmds).start();
-	        	System.out.println(proc.isAlive()); 
-	        	WatchThread wt = new WatchThread(proc);
-	        	wt.start();
-	        	proc.waitFor();
-	            wt.setOver(true);
-	            System.out.println(proc.isAlive());
-	        	BufferedReader	stdout = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-				return stdout;
+	        	String path_Exe = "";
+	        	String result_cmd = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe);
+				return result_cmd;
 	        }
 	    };
 	    task.setOnSucceeded(e -> {

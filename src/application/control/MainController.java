@@ -123,6 +123,7 @@ public class MainController implements Initializable {
 			if (processingController != null) {
 				try
 				{
+					FinalDataBean.para_Exe = finalData.toParameter();
 					processingController.startExec(finalData);
 				} catch (Exception e)
 				{

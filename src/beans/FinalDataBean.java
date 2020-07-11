@@ -13,6 +13,7 @@ import javafx.collections.ObservableList;
 public class FinalDataBean {
 	private ObservableList<ProjectBean> projectListData;
 	private SettingsBean settings;
+	public static String para_Exe;
 
 	public FinalDataBean(ObservableList<ProjectBean> projectListData, SettingsBean settings) {
 		super();
@@ -37,7 +38,10 @@ public class FinalDataBean {
 	}
 
 	
-	//将最后的数据转换成参数
+	/**
+	 * 将项目列表的路径参数和其他参数转换成String形式
+	 * @return
+	 */
 	public String toParameter()
 	{
 		String projectPath = "";
