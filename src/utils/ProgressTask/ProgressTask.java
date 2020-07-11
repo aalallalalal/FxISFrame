@@ -106,7 +106,7 @@ public class ProgressTask {
 					});
 				}
 			}
-		}, 500);
+		}, 200);
 
 	}
 
