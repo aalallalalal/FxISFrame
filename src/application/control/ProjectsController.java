@@ -95,9 +95,9 @@ public class ProjectsController extends BaseController implements Initializable 
 		projectTableView.getColumns().addAll(name_projects, path_projects, time_createProject);
 		projectTableView.setItems(projectListData);
 
-		name_projects.setPrefWidth(150);
+		name_projects.setPrefWidth(130);
 		path_projects.setPrefWidth(270);
-		time_createProject.setPrefWidth(120);
+		time_createProject.setPrefWidth(140);
 		path_projects.setSortable(false);
 
 		name_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectName"));
@@ -110,7 +110,7 @@ public class ProjectsController extends BaseController implements Initializable 
 				ProjectBean bean = ((ProjectBean) event.getTableView().getItems()
 						.get(event.getTablePosition().getRow()));
 				bean.setProjectName(event.getNewValue());
-				SaveUtil.changeProjectData(bean);
+				SaveUtil.changeProjectData(bean, (Stage) root.getParent().getScene().getWindow());
 			}
 		});
 

@@ -128,7 +128,7 @@ public class CreateProjectDialogController implements Initializable {
 		int locationFrom = (int) group.getSelectedToggle().getUserData();
 		ProjectBean project = new ProjectBean(textField.getText(), labelProject.getText(), locationFrom,
 				labelLocation.getText());
-		SaveUtil.saveProject(project);
+		SaveUtil.saveProject(project, (Stage) root.getParent().getScene().getWindow());
 		if (callBack != null) {
 			callBack.onDone(project);
 		}

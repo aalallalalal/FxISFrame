@@ -105,7 +105,7 @@ public class ImageListController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		task = new ProgressTask(new ProgressTask.MyTask() {
+		task = new ProgressTask(new ProgressTask.MyTask<Integer>() {
 			@Override
 			protected void succeeded() {
 				super.succeeded();

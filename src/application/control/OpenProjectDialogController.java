@@ -9,13 +9,17 @@ import com.jfoenix.controls.JFXButton;
 import beans.ProjectBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import utils.SaveUtil;
+import utils.SaveUtil.Callback;
 
 /**
  * 创建项目dialog界面controller
@@ -39,8 +43,12 @@ public class OpenProjectDialogController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		ArrayList<ProjectBean> projectsData = SaveUtil.getProjectsData();
-		projectListData.addAll(projectsData);
+		SaveUtil.getProjectsData(null, new Callback() {
+			@Override
+			public void onGetData(ArrayList<ProjectBean> list) {
+				projectListData.addAll(list);
+			}
+		});
 		initTableView();
 	}
 
@@ -54,18 +62,30 @@ public class OpenProjectDialogController implements Initializable {
 
 		name_projects.setPrefWidth(80);
 		path_projects.setPrefWidth(180);
-		time_createProject.setPrefWidth(80);
+		time_createProject.setPrefWidth(180);
 		path_projects.setSortable(false);
 
 		name_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectName"));
 		time_createProject.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("createTime"));
 		path_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectDir"));
+		projectTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				onTestMouse(event);
+			}
+		});
+	}
+
+	protected void onTestMouse(MouseEvent event) {
+		if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+			done();
+		}
 	}
 
 	@FXML
 	public void done() {
 		ProjectBean bean = (ProjectBean) projectTableView.getSelectionModel().getSelectedItem();
-		if(bean == null) {
+		if (bean == null) {
 			return;
 		}
 		if (callBack != null) {

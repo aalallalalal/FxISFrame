@@ -24,20 +24,13 @@ import utils.UIUtil;
  */
 public class ProgressTask {
 
-	private static Stage dialogStage ;
-	static Pane uiPane;
+	private Stage dialogStage;
 	private Thread inner;
-	private Timer time;
-	static Scene scene;
+	private static Scene scene;
+	private boolean isDone = false;
 
 	static {
-		// 窗口父子关系
-		dialogStage = new Stage();
-		dialogStage.setWidth(180);
-		dialogStage.setHeight(160);
-		dialogStage.initStyle(StageStyle.UNDECORATED);
-		dialogStage.initStyle(StageStyle.TRANSPARENT);
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
+		Pane uiPane = null;
 		try {
 			uiPane = FXMLLoader.load(ProgressTask.class.getResource("/utils/ProgressTask/ProgressTask.fxml"));
 		} catch (IOException e) {
@@ -46,47 +39,78 @@ public class ProgressTask {
 		scene = new Scene(uiPane);
 		UIUtil.setFrameCss(ProgressTask.class, scene);
 		scene.setFill(null);
-		dialogStage.setScene(scene);
 	}
-	
-	public ProgressTask(final MyTask task, Stage primaryStage) {
-//		dialogStage.initOwner(primaryStage);
-	
+
+	public ProgressTask(final MyTask<?> task, Stage primaryStage) {
+		// 窗口父子关系
+		dialogStage = new Stage();
+		if (primaryStage != null) {
+			dialogStage.initOwner(primaryStage);
+		}
+		dialogStage.setWidth(180);
+		dialogStage.setHeight(160);
+		dialogStage.initStyle(StageStyle.UNDECORATED);
+		dialogStage.initStyle(StageStyle.TRANSPARENT);
+		dialogStage.initModality(Modality.APPLICATION_MODAL);
+		dialogStage.setScene(scene);
+
 		inner = new Thread(task);
 		// 根据实际需要处理消息值
 		task.messageProperty().addListener(new ChangeListener<String>() {
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// 执行异步任务完毕，不管是否成功。
 				if ("DONE".equals(newValue)) {
+					isDone = true;
 					if (dialogStage != null) {
 						dialogStage.close();
 					}
 				}
 			}
 		});
-
-		time = new Timer();
 	}
 
+	/**
+	 * 启动异步线程
+	 */
 	public void start() {
-		activateProgressBar();
 		inner.start();
-		time.schedule(new TimerTask() {
+
+		// 开启dialog显示延迟，如果异步任务在500ms内执行完毕，则不显示dialog
+		Timer openDialogTime = new Timer();
+		openDialogTime.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				Platform.runLater(new Runnable() {
-					@Override
-					public void run() {
-						if (dialogStage != null) {
-							dialogStage.close();
+				// 500ms过去了,还没执行完,那开启dialog
+				if (!isDone) {
+					Platform.runLater(new Runnable() {
+						@Override
+						public void run() {
+							activateProgressBar();
+							// 开启保证dialog消失的延迟执行.10s内，还没执行完，就认定为dialog消失出现bug。主动关掉dialog
+							Timer closeTimer = new Timer();
+							closeTimer.schedule(new TimerTask() {
+								@Override
+								public void run() {
+									Platform.runLater(new Runnable() {
+										@Override
+										public void run() {
+											if (dialogStage != null) {
+												dialogStage.close();
+											}
+										}
+									});
+								}
+							}, 10000);
 						}
-					}
-				});
+					});
+				}
 			}
-		}, 10000);
+		}, 500);
+
 	}
 
-	public void activateProgressBar() {
+	private void activateProgressBar() {
 		dialogStage.show();
 	}
 
@@ -98,7 +122,7 @@ public class ProgressTask {
 		dialogStage.close();
 	}
 
-	public static abstract class MyTask extends Task<Integer> {
+	public static abstract class MyTask<T> extends Task<T> {
 		@Override
 		protected void succeeded() {
 			super.succeeded();
@@ -108,6 +132,12 @@ public class ProgressTask {
 		@Override
 		protected void failed() {
 			super.failed();
+			updateMessage("DONE");
+		}
+
+		@Override
+		protected void cancelled() {
+			super.cancelled();
 			updateMessage("DONE");
 		}
 	}
