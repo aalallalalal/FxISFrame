@@ -160,7 +160,15 @@ public class MainController implements Initializable {
 		}
 
 		@Override
-		public void updatePage() {
+		public void updateSuccPage() {
+			// TODO Auto-generated method stub
+			System.out.println("更新界面");
+			changeBottomBtnsView(currentController, 3);
+		}
+
+		@Override
+		public void updateFailPage()
+		{
 			// TODO Auto-generated method stub
 			System.out.println("更新界面");
 			changeBottomBtnsView(currentController, 3);

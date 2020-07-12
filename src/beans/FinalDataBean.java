@@ -46,11 +46,22 @@ public class FinalDataBean {
 	{
 		String projectPath = "";
 		Iterator<ProjectBean> iter =  this.projectListData.iterator();
+		int i = this.projectListData.size();
 		while(iter.hasNext())
 		{
-			ProjectBean temp = iter.next();
-			projectPath += temp.getProjectDir();
+			if(i != 1)
+			{
+				ProjectBean temp = iter.next();
+				projectPath += temp.getProjectDir();
+				projectPath += " ";
+			}
+			else
+			{
+				ProjectBean temp = iter.next();
+				projectPath += temp.getProjectDir();
+			}
 		}
+		System.out.println(projectPath);
 		return projectPath;
 	}
 }

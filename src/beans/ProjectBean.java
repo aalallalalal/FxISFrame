@@ -20,7 +20,9 @@ public class ProjectBean implements Serializable {
 	private String projectDir;
 	private String projectLocationFile;
 	private String createTime;
+	private String path_result;  //结果图片路径
 	
+
 	private int locationFrom; // 0:从图片，1：从文件
 
 	public ProjectBean(String projectName, String projectDir, int locationFrom, String projectLocationFile) {
@@ -85,5 +87,15 @@ public class ProjectBean implements Serializable {
 
 	public long getId() {
 		return id;
+	}
+	
+	public String getPath_result()
+	{
+		return path_result;
+	}
+
+	public void setPath_result(String path_result)
+	{
+		this.path_result = path_result;
 	}
 }

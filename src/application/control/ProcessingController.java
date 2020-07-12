@@ -50,7 +50,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	        @Override
 	        public String call() throws Exception {
 	            // process long-running computation, data retrieval, etc...
-	        	String path_Exe = "";
+	        	String path_Exe = "D:\\eclipse\\project\\GitHub\\exe\\ImageStitching\\ImageStitching.exe";
 	        	String result_cmd = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe);
 				return result_cmd;
 	        }
@@ -67,8 +67,11 @@ public class ProcessingController extends BaseController implements Initializabl
 			}
 			// update UI with result
 			this.state = false;
-			listener.updatePage();
+			listener.updateSuccPage();
 	        
+	    });
+	    task.setOnFailed(e -> {
+	    	//抛出异常
 	    });
 	    
 	    new Thread(task).start();
@@ -137,7 +140,9 @@ public class ProcessingController extends BaseController implements Initializabl
 
 		void tofirstpage();
 
-		void updatePage();
+		void updateSuccPage();
+		
+		void updateFailPage();
 	}
 
 }
