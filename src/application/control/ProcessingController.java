@@ -71,8 +71,8 @@ public class ProcessingController extends BaseController implements Initializabl
 	        public String call() throws Exception {
 	            // process long-running computation, data retrieval, etc...
 	        	String path = System.getProperty("user.dir");
-	        	String path_Exe = path + "/ImageStitching/ImageStitching.exe";//exe文件的结果路径
-	        	String result_cmd = ExeProcedureUtil.execute(path_Exe, "D:/eclipse/project/GitHub/exe/18");//参数
+	        	String path_Exe = path + "\\ExeProcedure\\ImageStitching.exe";//exe文件的结果路径
+	        	String result_cmd = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe);//参数
 				return result_cmd;
 	        }
 	    };

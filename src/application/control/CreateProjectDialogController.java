@@ -87,7 +87,9 @@ public class CreateProjectDialogController implements Initializable {
 			@Override
 			public void onResult(boolean isChoose, File file) {
 				if (isChoose) {
-					labelLocation.setText(file.getAbsolutePath());
+					String path = file.getAbsolutePath();
+					path = path.replaceAll("\\\\", "/");
+					labelLocation.setText(path);
 				}
 			}
 		});
@@ -99,7 +101,9 @@ public class CreateProjectDialogController implements Initializable {
 			@Override
 			public void onResult(boolean isChoose, File file) {
 				if (isChoose) {
-					labelProject.setText(file.getAbsolutePath());
+					String path = file.getAbsolutePath();
+					path = path.replaceAll("\\\\", "/");
+					labelProject.setText(path);
 				}
 			}
 		});
