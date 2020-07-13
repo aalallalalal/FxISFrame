@@ -52,13 +52,13 @@ public class FinalDataBean {
 			if(i != 1)
 			{
 				ProjectBean temp = iter.next();
-				projectPath += temp.getProjectDir();
+				projectPath += '"' + temp.getProjectDir() + '"';
 				projectPath += " ";
 			}
 			else
 			{
 				ProjectBean temp = iter.next();
-				projectPath += temp.getProjectDir();
+				projectPath += '"' + temp.getProjectDir() + '"';
 			}
 			i --;
 		}

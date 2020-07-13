@@ -90,7 +90,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	    	listener.updateFailPage();
 	    });
 	    
-	    new Thread(task).start();
+	    new Thread(task,"拼接").start();
 	}
 
 	@Override
@@ -155,6 +155,7 @@ public class ProcessingController extends BaseController implements Initializabl
 		if (!state) {
 			listener.tofirstpage();
 		} else {
+			
 			listener.toprojects();
 		}
 
