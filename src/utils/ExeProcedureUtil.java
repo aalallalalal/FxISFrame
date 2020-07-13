@@ -1,8 +1,10 @@
 package utils;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 
 /**
  * 执行外部exe程序工具类
@@ -19,15 +21,36 @@ public class ExeProcedureUtil
 	 * @return			 执行程序后cmd显示的结果
 	 * @throws Exception
 	 */
-	public static String execute(String path_Exe, String para_Exe) throws Exception {
+	public static String execute(String path_Exe, String para_Exe) {
 		String[] cmds = {path_Exe, para_Exe};
-		final Process proc = new ProcessBuilder(cmds).start();
-		WatchThread wt = new WatchThread(proc);
-    	wt.start();
-    	proc.waitFor();
-        wt.setOver(true);
-        BufferedReader stdout = new BufferedReader(new InputStreamReader(proc.getInputStream()));
-        return stdout.toString();
+		Process process;
+		BufferedReader inBr = null;
+		try {
+            Runtime runtime = Runtime.getRuntime();
+            process = runtime.exec(cmds);
+            InputStreamReader in=new InputStreamReader(process.getInputStream());
+            inBr=new BufferedReader(in);
+            String lineStr;
+
+            OutputStreamWriter os = new OutputStreamWriter(process.getOutputStream());
+            BufferedWriter bw = new BufferedWriter(os);
+            bw.write("\n"); 
+            bw.write("\n");
+
+            while((lineStr=inBr.readLine())!=null){
+                System.out.println(lineStr);
+            }
+
+            process.waitFor();
+            process.getInputStream().close();
+            process.getOutputStream().close();
+            inBr.close();
+            in.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+		return inBr.toString();
+        
 	}
 
 }

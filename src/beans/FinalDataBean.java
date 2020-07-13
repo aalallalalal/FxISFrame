@@ -60,7 +60,9 @@ public class FinalDataBean {
 				ProjectBean temp = iter.next();
 				projectPath += temp.getProjectDir();
 			}
+			i --;
 		}
+		System.out.println("路径：");
 		System.out.println(projectPath);
 		return projectPath;
 	}

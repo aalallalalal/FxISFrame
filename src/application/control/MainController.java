@@ -1,5 +1,8 @@
 package application.control;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -149,18 +152,24 @@ public class MainController implements Initializable {
 		public void toprojects() {
 			// TODO Auto-generated method stub
 			mPagination.setCurrentPageIndex(1);
+			processingController.setState(true);
+			processingController.setResult(true);
 		}
 
 		@Override
 		public void tofirstpage() {
 			// TODO Auto-generated method stub
 			mPagination.setCurrentPageIndex(0);
+			projectsController.clearData(); //清空
 		}
 
 		@Override
 		public void updateSuccPage() {
 			// TODO Auto-generated method stub
 			System.out.println("更新界面");
+			
+			processingController.imageView.setImage(processingController.image_succ);
+			
 			changeBottomBtnsView(currentController, 3);
 		}
 
@@ -169,6 +178,20 @@ public class MainController implements Initializable {
 			// TODO Auto-generated method stub
 			System.out.println("更新界面");
 			changeBottomBtnsView(currentController, 3);
+		}
+
+		@Override
+		public void openResultFromFileSystem()
+		{
+			// TODO Auto-generated method stub
+			try
+			{
+				Desktop.getDesktop().open(new File("D:/eclipse/project/GitHub/FxISFrame/Result"));
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}
