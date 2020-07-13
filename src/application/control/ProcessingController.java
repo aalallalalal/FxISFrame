@@ -30,6 +30,8 @@ public class ProcessingController extends BaseController implements Initializabl
 	private boolean result;// 运行结果
 
 	private boolean state = true;// 当前状态（是否运行完）
+	
+	Task<String> task;
 
 	Image image = new Image("resources/timg.gif");
 	Image image_succ = new Image("resources/succ.png");
@@ -63,12 +65,13 @@ public class ProcessingController extends BaseController implements Initializabl
 	 * @param finalData
 	 * @throws Exception
 	 */
-	public void startExec(FinalDataBean finalData) throws Exception {
+	public void startExec(FinalDataBean finalData)
+	{
 		this.finalData = finalData;
 		
-		Task<String> task = new Task<String>() {
+		task = new Task<String>() {
 	        @Override
-	        public String call() throws Exception {
+	        public String call() {
 	            // process long-running computation, data retrieval, etc...
 	        	String path = System.getProperty("user.dir");
 	        	String path_Exe = path + "\\ExeProcedure\\ImageStitching.exe";//exe文件的结果路径
@@ -88,6 +91,14 @@ public class ProcessingController extends BaseController implements Initializabl
 	    	this.result = false;
 	    	this.state = false;
 	    	listener.updateFailPage();
+	    });
+	    
+	    task.setOnCancelled(e -> {
+	    	listener.toprojects();
+	    	
+	    	System.out.println("关闭exe进程：" + ExeProcedureUtil.closeExe());
+	    	
+	    	ExeProcedureUtil.clearConsole();
 	    });
 	    
 	    new Thread(task,"拼接").start();
@@ -155,8 +166,7 @@ public class ProcessingController extends BaseController implements Initializabl
 		if (!state) {
 			listener.tofirstpage();
 		} else {
-			
-			listener.toprojects();
+			task.cancel(true);
 		}
 
 	}

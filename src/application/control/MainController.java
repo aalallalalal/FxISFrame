@@ -167,9 +167,7 @@ public class MainController implements Initializable {
 		public void updateSuccPage() {
 			// TODO Auto-generated method stub
 			System.out.println("更新界面");
-			
 			processingController.imageView.setImage(processingController.image_succ);
-			
 			changeBottomBtnsView(currentController, 3);
 		}
 
