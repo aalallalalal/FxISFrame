@@ -27,7 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import utils.SaveUtil;
+import utils.SaveProjectsUtil;
 import utils.UIUtil;
 
 /**
@@ -110,7 +110,7 @@ public class ProjectsController extends BaseController implements Initializable 
 				ProjectBean bean = ((ProjectBean) event.getTableView().getItems()
 						.get(event.getTablePosition().getRow()));
 				bean.setProjectName(event.getNewValue());
-				SaveUtil.changeProjectData(bean, (Stage) root.getParent().getScene().getWindow());
+				SaveProjectsUtil.changeProjectData(bean, null);
 			}
 		});
 

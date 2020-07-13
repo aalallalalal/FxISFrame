@@ -23,7 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import utils.FileChooserUtil;
 import utils.FileChooserUtil.Callback;
-import utils.SaveUtil;
+import utils.SaveProjectsUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
 
@@ -128,7 +128,7 @@ public class CreateProjectDialogController implements Initializable {
 		int locationFrom = (int) group.getSelectedToggle().getUserData();
 		ProjectBean project = new ProjectBean(textField.getText(), labelProject.getText(), locationFrom,
 				labelLocation.getText());
-		SaveUtil.saveProject(project, (Stage) root.getParent().getScene().getWindow());
+		SaveProjectsUtil.saveProject(project, null);
 		if (callBack != null) {
 			callBack.onDone(project);
 		}

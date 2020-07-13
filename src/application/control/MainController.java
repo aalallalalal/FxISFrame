@@ -121,12 +121,10 @@ public class MainController implements Initializable {
 		public void onClickStart(FinalDataBean finalData) {
 			nextPage();
 			if (processingController != null) {
-				try
-				{
+				try {
 					FinalDataBean.para_Exe = finalData.toParameter();
 					processingController.startExec(finalData);
-				} catch (Exception e)
-				{
+				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
@@ -167,8 +165,7 @@ public class MainController implements Initializable {
 		}
 
 		@Override
-		public void updateFailPage()
-		{
+		public void updateFailPage() {
 			// TODO Auto-generated method stub
 			System.out.println("更新界面");
 			changeBottomBtnsView(currentController, 3);
@@ -384,6 +381,7 @@ public class MainController implements Initializable {
 				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "打开项目", getStage());
 		if (openDialog != null) {
 			OpenProjectDialogController controller = openDialog.getFxmlLoader().getController();
+			controller.initData();
 			controller.setCallBack(new OpenProjectDialogController.CallBack() {
 				@Override
 				public void onDone(ProjectBean project) {

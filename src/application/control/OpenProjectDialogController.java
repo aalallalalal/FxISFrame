@@ -18,8 +18,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
-import utils.SaveUtil;
-import utils.SaveUtil.Callback;
+import javafx.stage.Stage;
+import utils.SaveProjectsUtil;
+import utils.SaveProjectsUtil.Callback;
 
 /**
  * 创建项目dialog界面controller
@@ -28,7 +29,7 @@ import utils.SaveUtil.Callback;
  */
 public class OpenProjectDialogController implements Initializable {
 	@FXML
-	BorderPane root;
+	BorderPane root1;
 	@FXML
 	private JFXButton btnDone;
 	@FXML
@@ -41,15 +42,18 @@ public class OpenProjectDialogController implements Initializable {
 
 	private CallBack callBack;
 
-	@Override
-	public void initialize(URL location, ResourceBundle resources) {
-		SaveUtil.getProjectsData(null, new Callback() {
+	public void initData() {
+		SaveProjectsUtil.getProjectsData((Stage) root1.getScene().getWindow(), new Callback() {
 			@Override
 			public void onGetData(ArrayList<ProjectBean> list) {
 				projectListData.addAll(list);
 			}
 		});
 		initTableView();
+	}
+
+	@Override
+	public void initialize(URL location, ResourceBundle resources) {
 	}
 
 	@SuppressWarnings("unchecked")
@@ -62,7 +66,7 @@ public class OpenProjectDialogController implements Initializable {
 
 		name_projects.setPrefWidth(80);
 		path_projects.setPrefWidth(180);
-		time_createProject.setPrefWidth(180);
+		time_createProject.setPrefWidth(170);
 		path_projects.setSortable(false);
 
 		name_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectName"));
@@ -89,6 +93,7 @@ public class OpenProjectDialogController implements Initializable {
 			return;
 		}
 		if (callBack != null) {
+			SaveProjectsUtil.upDataProjectData(bean);
 			callBack.onDone(bean);
 		}
 	}
@@ -100,4 +105,5 @@ public class OpenProjectDialogController implements Initializable {
 	public interface CallBack {
 		void onDone(ProjectBean project);
 	}
+
 }

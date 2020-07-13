@@ -41,19 +41,49 @@ public class ProgressTask {
 		scene.setFill(null);
 	}
 
-	public ProgressTask(final MyTask<?> task, Stage primaryStage) {
-		// 窗口父子关系
-		dialogStage = new Stage();
-		if (primaryStage != null) {
-			dialogStage.initOwner(primaryStage);
-		}
-		dialogStage.setWidth(180);
-		dialogStage.setHeight(160);
-		dialogStage.initStyle(StageStyle.UNDECORATED);
-		dialogStage.initStyle(StageStyle.TRANSPARENT);
-		dialogStage.initModality(Modality.APPLICATION_MODAL);
-		dialogStage.setScene(scene);
+	/**
+	 * 异步线程,不弹出加载框
+	 * 
+	 * @param task
+	 */
+	public ProgressTask(final MyTask<?> task) {
+		inner = new Thread(task);
+		// 根据实际需要处理消息值
+		task.messageProperty().addListener(new ChangeListener<String>() {
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+				// 执行异步任务完毕，不管是否成功。
+				if ("DONE".equals(newValue)) {
+					isDone = true;
+					if (dialogStage != null) {
+						dialogStage.close();
+					}
+				}
+			}
+		});
+	}
 
+	/**
+	 * 异步线程,弹出加载框
+	 * 
+	 * @param task
+	 * @param primaryStage
+	 */
+	public ProgressTask(final MyTask<?> task, Stage primaryStage) {
+		if (primaryStage == null) {
+		} else {
+			// 窗口父子关系
+			dialogStage = new Stage();
+			if (primaryStage != null) {
+				dialogStage.initOwner(primaryStage);
+			}
+			dialogStage.setWidth(180);
+			dialogStage.setHeight(160);
+			dialogStage.initStyle(StageStyle.UNDECORATED);
+			dialogStage.initStyle(StageStyle.TRANSPARENT);
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setScene(scene);
+		}
 		inner = new Thread(task);
 		// 根据实际需要处理消息值
 		task.messageProperty().addListener(new ChangeListener<String>() {
@@ -101,7 +131,7 @@ public class ProgressTask {
 										}
 									});
 								}
-							}, 10000);
+							}, 8000);
 						}
 					});
 				}
@@ -111,7 +141,9 @@ public class ProgressTask {
 	}
 
 	private void activateProgressBar() {
-		dialogStage.show();
+		if (dialogStage != null) {
+			dialogStage.show();
+		}
 	}
 
 	public Stage getDialogStage() {
@@ -119,7 +151,9 @@ public class ProgressTask {
 	}
 
 	public void cancelProgressBar() {
-		dialogStage.close();
+		if (dialogStage != null) {
+			dialogStage.close();
+		}
 	}
 
 	public static abstract class MyTask<T> extends Task<T> {

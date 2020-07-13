@@ -20,8 +20,8 @@ public class ProjectBean implements Serializable {
 	private String projectDir;
 	private String projectLocationFile;
 	private String createTime;
-	private String path_result;  //结果图片路径
-	
+	private long lastUsedTime;
+	private String path_result; // 结果图片路径
 
 	private int locationFrom; // 0:从图片，1：从文件
 
@@ -32,8 +32,9 @@ public class ProjectBean implements Serializable {
 		this.setLocationFrom(locationFrom);
 		this.projectLocationFile = projectLocationFile;
 		this.id = System.currentTimeMillis();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
-        this.createTime = df.format(new Date());// new Date()为获取当前系统时间
+		this.lastUsedTime = id;
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
+		this.createTime = df.format(new Date());// new Date()为获取当前系统时间
 	}
 
 	public String getProjectName() {
@@ -55,17 +56,14 @@ public class ProjectBean implements Serializable {
 	public String getProjectLocationFile() {
 		return projectLocationFile;
 	}
-	
-	public String getCreateTime()
-	{
+
+	public String getCreateTime() {
 		return createTime;
 	}
 
-	public void setCreateTime(String createTime)
-	{
+	public void setCreateTime(String createTime) {
 		this.createTime = createTime;
 	}
-
 
 	public void setProjectLocationFile(String projectLocationFile) {
 		this.projectLocationFile = projectLocationFile;
@@ -88,14 +86,20 @@ public class ProjectBean implements Serializable {
 	public long getId() {
 		return id;
 	}
-	
-	public String getPath_result()
-	{
+
+	public String getPath_result() {
 		return path_result;
 	}
 
-	public void setPath_result(String path_result)
-	{
+	public void setPath_result(String path_result) {
 		this.path_result = path_result;
+	}
+
+	public long getLastUsedTime() {
+		return lastUsedTime;
+	}
+
+	public void setLastUsedTime(long lastUsedTime) {
+		this.lastUsedTime = lastUsedTime;
 	}
 }
