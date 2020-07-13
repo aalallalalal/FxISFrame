@@ -24,11 +24,13 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -74,6 +76,8 @@ public class ImageListController implements Initializable {
 	private TableColumn<ImageBean, String> longtitudeCol;
 	private TableColumn<ImageBean, String> latitudeCol;
 	private TableColumn<ImageBean, String> heightCol;
+	@FXML
+	ImageView imageview;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -264,6 +268,7 @@ public class ImageListController implements Initializable {
 					ImageBean newValue) {
 				if (newValue != null) {
 					vbox_rightButtons.setDisable(false);
+					initImageView(newValue);
 				} else {
 					vbox_rightButtons.setDisable(true);
 				}
@@ -276,6 +281,20 @@ public class ImageListController implements Initializable {
 			}
 		});
 		refreshTabViewColumn();
+	}
+
+	/**
+	 * 初始化图片显示
+	 * 
+	 * @param newValue
+	 */
+	private void initImageView(ImageBean newValue) {
+		String path = "file:" + newValue.getPath();
+		Image image = new Image(path);
+		imageview.setImage(image);
+		imageview.setFitWidth(140);
+		imageview.setSmooth(true);
+		imageview.setCache(true);
 	}
 
 	/**

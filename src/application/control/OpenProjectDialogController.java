@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -72,6 +73,27 @@ public class OpenProjectDialogController implements Initializable {
 		name_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectName"));
 		time_createProject.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("createTime"));
 		path_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectDir"));
+		name_projects.setCellFactory(
+				new javafx.util.Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
+					@Override
+					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
+						return new ToolTipTableCell();
+					}
+				});
+		path_projects.setCellFactory(
+				new javafx.util.Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
+					@Override
+					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
+						return new ToolTipTableCell();
+					}
+				});
+		time_createProject.setCellFactory(
+				new javafx.util.Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
+					@Override
+					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
+						return new ToolTipTableCell();
+					}
+				});
 		projectTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {

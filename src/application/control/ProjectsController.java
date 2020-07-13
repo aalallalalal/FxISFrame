@@ -17,9 +17,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.input.MouseButton;
@@ -27,6 +29,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import utils.SaveProjectsUtil;
 import utils.UIUtil;
 
@@ -103,6 +106,25 @@ public class ProjectsController extends BaseController implements Initializable 
 		name_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectName"));
 		time_createProject.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("createTime"));
 		path_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectDir"));
+		time_createProject
+				.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
+					@Override
+					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
+						return new ToolTipTableCell();
+					}
+				});
+		name_projects.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
+			@Override
+			public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
+				return new ToolTipTableCell();
+			}
+		});
+		path_projects.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
+			@Override
+			public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
+				return new ToolTipTableCell();
+			}
+		});
 
 		name_projects.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ProjectBean, String>>() {
 			@Override
@@ -237,4 +259,6 @@ public class ProjectsController extends BaseController implements Initializable 
 		}
 		return false;
 	}
+
 }
+
