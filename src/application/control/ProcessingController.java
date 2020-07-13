@@ -70,7 +70,8 @@ public class ProcessingController extends BaseController implements Initializabl
 	        @Override
 	        public String call() throws Exception {
 	            // process long-running computation, data retrieval, etc...
-	        	String path_Exe = "D:/eclipse/project/GitHub/exe/ImageStitching/ImageStitching.exe";//exe文件的结果路径
+	        	String path = System.getProperty("user.dir");
+	        	String path_Exe = path + "/ImageStitching/ImageStitching.exe";//exe文件的结果路径
 	        	String result_cmd = ExeProcedureUtil.execute(path_Exe, "D:/eclipse/project/GitHub/exe/18");//参数
 				return result_cmd;
 	        }
