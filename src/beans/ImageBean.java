@@ -6,8 +6,8 @@ import javafx.beans.property.SimpleStringProperty;
 public class ImageBean {
 	private SimpleStringProperty path;
 	private SimpleStringProperty name;
-	private String longitudeRef ;
-	private String latitudeRef ;
+	private String longitudeRef = "";
+	private String latitudeRef = "";
 	private SimpleDoubleProperty longitude;// 经度
 	private SimpleDoubleProperty latitude;// 维度
 	private SimpleStringProperty height;// 高度

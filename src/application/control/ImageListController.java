@@ -3,6 +3,8 @@ package application.control;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 import com.drew.imaging.ImageProcessingException;
@@ -19,9 +21,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -32,6 +36,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -40,7 +45,9 @@ import javafx.stage.Stage;
 import utils.FileChooserUtil;
 import utils.FileChooserUtil.Callback;
 import utils.FileUtil;
+import utils.GpsUtil;
 import utils.ImageUtil;
+import utils.SaveProjectsUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
 import utils.ProgressTask.ProgressTask;
@@ -79,6 +86,8 @@ public class ImageListController implements Initializable {
 	@FXML
 	ImageView imageview;
 
+	private ArrayList<HashMap<String, String>> analysingGps;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTableView();
@@ -97,11 +106,29 @@ public class ImageListController implements Initializable {
 		this.project = project;
 		initDataView();
 		refreshListData();
-		refreshTabViewColumn();
+
+		Node close = root.getParent().lookup("#close");
+		close.addEventFilter(MouseDragEvent.MOUSE_PRESSED, new EventHandler<Event>() {
+			@Override
+			public void handle(Event event) {
+				SaveProjectsUtil.changeProjectData(project, null);
+			}
+		});
 	}
 
 	/**
-	 * 刷新图片数据。 TODO 读取文件数据
+	 * 解析location文件
+	 * 
+	 * @param proj
+	 */
+	private void analysingGps(ProjectBean proj) {
+		if (proj != null) {
+			analysingGps = GpsUtil.analysingGps(proj);
+		}
+	}
+
+	/**
+	 * 刷新图片数据。
 	 */
 	private void refreshListData() {
 		try {
@@ -119,6 +146,7 @@ public class ImageListController implements Initializable {
 			protected Integer call() {
 				File file = new File(project.getProjectDir());
 				if (file != null && file.exists()) {
+					ArrayList<ImageBean> processList = new ArrayList<ImageBean>();
 					File[] itemFiles = file.listFiles();
 					for (File item : itemFiles) {
 						if (!item.isDirectory() && FileUtil.isImage(item)) {
@@ -134,12 +162,14 @@ public class ImageListController implements Initializable {
 									e.printStackTrace();
 								}
 							}
-							listData.add(imageBean);
+							processList.add(imageBean);
 						}
 					}
 					if (project.getLocationFrom() == 1) {
-						setImageDataFromFile();
+						analysingGps(project);
+						processList = setImageDataFromFile(processList);
 					}
+					listData.addAll(processList);
 				}
 				return 1;
 			}
@@ -169,7 +199,9 @@ public class ImageListController implements Initializable {
 				if (isChoose) {
 					labelLocation.setText(file.getAbsolutePath());
 					if (project != null) {
+						project.setLocationFrom(1);
 						project.setProjectLocationFile(file.getAbsolutePath());
+						refreshListData();
 					}
 				}
 			}
@@ -229,12 +261,9 @@ public class ImageListController implements Initializable {
 		tableView.getColumns().addAll(path, latitudeCol, longtitudeCol, heightCol);
 		path.setPrefWidth(120);
 		path.setMinWidth(120);
-		longtitudeCol.setPrefWidth(120);
-		longtitudeCol.setMinWidth(120);
-		latitudeCol.setPrefWidth(120);
-		latitudeCol.setMinWidth(120);
+		longtitudeCol.setPrefWidth(110);
+		latitudeCol.setPrefWidth(110);
 		heightCol.setPrefWidth(100);
-		heightCol.setMinWidth(100);
 
 		path.setSortable(false);
 		longtitudeCol.setSortable(false);
@@ -246,7 +275,11 @@ public class ImageListController implements Initializable {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<ImageBean, String> arg0) {
 						SimpleStringProperty re = new SimpleStringProperty();
-						re.set(arg0.getValue().getLongitudeRef() + ":" + arg0.getValue().getLongitude());
+						if ("".equals(arg0.getValue().getLongitudeRef())) {
+							re.set(arg0.getValue().getLongitude() + "");
+						} else {
+							re.set(arg0.getValue().getLongitudeRef() + ":" + arg0.getValue().getLongitude());
+						}
 						return re;
 					}
 				});
@@ -255,7 +288,11 @@ public class ImageListController implements Initializable {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<ImageBean, String> arg0) {
 						SimpleStringProperty re = new SimpleStringProperty();
-						re.set(arg0.getValue().getLatitudeRef() + ":" + arg0.getValue().getLatitude());
+						if ("".equals(arg0.getValue().getLatitudeRef())) {
+							re.set(arg0.getValue().getLatitude() + "");
+						} else {
+							re.set(arg0.getValue().getLatitudeRef() + ":" + arg0.getValue().getLatitude());
+						}
 						return re;
 					}
 				});
@@ -280,7 +317,6 @@ public class ImageListController implements Initializable {
 				onTestMouse(event);
 			}
 		});
-		refreshTabViewColumn();
 	}
 
 	/**
@@ -293,8 +329,8 @@ public class ImageListController implements Initializable {
 		Image image = new Image(path);
 		imageview.setImage(image);
 		imageview.setFitWidth(140);
-		imageview.setSmooth(true);
-		imageview.setCache(true);
+		imageview.setSmooth(false);
+		imageview.setCache(false);
 	}
 
 	/**
@@ -305,24 +341,6 @@ public class ImageListController implements Initializable {
 	protected void onTestMouse(MouseEvent event) {
 		if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
 			onSeeImg();
-		}
-	}
-
-	/**
-	 * 从图片中读取才显示经纬度信息。从文件中读取不显示。 TODO 读取文件经纬度功能。
-	 */
-	private void refreshTabViewColumn() {
-		if (project != null) {
-			int locationFrom = project.getLocationFrom();
-			if (locationFrom == 0) {
-				longtitudeCol.setVisible(true);
-				latitudeCol.setVisible(true);
-				heightCol.setVisible(true);
-			} else {
-				longtitudeCol.setVisible(false);
-				latitudeCol.setVisible(false);
-				heightCol.setVisible(false);
-			}
 		}
 	}
 
@@ -350,17 +368,18 @@ public class ImageListController implements Initializable {
 						}
 					}
 					refreshListData();
-					refreshTabViewColumn();
 				}
 			}
 		});
 	}
 
 	/**
-	 * 解析图片数据 TODO:文件经纬度解析
+	 * 解析图片数据
+	 * 
+	 * @param listData2
 	 */
-	private void setImageDataFromFile() {
-		// TODO 文件中读取。先不做
+	private ArrayList<ImageBean> setImageDataFromFile(ArrayList<ImageBean> listData2) {
+		return listData2 = GpsUtil.setImageDataFromFile(analysingGps, listData2);
 	}
 
 	@FXML
@@ -370,4 +389,5 @@ public class ImageListController implements Initializable {
 		FlightLineController controller = openFrame.getFxmlLoader().getController();
 		controller.setData(listData);
 	}
+
 }

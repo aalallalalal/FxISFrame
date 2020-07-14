@@ -131,7 +131,7 @@ public class ProgressTask {
 										}
 									});
 								}
-							}, 8000);
+							}, 5000);
 						}
 					});
 				}
@@ -142,7 +142,9 @@ public class ProgressTask {
 
 	private void activateProgressBar() {
 		if (dialogStage != null) {
-			dialogStage.show();
+			if(!isDone) {
+				dialogStage.show();
+			}
 		}
 	}
 

@@ -13,7 +13,7 @@
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.FlightLineController">
 	<center>
-		<BorderPane fx:id="borderPane_Canvas" 
+		<Pane fx:id="pane_Canvas" 
 			style="-fx-padding: 10;-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
 			BorderPane.alignment="CENTER" />
 	</center>
