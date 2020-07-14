@@ -12,6 +12,7 @@ import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import utils.ExeProcedureUtil;
+import utils.ProgressTask.ExeTask;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 
@@ -23,15 +24,14 @@ import javafx.fxml.FXML;
  */
 public class ProcessingController extends BaseController implements Initializable {
 
-	private ProcessingListener listener;
-
-	private FinalDataBean finalData;
+	public ProcessingListener listener;
 
 	private boolean result;// 运行结果
 
 	private boolean state = true;// 当前状态（是否运行完）
 	
-	Task<String> task;
+	Task<Boolean> task;
+	Thread mythread;
 
 	Image image = new Image("resources/timg.gif");
 	Image image_succ = new Image("resources/succ.png");
@@ -60,48 +60,16 @@ public class ProcessingController extends BaseController implements Initializabl
 	}
 
 	/**
-	 * 开始执行程序，程序运行结束后改变当前状态并且设置程序运行结果
+	 * 开始执行程序，程序运行结束后改变页面
 	 * 
 	 * @param finalData
 	 * @throws Exception
 	 */
-	public void startExec(FinalDataBean finalData)
+	public void startExec()
 	{
-		this.finalData = finalData;
-		
-		task = new Task<String>() {
-	        @Override
-	        public String call() {
-	            // process long-running computation, data retrieval, etc...
-	        	String path = System.getProperty("user.dir");
-	        	String path_Exe = path + "\\ExeProcedure\\ImageStitching.exe";//exe文件的结果路径
-	        	String result_cmd = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe);//参数
-				return result_cmd;
-	        }
-	    };
-	    
-	    task.setOnSucceeded(e -> {
-			this.result = true;
-			// update UI with result
-			this.state = false;
-			listener.updateSuccPage();
-	    });
-	    
-	    task.setOnFailed(e -> {
-	    	this.result = false;
-	    	this.state = false;
-	    	listener.updateFailPage();
-	    });
-	    
-	    task.setOnCancelled(e -> {
-	    	listener.toprojects();
-	    	
-	    	System.out.println("关闭exe进程：" + ExeProcedureUtil.closeExe());
-	    	
-	    	ExeProcedureUtil.clearConsole();
-	    });
-	    
-	    new Thread(task,"拼接").start();
+		task = new ExeTask(this);
+	    mythread = new Thread(task);
+	    mythread.start();
 	}
 
 	@Override
@@ -167,7 +135,11 @@ public class ProcessingController extends BaseController implements Initializabl
 			listener.tofirstpage();
 		} else {
 			task.cancel(true);
+			System.out.println(task.isCancelled());
+			
 		}
+		mythread.interrupt();
+		System.out.println("线程：" + mythread.isAlive());
 
 	}
 

@@ -126,7 +126,7 @@ public class MainController implements Initializable {
 			if (processingController != null) {
 				try {
 					FinalDataBean.para_Exe = finalData.toParameter();
-					processingController.startExec(finalData);
+					processingController.startExec();
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -167,6 +167,8 @@ public class MainController implements Initializable {
 		public void updateSuccPage() {
 			// TODO Auto-generated method stub
 			System.out.println("更新界面");
+			processingController.setResult(true);
+			processingController.setState(false);
 			processingController.imageView.setImage(processingController.image_succ);
 			changeBottomBtnsView(currentController, 3);
 		}
@@ -175,6 +177,8 @@ public class MainController implements Initializable {
 		public void updateFailPage() {
 			// TODO Auto-generated method stub
 			System.out.println("更新界面");
+			processingController.setResult(false);
+			processingController.setState(false);
 			processingController.imageView.setImage(processingController.image_failed);
 			changeBottomBtnsView(currentController, 3);
 		}
