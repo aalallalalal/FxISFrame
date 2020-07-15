@@ -1,7 +1,9 @@
 package utils;
 
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -32,20 +34,24 @@ public class ExeProcedureUtil
             process = runtime.exec(cmds);
             InputStreamReader in=new InputStreamReader(process.getInputStream());
             inBr = new BufferedReader(in);
-
+            
+            FileOutputStream fos = new FileOutputStream("RuntimeDetialInfo.txt");
+			BufferedOutputStream bos  = new BufferedOutputStream(fos);
+			
             //OutputStreamWriter os = new OutputStreamWriter(process.getOutputStream());
             //BufferedWriter bw = new BufferedWriter(os);
-            //bw.write("\n"); 
-            //bw.write("\n");
-
             while((lineStr=inBr.readLine())!=null){
                 System.out.println(lineStr);
+                bos.write((lineStr + "\n").getBytes("UTF-8"));
                 
             }
-
+          
+            bos.flush();
+			System.out.println("写出完毕！");
+			bos.close();
             //process.waitFor();
             process.getInputStream().close();
-            //process.getOutputStream().close();
+            process.getOutputStream().close();
             inBr.close();
             in.close();
         } catch (Exception e) {
