@@ -22,35 +22,38 @@ public class ExeProcedureUtil
 	 * @return			 执行程序后cmd显示的结果
 	 * @throws Exception
 	 */
-	public static String execute(String path_Exe, String para_Exe) 
+	public static boolean execute(String path_Exe, String para_Exe, String flag) 
 	{
 		String[] cmds = {path_Exe, para_Exe};
 		BufferedReader inBr = null;
+		String lineStr = "";
 		try {
             Runtime runtime = Runtime.getRuntime();
             process = runtime.exec(cmds);
             InputStreamReader in=new InputStreamReader(process.getInputStream());
-            inBr=new BufferedReader(in);
-            String lineStr;
+            inBr = new BufferedReader(in);
 
-            OutputStreamWriter os = new OutputStreamWriter(process.getOutputStream());
-            BufferedWriter bw = new BufferedWriter(os);
-            bw.write("\n"); 
-            bw.write("\n");
+            //OutputStreamWriter os = new OutputStreamWriter(process.getOutputStream());
+            //BufferedWriter bw = new BufferedWriter(os);
+            //bw.write("\n"); 
+            //bw.write("\n");
 
             while((lineStr=inBr.readLine())!=null){
                 System.out.println(lineStr);
+                
             }
 
             //process.waitFor();
             process.getInputStream().close();
-            process.getOutputStream().close();
+            //process.getOutputStream().close();
             inBr.close();
             in.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-		return inBr.toString();
+		if(lineStr == flag)
+			return true;
+		return false;
 	}
 	
 	//关闭进程

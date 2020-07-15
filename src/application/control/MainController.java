@@ -166,7 +166,7 @@ public class MainController implements Initializable {
 		@Override
 		public void updateSuccPage() {
 			// TODO Auto-generated method stub
-			System.out.println("更新界面");
+			System.out.println("更新成功界面");
 			processingController.setResult(true);
 			processingController.setState(false);
 			processingController.imageView.setImage(processingController.image_succ);
@@ -176,7 +176,7 @@ public class MainController implements Initializable {
 		@Override
 		public void updateFailPage() {
 			// TODO Auto-generated method stub
-			System.out.println("更新界面");
+			System.out.println("更新失败界面");
 			processingController.setResult(false);
 			processingController.setState(false);
 			processingController.imageView.setImage(processingController.image_failed);

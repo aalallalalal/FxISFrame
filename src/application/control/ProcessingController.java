@@ -3,6 +3,7 @@ package application.control;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -63,6 +64,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	{
 		task = new ExeTask(this.listener);
 	    mythread = new Thread(task);
+	    mythread.setDaemon(true);
 	    mythread.start();
 	}
 
