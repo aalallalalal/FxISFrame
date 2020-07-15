@@ -5,6 +5,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import utils.ProgressTask.ExeTask;
@@ -33,6 +34,9 @@ public class ProcessingController extends BaseController implements Initializabl
 	Image image_failed = new Image("resources/failed.png");
 	@FXML
 	ImageView imageView = new ImageView(image);
+	
+	@FXML
+	Label DetailInfo;
 
 	public boolean isResult()
 	{
@@ -63,7 +67,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	public void startExec()
 	{
 		task = new ExeTask(this.listener);
-	    mythread = new Thread(task);
+	    mythread = new Thread(task,"拼接线程");
 	    mythread.setDaemon(true);
 	    mythread.start();
 	}
@@ -71,6 +75,16 @@ public class ProcessingController extends BaseController implements Initializabl
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		
+	}
+	
+	//取消进程，返回主界面之后初始化进程界面,
+	//在listener中的toprojects，tofirstpage方法中调用
+	public void initPage()
+	{
+		this.setState(true);
+		this.setResult(true);
+		this.imageView.setImage(image);
+		this.DetailInfo.setText("拼接中...");
 	}
 
 	public void test() {
@@ -138,7 +152,7 @@ public class ProcessingController extends BaseController implements Initializabl
 		System.out.println("线程：" + mythread.isAlive());
 
 	}
-
+	
 	public interface ProcessingListener {
 		//转到项目列表界面
 		void toprojects();

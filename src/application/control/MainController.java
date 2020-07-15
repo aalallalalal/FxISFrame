@@ -152,8 +152,7 @@ public class MainController implements Initializable {
 		public void toprojects() {
 			// TODO Auto-generated method stub
 			mPagination.setCurrentPageIndex(1);
-			processingController.setState(true);
-			processingController.setResult(true);
+			processingController.initPage();
 		}
 
 		@Override
@@ -161,6 +160,7 @@ public class MainController implements Initializable {
 			// TODO Auto-generated method stub
 			mPagination.setCurrentPageIndex(0);
 			projectsController.clearData(); //清空
+			processingController.initPage();
 		}
 
 		@Override
@@ -189,14 +189,14 @@ public class MainController implements Initializable {
 			// TODO Auto-generated method stub
 			try
 			{
-				Desktop.getDesktop().open(new File("D:/eclipse/project/GitHub/FxISFrame/Result"));
+				String path = System.getProperty("user.dir");
+				Desktop.getDesktop().open(new File(path + "\\Result"));
 			} catch (IOException e)
 			{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	/**

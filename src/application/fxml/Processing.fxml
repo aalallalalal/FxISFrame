@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import javafx.scene.control.*?>
@@ -15,4 +16,11 @@
          </image>
       </ImageView>
    </center>
+   <bottom>
+      <Label fx:id="DetailInfo" alignment="CENTER" prefHeight="83.0" prefWidth="200.0" text="运行信息" BorderPane.alignment="CENTER">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+   </bottom>
 </BorderPane>

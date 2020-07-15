@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
+import application.control.ProcessingController.ProcessingListener;
+
 /**
  * 执行外部exe程序工具类
  * @author wxp
