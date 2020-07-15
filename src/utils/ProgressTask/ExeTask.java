@@ -1,16 +1,16 @@
 package utils.ProgressTask;
 
-import application.control.ProcessingController;
+import application.control.ProcessingController.ProcessingListener;
 import beans.FinalDataBean;
 import javafx.concurrent.Task;
 import utils.ExeProcedureUtil;
 
 public class ExeTask extends Task<Boolean> 
 {
-	ProcessingController proc;
-	public ExeTask(ProcessingController proc)
+	ProcessingListener listener;
+	public ExeTask(ProcessingListener listener)
 	{
-		this.proc = proc;
+		this.listener = listener;
 	}
 	
 	@Override
@@ -25,20 +25,19 @@ public class ExeTask extends Task<Boolean>
     @Override
 	protected void succeeded()
 	{
-		proc.listener.updateSuccPage();
+		listener.updateSuccPage();
 	}
 
 	@Override
 	protected void cancelled()
 	{
-		proc.listener.toprojects();
+		listener.toprojects();
     	System.out.println("关闭exe进程：" + ExeProcedureUtil.closeExe());
-    	ExeProcedureUtil.clearConsole();
 	}
 
 	@Override
 	protected void failed()
 	{
-		proc.listener.updateFailPage();
+		listener.updateFailPage();
 	}
 }

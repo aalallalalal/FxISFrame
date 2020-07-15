@@ -1,17 +1,11 @@
 package application.control;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
+
 import java.net.URL;
 import java.util.ResourceBundle;
-
-import beans.FinalDataBean;
-import beans.ProjectBean;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import utils.ExeProcedureUtil;
 import utils.ProgressTask.ExeTask;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -67,7 +61,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	 */
 	public void startExec()
 	{
-		task = new ExeTask(this);
+		task = new ExeTask(this.listener);
 	    mythread = new Thread(task);
 	    mythread.start();
 	}
