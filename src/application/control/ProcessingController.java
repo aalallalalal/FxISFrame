@@ -76,6 +76,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	 */
 	public void startExec()
 	{
+		DetailInfo.setText("详细信息");
 		task = new ExeTask(this.listener);
 		task.messageProperty().addListener(new ChangeListener<String>()
 		{

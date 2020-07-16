@@ -17,6 +17,7 @@
       </ImageView>
    </center>
    <bottom>
-      <Label prefHeight="20.0" prefWidth="800.0" style="-fx-background-color: #000000;" text="Label" BorderPane.alignment="CENTER" />
+      <Label fx:id="DetailInfo" prefHeight="20.0" prefWidth="800.0" styleClass="label-detailInfo" text="Label" BorderPane.alignment="CENTER">
+      </Label>
    </bottom>
 </BorderPane>

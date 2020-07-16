@@ -136,3 +136,9 @@ visibility: hidden;
     -fx-background-radius: 1.0;
 }
 
+.label-detailInfo
+{
+	-fx-text-fill: black;
+	-fx-background-color: #E6E6E6;
+	-fx-font-size:13.0pt; 
+}
