@@ -19,7 +19,7 @@ public class ExeTask extends Task<Boolean>
     	String path = System.getProperty("user.dir");
     	String path_Exe = path + "\\ExeProcedure\\ImageStitching.exe";//exe文件的结果路径
     	String flag = "拼接成功";
-    	boolean Falg = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe, flag);//参数
+    	boolean Falg = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe, flag, this);//参数
 		return Falg;
     }
 	
@@ -35,13 +35,11 @@ public class ExeTask extends Task<Boolean>
     		
 	}
 
-    
 	@Override
-	protected void running()
+	public void updateMessage(String message)
 	{
 		// TODO Auto-generated method stub
-		super.running();
-		updateMessage("运行中。。。");
+		super.updateMessage(message);
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
 import application.control.ProcessingController.ProcessingListener;
+import utils.ProgressTask.ExeTask;
 
 /**
  * 执行外部exe程序工具类
@@ -26,7 +27,7 @@ public class ExeProcedureUtil
 	 * @return			 执行程序后cmd显示的结果
 	 * @throws Exception
 	 */
-	public static boolean execute(String path_Exe, String para_Exe, String flag) 
+	public static boolean execute(String path_Exe, String para_Exe, String flag, ExeTask task) 
 	{
 		String[] cmds = {path_Exe, para_Exe};
 		BufferedReader inBr = null;
@@ -45,7 +46,7 @@ public class ExeProcedureUtil
             while((lineStr=inBr.readLine())!=null){
                 System.out.println(lineStr);
                 bos.write((lineStr + "\n").getBytes("UTF-8"));
-                
+                task.updateMessage(lineStr);
             }
           
             bos.flush();

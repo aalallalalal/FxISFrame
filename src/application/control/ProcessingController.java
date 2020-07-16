@@ -14,6 +14,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import utils.UIUtil;
 import utils.ProgressTask.ExeTask;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 
@@ -75,6 +77,15 @@ public class ProcessingController extends BaseController implements Initializabl
 	public void startExec()
 	{
 		task = new ExeTask(this.listener);
+		task.messageProperty().addListener(new ChangeListener<String>()
+		{
+			@Override
+			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
+			{
+				DetailInfo.setText(newValue);
+				System.out.println("更新");
+			}
+		});
 	    mythread = new Thread(task,"拼接线程");
 	    mythread.setDaemon(true);
 	    mythread.start();
