@@ -20,7 +20,7 @@ public class ExeTask extends Task<Boolean>
     	String path_Exe = path + "\\ExeProcedure\\ImageStitching.exe";//exe文件的结果路径
     	String flag = "拼接成功";
     	boolean Falg = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe, flag);//参数
-		return true;
+		return Falg;
     }
 	
     @Override
@@ -33,6 +33,15 @@ public class ExeTask extends Task<Boolean>
     		listener.updateFailPage();
     	}
     		
+	}
+
+    
+	@Override
+	protected void running()
+	{
+		// TODO Auto-generated method stub
+		super.running();
+		updateMessage("运行中。。。");
 	}
 
 	@Override

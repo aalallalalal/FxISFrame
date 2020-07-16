@@ -4,10 +4,15 @@ package application.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import base.controller.ConfirmDialogController.CallBack;
+import consts.ConstSize;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
+import utils.UIUtil;
 import utils.ProgressTask.ExeTask;
 import javafx.concurrent.Task;
 import javafx.fxml.FXML;
@@ -36,7 +41,10 @@ public class ProcessingController extends BaseController implements Initializabl
 	ImageView imageView = new ImageView(image);
 	
 	@FXML
-	Label DetailInfo;
+	Label DetailInfo = new Label();
+	
+	@FXML
+	BorderPane root;
 
 	public boolean isResult()
 	{
@@ -84,7 +92,6 @@ public class ProcessingController extends BaseController implements Initializabl
 		this.setState(true);
 		this.setResult(true);
 		this.imageView.setImage(image);
-		this.DetailInfo.setText("拼接中...");
 	}
 
 	public void test() {
@@ -143,14 +150,25 @@ public class ProcessingController extends BaseController implements Initializabl
 		// TODO Auto-generated method stub
 		if (!state) {
 			listener.tofirstpage();
+			mythread.interrupt();
+			System.out.println("线程：" + mythread.isAlive());
 		} else {
-			task.cancel(true);
-			System.out.println(task.isCancelled());
-			
-		}
-		mythread.interrupt();
-		System.out.println("线程：" + mythread.isAlive());
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, "取消拼接", "拼接运行中，确定取消？",
+					(Stage) root.getScene().getWindow(), new CallBack() {
+						@Override
+						public void onCancel() {
+						}
 
+						@Override
+						public void onConfirm() {
+							task.cancel(true);
+							System.out.println(task.isCancelled());
+							mythread.interrupt();
+							System.out.println("线程：" + mythread.isAlive());
+						}
+					});
+		}
 	}
 	
 	public interface ProcessingListener {
