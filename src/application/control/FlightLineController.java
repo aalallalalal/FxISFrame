@@ -33,7 +33,8 @@ import utils.ProgressTask.ProgressTask;
 import views.MyToolTip;
 
 public class FlightLineController implements Initializable {
-
+	private static final double Scale = 0.85;
+	private static final double InitTransX = 30, InitTransY = 30;
 	@FXML
 	BorderPane root;
 	@FXML
@@ -47,6 +48,7 @@ public class FlightLineController implements Initializable {
 			false, false);
 	private Image imageTarget = new Image(getClass().getResourceAsStream("/resources/target.png"), 25, 25, false,
 			false);
+	private double centerOffsetX, centerOffsetY;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -117,8 +119,9 @@ public class FlightLineController implements Initializable {
 		// 画线
 		gc.setStroke(Color.LIGHTSKYBLUE);
 		gc.save();
-		gc.translate(30, 30);
-		gc.scale(0.85, 0.85);
+//		gc.translate(InitTransX + centerOffsetX, InitTransY + centerOffsetY);
+		gc.translate(InitTransX, InitTransY);
+		gc.scale(Scale, Scale);
 		gc.setEffect(dropShadow);
 		gc.setLineWidth(3);
 		gc.strokePolyline(xList, yList, size);
@@ -132,22 +135,23 @@ public class FlightLineController implements Initializable {
 			} else {
 				item = generateLabel(null);
 			}
-			item.setLayoutX((xList[i] - 7 + 30) * 0.85);
-			item.setLayoutY((yList[i] - 7 + 30) * 0.85);
-			lineData.add((xList[i] - 7 + 30) * 0.85);
-			lineData.add((yList[i] - 7 + 30) * 0.85);
+			item.setLayoutX((xList[i] - 7 + InitTransX) * Scale);
+			item.setLayoutY((yList[i] - 7 + InitTransY) * Scale);
+			lineData.add((xList[i] - 7 + InitTransX) * Scale);
+			lineData.add((yList[i] - 7 + InitTransY) * Scale);
 			pane_Canvas.getChildren().add(item);
 		}
 
 		gc.restore();
 		// 画动画
 		Polyline polyLine = new Polyline();
-		polyLine.setTranslateX(25 / 2 * 0.85);
-		polyLine.setTranslateY(25 / 2 * 0.85);
+		polyLine.setTranslateX(25 / 2 * Scale);
+		polyLine.setTranslateY(25 / 2 * Scale);
 		polyLine.getPoints().addAll(lineData);
 
 		PathTransition pathTransition = new PathTransition();
-		pathTransition.setDuration(Duration.millis(25000));
+		
+		pathTransition.setDuration(Duration.millis(500*size));
 		pathTransition.setPath(polyLine);
 		pathTransition.setCycleCount(Timeline.INDEFINITE);
 		pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);// 方向
@@ -285,13 +289,16 @@ public class FlightLineController implements Initializable {
 		double radioWindow = windowY / windowX;
 		// 5.选择按x还是y
 		double scale = 0;
-		System.out.println("scale" + scale);
 		if (radioData >= radioWindow) {
 			// 用y
 			scale = windowY / distY;
+			centerOffsetX = (windowX - InitTransX * 2 - distX) / 2;
+			centerOffsetY = 0;
 		} else {
 			// 用X
 			scale = windowX / distX;
+			centerOffsetY = (windowY - InitTransY * 2 - distY) / 2;
+			centerOffsetX = 0;
 		}
 		// 6.重置数据大小
 		ArrayList<Double> afterData = new ArrayList<Double>();
