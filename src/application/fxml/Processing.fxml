@@ -17,7 +17,6 @@
       </ImageView>
    </center>
    <bottom>
-      <Label fx:id="DetailInfo" prefHeight="20.0" prefWidth="800.0" styleClass="label-detailInfo" text="Label" BorderPane.alignment="CENTER">
-      </Label>
+      <TextArea fx:id="textarea" editable="false" prefHeight="50.0" prefWidth="800.0" styleClass="text-area" wrapText="true" BorderPane.alignment="CENTER" />
    </bottom>
 </BorderPane>

@@ -124,13 +124,8 @@ public class MainController implements Initializable {
 		public void onClickStart(FinalDataBean finalData) {
 			nextPage();
 			if (processingController != null) {
-				try {
 					FinalDataBean.para_Exe = finalData.toParameter();
 					processingController.startExec();
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
 			}
 		}
 
@@ -150,14 +145,12 @@ public class MainController implements Initializable {
 
 		@Override
 		public void toprojects() {
-			// TODO Auto-generated method stub
 			mPagination.setCurrentPageIndex(1);
 			processingController.initPage();
 		}
 
 		@Override
 		public void tofirstpage() {
-			// TODO Auto-generated method stub
 			mPagination.setCurrentPageIndex(0);
 			projectsController.clearData(); //清空
 			processingController.initPage();
@@ -165,7 +158,6 @@ public class MainController implements Initializable {
 
 		@Override
 		public void updateSuccPage() {
-			// TODO Auto-generated method stub
 			System.out.println("更新成功界面");
 			processingController.setResult(true);
 			processingController.setState(false);
@@ -175,7 +167,6 @@ public class MainController implements Initializable {
 
 		@Override
 		public void updateFailPage() {
-			// TODO Auto-generated method stub
 			System.out.println("更新失败界面");
 			processingController.setResult(false);
 			processingController.setState(false);
@@ -186,16 +177,20 @@ public class MainController implements Initializable {
 		@Override
 		public void openResultFromFileSystem()
 		{
-			// TODO Auto-generated method stub
 			try
 			{
 				String path = System.getProperty("user.dir");
 				Desktop.getDesktop().open(new File(path + "\\Result"));
 			} catch (IOException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+
+		@Override
+		public void update(String lineStr)
+		{
+			processingController.textarea.appendText(lineStr);
 		}
 	}
 

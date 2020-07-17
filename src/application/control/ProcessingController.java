@@ -8,6 +8,7 @@ import base.controller.ConfirmDialogController.CallBack;
 import consts.ConstSize;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -44,6 +45,9 @@ public class ProcessingController extends BaseController implements Initializabl
 	
 	@FXML
 	Label DetailInfo = new Label();
+	
+	@FXML
+	TextArea textarea = new TextArea();
 	
 	@FXML
 	BorderPane root;
@@ -83,8 +87,8 @@ public class ProcessingController extends BaseController implements Initializabl
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
-				DetailInfo.setText(newValue);
-				System.out.println("更新");
+				//DetailInfo.setText(newValue);
+				//textarea.appendText("\n" + newValue);
 			}
 		});
 	    mythread = new Thread(task,"拼接线程");
@@ -194,6 +198,7 @@ public class ProcessingController extends BaseController implements Initializabl
 		void updateFailPage();
 		//打开文件系统的结果目录
 		void openResultFromFileSystem();
+		void update(String lineStr);
 	}
 
 }
