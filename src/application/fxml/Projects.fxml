@@ -26,9 +26,6 @@
 					<children>
 						<Label fx:id="bottomLabel" prefHeight="30.0"
 							prefWidth="500.0" text="Lable" textFill="#000000">
-							<font>
-								<Font size="16.0" />
-							</font>
 							<HBox.margin>
 								<Insets bottom="34.0" top="10.0" />
 							</HBox.margin>

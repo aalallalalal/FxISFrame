@@ -32,7 +32,7 @@
 				</Label>
 			</center>
 			<right>
-				<JFXButton buttonType="RAISED" onAction="#onClickHelp">
+				<JFXButton buttonType="RAISED" onAction="#onClickHelp"	 >
 					<graphic>
 						<ImageView fitHeight="25.0" fitWidth="25.0"
 							pickOnBounds="true" preserveRatio="true">
@@ -55,7 +55,7 @@
 				<JFXButton buttonType="RAISED" text="创建项目" prefWidth="220"
 					onAction="#createProject" prefHeight="90"
 					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;
-					-fx-font-size:22;-fx-font-weight:bold;"
+					-fx-font-size:22; "
 					BorderPane.alignment="CENTER">
 					<graphic>
 						<ImageView fitHeight="42.0" fitWidth="42.0"
@@ -71,7 +71,7 @@
 				<JFXButton buttonType="RAISED" text="打开项目" prefWidth="220"
 					prefHeight="90" onAction="#openProject"
 					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;
-					-fx-font-size:22;-fx-font-weight:bold;"
+					-fx-font-size:22; "
 					BorderPane.alignment="CENTER">
 					<graphic>
 						<ImageView fitHeight="42.0" fitWidth="42.0"

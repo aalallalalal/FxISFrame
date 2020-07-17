@@ -9,7 +9,6 @@ import java.util.concurrent.ExecutionException;
 import beans.ImageBean;
 import consts.ConstSize;
 import javafx.animation.PathTransition;
-import javafx.animation.PathTransitionBuilder;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
@@ -26,12 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.CubicCurveTo;
-import javafx.scene.shape.LineTo;
-import javafx.scene.shape.MoveTo;
-import javafx.scene.shape.Path;
 import javafx.scene.shape.Polyline;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import utils.ToastUtil;
@@ -44,12 +38,13 @@ public class FlightLineController implements Initializable {
 	BorderPane root;
 	@FXML
 	Pane pane_Canvas;
-	private double windowX = ConstSize.Second_Frame_Width - 60;
+	private double windowX = ConstSize.Second_Frame_Width - 80;
 	private double windowY = ConstSize.Second_Frame_Height - 50 - 80;
 	private DropShadow dropShadow;
-	private Image image = new Image(getClass().getResourceAsStream("/resources/camera.png"), 16, 16, false, false);
-	private Image imageFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill.png"), 16, 16, false,
+	private Image image = new Image(getClass().getResourceAsStream("/resources/camera-fill-normal.png"), 14, 14, false,
 			false);
+	private Image imageFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill-focus.png"), 14, 14,
+			false, false);
 	private Image imageTarget = new Image(getClass().getResourceAsStream("/resources/target.png"), 25, 25, false,
 			false);
 
@@ -64,6 +59,7 @@ public class FlightLineController implements Initializable {
 
 	/**
 	 * 设置数据
+	 * 
 	 * @param listData
 	 */
 	public void setData(ObservableList<ImageBean> listData) {
@@ -77,7 +73,7 @@ public class FlightLineController implements Initializable {
 			protected void succeeded() {
 				super.succeeded();
 				try {
-					//修改数据
+					// 修改数据
 					ArrayList<Double> analyData = get();
 					double[] xList = new double[analyData.size() / 2];
 					double[] yList = new double[analyData.size() / 2];
@@ -88,15 +84,14 @@ public class FlightLineController implements Initializable {
 							yList[i / 2] = analyData.get(i);
 						}
 					}
-					
+
 					Canvas canvas = new Canvas(windowX, windowY);
 					GraphicsContext gc = canvas.getGraphicsContext2D();
 					canvas.setLayoutX(0);
 					canvas.setLayoutY(0);
 					pane_Canvas.getChildren().add(canvas);
 
-					drawShapes(gc, xList, yList, xList.length >= yList.length ? yList.length : xList.length, listData,
-							analyData);
+					drawShapes(gc, xList, yList, xList.length >= yList.length ? yList.length : xList.length, listData);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				} catch (ExecutionException e) {
@@ -118,16 +113,18 @@ public class FlightLineController implements Initializable {
 	 * @param analyData
 	 */
 	private void drawShapes(GraphicsContext gc, double[] xList, double[] yList, int size,
-			ObservableList<ImageBean> listData, ArrayList<Double> analyData) {
-		//画线
+			ObservableList<ImageBean> listData) {
+		// 画线
 		gc.setStroke(Color.LIGHTSKYBLUE);
+		gc.save();
 		gc.translate(30, 30);
 		gc.scale(0.85, 0.85);
 		gc.setEffect(dropShadow);
 		gc.setLineWidth(3);
 		gc.strokePolyline(xList, yList, size);
 
-		//画点
+		ArrayList<Double> lineData = new ArrayList<Double>();
+		// 画点
 		for (int i = 0; i < size; i++) {
 			Label item;
 			if (listData.size() > i) {
@@ -135,16 +132,19 @@ public class FlightLineController implements Initializable {
 			} else {
 				item = generateLabel(null);
 			}
-			item.setLayoutX((xList[i] - 7) * 0.85 + 30);
-			item.setLayoutY((yList[i] - 7) * 0.85 + 30);
+			item.setLayoutX((xList[i] - 7 + 30) * 0.85);
+			item.setLayoutY((yList[i] - 7 + 30) * 0.85);
+			lineData.add((xList[i] - 7 + 30) * 0.85);
+			lineData.add((yList[i] - 7 + 30) * 0.85);
 			pane_Canvas.getChildren().add(item);
 		}
 
-		//画动画
+		gc.restore();
+		// 画动画
 		Polyline polyLine = new Polyline();
-		polyLine.setScaleX(0.85);
-		polyLine.setScaleY(0.85);
-		polyLine.getPoints().addAll(analyData);
+		polyLine.setTranslateX(25 / 2 * 0.85);
+		polyLine.setTranslateY(25 / 2 * 0.85);
+		polyLine.getPoints().addAll(lineData);
 
 		PathTransition pathTransition = new PathTransition();
 		pathTransition.setDuration(Duration.millis(25000));
@@ -153,8 +153,8 @@ public class FlightLineController implements Initializable {
 		pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);// 方向
 
 		Label target = new Label();
-		target.setPrefWidth(14);
-		target.setPrefHeight(14);
+		target.setPrefWidth(25);
+		target.setPrefHeight(25);
 		target.setGraphic(new ImageView(imageTarget));
 		target.setEffect(dropShadow);
 

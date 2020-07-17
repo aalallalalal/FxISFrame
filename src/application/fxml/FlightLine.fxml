@@ -14,7 +14,7 @@
 	fx:controller="application.control.FlightLineController">
 	<center>
 		<Pane fx:id="pane_Canvas" 
-			style="-fx-padding: 10;-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
+			style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
 			BorderPane.alignment="CENTER" />
 	</center>
 </BorderPane>
