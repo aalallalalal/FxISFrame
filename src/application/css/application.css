@@ -142,3 +142,18 @@ visibility: hidden;
 	-fx-background-color: #E6E6E6;
 	-fx-font-size:13.0pt; 
 }
+
+.text-area{
+    -fx-background-insets: 0;
+    -fx-background-color: transparent, white, transparent, white;
+    -fx-font-size: 13px;
+}
+.text-area .content {
+    -fx-background-color: transparent, white, transparent, white;
+}
+.text-area:focused {
+    -fx-background-color: transparent, white, transparent, white;
+}
+
+
+

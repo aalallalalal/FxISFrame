@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 
-import application.control.ProcessingController.ProcessingListener;
+import javafx.application.Platform;
 import utils.ProgressTask.ExeTask;
 
 /**
@@ -32,6 +32,7 @@ public class ExeProcedureUtil
 		String[] cmds = {path_Exe, para_Exe};
 		BufferedReader inBr = null;
 		String lineStr = "";
+		String oldLine = "";
 		try {
             Runtime runtime = Runtime.getRuntime();
             process = runtime.exec(cmds);
@@ -45,14 +46,20 @@ public class ExeProcedureUtil
             //BufferedWriter bw = new BufferedWriter(os);
             while((lineStr=inBr.readLine())!=null){
                 System.out.println(lineStr);
+                oldLine = lineStr;
                 bos.write((lineStr + "\n").getBytes("UTF-8"));
-                task.updateMessage(lineStr);
+                //task.updateMessage(lineStr);
+                final String newStr = lineStr;
+				
+				  Platform.runLater(new Runnable() {
+				  
+				  @Override public void run() { //更新JavaFX的主线程的代码放在此处
+				 		task.listener.update("\n" + newStr);
+				  } });
             }
-          
+                
             bos.flush();
-			System.out.println("写出完毕！");
 			bos.close();
-            //process.waitFor();
             process.getInputStream().close();
             process.getOutputStream().close();
             inBr.close();
@@ -60,9 +67,7 @@ public class ExeProcedureUtil
         } catch (Exception e) {
             e.printStackTrace();
         }
-		if(lineStr == flag)
-			return true;
-		return false;
+		return oldLine.equals(flag);
 	}
 	
 	//关闭进程

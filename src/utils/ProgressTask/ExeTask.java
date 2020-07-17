@@ -7,7 +7,7 @@ import utils.ExeProcedureUtil;
 
 public class ExeTask extends Task<Boolean> 
 {
-	ProcessingListener listener;
+	public ProcessingListener listener;
 	public ExeTask(ProcessingListener listener)
 	{
 		this.listener = listener;
@@ -18,7 +18,7 @@ public class ExeTask extends Task<Boolean>
         // process long-running computation, data retrieval, etc...
     	String path = System.getProperty("user.dir");
     	String path_Exe = path + "\\ExeProcedure\\ImageStitching.exe";//exe文件的结果路径
-    	String flag = "拼接成功";
+    	String flag = "Stitch Finished!";
     	boolean Falg = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe, flag, this);//参数
 		return Falg;
     }
