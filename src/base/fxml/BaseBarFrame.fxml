@@ -30,7 +30,7 @@
 					</styleClass>
 					<children>
 						<Label fx:id="bar_title" maxWidth="Infinity" text="图片拼接"
-							style="-fx-font-weight: bold;-fx-font-size:18;"
+							style="-fx-font-weight: bold; -fx-font-size:18;"
 							HBox.hgrow="ALWAYS">
 						</Label>
 						<JFXButton onAction="#onClickHide" style="-fx-pref-width:26 ;-fx-focus-color: transparent;">

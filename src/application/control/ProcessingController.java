@@ -108,6 +108,7 @@ public class ProcessingController extends BaseController implements Initializabl
 		this.setState(true);
 		this.setResult(true);
 		this.imageView.setImage(image);
+		this.textarea.clear();
 	}
 
 	public void test() {
@@ -131,10 +132,10 @@ public class ProcessingController extends BaseController implements Initializabl
 			title.setText("拼接成功");
 			// TODO 根据情况显示：上一步；或不显示
 			leftBtn.setVisible(true);
-			leftBtn.setText("查看结果");
+			leftBtn.setText("返回首页");
 			rightBtn.setVisible(true);
 			// TODO 根据情况显示：重新拼接；完成
-			rightBtn.setText("返回首页");
+			rightBtn.setText("查看结果");
 		} else {
 			title.setText("拼接失败");
 			// TODO 根据情况显示：上一步；或不显示
@@ -152,7 +153,9 @@ public class ProcessingController extends BaseController implements Initializabl
 		// TODO Auto-generated method stub
 		if(result)
 		{
-			listener.openResultFromFileSystem();
+			listener.tofirstpage();
+			mythread.interrupt();
+			System.out.println("线程：" + mythread.isAlive());
 		}
 		else
 		{
@@ -165,9 +168,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	protected void onClickRightBtn() {
 		// TODO Auto-generated method stub
 		if (!state) {
-			listener.tofirstpage();
-			mythread.interrupt();
-			System.out.println("线程：" + mythread.isAlive());
+			listener.openResultFromFileSystem();
 		} else {
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
 					ConstSize.Confirm_Dialog_Frame_Height, "取消拼接", "拼接运行中，确定取消？",

@@ -52,11 +52,10 @@
 			</center>
 			<bottom>
 				<BorderPane prefHeight="50.0" prefWidth="200.0"
-				style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
+				style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid; -fx-padding: 5;"
 					BorderPane.alignment="CENTER">
 					<left>
-						<JFXButton onAction="#onCancel" text="取 消"
-							BorderPane.alignment="CENTER">
+						<JFXButton onAction="#onCancel" text="取 消" prefHeight="30.0" prefWidth="80.0">
 							<styleClass>
 								<String fx:value="btn-level-vip" />
 							</styleClass>
@@ -68,8 +67,7 @@
 						</JFXButton>
 					</left>
 					<right>
-						<JFXButton onAction="#onConfirm" text="确 定"
-							BorderPane.alignment="CENTER">
+						<JFXButton onAction="#onConfirm" text="确 定" prefHeight="30.0" prefWidth="80.0">
 							<styleClass>
 								<String fx:value="btn-level-vip" />
 							</styleClass>

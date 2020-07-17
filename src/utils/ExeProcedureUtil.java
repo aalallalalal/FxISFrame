@@ -53,9 +53,10 @@ public class ExeProcedureUtil
 				
 				  Platform.runLater(new Runnable() {
 				  
-				  @Override public void run() { //更新JavaFX的主线程的代码放在此处
-				 		task.listener.update("\n" + newStr);
-				  } });
+					  @Override public void run() { //更新JavaFX的主线程的代码放在此处
+					 		task.listener.update("\n" + newStr);
+					  } 
+				  });
             }
                 
             bos.flush();

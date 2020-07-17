@@ -44,8 +44,8 @@
 						<String fx:value="btn-level-normal" />
 					</styleClass>
 				</JFXButton>
-				<ImageView fx:id="imageview" fitHeight="140.0"
-					fitWidth="140.0" pickOnBounds="true" preserveRatio="true" />
+				<ImageView fx:id="imageview" fitHeight="120.0"
+					fitWidth="120.0" pickOnBounds="true" preserveRatio="true" />
 			</children>
 		</VBox>
 	</right>

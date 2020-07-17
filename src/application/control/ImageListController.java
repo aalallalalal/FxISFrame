@@ -183,6 +183,7 @@ public class ImageListController implements Initializable {
 			if (from == 0) {
 				// 图片读入经纬度
 				group.selectToggle(radioButton_img);
+				labelLocation.setText(project.getProjectLocationFile());
 			} else {
 				// 文件读入经纬度
 				group.selectToggle(radioButton_file);

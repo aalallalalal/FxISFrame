@@ -23,6 +23,9 @@
 							<styleClass>
 								<String fx:value="label-leve-normal" />
 							</styleClass>
+							<HBox.margin>
+								<Insets top="3.5" />
+							</HBox.margin>
 						</Label>
 						<VBox spacing="10.0">
 							<children>

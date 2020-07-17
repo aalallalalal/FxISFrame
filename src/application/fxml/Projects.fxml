@@ -25,7 +25,8 @@
 				<HBox prefHeight="64.0" prefWidth="200.0">
 					<children>
 						<Label fx:id="bottomLabel" prefHeight="30.0"
-							prefWidth="500.0" text="Lable" textFill="#000000">
+							prefWidth="500.0" text="Lable" textFill="#000000"  
+								style="-fx-font-size:16.0;">
 							<HBox.margin>
 								<Insets bottom="34.0" top="10.0" />
 							</HBox.margin>

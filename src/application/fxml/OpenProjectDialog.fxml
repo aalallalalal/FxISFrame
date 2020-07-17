@@ -17,7 +17,7 @@
 			style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;" />
 	</center>
 	<bottom>
-		<JFXButton fx:id="btnDone" buttonType="RAISED"
+		<JFXButton fx:id="btnDone" buttonType="RAISED" prefWidth="120.0"
 			onAction="#done" text=" 打 开 " BorderPane.alignment="CENTER">
 			<styleClass>
 				<String fx:value="btn-level-vip" />
