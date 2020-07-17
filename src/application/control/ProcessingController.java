@@ -168,7 +168,10 @@ public class ProcessingController extends BaseController implements Initializabl
 	protected void onClickRightBtn() {
 		// TODO Auto-generated method stub
 		if (!state) {
-			listener.openResultFromFileSystem();
+			if(result)
+				listener.openResultFromFileSystem();
+			else
+				listener.tofirstpage();
 		} else {
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
 					ConstSize.Confirm_Dialog_Frame_Height, "取消拼接", "拼接运行中，确定取消？",
