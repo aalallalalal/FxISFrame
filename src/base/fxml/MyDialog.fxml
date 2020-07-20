@@ -8,6 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
+<?import views.MyToolTip?>
 
 <BorderPane fx:id="root"
 	style="-fx-background:transparent;-fx-padding: 10;"
@@ -34,6 +35,9 @@
 						</Label>
 						<JFXButton onAction="#onClickClose"
 							style="-fx-padding: 3;-fx-focus-color: transparent;">
+							<tooltip>
+								<MyToolTip text="关闭"></MyToolTip>
+							</tooltip>
 							<graphic>
 								<ImageView fitHeight="22" fitWidth="22"
 									pickOnBounds="true" preserveRatio="true">

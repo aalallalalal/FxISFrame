@@ -7,6 +7,7 @@
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
+<?import views.MyToolTip?>
 
 <BorderPane fx:id="root"
 	style="-fx-background:transparent;-fx-padding: 10;"
@@ -33,6 +34,9 @@
 						</Label>
 						<JFXButton onAction="#onClickClose"
 							style="-fx-padding: 4;-fx-focus-color: transparent;">
+							<tooltip>
+								<MyToolTip text="关闭"></MyToolTip>
+							</tooltip>
 							<graphic>
 								<ImageView fitHeight="22" fitWidth="22"
 									pickOnBounds="true" preserveRatio="true">
@@ -52,10 +56,11 @@
 			</center>
 			<bottom>
 				<BorderPane prefHeight="50.0" prefWidth="200.0"
-				style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid; -fx-padding: 5;"
+					style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid; -fx-padding: 5;"
 					BorderPane.alignment="CENTER">
 					<left>
-						<JFXButton onAction="#onCancel" text="取 消" prefHeight="30.0" prefWidth="80.0">
+						<JFXButton onAction="#onCancel" text="取 消"
+							prefHeight="30.0" prefWidth="80.0">
 							<styleClass>
 								<String fx:value="btn-level-vip" />
 							</styleClass>
@@ -67,7 +72,8 @@
 						</JFXButton>
 					</left>
 					<right>
-						<JFXButton onAction="#onConfirm" text="确 定" prefHeight="30.0" prefWidth="80.0">
+						<JFXButton onAction="#onConfirm" text="确 定"
+							prefHeight="30.0" prefWidth="80.0">
 							<styleClass>
 								<String fx:value="btn-level-vip" />
 							</styleClass>

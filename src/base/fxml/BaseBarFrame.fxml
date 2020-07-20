@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.String?>
+<?import views.MyToolTip?>
 
 <BorderPane
 	style="-fx-background:transparent;-fx-padding: 10;" fx:id="root"
@@ -35,6 +36,9 @@
 						</Label>
 						<JFXButton onAction="#onClickHide"
 							style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">
+							<tooltip>
+								<MyToolTip text="最小化"></MyToolTip>
+							</tooltip>
 							<graphic>
 								<ImageView fitWidth="24.0" preserveRatio="true">
 									<image>
@@ -45,6 +49,9 @@
 						</JFXButton>
 						<JFXButton onAction="#onClickClose"
 							style="-fx-padding: 4;-fx-pref-width:26 ；-fx-focus-color: transparent;">
+							<tooltip>
+								<MyToolTip text="退出软件"></MyToolTip>
+							</tooltip>
 							<graphic>
 								<ImageView fitWidth="24.0" preserveRatio="true">
 									<image>

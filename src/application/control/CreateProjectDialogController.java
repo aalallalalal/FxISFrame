@@ -23,6 +23,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import utils.FileChooserUtil;
 import utils.FileChooserUtil.Callback;
+import views.MyToolTip;
 import utils.SaveProjectsUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
@@ -90,6 +91,7 @@ public class CreateProjectDialogController implements Initializable {
 					String path = file.getAbsolutePath();
 					path = path.replaceAll("\\\\", "/");
 					labelLocation.setText(path);
+					labelLocation.setTooltip(new MyToolTip(path));
 				}
 			}
 		});
@@ -104,6 +106,7 @@ public class CreateProjectDialogController implements Initializable {
 					String path = file.getAbsolutePath();
 					path = path.replaceAll("\\\\", "/");
 					labelProject.setText(path);
+					labelProject.setTooltip(new MyToolTip(path));
 				}
 			}
 		});

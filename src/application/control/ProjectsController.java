@@ -109,19 +109,19 @@ public class ProjectsController extends BaseController implements Initializable 
 				.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 					@Override
 					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
-						return new ToolTipTableCell();
+						return new ToolTipTableCell<ProjectBean>();
 					}
 				});
 		name_projects.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 			@Override
 			public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
-				return new ToolTipTableCell();
+				return new ToolTipTableCell<ProjectBean>();
 			}
 		});
 		path_projects.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 			@Override
 			public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
-				return new ToolTipTableCell();
+				return new ToolTipTableCell<ProjectBean>();
 			}
 		});
 

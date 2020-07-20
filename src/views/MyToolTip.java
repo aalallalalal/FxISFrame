@@ -9,10 +9,15 @@ import javafx.util.Duration;
 
 /**
  * 利用反射修改tooltip显示时间
+ * 
  * @author DP
  *
  */
 public class MyToolTip extends Tooltip {
+	public MyToolTip() {
+		this("");
+	}
+
 	public MyToolTip(String str) {
 		super(str);
 		try {
@@ -24,7 +29,8 @@ public class MyToolTip extends Tooltip {
 			fieldTimer.setAccessible(true);
 			Timeline objTimer = (Timeline) fieldTimer.get(objBehavior);
 			objTimer.getKeyFrames().clear();
-			objTimer.getKeyFrames().add(new KeyFrame(new Duration(50)));
+			objTimer.getKeyFrames().add(new KeyFrame(new Duration(500)));
+			setStyle("-fx-font-size:12;");
 		} catch (NoSuchFieldException e) {
 			e.printStackTrace();
 		} catch (SecurityException e) {

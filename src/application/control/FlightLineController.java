@@ -26,6 +26,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.LinearGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -118,15 +121,19 @@ public class FlightLineController implements Initializable {
 	private void drawShapes(GraphicsContext gc, double[] xList, double[] yList, int size,
 			ObservableList<ImageBean> listData) {
 		// 画线
-		gc.setStroke(Color.LIGHTSKYBLUE);
+		LinearGradient linearGradient1 = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE, new Stop[] {
+                new Stop(0, Color .LIGHTGREEN),
+                new Stop(1, Color.LIGHTSKYBLUE)
+        });
+		gc.setStroke(linearGradient1);
 		gc.save();
 //		gc.translate(InitTransX + centerOffsetX, InitTransY + centerOffsetY);
 		gc.translate(InitTransX, InitTransY);
 		gc.scale(Scale, Scale);
-		gc.setEffect(dropShadow);
 		gc.setLineWidth(3);
 		gc.strokePolyline(xList, yList, size);
-
+//		gc.setEffect(dropShadow);
+		
 		ArrayList<Double> lineData = new ArrayList<Double>();
 		// 画点
 		for (int i = 0; i < size; i++) {
@@ -137,8 +144,8 @@ public class FlightLineController implements Initializable {
 				item = generateLabel(null);
 			}
 			item.setPadding(new Insets(0));
-			item.setLayoutX((xList[i] - 7 + InitTransX) * Scale);
-			item.setLayoutY((yList[i] - 7 + InitTransY) * Scale);
+			item.setLayoutX((xList[i] -3 + InitTransX) * Scale);
+			item.setLayoutY((yList[i] - 11 + InitTransY) * Scale);
 			lineData.add((xList[i] - 7 + InitTransX) * Scale);
 			lineData.add((yList[i] - 7 + InitTransY) * Scale);
 			pane_Canvas.getChildren().add(item);

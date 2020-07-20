@@ -28,6 +28,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableView;
@@ -51,6 +52,7 @@ import utils.SaveProjectsUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
 import utils.ProgressTask.ProgressTask;
+import views.MyToolTip;
 
 /**
  * 点击项目进入，图片列表界面controller
@@ -190,10 +192,12 @@ public class ImageListController implements Initializable {
 				// 图片读入经纬度
 				group.selectToggle(radioButton_img);
 				labelLocation.setText(project.getProjectLocationFile());
+				labelLocation.setTooltip(new MyToolTip(project.getProjectLocationFile()));
 			} else {
 				// 文件读入经纬度
 				group.selectToggle(radioButton_file);
 				labelLocation.setText(project.getProjectLocationFile());
+				labelLocation.setTooltip(new MyToolTip(project.getProjectLocationFile()));
 			}
 
 			textField_projectName.setText(project.getProjectName());
@@ -207,6 +211,7 @@ public class ImageListController implements Initializable {
 			public void onResult(boolean isChoose, File file) {
 				if (isChoose) {
 					labelLocation.setText(file.getAbsolutePath());
+					labelLocation.setTooltip(new MyToolTip(file.getAbsolutePath()));
 					if (project != null) {
 						project.setLocationFrom(1);
 						project.setProjectLocationFile(file.getAbsolutePath());
@@ -279,17 +284,32 @@ public class ImageListController implements Initializable {
 		latitudeCol.setSortable(false);
 		heightCol.setSortable(false);
 		path.setCellValueFactory(new PropertyValueFactory<ImageBean, String>("name"));
+		path.setCellFactory(new javafx.util.Callback<TableColumn<ImageBean, String>, TableCell<ImageBean, String>>() {
+			@Override
+			public TableCell<ImageBean, String> call(TableColumn<ImageBean, String> param) {
+				return new ToolTipTableCell<ImageBean>();
+			}
+		});
 		longtitudeCol.setCellValueFactory(
 				new javafx.util.Callback<TableColumn.CellDataFeatures<ImageBean, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<ImageBean, String> arg0) {
 						SimpleStringProperty re = new SimpleStringProperty();
+						String set;
 						if ("".equals(arg0.getValue().getLongitudeRef())) {
-							re.set(arg0.getValue().getLongitude() + "");
+							set = arg0.getValue().getLongitude() + "";
 						} else {
-							re.set(arg0.getValue().getLongitudeRef() + ":" + arg0.getValue().getLongitude());
+							set = arg0.getValue().getLongitudeRef() + ":" + arg0.getValue().getLongitude();
 						}
+						re.set(set);
 						return re;
+					}
+				});
+		longtitudeCol.setCellFactory(
+				new javafx.util.Callback<TableColumn<ImageBean, String>, TableCell<ImageBean, String>>() {
+					@Override
+					public TableCell<ImageBean, String> call(TableColumn<ImageBean, String> param) {
+						return new ToolTipTableCell<ImageBean>();
 					}
 				});
 		latitudeCol.setCellValueFactory(
@@ -311,7 +331,21 @@ public class ImageListController implements Initializable {
 						return re;
 					}
 				});
+		latitudeCol.setCellFactory(
+				new javafx.util.Callback<TableColumn<ImageBean, String>, TableCell<ImageBean, String>>() {
+					@Override
+					public TableCell<ImageBean, String> call(TableColumn<ImageBean, String> param) {
+						return new ToolTipTableCell<ImageBean>();
+					}
+				});
 		heightCol.setCellValueFactory(new PropertyValueFactory<ImageBean, String>("height"));
+		heightCol.setCellFactory(
+				new javafx.util.Callback<TableColumn<ImageBean, String>, TableCell<ImageBean, String>>() {
+					@Override
+					public TableCell<ImageBean, String> call(TableColumn<ImageBean, String> param) {
+						return new ToolTipTableCell<ImageBean>();
+					}
+				});
 		tableView.setItems(listData);
 
 		tableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<ImageBean>() {

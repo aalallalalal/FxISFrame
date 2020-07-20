@@ -5,6 +5,9 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import views.MyToolTip;
+
+import com.jfoenix.controls.JFXButton;
 
 /**
  * 创建项目界面controller
@@ -14,12 +17,15 @@ import javafx.fxml.Initializable;
  */
 public class CreateProjectController extends BaseController implements Initializable {
 	private CreateProjectListener listener;
+	@FXML
+	JFXButton button_help;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		if (listener != null) {
 			listener.onClearData();
 		}
+//		button_help.setTooltip(new MyToolTip("帮助"));
 	}
 
 	public void test() {
@@ -38,7 +44,9 @@ public class CreateProjectController extends BaseController implements Initializ
 
 	public interface CreateProjectListener {
 		void onCreateProject();
+
 		void onOpenProject();
+
 		void onClearData();
 	}
 
