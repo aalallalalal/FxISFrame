@@ -87,9 +87,9 @@ public class ProjectsController extends BaseController implements Initializable 
 
 	@SuppressWarnings("unchecked")
 	private void initTableView() {
-		projectTableView.setEditable(true);// 表格设置为可编辑
+//		projectTableView.setEditable(true);// 表格设置为可编辑
 		name_projects = new TableColumn<ProjectBean, String>("工程名称");
-		name_projects.setEditable(true);
+//		name_projects.setEditable(true);
 		name_projects.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		path_projects = new TableColumn<ProjectBean, String>("路径");
@@ -166,11 +166,20 @@ public class ProjectsController extends BaseController implements Initializable 
 	@FXML
 	void onDetailProject() {
 		int index = projectTableView.getSelectionModel().getSelectedIndex();
+		if (index < 0 || index >= projectListData.size()) {
+			return;
+		}
 		ProjectBean project = projectListData.get(index);
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml",
 				ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height, "项目" + project.getProjectName());
 		ImageListController controller = openFrame.getFxmlLoader().getController();
 		controller.setProjectInfo(project);
+		controller.setCallBack(new ImageListController.Callback() {
+			@Override
+			public void onProjectChange(ProjectBean project) {
+				projectListData.set(index, project);
+			}
+		});
 	}
 
 	@FXML
@@ -260,4 +269,3 @@ public class ProjectsController extends BaseController implements Initializable 
 	}
 
 }
-

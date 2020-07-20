@@ -35,7 +35,8 @@
 						<!-- <JFXButton onAction="#onClickHide"> <graphic> <ImageView fitHeight="18.0" 
 							fitWidth="18.0" pickOnBounds="true" preserveRatio="true"> <image> <Image 
 							url="/resources/min.png" /> </image> </ImageView> </graphic> </JFXButton> -->
-						<JFXButton onAction="#onClickClose" fx:id="close" style="-fx-focus-color: transparent;">
+						<JFXButton onAction="#onClickClose" fx:id="close"
+							style="-fx-padding: 4;-fx-focus-color: transparent;">
 							<graphic>
 								<ImageView fitHeight="25.0" fitWidth="25.0"
 									pickOnBounds="true" preserveRatio="true">

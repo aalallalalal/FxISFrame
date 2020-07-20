@@ -15,6 +15,7 @@ import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Insets;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.Label;
@@ -135,6 +136,7 @@ public class FlightLineController implements Initializable {
 			} else {
 				item = generateLabel(null);
 			}
+			item.setPadding(new Insets(0));
 			item.setLayoutX((xList[i] - 7 + InitTransX) * Scale);
 			item.setLayoutY((yList[i] - 7 + InitTransY) * Scale);
 			lineData.add((xList[i] - 7 + InitTransX) * Scale);
@@ -150,8 +152,8 @@ public class FlightLineController implements Initializable {
 		polyLine.getPoints().addAll(lineData);
 
 		PathTransition pathTransition = new PathTransition();
-		
-		pathTransition.setDuration(Duration.millis(500*size));
+
+		pathTransition.setDuration(Duration.millis(500 * size));
 		pathTransition.setPath(polyLine);
 		pathTransition.setCycleCount(Timeline.INDEFINITE);
 		pathTransition.setOrientation(PathTransition.OrientationType.ORTHOGONAL_TO_TANGENT);// 方向

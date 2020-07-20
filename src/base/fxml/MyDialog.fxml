@@ -33,7 +33,7 @@
 							HBox.hgrow="ALWAYS">
 						</Label>
 						<JFXButton onAction="#onClickClose"
-							style="-fx-focus-color: transparent;">
+							style="-fx-padding: 3;-fx-focus-color: transparent;">
 							<graphic>
 								<ImageView fitHeight="22" fitWidth="22"
 									pickOnBounds="true" preserveRatio="true">

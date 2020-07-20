@@ -9,6 +9,7 @@ import java.util.ResourceBundle;
 
 import com.drew.imaging.ImageProcessingException;
 import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.JFXTextField;
 
 import base.controller.ConfirmDialogController.CallBack;
 import beans.ImageBean;
@@ -43,7 +44,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import utils.FileChooserUtil;
-import utils.FileChooserUtil.Callback;
 import utils.FileUtil;
 import utils.GpsUtil;
 import utils.ImageUtil;
@@ -72,6 +72,8 @@ public class ImageListController implements Initializable {
 	VBox vbox_rightButtons;
 	@FXML
 	BorderPane root;
+	@FXML
+	JFXTextField textField_projectName;
 
 	private ObservableList<ImageBean> listData = FXCollections.observableArrayList();
 	@FXML
@@ -111,7 +113,11 @@ public class ImageListController implements Initializable {
 		close.addEventFilter(MouseDragEvent.MOUSE_PRESSED, new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
+				project.setProjectName(textField_projectName.getText());
 				SaveProjectsUtil.changeProjectData(project, null);
+				if (callBack != null) {
+					callBack.onProjectChange(project);
+				}
 			}
 		});
 	}
@@ -189,12 +195,14 @@ public class ImageListController implements Initializable {
 				group.selectToggle(radioButton_file);
 				labelLocation.setText(project.getProjectLocationFile());
 			}
+
+			textField_projectName.setText(project.getProjectName());
 		}
 	}
 
 	@FXML
 	public void onClickSelectLocation() {
-		FileChooserUtil.OpenFileChooserUtil("选择经纬度文件", labelLocation, new Callback() {
+		FileChooserUtil.OpenFileChooserUtil("选择经纬度文件", labelLocation, new FileChooserUtil.Callback() {
 			@Override
 			public void onResult(boolean isChoose, File file) {
 				if (isChoose) {
@@ -288,11 +296,17 @@ public class ImageListController implements Initializable {
 				new javafx.util.Callback<TableColumn.CellDataFeatures<ImageBean, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<ImageBean, String> arg0) {
-						SimpleStringProperty re = new SimpleStringProperty();
-						if ("".equals(arg0.getValue().getLatitudeRef())) {
-							re.set(arg0.getValue().getLatitude() + "");
-						} else {
-							re.set(arg0.getValue().getLatitudeRef() + ":" + arg0.getValue().getLatitude());
+						SimpleStringProperty re = null;
+						try {
+							re = new SimpleStringProperty();
+							if ("".equals(arg0.getValue().getLatitudeRef())) {
+								re.set(arg0.getValue().getLatitude() + "");
+							} else {
+								re.set(arg0.getValue().getLatitudeRef() + ":" + arg0.getValue().getLatitude());
+							}
+						} catch (Exception e) {
+							e.printStackTrace();
+							re.set("");
 						}
 						return re;
 					}
@@ -389,6 +403,16 @@ public class ImageListController implements Initializable {
 				ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height, project.getProjectName() + "飞行路径");
 		FlightLineController controller = openFrame.getFxmlLoader().getController();
 		controller.setData(listData);
+	}
+
+	private Callback callBack;
+
+	public void setCallBack(Callback callBack) {
+		this.callBack = callBack;
+	}
+
+	public interface Callback {
+		void onProjectChange(ProjectBean project);
 	}
 
 }

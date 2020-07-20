@@ -33,7 +33,8 @@
 							style="-fx-font-weight: bold; -fx-font-size:18;"
 							HBox.hgrow="ALWAYS">
 						</Label>
-						<JFXButton onAction="#onClickHide" style="-fx-pref-width:26 ;-fx-focus-color: transparent;">
+						<JFXButton onAction="#onClickHide"
+							style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">
 							<graphic>
 								<ImageView fitWidth="24.0" preserveRatio="true">
 									<image>
@@ -42,7 +43,8 @@
 								</ImageView>
 							</graphic>
 						</JFXButton>
-						<JFXButton onAction="#onClickClose"  style="-fx-pref-width:26 ；-fx-focus-color: transparent;">
+						<JFXButton onAction="#onClickClose"
+							style="-fx-padding: 4;-fx-pref-width:26 ；-fx-focus-color: transparent;">
 							<graphic>
 								<ImageView fitWidth="24.0" preserveRatio="true">
 									<image>
