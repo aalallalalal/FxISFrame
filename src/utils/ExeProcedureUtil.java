@@ -2,11 +2,11 @@ package utils;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
+import java.nio.charset.Charset;
+import java.nio.charset.CharsetDecoder;
 
 import javafx.application.Platform;
 import utils.ProgressTask.ExeTask;
@@ -36,14 +36,12 @@ public class ExeProcedureUtil
 		try {
             Runtime runtime = Runtime.getRuntime();
             process = runtime.exec(cmds);
-            InputStreamReader in=new InputStreamReader(process.getInputStream());
+            InputStreamReader in=new InputStreamReader(process.getInputStream(), Charset.forName("GBK"));
             inBr = new BufferedReader(in);
             
             FileOutputStream fos = new FileOutputStream("RuntimeDetialInfo.txt");
 			BufferedOutputStream bos  = new BufferedOutputStream(fos);
 			
-            //OutputStreamWriter os = new OutputStreamWriter(process.getOutputStream());
-            //BufferedWriter bw = new BufferedWriter(os);
             while((lineStr=inBr.readLine())!=null){
                 System.out.println(lineStr);
                 oldLine = lineStr;
