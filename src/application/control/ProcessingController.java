@@ -44,7 +44,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	ImageView imageView = new ImageView(image);
 	
 	@FXML
-	Label DetailInfo = new Label();
+	Label FailDetailInfo = new Label();
 	
 	@FXML
 	TextArea textarea = new TextArea();
@@ -80,15 +80,13 @@ public class ProcessingController extends BaseController implements Initializabl
 	 */
 	public void startExec()
 	{
-		DetailInfo.setText("详细信息");
 		task = new ExeTask(this.listener);
 		task.messageProperty().addListener(new ChangeListener<String>()
 		{
 			@Override
 			public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
 			{
-				//DetailInfo.setText(newValue);
-				//textarea.appendText("\n" + newValue);
+				FailDetailInfo.setText(newValue);
 			}
 		});
 	    mythread = new Thread(task,"拼接线程");
@@ -109,12 +107,9 @@ public class ProcessingController extends BaseController implements Initializabl
 		this.setResult(true);
 		this.imageView.setImage(image);
 		this.textarea.clear();
+		this.FailDetailInfo.setText("");
 	}
-
-	public void test() {
-		System.out.println("ProcessingController来自其他controller的调用");
-	}
-
+	
 	public void setListener(ProcessingListener listener) {
 		this.listener = listener;
 	}

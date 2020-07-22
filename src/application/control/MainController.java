@@ -171,6 +171,7 @@ public class MainController implements Initializable {
 			processingController.setResult(false);
 			processingController.setState(false);
 			processingController.imageView.setImage(processingController.image_failed);
+			ProcessingPane.setBottom(processingController.FailDetailInfo);
 			changeBottomBtnsView(currentController, 3);
 		}
 

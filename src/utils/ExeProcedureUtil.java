@@ -6,7 +6,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 
 import javafx.application.Platform;
 import utils.ProgressTask.ExeTask;
@@ -66,7 +65,13 @@ public class ExeProcedureUtil
         } catch (Exception e) {
             e.printStackTrace();
         }
-		return oldLine.equals(flag);
+		if(oldLine.equals(flag))
+			return true;
+		else
+		{
+			task.updateMessage(oldLine);
+			return false;
+		}
 	}
 	
 	//关闭进程
