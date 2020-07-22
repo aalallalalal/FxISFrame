@@ -48,4 +48,23 @@ public class FileUtil {
 		imgFile.renameTo(deletedImg);
 	}
 	
+	public static void deleteTxt(String path) {
+		String parentdirname = path.substring(path.lastIndexOf("/"));
+		FileUtil.deleteFile(path + parentdirname + "-STITCH-GRAPH.txt");
+		FileUtil.deleteFile(path + parentdirname + "-STITCH-GRAPH-adjust.txt");
+		FileUtil.deleteFile(path + parentdirname + "-STITCH-GRAPH-adjust_opGSP.txt");
+	}
+	
+	public static void deleteFile(String txtPath) {
+		File txtFile = new File(txtPath);
+		if (txtFile == null || !txtFile.exists()) {
+			System.out.println("返回");
+			return;
+		}
+		else
+		{
+			System.out.println("删除：" + txtFile.delete());
+		}
+	}
+	
 }

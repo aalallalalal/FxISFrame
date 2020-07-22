@@ -246,9 +246,9 @@ public class ImageListController implements Initializable {
 					public void onConfirm() {
 						listData.remove(selectedItem);
 						FileUtil.deleteImage(selectedItem.getPath());
+						FileUtil.deleteTxt(project.getProjectDir());
 					}
 				});
-
 	}
 
 	@FXML
