@@ -33,7 +33,7 @@ import utils.UIUtil;
  * 
  * @author DP
  */
-public class CreateProjectDialogController implements Initializable {
+public class ChangeProjectDialogController implements Initializable {
 	@FXML
 	BorderPane root;
 	@FXML
@@ -54,6 +54,27 @@ public class CreateProjectDialogController implements Initializable {
 	private CallBack callBack;
 
 	private ToggleGroup group;
+
+	private ProjectBean bean;
+
+	public void setInitData(ProjectBean bean) {
+		this.bean = bean;
+		initData();
+	}
+
+	private void initData() {
+		if (bean == null) {
+			return;
+		}
+		textField.setText(bean.getProjectName());
+		labelProject.setText(bean.getProjectDir());
+		labelLocation.setText(bean.getProjectLocationFile());
+		if(bean.getLocationFrom()==0) {
+			group.selectToggle(radioButton_img);
+		}else {
+			group.selectToggle(radioButton_file);
+		}
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -144,11 +165,13 @@ public class CreateProjectDialogController implements Initializable {
 			return;
 		}
 		int locationFrom = (int) group.getSelectedToggle().getUserData();
-		ProjectBean project = new ProjectBean(textField.getText(), labelProject.getText(), locationFrom,
-				labelLocation.getText());
-		SaveProjectsUtil.saveProject(project, null);
+		bean.setProjectName(textField.getText());
+		bean.setProjectDir(labelProject.getText());
+		bean.setLocationFrom(locationFrom);
+		bean.setProjectLocationFile(labelLocation.getText());
+		SaveProjectsUtil.changeProjectData(bean, null);
 		if (callBack != null) {
-			callBack.onDone(project);
+			callBack.onDone(bean);
 		}
 	}
 
@@ -159,4 +182,5 @@ public class CreateProjectDialogController implements Initializable {
 	public interface CallBack {
 		void onDone(ProjectBean project);
 	}
+
 }

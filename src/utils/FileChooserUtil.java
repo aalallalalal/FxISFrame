@@ -31,7 +31,7 @@ public class FileChooserUtil
 		filechooser.setTitle(title);
 		
 		//文件类型
-		filechooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt", "*.GSP"));
+		filechooser.getExtensionFilters().addAll(new ExtensionFilter("Text Files", "*.txt", "*.GPS"));
 		
 		//显示窗口,返回选择文件
 		selectedFile = filechooser.showOpenDialog(node.getScene().getWindow());

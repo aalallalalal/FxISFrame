@@ -3,11 +3,10 @@ package application.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import views.MyToolTip;
-
-import com.jfoenix.controls.JFXButton;
 
 /**
  * 创建项目界面controller

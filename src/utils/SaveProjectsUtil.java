@@ -74,6 +74,7 @@ public class SaveProjectsUtil {
 				for (ProjectBean item : projectsData) {
 					if (item.getId() == bean.getId()) {
 						item.setProjectName(bean.getProjectName());
+						item.setProjectDir(bean.getProjectDir());
 						item.setLastUsedTime(System.currentTimeMillis());
 						item.setLocationFrom(bean.getLocationFrom());
 						item.setProjectLocationFile(bean.getProjectLocationFile());

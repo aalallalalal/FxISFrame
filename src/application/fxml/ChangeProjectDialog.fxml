@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import views.MyToolTip?>
+
+<BorderPane fx:id="root"
+	style="-fx-background-color: #fefefe; -fx-padding: 10;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.control.ChangeProjectDialogController">
+	<center>
+		<VBox alignment="CENTER_LEFT"
+			style="-fx-padding: 15;-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
+			BorderPane.alignment="CENTER">
+			<children>
+				<HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="8.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="项目名称：" wrapText="true" />
+						<JFXTextField fx:id="textField" focusColor="#FFA500"
+							unFocusColor="#fafafa00" labelFloat="true" prefColumnCount="10"
+							prefHeight="30.0" prefWidth="280.0" maxWidth="-1"
+							style="-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;        -fx-font-size: 14; -fx-padding:4;" />
+					</children>
+				</HBox>
+				<HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="5.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="项目文件夹 路径：" wrapText="true" />
+						<Label fx:id="labelProject" maxWidth="-1" prefHeight="30.0"
+							prefWidth="300"
+							style="-fx-text-fill: #000; -fx-font-size: 14;-fx-border-color:#fafafa;-fx-border-width:2;        -fx-padding:4;-fx-border-style:solid;"
+							HBox.hgrow="ALWAYS" />
+						<JFXButton buttonType="RAISED"
+							onAction="#onClickSelectProject">
+							<tooltip>
+								<MyToolTip text="选择项目路径"></MyToolTip>
+							</tooltip>
+							<graphic>
+								<ImageView fitHeight="25.0" fitWidth="25.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/ellipsis.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+
+				<HBox alignment="CENTER_LEFT" prefHeight="60.0" spacing="5.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="经纬度输入方式：" wrapText="true" />
+						<JFXRadioButton text="图片中录入" selected="true"
+							selectedColor="#FFA500" fx:id="radioButton_img"
+							style="-fx-text-fill: #000; -fx-font-size: 14;-fx-spacing:4">
+						</JFXRadioButton>
+						<JFXRadioButton text="文件中录入" selected="false"
+							selectedColor="#FFA500" fx:id="radioButton_file"
+							style="-fx-text-fill: #000; -fx-font-size: 14;" />
+					</children>
+				</HBox>
+
+				<HBox fx:id="hbox_location" alignment="CENTER_LEFT"
+					disable="true" prefHeight="60.0" spacing="5.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="经纬度文件路径：" wrapText="true" />
+						<Label fx:id="labelLocation" maxWidth="-Infinity"
+							prefHeight="30.0" prefWidth="250"
+							style="-fx-text-fill: #000;-fx-padding:4;-fx-font-size: 14;-fx-border-color:#fafafa;-fx-border-width:2;        -fx-border-style:solid;" />
+						<JFXButton buttonType="RAISED"
+							onAction="#onClickSelectLocation">
+							<tooltip>
+								<MyToolTip text="选择经纬度文件"></MyToolTip>
+							</tooltip>
+							<graphic>
+								<ImageView fitHeight="25.0" fitWidth="25.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/ellipsis.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+						<JFXButton buttonType="RAISED" onAction="#onClickHelp">
+							<tooltip>
+								<MyToolTip text="帮助"></MyToolTip>
+							</tooltip>
+							<graphic>
+								<ImageView fitHeight="25.0" fitWidth="25.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/help_dark.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+	</center>
+	<bottom>
+		<JFXButton fx:id="btnDone" buttonType="RAISED"
+			prefWidth="120.0" onAction="#done" text=" 完  成 "
+			BorderPane.alignment="CENTER">
+			<styleClass>
+				<String fx:value="btn-level-vip" />
+			</styleClass>
+			<BorderPane.margin>
+				<Insets bottom="10.0" />
+				<Insets top="10.0" />
+			</BorderPane.margin>
+		</JFXButton>
+	</bottom>
+</BorderPane>

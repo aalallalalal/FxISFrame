@@ -25,6 +25,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import utils.ToastUtil;
 import utils.UIUtil;
 
 /**
@@ -124,8 +125,8 @@ public class MainController implements Initializable {
 		public void onClickStart(FinalDataBean finalData) {
 			nextPage();
 			if (processingController != null) {
-					FinalDataBean.para_Exe = finalData.toParameter();
-					processingController.startExec();
+				FinalDataBean.para_Exe = finalData.toParameter();
+				processingController.startExec();
 			}
 		}
 
@@ -152,7 +153,7 @@ public class MainController implements Initializable {
 		@Override
 		public void tofirstpage() {
 			mPagination.setCurrentPageIndex(0);
-			projectsController.clearData(); //清空
+			projectsController.clearData(); // 清空
 			processingController.initPage();
 		}
 
@@ -176,21 +177,17 @@ public class MainController implements Initializable {
 		}
 
 		@Override
-		public void openResultFromFileSystem()
-		{
-			try
-			{
+		public void openResultFromFileSystem() {
+			try {
 				String path = System.getProperty("user.dir");
 				Desktop.getDesktop().open(new File(path + "\\Result"));
-			} catch (IOException e)
-			{
+			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
 		@Override
-		public void update(String lineStr)
-		{
+		public void update(String lineStr) {
 			processingController.textarea.appendText(lineStr);
 		}
 	}
@@ -411,6 +408,61 @@ public class MainController implements Initializable {
 					if (dialog != null) {
 						dialog.close();
 					}
+
+					File projectFile = new File(project.getProjectDir());
+					File locationFile = new File(project.getProjectLocationFile());
+					if (projectFile == null || !projectFile.exists()) {
+						// 项目路径不存在
+						openChangeProjectDialog(project, isToNextPage);
+						ToastUtil.toast("项目路径失效,请重新设置");
+						return;
+					} else {
+						// 项目路径存在
+						if (project.getLocationFrom() == 1 && (locationFile == null || !locationFile.exists()
+								|| !(project.getProjectLocationFile().endsWith(".txt")
+										|| project.getProjectLocationFile().endsWith(".TXT")
+										|| project.getProjectLocationFile().endsWith(".GPS")
+										|| project.getProjectLocationFile().endsWith(".gps")))) {
+							// 项目路径存在且是文件读取，但经纬度文件不正确
+							openChangeProjectDialog(project, isToNextPage);
+							ToastUtil.toast("经纬度文件路径失效,请重新设置");
+							return;
+						}
+					}
+
+					// 没问题
+					if (isToNextPage) {
+						nextPage();
+					}
+					if (projectsController != null) {
+						projectsController.addProject(project);
+					}
+				}
+			});
+		}
+	}
+
+	/**
+	 * 更新项目信息
+	 * 
+	 * @param bean
+	 * @param isToNextPage
+	 */
+	private void openChangeProjectDialog(ProjectBean bean, boolean isToNextPage) {
+		MyFxmlBean changeDialog;
+		changeDialog = UIUtil.openDialog(getClass(), "/application/fxml/ChangeProjectDialog.fxml",
+				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "更新项目", getStage());
+		if (changeDialog != null) {
+			ChangeProjectDialogController controller = changeDialog.getFxmlLoader().getController();
+			controller.setInitData(bean);
+			controller.setCallBack(new ChangeProjectDialogController.CallBack() {
+				@Override
+				public void onDone(ProjectBean project) {
+					Stage dialog = changeDialog.getStage();
+					if (dialog != null) {
+						dialog.close();
+					}
+					// 没问题
 					if (isToNextPage) {
 						nextPage();
 					}

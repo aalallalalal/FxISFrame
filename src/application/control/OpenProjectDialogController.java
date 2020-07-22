@@ -77,21 +77,21 @@ public class OpenProjectDialogController implements Initializable {
 				new javafx.util.Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 					@Override
 					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
-						return new ToolTipTableCell();
+						return new ToolTipTableCell<ProjectBean>();
 					}
 				});
 		path_projects.setCellFactory(
 				new javafx.util.Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 					@Override
 					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
-						return new ToolTipTableCell();
+						return new ToolTipTableCell<ProjectBean>();
 					}
 				});
 		time_createProject.setCellFactory(
 				new javafx.util.Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 					@Override
 					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
-						return new ToolTipTableCell();
+						return new ToolTipTableCell<ProjectBean>();
 					}
 				});
 		projectTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
