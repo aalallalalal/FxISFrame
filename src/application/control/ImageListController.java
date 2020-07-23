@@ -115,6 +115,17 @@ public class ImageListController implements Initializable {
 		close.addEventFilter(MouseDragEvent.MOUSE_PRESSED, new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
+				int locationFrom = project.getLocationFrom();
+				if (locationFrom == 1) {
+					String locationPath = project.getProjectLocationFile();
+					File locationFile = new File(locationPath);
+					if (locationPath == null || "".equals(locationPath) || locationFile == null
+							|| !locationFile.exists()) {
+						ToastUtil.toast("经纬度文件路径无效");
+						event.consume();
+						return;
+					}
+				}
 				project.setProjectName(textField_projectName.getText());
 				SaveProjectsUtil.changeProjectData(project, null);
 				if (callBack != null) {

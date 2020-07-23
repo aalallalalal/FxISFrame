@@ -51,7 +51,7 @@ public class FlightLineController implements Initializable {
 	private Image imageFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill-focus.png"), 14, 14,
 			false, false);
 	private Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight.png"), 25, 25, false,
-			false);
+			true);
 	private double centerOffsetX, centerOffsetY;
 
 	@Override
