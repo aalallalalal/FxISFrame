@@ -2,6 +2,7 @@ package utils;
 
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -32,13 +33,18 @@ public class ExeProcedureUtil
 		BufferedReader inBr = null;
 		String lineStr = "";
 		String oldLine = "";
+		
+		File workDir = new File(System.getProperty("user.dir") + "\\Run");
+		if(!workDir.exists())
+			workDir.mkdir();
+		
 		try {
             Runtime runtime = Runtime.getRuntime();
-            process = runtime.exec(cmds);
+            process = runtime.exec(cmds, null, workDir);
             InputStreamReader in=new InputStreamReader(process.getInputStream(), Charset.forName("GBK"));
             inBr = new BufferedReader(in);
             
-            FileOutputStream fos = new FileOutputStream("RuntimeDetialInfo.txt");
+            FileOutputStream fos = new FileOutputStream(workDir + "\\RuntimeDetialInfo.txt");
 			BufferedOutputStream bos  = new BufferedOutputStream(fos);
 			
             while((lineStr=inBr.readLine())!=null){
@@ -65,6 +71,8 @@ public class ExeProcedureUtil
         } catch (Exception e) {
             e.printStackTrace();
         }
+		workDir.delete();
+		
 		if(oldLine.equals(flag))
 			return true;
 		else

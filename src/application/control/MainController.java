@@ -180,7 +180,7 @@ public class MainController implements Initializable {
 		public void openResultFromFileSystem() {
 			try {
 				String path = System.getProperty("user.dir");
-				Desktop.getDesktop().open(new File(path + "\\Result"));
+				Desktop.getDesktop().open(new File(path + "\\Run\\Result"));
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
