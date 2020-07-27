@@ -1,13 +1,18 @@
 package application.control;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URL;
+import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
 import beans.ImageBean;
 import consts.ConstSize;
+import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
@@ -33,10 +38,12 @@ import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import utils.ToastUtil;
+import utils.UrlSigner;
 import utils.ProgressTask.ProgressTask;
 import views.MyToolTip;
 
 public class FlightLineController implements Initializable {
+
 	private static final double Scale = 0.85;
 	private static final double InitTransX = 30, InitTransY = 30;
 	@FXML
@@ -50,12 +57,38 @@ public class FlightLineController implements Initializable {
 			false);
 	private Image imageFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill-focus.png"), 14, 14,
 			false, false);
-	private Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight.png"), 25, 25, false,
-			true);
+	private Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight.png"), 25, 25, false, true);
 	private double centerOffsetX, centerOffsetY;
+
+	private void initGoogleMap() {
+		try {
+			String imageUrl = "http://google.cn/maps/api/staticmap?maptype=satellite&language=zh-CN&sensor=false"
+					+ "&center=40.714728,-73.998672&zoom=11&size=612x612&scale=2";
+			String destinationFile = "D://image.jpg";
+			URL url = new URL(UrlSigner.sign(imageUrl));
+			URLConnection openConnection = url.openConnection();
+//			openConnection.setRequestProperty("User-Agent", "Mozilla/4.0 compatible; MSIE 5.0;Windows NT; DigExt)");
+			InputStream is = openConnection.getInputStream();
+			OutputStream os = new FileOutputStream(destinationFile); 
+
+			byte[] b = new byte[2048];
+			int length;
+
+			while ((length = is.read(b)) != -1) {
+				os.write(b, 0, length);
+			}
+
+			is.close();
+			os.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		initGoogleMap();
 		dropShadow = new DropShadow();
 		dropShadow.setRadius(5.0);
 		dropShadow.setOffsetX(3.0);
@@ -121,10 +154,8 @@ public class FlightLineController implements Initializable {
 	private void drawShapes(GraphicsContext gc, double[] xList, double[] yList, int size,
 			ObservableList<ImageBean> listData) {
 		// 画线
-		LinearGradient linearGradient1 = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE, new Stop[] {
-                new Stop(0, Color .LIGHTGREEN),
-                new Stop(1, Color.LIGHTSKYBLUE)
-        });
+		LinearGradient linearGradient1 = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
+				new Stop[] { new Stop(0, Color.LIGHTGREEN), new Stop(1, Color.LIGHTSKYBLUE) });
 		gc.setStroke(linearGradient1);
 		gc.save();
 //		gc.translate(InitTransX + centerOffsetX, InitTransY + centerOffsetY);
@@ -133,7 +164,7 @@ public class FlightLineController implements Initializable {
 		gc.setLineWidth(3);
 		gc.strokePolyline(xList, yList, size);
 //		gc.setEffect(dropShadow);
-		
+
 		ArrayList<Double> lineData = new ArrayList<Double>();
 		// 画点
 		for (int i = 0; i < size; i++) {
@@ -144,7 +175,7 @@ public class FlightLineController implements Initializable {
 				item = generateLabel(null);
 			}
 			item.setPadding(new Insets(0));
-			item.setLayoutX((xList[i] -3 + InitTransX) * Scale);
+			item.setLayoutX((xList[i] - 3 + InitTransX) * Scale);
 			item.setLayoutY((yList[i] - 11 + InitTransY) * Scale);
 			lineData.add((xList[i] - 7 + InitTransX) * Scale);
 			lineData.add((yList[i] - 7 + InitTransY) * Scale);
@@ -174,6 +205,7 @@ public class FlightLineController implements Initializable {
 		pane_Canvas.getChildren().addAll(target);
 
 		pathTransition.setNode(target);
+		pathTransition.setInterpolator(Interpolator.LINEAR);
 		pathTransition.play();
 	}
 

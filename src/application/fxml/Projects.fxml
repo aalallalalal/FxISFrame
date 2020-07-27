@@ -46,7 +46,7 @@
 						<String fx:value="btn-level-projects" />
 					</styleClass>
 				</JFXButton>
-				<JFXButton onAction="#openProject" text="添加工程">
+				<JFXButton onAction="#openProject" text="打开工程">
 					<styleClass>
 						<String fx:value="btn-level-projects" />
 					</styleClass>

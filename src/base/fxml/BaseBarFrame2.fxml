@@ -42,8 +42,8 @@
 								<MyToolTip text="关闭页面"></MyToolTip>
 							</tooltip>
 							<graphic>
-								<ImageView fitHeight="25.0" fitWidth="25.0"
-									pickOnBounds="true" preserveRatio="true">
+								<ImageView smooth="true" fitHeight="25.0"
+									fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
 									<image>
 										<Image url="/resources/close.png" />
 									</image>

@@ -40,7 +40,8 @@
 								<MyToolTip text="最小化"></MyToolTip>
 							</tooltip>
 							<graphic>
-								<ImageView fitWidth="24.0" preserveRatio="true">
+								<ImageView fitWidth="24.0" preserveRatio="true"
+									smooth="true">
 									<image>
 										<Image url="/resources/min.png" />
 									</image>
@@ -53,7 +54,8 @@
 								<MyToolTip text="退出软件"></MyToolTip>
 							</tooltip>
 							<graphic>
-								<ImageView fitWidth="24.0" preserveRatio="true">
+								<ImageView fitWidth="24.0" preserveRatio="true"
+									smooth="true">
 									<image>
 										<Image url="/resources/close.png" />
 									</image>
