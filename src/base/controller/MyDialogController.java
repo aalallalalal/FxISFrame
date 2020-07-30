@@ -3,11 +3,13 @@ package base.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import consts.ConstRes;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import utils.AnimatorUtil;
 
 public class MyDialogController implements Initializable {
 	@FXML
@@ -17,7 +19,7 @@ public class MyDialogController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-	
+		AnimatorUtil.fadeShow(root,ConstRes.SHOW_TIME);
 	}
 
 	@FXML

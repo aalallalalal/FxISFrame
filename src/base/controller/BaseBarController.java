@@ -10,6 +10,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import utils.AnimatorUtil;
 
 /**
  * 主界面的controller
@@ -27,6 +28,7 @@ public class BaseBarController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		AnimatorUtil.fadeShow(root, 1500);
 	}
 
 	public BaseBarController() {

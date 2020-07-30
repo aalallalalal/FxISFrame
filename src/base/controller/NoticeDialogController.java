@@ -5,11 +5,13 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXTextArea;
 
+import consts.ConstRes;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import utils.AnimatorUtil;
 
 public class NoticeDialogController implements Initializable {
 
@@ -25,6 +27,7 @@ public class NoticeDialogController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		AnimatorUtil.fadeShow(root,ConstRes.SHOW_TIME);
 		if (textArea_content != null) {
 			textArea_content.setText(content);
 		}

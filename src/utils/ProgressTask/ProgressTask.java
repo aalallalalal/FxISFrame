@@ -111,7 +111,7 @@ public class ProgressTask {
 		openDialogTime.schedule(new TimerTask() {
 			@Override
 			public void run() {
-				// 500ms过去了,还没执行完,那开启dialog
+				// 200ms过去了,还没执行完,那开启dialog
 				if (!isDone) {
 					Platform.runLater(new Runnable() {
 						@Override
@@ -142,7 +142,7 @@ public class ProgressTask {
 
 	private void activateProgressBar() {
 		if (dialogStage != null) {
-			if(!isDone) {
+			if (!isDone) {
 				dialogStage.show();
 			}
 		}
@@ -169,12 +169,17 @@ public class ProgressTask {
 		protected void failed() {
 			super.failed();
 			updateMessage("DONE");
+			unSucceeded();
 		}
 
 		@Override
 		protected void cancelled() {
 			super.cancelled();
 			updateMessage("DONE");
+			unSucceeded();
+		}
+
+		protected void unSucceeded() {
 		}
 	}
 }

@@ -11,6 +11,7 @@
 
 <BorderPane fx:id="root"
 	style="-fx-background:transparent;-fx-padding: 10;"
+	opacity="0"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="base.controller.ConfirmDialogController">
 	<center>

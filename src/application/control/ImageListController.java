@@ -213,6 +213,27 @@ public class ImageListController implements Initializable {
 
 			textField_projectName.setText(project.getProjectName());
 		}
+		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+			public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
+				if (group.getSelectedToggle() != null) {
+					int data = (int) group.getSelectedToggle().getUserData();
+					if (data == 0) {
+						// 选择图片录入
+						hbox_location.setDisable(true);
+						if (project != null) {
+							project.setLocationFrom(0);
+						}
+					} else {
+						// 选择文件录入
+						hbox_location.setDisable(false);
+						if (project != null) {
+							project.setLocationFrom(1);
+						}
+					}
+					refreshListData();
+				}
+			}
+		});
 	}
 
 	@FXML
@@ -305,14 +326,19 @@ public class ImageListController implements Initializable {
 				new javafx.util.Callback<TableColumn.CellDataFeatures<ImageBean, String>, ObservableValue<String>>() {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<ImageBean, String> arg0) {
-						SimpleStringProperty re = new SimpleStringProperty();
-						String set;
-						if ("".equals(arg0.getValue().getLongitudeRef())) {
-							set = arg0.getValue().getLongitude() + "";
-						} else {
-							set = arg0.getValue().getLongitudeRef() + ":" + arg0.getValue().getLongitude();
+						SimpleStringProperty re = null;
+						try {
+							re = new SimpleStringProperty();
+							String set;
+							if ("".equals(arg0.getValue().getLongitudeRef())) {
+								set = arg0.getValue().getLongitude() + "";
+							} else {
+								set = arg0.getValue().getLongitudeRef() + ":" + arg0.getValue().getLongitude();
+							}
+							re.set(set);
+						} catch (Exception e) {
+							re.set("");
 						}
-						re.set(set);
 						return re;
 					}
 				});
@@ -336,7 +362,6 @@ public class ImageListController implements Initializable {
 								re.set(arg0.getValue().getLatitudeRef() + ":" + arg0.getValue().getLatitude());
 							}
 						} catch (Exception e) {
-							e.printStackTrace();
 							re.set("");
 						}
 						return re;
@@ -410,27 +435,6 @@ public class ImageListController implements Initializable {
 		radioButton_img.setUserData(0);
 		radioButton_file.setToggleGroup(group);
 		radioButton_file.setUserData(1);
-		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
-			public void changed(ObservableValue<? extends Toggle> ov, Toggle old_toggle, Toggle new_toggle) {
-				if (group.getSelectedToggle() != null) {
-					int data = (int) group.getSelectedToggle().getUserData();
-					if (data == 0) {
-						// 选择图片录入
-						hbox_location.setDisable(true);
-						if (project != null) {
-							project.setLocationFrom(0);
-						}
-					} else {
-						// 选择文件录入
-						hbox_location.setDisable(false);
-						if (project != null) {
-							project.setLocationFrom(1);
-						}
-					}
-					refreshListData();
-				}
-			}
-		});
 	}
 
 	/**
@@ -444,10 +448,21 @@ public class ImageListController implements Initializable {
 
 	@FXML
 	public void onSeeLine() {
-		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/FlightLine.fxml",
-				ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height, project.getProjectName() + "飞行路径");
-		FlightLineController controller = openFrame.getFxmlLoader().getController();
-		controller.setData(listData);
+//		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/FlightLine.fxml",
+//				ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height, project.getProjectName() + "飞行路径");
+//		FlightLineController controller = openFrame.getFxmlLoader().getController();
+//		controller.setData(listData);
+
+		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/GoogleMapFlightLine.fxml",
+				ConstSize.Flight_Width, ConstSize.Flight_Height, project.getProjectName() + "飞行路径");
+		GoogleMapFlightLineController controller = openFrame.getFxmlLoader().getController();
+		ArrayList<ImageBean> copyListData = new ArrayList<ImageBean>();
+		copyListData.addAll(listData);
+		controller.setData(copyListData);
+//		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/GoogleMapEmbedFlightLine.fxml",
+//				ConstSize.Flight_Width, ConstSize.Flight_Height, project.getProjectName() + "飞行路径");
+//		GoogleMapEmbedFlightLineController controller = openFrame.getFxmlLoader().getController();
+//		controller.setData(listData);
 	}
 
 	private Callback callBack;

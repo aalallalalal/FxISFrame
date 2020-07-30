@@ -13,6 +13,7 @@
 <BorderPane
 	style="-fx-background:transparent;-fx-padding: 10;" fx:id="root"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	opacity="0"
 	fx:controller="base.controller.BaseBarController2">
 	<center>
 		<BorderPane BorderPane.alignment="CENTER">

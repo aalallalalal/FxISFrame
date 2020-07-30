@@ -9,15 +9,29 @@ import beans.MyFxmlBean;
 import consts.ConstRes;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.JavaFXBuilderFactory;
+import javafx.geometry.Rectangle2D;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
+import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 
 public class UIUtil {
+
+	public static double getFlightWidth() {
+		Rectangle2D screenRectangle = Screen.getPrimary().getBounds();
+		double width = screenRectangle.getWidth();
+		return width;
+	}
+
+	public static double getFlightHeight() {
+		Rectangle2D screenRectangle = Screen.getPrimary().getBounds();
+		double height = screenRectangle.getHeight();
+		return height;
+	}
 
 	/**
 	 * 用来加载fxml文件的工具，返回根布局和对应的FXMLoader.

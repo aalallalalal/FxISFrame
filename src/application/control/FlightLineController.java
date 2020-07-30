@@ -1,11 +1,7 @@
 package application.control;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
 import java.net.URL;
-import java.net.URLConnection;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
@@ -38,7 +34,6 @@ import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import utils.ToastUtil;
-import utils.UrlSigner;
 import utils.ProgressTask.ProgressTask;
 import views.MyToolTip;
 
@@ -60,35 +55,8 @@ public class FlightLineController implements Initializable {
 	private Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight.png"), 25, 25, false, true);
 	private double centerOffsetX, centerOffsetY;
 
-	private void initGoogleMap() {
-		try {
-			String imageUrl = "http://google.cn/maps/api/staticmap?maptype=satellite&language=zh-CN&sensor=false"
-					+ "&center=40.714728,-73.998672&zoom=11&size=612x612&scale=2";
-			String destinationFile = "D://image.jpg";
-			URL url = new URL(UrlSigner.sign(imageUrl));
-			URLConnection openConnection = url.openConnection();
-//			openConnection.setRequestProperty("User-Agent", "Mozilla/4.0 compatible; MSIE 5.0;Windows NT; DigExt)");
-			InputStream is = openConnection.getInputStream();
-			OutputStream os = new FileOutputStream(destinationFile); 
-
-			byte[] b = new byte[2048];
-			int length;
-
-			while ((length = is.read(b)) != -1) {
-				os.write(b, 0, length);
-			}
-
-			is.close();
-			os.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-	}
-
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		initGoogleMap();
 		dropShadow = new DropShadow();
 		dropShadow.setRadius(5.0);
 		dropShadow.setOffsetX(3.0);
@@ -333,12 +301,12 @@ public class FlightLineController implements Initializable {
 		if (radioData >= radioWindow) {
 			// 用y
 			scale = windowY / distY;
-			centerOffsetX = (windowX - InitTransX * 2 - distX) / 2;
+			centerOffsetX = (windowX - distX) / 2;
 			centerOffsetY = 0;
 		} else {
 			// 用X
 			scale = windowX / distX;
-			centerOffsetY = (windowY - InitTransY * 2 - distY) / 2;
+			centerOffsetY = (windowY - distY) / 2;
 			centerOffsetX = 0;
 		}
 		// 6.重置数据大小

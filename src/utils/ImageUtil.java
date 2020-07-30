@@ -33,10 +33,10 @@ public class ImageUtil {
 			return;
 		}
 		for (GpsDirectory item : gps) {
-			System.out.println(item);
+//			System.out.println(item);
 			Collection<Tag> tags = item.getTags();
 			for (Tag itemTag : tags) {
-				System.out.println(itemTag.getTagName() + "---------->" + itemTag.getDescription());
+//				System.out.println(itemTag.getTagName() + "---------->" + itemTag.getDescription());
 
 				if ("GPS Latitude Ref".equals(itemTag.getTagName())) {
 					imageBean.setLatitudeRef(itemTag.getDescription());

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import net.kurobako.gesturefx.GesturePane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import java.lang.String?>
+<?import views.MyToolTip?>
+
+<BorderPane fx:id="root" style="-fx-background-color:#fff;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.control.GoogleMapFlightLineController">
+	<center>
+		<AnchorPane fx:id="pane" opacity="0"
+			style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;-fx-padding:2"
+			BorderPane.alignment="CENTER">
+			<children>
+				<GesturePane fx:id="gesturePane"
+					AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+					<ImageView fx:id="imageView" pickOnBounds="true"
+						style="-fx-background-color:#fff" preserveRatio="true"
+						fitHeight="626" fitWidth="976" />
+				</GesturePane>
+
+				<TextArea fx:id="textArea_tip" prefHeight="80.0"
+					prefWidth="160" editable="false" wrapText="true"
+					AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"
+					visible="false"
+					style="-fx-font-size:10;-fx-padding:3;-fx-text-fill: #fff;-fx-background-color:rgba(56,56,56,0.4);-fx-border-radius: 10;-fx-background-radius: 10">
+				</TextArea>
+
+
+				<TextArea fx:id="textArea_place" prefHeight="20.0"
+					prefWidth="180" editable="false" wrapText="true"
+					AnchorPane.rightAnchor="5.0" AnchorPane.bottomAnchor="25.0"
+					visible="false"
+					style="-fx-font-size:12;-fx-padding:3;-fx-text-fill: #fff;-fx-background-color:rgba(56,56,56,0.4);-fx-border-radius: 
+					10;-fx-background-radius: 10">
+				</TextArea>
+
+				<JFXButton onAction="#onClickPaneSwitch"
+					AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="5.0"
+					style="-fx-padding:4;-fx-pref-width:26; -fx-focus-color:transparent;">
+					<tooltip>
+						<MyToolTip text="开关飞行路径面板"></MyToolTip>
+					</tooltip>
+					<graphic>
+						<ImageView fx:id="btn_switch" fitWidth="35.0"
+							preserveRatio="true" smooth="true">
+							<image>
+								<Image url="/resources/icon_switch_off.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</JFXButton>
+
+				<GesturePane fx:id="gesturePaneFlight"
+					AnchorPane.bottomAnchor="70.0" prefHeight="450" prefWidth="450"
+					style="-fx-background-color:rgba(56,56,56,0.4);-fx-border-color:#fafafa;-fx-border-radius:5;-fx-border-width:2;-fx-border-style:solid;"
+					AnchorPane.leftAnchor="5.0">
+					<Pane fx:id="pane_Canvas" prefHeight="450" prefWidth="450" />
+				</GesturePane>
+			</children>
+		</AnchorPane>
+	</center>
+</BorderPane>

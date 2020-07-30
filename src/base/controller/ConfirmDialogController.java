@@ -3,10 +3,12 @@ package base.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import consts.ConstRes;
 import javafx.fxml.Initializable;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import utils.AnimatorUtil;
 import javafx.scene.control.Label;
 
 public class ConfirmDialogController implements Initializable {
@@ -24,6 +26,7 @@ public class ConfirmDialogController implements Initializable {
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		AnimatorUtil.fadeShow(root, ConstRes.SHOW_TIME);
 		if (label_content != null) {
 			label_content.setText(content);
 		}
