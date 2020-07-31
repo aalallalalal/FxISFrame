@@ -13,7 +13,8 @@ public class SettingsBean {
 	private boolean isPreCheck;
 	private String flyHeight;
 	private String cameraSize;
-
+	private int language; // 0中文，1英文
+	
 	public boolean isSaveMiddle() {
 		return isSaveMiddle;
 	}
@@ -60,6 +61,14 @@ public class SettingsBean {
 
 	public void setCameraSize(String cameraSize) {
 		this.cameraSize = cameraSize;
+	}
+
+	public int getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(int language) {
+		this.language = language;
 	}
 
 }

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXCheckBox;
+import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
 import beans.FinalDataBean;
@@ -14,6 +15,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import utils.ToastUtil;
@@ -42,11 +44,27 @@ public class SettingController extends BaseController implements Initializable {
 	HBox hbox_preCheckDetail;
 	@FXML
 	BorderPane root;
+	@FXML
+	private JFXRadioButton radioButton_CN;
+	@FXML
+	private JFXRadioButton radioButton_E;
+
+	private ToggleGroup group;
+
 	private ObservableList<ProjectBean> projectListData;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initCheckBox();
+		initToggleGroup();
+	}
+
+	private void initToggleGroup() {
+		group = new ToggleGroup();
+		radioButton_CN.setToggleGroup(group);
+		radioButton_CN.setUserData(0);
+		radioButton_E.setToggleGroup(group);
+		radioButton_E.setUserData(1);
 	}
 
 	private void initCheckBox() {
@@ -132,6 +150,7 @@ public class SettingController extends BaseController implements Initializable {
 		setting.setPreCheck(checkBox_preCheck.isSelected());
 		setting.setFlyHeight(textArea_flyHeight.getText());
 		setting.setCameraSize(textArea_cameraSize.getText());
+		setting.setLanguage((int) group.getSelectedToggle().getUserData());
 		FinalDataBean finalDataBean = new FinalDataBean(projectListData, setting);
 		if (listener != null) {
 			listener.onClickStart(finalDataBean);

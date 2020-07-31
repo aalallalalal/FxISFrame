@@ -13,7 +13,7 @@
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.SettingController">
 	<center>
-		<VBox spacing="20.0"
+		<VBox spacing="30.0"
 			style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;-fx-padding: 10;"
 			BorderPane.alignment="CENTER">
 			<children>
@@ -63,45 +63,65 @@
 						</VBox>
 					</children>
 				</HBox>
-				<JFXCheckBox fx:id="checkBox_preCheck" selected="false"
-					text="进行重叠率先验约束">
-					<styleClass>
-						<String fx:value="custom-jfx-check-box" />
-					</styleClass>
-				</JFXCheckBox>
-				<HBox fx:id="hbox_preCheckDetail" alignment="CENTER_LEFT"
-					disable="true" prefHeight="10.0" spacing="6.0">
-					<children>
-						<Label text="无人机飞行高度(米):">
-							<styleClass>
-								<String fx:value="label-leve-normal" />
-							</styleClass>
-						</Label>
-						<JFXTextField fx:id="textArea_flyHeight"
-							prefHeight="10.0">
-							<styleClass>
-								<String fx:value="custom-text-field" />
-							</styleClass>
-						</JFXTextField>
-						<Label text="相机像元大小(微米):">
-							<styleClass>
-								<String fx:value="label-leve-normal" />
-							</styleClass>
-						</Label>
-						<JFXTextField fx:id="textArea_cameraSize"
-							prefHeight="10.0">
-							<styleClass>
-								<String fx:value="custom-text-field" />
-							</styleClass>
-						</JFXTextField>
-					</children>
-				</HBox>
+				<VBox spacing="15">
+					<JFXCheckBox fx:id="checkBox_preCheck" selected="false"
+						text="进行重叠率先验约束">
+						<styleClass>
+							<String fx:value="custom-jfx-check-box" />
+						</styleClass>
+					</JFXCheckBox>
+					<HBox fx:id="hbox_preCheckDetail" alignment="CENTER_LEFT"
+						disable="true" prefHeight="10.0" spacing="6.0">
+						<children>
+							<Label text="无人机飞行高度(米):">
+								<styleClass>
+									<String fx:value="label-leve-normal" />
+								</styleClass>
+							</Label>
+							<JFXTextField fx:id="textArea_flyHeight"
+								prefHeight="10.0">
+								<styleClass>
+									<String fx:value="custom-text-field" />
+								</styleClass>
+							</JFXTextField>
+							<Label text="相机像元大小(微米):">
+								<styleClass>
+									<String fx:value="label-leve-normal" />
+								</styleClass>
+							</Label>
+							<JFXTextField fx:id="textArea_cameraSize"
+								prefHeight="10.0">
+								<styleClass>
+									<String fx:value="custom-text-field" />
+								</styleClass>
+							</JFXTextField>
+						</children>
+						<VBox.margin>
+							<Insets left="10" />
+						</VBox.margin>
+					</HBox>
+				</VBox>
 				<JFXCheckBox fx:id="checkBox_SaveMiddle"
 					selected="false" text="保存中间中间结果">
 					<styleClass>
 						<String fx:value="custom-jfx-check-box" />
 					</styleClass>
 				</JFXCheckBox>
+
+				<HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="5.0">
+					<children>
+						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
+							text="拼接信息输出：" wrapText="true" />
+						<JFXRadioButton text="中文" selected="true"
+							selectedColor="#FFA500" fx:id="radioButton_CN"
+							style="-fx-text-fill: #000; -fx-font-size: 14;-fx-spacing:4">
+						</JFXRadioButton>
+						<JFXRadioButton text="English" selected="false"
+							selectedColor="#FFA500" fx:id="radioButton_E"
+							style="-fx-text-fill: #000; -fx-font-size: 14;" />
+					</children>
+				</HBox>
+
 			</children>
 			<BorderPane.margin>
 				<Insets bottom="35.0" left="35.0" right="35.0" top="35.0" />
