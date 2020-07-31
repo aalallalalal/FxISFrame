@@ -13,8 +13,8 @@
 
 <BorderPane
 	style="-fx-background:transparent;-fx-padding: 10;" fx:id="root"
-	opacity="0"
-	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	opacity="0" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="base.controller.BaseBarController">
 	<center>
 		<BorderPane BorderPane.alignment="CENTER">
@@ -35,21 +35,21 @@
 							style="-fx-font-weight: bold; -fx-font-size:18;"
 							HBox.hgrow="ALWAYS">
 						</Label>
-						<JFXButton fx:id = "btn_hide"  onAction="#onClickHide"
+						<JFXButton fx:id="btn_hide" onAction="#onClickHide"
 							style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">
 							<tooltip>
 								<MyToolTip text="最小化"></MyToolTip>
 							</tooltip>
 							<graphic>
-								<ImageView fitWidth="24.0" preserveRatio="true"
-									smooth="true">
+								<ImageView fx:id="img_hide" fitWidth="24.0"
+									preserveRatio="true" smooth="true">
 									<image>
 										<Image url="/resources/min.png" />
 									</image>
 								</ImageView>
 							</graphic>
 						</JFXButton>
-						<JFXButton fx:id = "btn_close" onAction="#onClickClose"
+						<JFXButton fx:id="btn_close" onAction="#onClickClose"
 							style="-fx-padding: 4;-fx-pref-width:26 ；-fx-focus-color: transparent;">
 							<tooltip>
 								<MyToolTip text="退出软件"></MyToolTip>

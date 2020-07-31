@@ -10,8 +10,6 @@ import java.util.concurrent.ExecutionException;
 import beans.GoogleMapGeocodingBean;
 import beans.GoogleMapGeocodingBean.Results;
 import beans.ImageBean;
-import javafx.animation.Animation;
-import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
@@ -148,7 +146,6 @@ public class GoogleMapFlightLineController implements Initializable {
 				gc.strokePolyline(xList, yList, size);
 
 				ArrayList<Double> lineData = new ArrayList<Double>();
-				Insets insets = new Insets(0);
 				// 画点
 				for (int i = 0; i < size; i++) {
 					Label item;
@@ -157,7 +154,6 @@ public class GoogleMapFlightLineController implements Initializable {
 					} else {
 						item = generateLabel(null);
 					}
-					item.setPadding(insets);
 					item.setLayoutX(xList[i] - item.getLayoutBounds().getMinX() - 7);
 					item.setLayoutY(yList[i] - item.getLayoutBounds().getMinY() - 14);
 					lineData.add(xList[i]);
@@ -203,8 +199,12 @@ public class GoogleMapFlightLineController implements Initializable {
 				Label item = new Label();
 				item.setPrefHeight(14);
 				item.setPrefWidth(14);
+				item.setMaxWidth(14);
+				item.setMaxHeight(14);
+				Insets insets = new Insets(0);
+				item.setPadding(insets);
 				item.setGraphic(new ImageView(camera));
-				item.setEffect(dropShadow);
+//				item.setEffect(dropShadow);
 				item.addEventHandler(MouseEvent.MOUSE_ENTERED, new EnteredHandler(item));
 				item.addEventHandler(MouseEvent.MOUSE_EXITED, new ExitHandler(item));
 				item.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {

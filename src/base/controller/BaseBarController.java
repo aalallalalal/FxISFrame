@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import utils.AnimatorUtil;
+import javafx.scene.image.ImageView;
 
 /**
  * 主界面的controller
@@ -42,6 +43,7 @@ public class BaseBarController implements Initializable {
 	protected TranslateTransition translateExit;
 	private ScaleTransition scaleEnter;
 	private TranslateTransition translateEnter;
+	@FXML ImageView img_hide;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -73,8 +75,8 @@ public class BaseBarController implements Initializable {
 				if (translateExit != null) {
 					translateExit.stop();
 				}
-				scaleEnter = AnimatorUtil.scale(btn_hide, 350, 1, 0.7);
-				translateEnter = AnimatorUtil.translate(btn_hide, 350, 0, 3);
+				scaleEnter = AnimatorUtil.scale(img_hide, 350, 1, 0.7);
+				translateEnter = AnimatorUtil.translate(img_hide, 350, 0, 3);
 			}
 		});
 		btn_hide.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
@@ -86,8 +88,8 @@ public class BaseBarController implements Initializable {
 				if (translateEnter != null) {
 					translateEnter.stop();
 				}
-				scaleExit = AnimatorUtil.scale(btn_hide, 350, 0.7, 1);
-				translateExit = AnimatorUtil.translate(btn_hide, 350, 3, 0);
+				scaleExit = AnimatorUtil.scale(img_hide, 350, 0.7, 1);
+				translateExit = AnimatorUtil.translate(img_hide, 350, 3, 0);
 			}
 		});
 	}
