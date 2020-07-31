@@ -6,6 +6,8 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import javafx.animation.RotateTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -36,6 +38,10 @@ public class BaseBarController implements Initializable {
 	JFXButton btn_hide;
 	private RotateTransition rotateEnter;
 	private RotateTransition rotateExit;
+	protected ScaleTransition scaleExit;
+	protected TranslateTransition translateExit;
+	private ScaleTransition scaleEnter;
+	private TranslateTransition translateEnter;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -61,7 +67,27 @@ public class BaseBarController implements Initializable {
 		btn_hide.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				AnimatorUtil.scale(btn_hide, 350, 1, 0.7);
+				if (scaleExit != null) {
+					scaleExit.stop();
+				}
+				if (translateExit != null) {
+					translateExit.stop();
+				}
+				scaleEnter = AnimatorUtil.scale(btn_hide, 350, 1, 0.7);
+				translateEnter = AnimatorUtil.translate(btn_hide, 350, 0, 3);
+			}
+		});
+		btn_hide.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (scaleEnter != null) {
+					scaleEnter.stop();
+				}
+				if (translateEnter != null) {
+					translateEnter.stop();
+				}
+				scaleExit = AnimatorUtil.scale(btn_hide, 350, 0.7, 1);
+				translateExit = AnimatorUtil.translate(btn_hide, 350, 3, 0);
 			}
 		});
 	}

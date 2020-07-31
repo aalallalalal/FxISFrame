@@ -3,6 +3,7 @@ package utils;
 import javafx.animation.FadeTransition;
 import javafx.animation.RotateTransition;
 import javafx.animation.ScaleTransition;
+import javafx.animation.TranslateTransition;
 import javafx.scene.Node;
 import javafx.util.Duration;
 
@@ -34,14 +35,22 @@ public class AnimatorUtil {
 		return rt;
 	}
 
-	public static ScaleTransition scale(Node pane, double time,double fromX ,double toX) {
+	public static ScaleTransition scale(Node pane, double time, double fromX, double toX) {
 		ScaleTransition st = new ScaleTransition(Duration.millis(time), pane);
 		st.setFromX(fromX);
 		st.setToX(toX);
-		st.setCycleCount(2);
-		st.setAutoReverse(true);
+		st.setCycleCount(1);
 		st.play();
 		return st;
+	}
+
+	public static TranslateTransition translate(Node pane, double time, double fromY, double toY) {
+		TranslateTransition tt = new TranslateTransition(Duration.millis(time), pane);
+		tt.setFromY(fromY);
+		tt.setToY(toY);
+		tt.setCycleCount(1);
+		tt.play();
+		return tt;
 	}
 
 }
