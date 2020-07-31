@@ -3,13 +3,18 @@ package base.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+
 import consts.ConstRes;
 import javafx.fxml.Initializable;
+import javafx.animation.RotateTransition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import utils.AnimatorUtil;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 
 public class ConfirmDialogController implements Initializable {
 
@@ -19,6 +24,10 @@ public class ConfirmDialogController implements Initializable {
 	Label bar_title;
 	@FXML
 	Label label_content;
+	@FXML
+	JFXButton btn_close;
+	private RotateTransition rotateEnter;
+	private RotateTransition rotateExit;
 
 	private CallBack callback;
 	private String title;
@@ -33,6 +42,24 @@ public class ConfirmDialogController implements Initializable {
 		if (bar_title != null) {
 			bar_title.setText(title);
 		}
+		btn_close.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (rotateExit != null) {
+					rotateExit.stop();
+				}
+				rotateEnter = AnimatorUtil.rotate(btn_close, 350, 0, 90);
+			}
+		});
+		btn_close.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (rotateEnter != null) {
+					rotateEnter.stop();
+				}
+				rotateExit = AnimatorUtil.rotate(btn_close, 350, 90, 0);
+			}
+		});
 	}
 
 	public void setContent(String content) {

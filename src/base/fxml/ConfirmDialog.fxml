@@ -33,7 +33,7 @@
 							style="-fx-font-weight: bold;-fx-font-size:14;"
 							HBox.hgrow="ALWAYS">
 						</Label>
-						<JFXButton onAction="#onClickClose"
+						<JFXButton fx:id = "btn_close" onAction="#onClickClose"
 							style="-fx-padding: 4;-fx-focus-color: transparent;">
 							<tooltip>
 								<MyToolTip text="关闭"></MyToolTip>

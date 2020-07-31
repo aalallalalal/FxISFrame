@@ -459,10 +459,6 @@ public class ImageListController implements Initializable {
 		ArrayList<ImageBean> copyListData = new ArrayList<ImageBean>();
 		copyListData.addAll(listData);
 		controller.setData(copyListData);
-//		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/GoogleMapEmbedFlightLine.fxml",
-//				ConstSize.Flight_Width, ConstSize.Flight_Height, project.getProjectName() + "飞行路径");
-//		GoogleMapEmbedFlightLineController controller = openFrame.getFxmlLoader().getController();
-//		controller.setData(listData);
 	}
 
 	private Callback callBack;

@@ -3,10 +3,15 @@ package base.controller;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+
 import consts.ConstRes;
+import javafx.animation.RotateTransition;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
@@ -23,10 +28,32 @@ public class BaseBarController2 implements Initializable {
 	private HBox bar;
 	@FXML
 	BorderPane root;
+	@FXML
+	JFXButton close;
+	private RotateTransition rotateEnter;
+	private RotateTransition rotateExit;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		AnimatorUtil.fadeShow(root, ConstRes.SHOW_TIME);
+		close.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (rotateExit != null) {
+					rotateExit.stop();
+				}
+				rotateEnter = AnimatorUtil.rotate(close, 350, 0, 90);
+			}
+		});
+		close.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (rotateEnter != null) {
+					rotateEnter.stop();
+				}
+				rotateExit = AnimatorUtil.rotate(close, 350, 90, 0);
+			}
+		});
 	}
 
 	public BaseBarController2() {
