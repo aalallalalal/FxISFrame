@@ -33,22 +33,19 @@
 				</Label>
 			</center>
 			<right>
-				<JFXButton fx:id="button_help" buttonType="RAISED"
-					onAction="#onClickHelp">
+				<JFXButton fx:id="button_setting" buttonType="RAISED"
+					BorderPane.alignment="TOP_RIGHT" onAction="#onClickSetting">
 					<tooltip>
-						<MyToolTip text="帮助"></MyToolTip>
+						<MyToolTip text="%createProject_set"></MyToolTip>
 					</tooltip>
 					<graphic>
 						<ImageView fitHeight="25.0" fitWidth="25.0"
 							pickOnBounds="true" preserveRatio="true" smooth="true">
 							<image>
-								<Image url="/resources/help_dark.png" />
+								<Image url="/resources/set.png" />
 							</image>
 						</ImageView>
 					</graphic>
-					<BorderPane.margin>
-						<Insets top="30.0" />
-					</BorderPane.margin>
 				</JFXButton>
 			</right>
 		</BorderPane>
@@ -57,7 +54,8 @@
 		<BorderPane prefHeight="200.0" prefWidth="200.0"
 			BorderPane.alignment="CENTER">
 			<left>
-				<JFXButton buttonType="RAISED" text="创建项目" prefWidth="220"
+				<JFXButton buttonType="RAISED"
+					text="%createProject_createproject" prefWidth="220"
 					onAction="#createProject" prefHeight="90"
 					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;
 					-fx-font-size:22; "
@@ -73,8 +71,9 @@
 				</JFXButton>
 			</left>
 			<right>
-				<JFXButton buttonType="RAISED" text="打开项目" prefWidth="220"
-					prefHeight="90" onAction="#openProject"
+				<JFXButton buttonType="RAISED"
+					text="%createProject_openproject" prefWidth="220" prefHeight="90"
+					onAction="#openProject"
 					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;
 					-fx-font-size:22; "
 					BorderPane.alignment="CENTER">
@@ -93,4 +92,20 @@
 			</BorderPane.margin>
 		</BorderPane>
 	</center>
+	<bottom>
+		<JFXButton fx:id="button_help" buttonType="RAISED"
+			BorderPane.alignment="BOTTOM_RIGHT" onAction="#onClickHelp">
+			<tooltip>
+				<MyToolTip text="%createProject_help"></MyToolTip>
+			</tooltip>
+			<graphic>
+				<ImageView fitHeight="25.0" fitWidth="25.0"
+					pickOnBounds="true" preserveRatio="true" smooth="true">
+					<image>
+						<Image url="/resources/help.png" />
+					</image>
+				</ImageView>
+			</graphic>
+		</JFXButton>
+	</bottom>
 </BorderPane>

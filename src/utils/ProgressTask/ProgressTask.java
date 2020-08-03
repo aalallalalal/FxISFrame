@@ -14,6 +14,7 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import utils.ResUtil;
 import utils.UIUtil;
 
 /**
@@ -32,7 +33,8 @@ public class ProgressTask {
 	static {
 		Pane uiPane = null;
 		try {
-			uiPane = FXMLLoader.load(ProgressTask.class.getResource("/utils/ProgressTask/ProgressTask.fxml"));
+			uiPane = FXMLLoader.load(ProgressTask.class.getResource("/utils/ProgressTask/ProgressTask.fxml"),
+					ResUtil.getResource());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

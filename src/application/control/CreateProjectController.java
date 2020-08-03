@@ -24,7 +24,8 @@ public class CreateProjectController extends BaseController implements Initializ
 		if (listener != null) {
 			listener.onClearData();
 		}
-//		button_help.setTooltip(new MyToolTip("帮助"));
+//				ResUtil.initLanguage(combox_language.getSelectionModel().getSelectedIndex());
+//				SaveLanguageUtil.saveData(combox_language.getSelectionModel().getSelectedIndex());
 	}
 
 	public void test() {
@@ -47,6 +48,10 @@ public class CreateProjectController extends BaseController implements Initializ
 		void onOpenProject();
 
 		void onClearData();
+
+		void onClickHelp();
+
+		void onClickSet();
 	}
 
 	@Override
@@ -78,5 +83,15 @@ public class CreateProjectController extends BaseController implements Initializ
 	@FXML
 	public void onClickHelp() {
 		System.out.println("帮助界面");
+		if (listener != null) {
+			listener.onClickHelp();
+		}
+	}
+
+	@FXML
+	public void onClickSetting() {
+		if (listener != null) {
+			listener.onClickSet();
+		}
 	}
 }

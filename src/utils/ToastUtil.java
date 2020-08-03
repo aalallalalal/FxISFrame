@@ -44,21 +44,36 @@ public class ToastUtil {
 		Timer timer = new Timer();
 		timer.schedule(task, time);
 		stage.show();
+//		Region region = (Region) textArea.lookup(".content");
+//		region.setBackground(new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+//		region.setStyle("-fx-background-color: rgba(56,56,56,0.4);-fx-border-radius: 25;-fx-background-radius: 25");
 	}
 
 	// 设置消息
 	private static void init(String msg) {
 		Label label = new Label(msg);// 默认信息
 		label.setText(msg);
-		label.setPrefWidth(150);
+		label.setPrefWidth(220);
 		label.setStyle(
 				"-fx-text-fill: #fff;-fx-background: rgba(56,56,56,0.4);-fx-border-radius: 25;-fx-background-radius: 25");// label透明,圆角
 		label.setPrefHeight(50);
 		label.setMaxWidth(800);
-		label.setPadding(new Insets(15));
+		label.setPadding(new Insets(5));
 		label.setAlignment(Pos.CENTER);// 居中
-		label.setFont(new Font(12));// 字体大小
-		Scene scene = new Scene(label,160,50);
+		label.setFont(new Font(10));// 字体大小
+		
+		
+//		textArea = new TextArea(msg);
+//		textArea.setPrefWidth(150);
+//		textArea.setMaxWidth(800);
+//		textArea.setPadding(new Insets(15));
+//		textArea.setEditable(false);
+//		textArea.setWrapText(true);
+//		textArea.setFont(new Font(12));
+//		textArea.setStyle(
+//				"-fx-text-fill: #fff;-fx-background: rgba(56,56,56,0.4);-fx-border-radius: 25;-fx-background-radius: 25");// label透明,圆角
+
+		Scene scene = new Scene(label, 200, 50);
 		scene.setFill(null);// 场景透明
 		stage.setScene(scene);
 	}

@@ -10,6 +10,11 @@ import java.util.Iterator;
 import beans.ImageBean;
 import beans.ProjectBean;
 
+/**
+ * gps数据处理
+ * @author DP
+ *
+ */
 public class GpsUtil {
 
 	public static final String Imagename = "Imagename";// 图片名key

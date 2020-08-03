@@ -8,10 +8,12 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import application.Main;
 import application.control.CreateProjectDialogController.CallBack;
 import beans.FinalDataBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
+import beans.SoftwareSettingsBean;
 import consts.ConstSize;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -25,6 +27,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import utils.MyPlatform;
+import utils.ResUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
 
@@ -84,6 +88,41 @@ public class MainController implements Initializable {
 		@Override
 		public void onOpenProject() {
 			openOpenProjectDialog(true);
+		}
+
+		@Override
+		public void onClickHelp() {
+
+		}
+
+		@Override
+		public void onClickSet() {
+			MyFxmlBean openDialog;
+			openDialog = UIUtil.openDialog(getClass(), "/application/fxml/SoftwareSettingsDialog.fxml",
+					ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "设置", getStage());
+			if (openDialog != null) {
+				SoftwareSettingsDialogController controller = openDialog.getFxmlLoader().getController();
+				controller.setCallBack(new SoftwareSettingsDialogController.CallBack() {
+					@Override
+					public void onDone(SoftwareSettingsBean settings, boolean isChanged) {
+						openDialog.getStage().close();
+						if (isChanged) {
+							ToastUtil.toast(ResUtil.gs("restart"));
+							MyPlatform.runLater(new Runnable() {
+								@Override
+								public void run() {
+									getStage().close();
+									try {
+										new Main().start(new Stage());
+									} catch (Exception e) {
+										e.printStackTrace();
+									}
+								}
+							}, 2000);
+						}
+					}
+				});
+			}
 		}
 	}
 
@@ -202,6 +241,7 @@ public class MainController implements Initializable {
 	protected Node createPage(Integer pageIndex) throws Exception {
 		currentPane = null;
 		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setResources(ResUtil.getResource());
 		fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
 		URL location;
 		switch (pageIndex.intValue()) {

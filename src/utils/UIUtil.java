@@ -42,6 +42,7 @@ public class UIUtil {
 	 */
 	public static MyFxmlBean loadFxml(Class<?> clz, String uiPath) {
 		FXMLLoader fxmlLoader = new FXMLLoader();
+		fxmlLoader.setResources(ResUtil.getResource());
 		fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
 		URL location = clz.getResource(uiPath);
 		fxmlLoader.setLocation(location);
@@ -67,7 +68,7 @@ public class UIUtil {
 	 */
 	public static MyFxmlBean openFrame(Class<?> clz, String uiPath, double frameW, double frameH, String title) {
 		try {
-			BorderPane framePane = (BorderPane) FXMLLoader.load(clz.getResource(ConstRes.UI_Bar_No_Path));
+			BorderPane framePane = (BorderPane) FXMLLoader.load(clz.getResource(ConstRes.UI_Bar_No_Path),ResUtil.getResource());
 			MyFxmlBean loadFxml = loadFxml(clz, uiPath);
 			Pane anotherRoot = loadFxml.getPane();
 			// 将子界面加入框架中
@@ -105,7 +106,7 @@ public class UIUtil {
 	public static MyFxmlBean openDialog(Class<?> clz, String uiPath, double frameW, double frameH, String title,
 			Stage ownStage) {
 		try {
-			BorderPane framePane = (BorderPane) FXMLLoader.load(clz.getResource(ConstRes.UI_Bar_Dialog_Path));
+			BorderPane framePane = (BorderPane) FXMLLoader.load(clz.getResource(ConstRes.UI_Bar_Dialog_Path),ResUtil.getResource());
 			MyFxmlBean loadFxml = loadFxml(clz, uiPath);
 			Pane anotherRoot = loadFxml.getPane();
 			// 将子界面加入框架中

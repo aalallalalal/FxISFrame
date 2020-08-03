@@ -9,7 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
-import utils.DragWindowHandler;
+import utils.ResUtil;
 import utils.UIUtil;
 
 public class Main extends BaseApplication {
@@ -28,7 +28,7 @@ public class Main extends BaseApplication {
 		Scene barScene = null;
 		try {
 			// 获取带bar的框架界面
-			BorderPane framePane = (BorderPane) FXMLLoader.load(getClass().getResource(ConstRes.UI_Bar_Path));
+			BorderPane framePane = (BorderPane) FXMLLoader.load(getClass().getResource(ConstRes.UI_Bar_Path),ResUtil.getResource());
 			UIUtil.setFrameCanDrag(framePane, stage);
 			// 将子界面加入框架中
 			((BorderPane) (framePane.getCenter())).setCenter(uiPane);

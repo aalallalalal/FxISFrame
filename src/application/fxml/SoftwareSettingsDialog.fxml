@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import views.MyToolTip?>
+
+<BorderPane fx:id="root1"
+	style="-fx-background-color: #fefefe; -fx-padding: 10;"
+	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+	fx:controller="application.control.SoftwareSettingsDialogController">
+	<center>
+		<VBox>
+			<HBox alignment="CENTER_LEFT" prefHeight="35.0" spacing="5.0">
+				<children>
+					<Label style="-fx-text-fill: #000; -fx-font-size: 12;"
+						text="软件语言：" wrapText="true" />
+					<JFXRadioButton fx:id="radioButton_ch"
+						selected="true" selectedColor="#FFA500"
+						style="-fx-text-fill: #000; -fx-font-size: 12;-fx-spacing:4"
+						text="简体中文">
+					</JFXRadioButton>
+					<JFXRadioButton fx:id="radioButton_eng"
+						selected="false" selectedColor="#FFA500"
+						style="-fx-text-fill: #000; -fx-font-size: 12;" text="English" />
+				</children>
+			</HBox>
+		</VBox>
+	</center>
+	<bottom>
+		<JFXButton fx:id="btnDone" buttonType="RAISED"
+			prefWidth="120.0" onAction="#done" text=" 完 成 "
+			BorderPane.alignment="CENTER">
+			<styleClass>
+				<String fx:value="btn-level-vip" />
+			</styleClass>
+			<BorderPane.margin>
+				<Insets bottom="10.0" />
+				<Insets top="10.0" />
+			</BorderPane.margin>
+		</JFXButton>
+	</bottom>
+</BorderPane>

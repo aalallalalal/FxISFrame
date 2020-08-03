@@ -207,6 +207,7 @@ public class ImageListController implements Initializable {
 			} else {
 				// 文件读入经纬度
 				group.selectToggle(radioButton_file);
+				hbox_location.setDisable(false);
 				labelLocation.setText(project.getProjectLocationFile());
 				labelLocation.setTooltip(new MyToolTip(project.getProjectLocationFile()));
 			}
