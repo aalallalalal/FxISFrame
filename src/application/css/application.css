@@ -143,6 +143,12 @@ visibility: hidden;
 	-fx-font-size:13.0pt; 
 }
 
+.currentproject
+{
+	-fx-text-fill: black;
+	-fx-font-size:13.0px; 
+}
+
 .text-area{
     -fx-background-insets: 0;
     -fx-background-color: transparent, white, transparent, white;
@@ -153,6 +159,58 @@ visibility: hidden;
 }
 .text-area:focused {
     -fx-background-color: transparent, white, transparent, white;
+}
+
+
+/* 修改TabPane的Pane区域背景颜色 */
+.jfx-tab-pane {
+    -fx-background-color: white;
+}
+
+/* 修改顶栏的背景颜色 */
+.jfx-tab-pane *.tab-header-area *.tab-header-background
+{
+    -fx-background-color: -fx-outer-border, -fx-text-box-border, #333333;
+}
+
+/* 修改Tab的背景颜色 */
+.tab {
+    -fx-background-color: #333333;
+   
+}
+/* tab选中时设置背景颜色 */
+.tab:selected {
+    -fx-background-color: #990000;
+}
+
+/* Tab选中的时候选中其边框并修改样式 */
+.jfx-tab-pane:focused >.tab-header-area >.headers-region >.tab:selected >.focus-indicator {
+    -fx-border-radius: 0px;
+    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-color: white;
+}
+
+.list-cell:even {
+    -fx-background-color: white;
+}
+.list-cell:odd {
+    -fx-background-color: white;
+}
+.list-cell:selected {
+    -fx-background-color: #4169E1;
+}
+
+.list-cell *.button{
+	-fx-text-fill:black;
+	-fx-font-size: 16px;
+}
+
+.list-cell *.label{
+	-fx-font-size: 18px;
+}
+
+.list-cell:empty {
+    -fx-background-color: white;
 }
 
 

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.image.*?>
 <?import java.lang.*?>
@@ -8,15 +10,28 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane fx:id="root" style="-fx-background-color:#fff" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.ProcessingController">
-   <center>
-      <ImageView fx:id="imageView" fitHeight="150.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-         <image>
-            <Image url="@../../resources/timg.gif" />
-         </image>
-      </ImageView>
-   </center>
+<BorderPane fx:id="root" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color:#fff" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.ProcessingController">
    <bottom>
-      <TextArea fx:id="textarea" editable="false" prefHeight="60.0" prefWidth="800.0" styleClass="text-area" wrapText="true" BorderPane.alignment="CENTER" />
+      <VBox prefHeight="82.0" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="currentProject" prefHeight="20.0" prefWidth="800.0" styleClass="currentproject">
+               <VBox.margin>
+                  <Insets left="8.0" />
+               </VBox.margin></Label>
+            <TextArea fx:id="textarea" editable="false" prefHeight="60.0" prefWidth="800.0" styleClass="text-area" wrapText="true" />
+         </children>
+      </VBox>
    </bottom>
+   <center>
+      <JFXTabPane fx:id="tabPane" BorderPane.alignment="CENTER">
+         <tabs>
+            <Tab fx:id="tab_running"/>
+            <Tab fx:id="tab_achieve"/>
+            <Tab fx:id="tab_failed"/>
+         </tabs>
+         <BorderPane.margin>
+            <Insets left="10.0" right="10.0" top="20.0" />
+         </BorderPane.margin>
+      </JFXTabPane>
+   </center>
 </BorderPane>

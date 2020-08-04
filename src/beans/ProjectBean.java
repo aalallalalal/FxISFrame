@@ -102,4 +102,19 @@ public class ProjectBean implements Serializable {
 	public void setLastUsedTime(long lastUsedTime) {
 		this.lastUsedTime = lastUsedTime;
 	}
+	
+	public String getParam()
+	{
+		String parameter = " \"-read_LatALon\" ";
+		if(this.getLocationFrom() == 0)
+			parameter += "\"_img\" ";
+		else
+		{
+			parameter += "\"_file \"";
+			parameter += this.getProjectLocationFile();
+			parameter += " ";
+		}
+		parameter += '"' + this.getProjectDir() + '"';
+		return parameter;
+	}
 }

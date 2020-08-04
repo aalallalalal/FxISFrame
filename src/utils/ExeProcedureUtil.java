@@ -8,8 +8,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 
+import application.control.ProcessingController.ProcessingListener;
 import javafx.application.Platform;
-import utils.ProgressTask.ExeTask;
 
 /**
  * 执行外部exe程序工具类
@@ -27,12 +27,12 @@ public class ExeProcedureUtil
 	 * @return			 执行程序后cmd显示的结果
 	 * @throws Exception
 	 */
-	public static boolean execute(String path_Exe, String para_Exe, String flag, ExeTask task) 
+	public static String execute(String path_Exe, String para_Exe, ProcessingListener listener) 
 	{
 		String[] cmds = {path_Exe, para_Exe};
 		BufferedReader inBr = null;
 		String lineStr = "";
-		String oldLine = "";
+		String oldString = "";
 		
 		File workDir = new File(System.getProperty("user.dir") + "\\Run");
 		if(!workDir.exists())
@@ -49,15 +49,14 @@ public class ExeProcedureUtil
 			
             while((lineStr=inBr.readLine())!=null){
                 System.out.println(lineStr);
-                oldLine = lineStr;
                 bos.write((lineStr + "\n").getBytes("UTF-8"));
                 //task.updateMessage(lineStr);
+                oldString = lineStr;
                 final String newStr = lineStr;
-				
+                
 				  Platform.runLater(new Runnable() {
-				  
 					  @Override public void run() { //更新JavaFX的主线程的代码放在此处
-					 		task.listener.update("\n" + newStr);
+					 		listener.update("\n" + newStr);
 					  } 
 				  });
             }
@@ -72,14 +71,7 @@ public class ExeProcedureUtil
             e.printStackTrace();
         }
 		workDir.delete();
-		
-		if(oldLine.equals(flag))
-			return true;
-		else
-		{
-			task.updateMessage(oldLine);
-			return false;
-		}
+		return oldString;
 	}
 	
 	//关闭进程

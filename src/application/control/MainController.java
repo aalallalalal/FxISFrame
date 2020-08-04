@@ -10,6 +10,7 @@ import com.jfoenix.controls.JFXButton;
 
 import application.Main;
 import application.control.CreateProjectDialogController.CallBack;
+import application.control.ProcessingController.MyHBox;
 import beans.FinalDataBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
@@ -164,7 +165,8 @@ public class MainController implements Initializable {
 		public void onClickStart(FinalDataBean finalData) {
 			nextPage();
 			if (processingController != null) {
-				FinalDataBean.para_Exe = finalData.toParameter();
+				FinalDataBean.setting = finalData.toSettingParameter();
+				finalData.toPathParameter();
 				processingController.startExec();
 			}
 		}
@@ -197,22 +199,27 @@ public class MainController implements Initializable {
 		}
 
 		@Override
-		public void updateSuccPage() {
+		public void updateSuccBox() {
 			System.out.println("更新成功界面");
-			processingController.setResult(true);
-			processingController.setState(false);
-			processingController.imageView.setImage(processingController.image_succ);
-			changeBottomBtnsView(currentController, 3);
+			MyHBox temp = processingController.list_running.get(0);
+			temp.toSucc();
+			processingController.list_achieve.add(temp);
+			processingController.list_running.remove(0);
+			processingController.tab_achieve.setContent(processingController.listView_achieve);
+			processingController.updateParam();
+			processingController.nextRun();
 		}
 
 		@Override
-		public void updateFailPage() {
+		public void updateFailBox(String reason) {
 			System.out.println("更新失败界面");
-			processingController.setResult(false);
-			processingController.setState(false);
-			processingController.imageView.setImage(processingController.image_failed);
-			ProcessingPane.setBottom(processingController.FailDetailInfo);
-			changeBottomBtnsView(currentController, 3);
+			MyHBox temp = processingController.list_running.get(0);
+			temp.toFailed(reason);
+			processingController.list_failed.add(temp);
+			processingController.list_running.remove(0);
+			processingController.tab_failed.setContent(processingController.listView_failed);
+			processingController.updateParam();
+			processingController.nextRun();
 		}
 
 		@Override
@@ -229,8 +236,16 @@ public class MainController implements Initializable {
 		public void update(String lineStr) {
 			processingController.textarea.appendText(lineStr);
 		}
-	}
 
+		@Override
+		public void updateFinish()
+		{
+			processingController.setState(false);
+			processingController.currentProject.setText("");
+			processingController.textarea.clear();
+			changeBottomBtnsView(currentController, 3);
+		}
+	}
 	/**
 	 * 创建子界面
 	 * 
