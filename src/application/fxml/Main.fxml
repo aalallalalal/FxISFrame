@@ -12,6 +12,7 @@
 <?import java.lang.String?>
 <?import javafx.scene.effect.*?>
 <?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
 
 <!-- 主框架界面 -->
 
@@ -27,11 +28,11 @@
 		</Pagination>
 	</center>
 	<bottom>
-		<StackPane prefHeight="45.0" BorderPane.alignment="CENTER">
+		<StackPane prefHeight="40.0" BorderPane.alignment="CENTER">
 			<children>
 				<FlowPane fx:id="bottomGroupPane" alignment="CENTER_RIGHT"
 					style="-fx-background-color:  #AAAAAA;-fx-padding: 10;"
-					prefHeight="200.0" prefWidth="200.0">
+					prefHeight="30.0" prefWidth="200.0">
 					<children>
 						<Label text="Made by ** Team"
 							style="-fx-text-fill: #F1F1F1; -fx-font-size:14;">
@@ -43,12 +44,13 @@
 				</FlowPane>
 			</children>
 			<children>
-				<BorderPane prefHeight="45.0" fx:id="bottomBtnsPane"
+				<BorderPane prefHeight="40.0" fx:id="bottomBtnsPane"
 					style="-fx-background-color:  #FAFAFA;-fx-padding: 10;"
 					BorderPane.alignment="CENTER">
 					<left>
 						<JFXButton fx:id="btn_pre" buttonType="RAISED"
-							onAction="#leftBtn" text="%pre_step" BorderPane.alignment="CENTER">
+							onAction="#leftBtn" text="%pre_step"
+							BorderPane.alignment="CENTER">
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0"
 									pickOnBounds="true" preserveRatio="true">
@@ -64,7 +66,8 @@
 					</left>
 					<right>
 						<JFXButton fx:id="btn_next" buttonType="RAISED"
-							onAction="#rightBtn" text="%next_step" BorderPane.alignment="CENTER">
+							onAction="#rightBtn" text="%next_step"
+							BorderPane.alignment="CENTER">
 							<styleClass>
 								<String fx:value="btn-level-vip" />
 							</styleClass>
