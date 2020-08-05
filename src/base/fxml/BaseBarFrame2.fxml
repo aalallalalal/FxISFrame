@@ -33,6 +33,9 @@
 						<Label fx:id="bar_title" maxWidth="Infinity" 	text="%software_title"
 							style="-fx-font-weight: bold;-fx-font-size:16;"
 							HBox.hgrow="ALWAYS">
+							<effect>
+								<DropShadow color="#FAFAFA" radius="10" />
+							</effect>
 						</Label>
 						<!-- <JFXButton onAction="#onClickHide"> <graphic> <ImageView fitHeight="18.0" 
 							fitWidth="18.0" pickOnBounds="true" preserveRatio="true"> <image> <Image 

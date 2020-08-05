@@ -16,7 +16,7 @@
 	fx:controller="application.control.SettingController">
 	<center>
 		<VBox spacing="30.0"
-			style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;-fx-padding: 10;"
+			style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;-fx-padding: 12;"
 			BorderPane.alignment="CENTER">
 			<children>
 				<HBox spacing="16.0">
@@ -80,8 +80,8 @@
 									<String fx:value="label-leve-normal" />
 								</styleClass>
 							</Label>
-							<DecimalField fx:id="textArea_flyHeight" prefWidth="100"
-								prefHeight="10.0">
+							<DecimalField fx:id="textArea_flyHeight"
+								prefWidth="100" prefHeight="10.0">
 								<styleClass>
 									<String fx:value="custom-text-field" />
 								</styleClass>
@@ -91,8 +91,8 @@
 									<String fx:value="label-leve-normal" />
 								</styleClass>
 							</Label>
-							<DecimalField fx:id="textArea_cameraSize" prefWidth="100"
-								prefHeight="10.0">
+							<DecimalField fx:id="textArea_cameraSize"
+								prefWidth="100" prefHeight="10.0">
 								<styleClass>
 									<String fx:value="custom-text-field" />
 								</styleClass>

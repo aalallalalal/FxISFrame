@@ -30,13 +30,13 @@
 		<StackPane prefHeight="45.0" BorderPane.alignment="CENTER">
 			<children>
 				<FlowPane fx:id="bottomGroupPane" alignment="CENTER_RIGHT"
-					style="-fx-background-color:  #F5F5F5;-fx-padding: 10;"
+					style="-fx-background-color:  #AAAAAA;-fx-padding: 10;"
 					prefHeight="200.0" prefWidth="200.0">
 					<children>
-						<Label text="Made by *****Team"
-							style="-fx-text-fill: #c5ab26; -fx-font-size:14;">
+						<Label text="Made by ** Team"
+							style="-fx-text-fill: #F1F1F1; -fx-font-size:14;">
 							<effect>
-								<DropShadow color="#f2cd00" radius="10" />
+								<DropShadow color="#FAFAFA" radius="10" />
 							</effect>
 						</Label>
 					</children>
@@ -44,7 +44,7 @@
 			</children>
 			<children>
 				<BorderPane prefHeight="45.0" fx:id="bottomBtnsPane"
-					style="-fx-background-color:  #F5F5F5;-fx-padding: 10;"
+					style="-fx-background-color:  #FAFAFA;-fx-padding: 10;"
 					BorderPane.alignment="CENTER">
 					<left>
 						<JFXButton fx:id="btn_pre" buttonType="RAISED"

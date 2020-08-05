@@ -5,8 +5,14 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import javafx.animation.Transition;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.effect.DropShadow;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
+import javafx.util.Duration;
 import utils.ResUtil;
 
 /**
@@ -19,14 +25,60 @@ public class CreateProjectController extends BaseController implements Initializ
 	private CreateProjectListener listener;
 	@FXML
 	JFXButton button_help;
+	@FXML
+	JFXButton btn_create;
+	@FXML
+	JFXButton btn_open;
+	private DropShadow effectOn;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		if (listener != null) {
 			listener.onClearData();
 		}
-//				ResUtil.initLanguage(combox_language.getSelectionModel().getSelectedIndex());
-//				SaveLanguageUtil.saveData(combox_language.getSelectionModel().getSelectedIndex());
+		initButtonEffect();
+	}
+
+	private void initButtonEffect() {
+		final Transition animation = new Transition() {
+			{
+				setCycleDuration(Duration.millis(200));
+			}
+
+			protected void interpolate(double frac) {
+				effectOn.setRadius((double) 12 * (double) frac);
+			}
+		};
+		effectOn = new DropShadow();
+		effectOn.setColor(Color.DEEPSKYBLUE);
+		effectOn.setRadius(0);
+
+		btn_create.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				btn_create.setEffect(effectOn);
+				animation.play();
+			}
+		});
+		btn_create.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				btn_create.setEffect(null);
+			}
+		});
+		btn_open.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				btn_open.setEffect(effectOn);
+				animation.play();
+			}
+		});
+		btn_open.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				btn_open.setEffect(null);
+			}
+		});
 	}
 
 	public void test() {
