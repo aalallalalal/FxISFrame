@@ -18,7 +18,7 @@
 	</center>
 	<bottom>
 		<JFXButton fx:id="btnDone" buttonType="RAISED" prefWidth="120.0"
-			onAction="#done" text=" 打 开 " BorderPane.alignment="CENTER">
+			onAction="#done" text="%open" BorderPane.alignment="CENTER">
 			<styleClass>
 				<String fx:value="btn-level-vip" />
 			</styleClass>

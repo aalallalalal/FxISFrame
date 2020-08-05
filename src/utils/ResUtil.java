@@ -27,6 +27,22 @@ public final class ResUtil {
 	 * @param key the key of the properties.
 	 * @return the value of the property. Return the key if the value is not found.
 	 */
+	public static String gs(String key) {
+		try {
+			String res = getResource().getString(key);
+			return res;
+		} catch (Exception e) {
+			return "--";
+		}
+	}
+
+	/**
+	 * Gets a string from the ResourceBundles. <br>
+	 * Convenience method to save casting.
+	 *
+	 * @param key the key of the properties.
+	 * @return the value of the property. Return the key if the value is not found.
+	 */
 	public static String gs(String key, Object... strs) {
 		try {
 			String res = String.format(getResource().getString(key), strs);

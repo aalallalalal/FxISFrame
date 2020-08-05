@@ -46,12 +46,13 @@ import javafx.util.Duration;
 import net.kurobako.gesturefx.GesturePane;
 import utils.AnimatorUtil;
 import utils.GoogleMapUtil;
+import utils.ResUtil;
 import utils.ToastUtil;
 import utils.ProgressTask.ProgressTask;
 import views.MyToolTip;
 
 public class GoogleMapFlightLineController implements Initializable {
-	private static final String TIP = "Tips:\n  CTRL+鼠标滚轮：放大、缩小\n  双击地图：放大";
+	private static final String TIP = ResUtil.gs("flight_tips");
 	private static final double FlightPaneWH = 450;
 	private static final double FlightDataOffset = 20;
 
@@ -120,7 +121,7 @@ public class GoogleMapFlightLineController implements Initializable {
 		this.listData = listData;
 		if (listData == null || listData.size() == 0) {
 			System.out.println("飞机界面数据：" + listData.size());
-			ToastUtil.toast("数据加载失败,请重试");
+			ToastUtil.toast(ResUtil.gs("load_data_error"));
 		}
 		ProgressTask task = new ProgressTask(new ProgressTask.MyTask<double[][]>() {
 			private double xMax;
@@ -225,7 +226,7 @@ public class GoogleMapFlightLineController implements Initializable {
 								try {
 									runtime.exec("cmd /c " + imageBean.getPath());
 								} catch (IOException exc) {
-									ToastUtil.toast("打开图片失败！");
+									ToastUtil.toast(ResUtil.gs("open_image_error"));
 									exc.printStackTrace();
 								}
 							}
@@ -250,13 +251,14 @@ public class GoogleMapFlightLineController implements Initializable {
 					return "";
 				}
 				StringBuilder sb = new StringBuilder("");
-				sb.append("图像名称:" + imageBean.getName());
+				sb.append(ResUtil.gs("flight_image_name") + imageBean.getName());
 				if ("".equals(imageBean.getLongitudeRef())) {
-					sb.append("\n图像经度:" + imageBean.getLongitude());
-					sb.append("\n图像纬度:" + imageBean.getLatitude());
+					sb.append("\n" + ResUtil.gs("flight_image_long") + imageBean.getLongitude());
+					sb.append("\n" + ResUtil.gs("flight_image_lat") + imageBean.getLatitude());
 				} else {
-					sb.append("\n图像经度:" + imageBean.getLongitudeRef() + ":" + imageBean.getLongitude());
-					sb.append("\n图像纬度:" + imageBean.getLatitudeRef() + ":" + imageBean.getLatitude());
+					sb.append("\n" + ResUtil.gs("flight_image_long") + imageBean.getLongitudeRef() + ":"
+							+ imageBean.getLongitude());
+					sb.append("\n" + ResUtil.gs("flight_image_lat") + ":" + imageBean.getLatitude());
 				}
 
 				return sb.toString();
@@ -454,7 +456,7 @@ public class GoogleMapFlightLineController implements Initializable {
 								region.setBackground(new Background(
 										new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
 								region.setStyle("-fx-background-color: rgba(56,56,56,0.4)");
-								textArea_place.setText("地理位置:" + resultItem.getFormatted_address());
+								textArea_place.setText(ResUtil.gs("flight_geo") + resultItem.getFormatted_address());
 							}
 						}
 					}
@@ -486,7 +488,7 @@ public class GoogleMapFlightLineController implements Initializable {
 			@Override
 			protected void unSucceeded() {
 				super.unSucceeded();
-				ToastUtil.toast("数据加载失败,请重试");
+				ToastUtil.toast(ResUtil.gs("load_data_error"));
 			}
 
 		}, (Stage) root.getParent().getScene().getWindow());

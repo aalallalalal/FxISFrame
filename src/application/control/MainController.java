@@ -100,7 +100,8 @@ public class MainController implements Initializable {
 		public void onClickSet() {
 			MyFxmlBean openDialog;
 			openDialog = UIUtil.openDialog(getClass(), "/application/fxml/SoftwareSettingsDialog.fxml",
-					ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "设置", getStage());
+					ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("software_setting"),
+					getStage());
 			if (openDialog != null) {
 				SoftwareSettingsDialogController controller = openDialog.getFxmlLoader().getController();
 				controller.setCallBack(new SoftwareSettingsDialogController.CallBack() {
@@ -238,14 +239,14 @@ public class MainController implements Initializable {
 		}
 
 		@Override
-		public void updateFinish()
-		{
+		public void updateFinish() {
 			processingController.setState(false);
 			processingController.currentProject.setText("");
 			processingController.textarea.clear();
 			changeBottomBtnsView(currentController, 3);
 		}
 	}
+
 	/**
 	 * 创建子界面
 	 * 
@@ -452,7 +453,7 @@ public class MainController implements Initializable {
 	private void openOpenProjectDialog(boolean isToNextPage) {
 		MyFxmlBean openDialog;
 		openDialog = UIUtil.openDialog(getClass(), "/application/fxml/OpenProjectDialog.fxml",
-				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "打开项目", getStage());
+				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("createProject_openproject"), getStage());
 		if (openDialog != null) {
 			OpenProjectDialogController controller = openDialog.getFxmlLoader().getController();
 			controller.initData();
@@ -469,7 +470,7 @@ public class MainController implements Initializable {
 					if (projectFile == null || !projectFile.exists()) {
 						// 项目路径不存在
 						openChangeProjectDialog(project, isToNextPage);
-						ToastUtil.toast("项目路径失效,请重新设置");
+						ToastUtil.toast(ResUtil.gs("input_error_project_path"));
 						return;
 					} else {
 						// 项目路径存在
@@ -480,7 +481,7 @@ public class MainController implements Initializable {
 										|| project.getProjectLocationFile().endsWith(".gps")))) {
 							// 项目路径存在且是文件读取，但经纬度文件不正确
 							openChangeProjectDialog(project, isToNextPage);
-							ToastUtil.toast("经纬度文件路径失效,请重新设置");
+							ToastUtil.toast(ResUtil.gs("input_error_location_path"));
 							return;
 						}
 					}
@@ -506,7 +507,7 @@ public class MainController implements Initializable {
 	private void openChangeProjectDialog(ProjectBean bean, boolean isToNextPage) {
 		MyFxmlBean changeDialog;
 		changeDialog = UIUtil.openDialog(getClass(), "/application/fxml/ChangeProjectDialog.fxml",
-				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "更新项目", getStage());
+				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("createProject_changeproject"), getStage());
 		if (changeDialog != null) {
 			ChangeProjectDialogController controller = changeDialog.getFxmlLoader().getController();
 			controller.setInitData(bean);
@@ -535,7 +536,7 @@ public class MainController implements Initializable {
 	private void openCreateProjectDialog(boolean isToNextPage) {
 		MyFxmlBean createDialog;
 		createDialog = UIUtil.openDialog(getClass(), "/application/fxml/CreateProjectDialog.fxml",
-				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, "创建项目", getStage());
+				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("createProject_createproject"), getStage());
 		if (createDialog != null) {
 			CreateProjectDialogController controller = createDialog.getFxmlLoader().getController();
 			controller.setCallBack(new CallBack() {

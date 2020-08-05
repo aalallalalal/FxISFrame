@@ -20,7 +20,7 @@ public class GoogleMapUtil {
 	private static final String BASE_STATIC_URL = "http://google.cn/maps/api/staticmap?maptype=satellite&language=zh-CN&sensor=false"
 			+ "&key=" + GOOGLE_MAP_KEY;
 	private static final String BASE_GEOCODING_URL = "https://google.cn/maps/api/geocode/json?&result_type=political&key="
-			+ GOOGLE_MAP_KEY + "&language=zh-CN";
+			+ GOOGLE_MAP_KEY;
 
 	/**
 	 * 根据经纬度获取到具体地理信息
@@ -28,12 +28,17 @@ public class GoogleMapUtil {
 	public static GoogleMapGeocodingBean getGeocoding(double lat, double lng) {
 		GoogleMapGeocodingBean jsonBean = null;
 		String urlStr = BASE_GEOCODING_URL + "&latlng=" + lat + "," + lng;
+		if (SaveLanguageUtil.getData() == 0) {
+			urlStr = urlStr + "&language=zh-CN";
+		} else {
+			urlStr = urlStr + "&language=en";
+		}
 		try {
 			URL url = new URL(urlStr);
 			HttpURLConnection openConnection = (HttpURLConnection) url.openConnection();
 			int responseCode = openConnection.getResponseCode();
 			if (responseCode != 200) {
-				ToastUtil.toast("地址信息加载失败");
+				ToastUtil.toast(ResUtil.gs("flight_geo_error"));
 			} else {
 				InputStreamReader in = new InputStreamReader(openConnection.getInputStream(), "UTF-8");
 				BufferedReader br = new BufferedReader(in);
@@ -69,7 +74,7 @@ public class GoogleMapUtil {
 			HttpURLConnection openConnection = (HttpURLConnection) url.openConnection();
 			int responseCode = openConnection.getResponseCode();
 			if (responseCode != 200) {
-				ToastUtil.toast("卫星图像加载失败");
+				ToastUtil.toast(ResUtil.gs("flight_map_error"));
 			} else {
 				InputStream is = openConnection.getInputStream();
 				imageMap = new Image(is);
@@ -78,7 +83,7 @@ public class GoogleMapUtil {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-			ToastUtil.toast("无网络,卫星图像加载失败");
+			ToastUtil.toast(ResUtil.gs("flight_map_error_no_net"));
 		}
 		System.out.println("URL mapimage:" + urlStr);
 		return imageMap;

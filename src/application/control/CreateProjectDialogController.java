@@ -22,6 +22,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import utils.FileChooserUtil;
+import utils.ResUtil;
 import utils.FileChooserUtil.Callback;
 import views.MyToolTip;
 import utils.SaveProjectsUtil;
@@ -84,7 +85,7 @@ public class CreateProjectDialogController implements Initializable {
 	@FXML
 	public void onClickSelectLocation() {
 		// TODO
-		FileChooserUtil.OpenFileChooserUtil("选择经纬度文件", labelLocation, new Callback() {
+		FileChooserUtil.OpenFileChooserUtil(ResUtil.gs("choose_location_file"), labelLocation, new Callback() {
 			@Override
 			public void onResult(boolean isChoose, File file) {
 				if (isChoose) {
@@ -99,7 +100,7 @@ public class CreateProjectDialogController implements Initializable {
 
 	@FXML
 	public void onClickSelectProject() {
-		FileChooserUtil.OpenDirectoryChooserUtil("选择项目文件路径", labelProject, new Callback() {
+		FileChooserUtil.OpenDirectoryChooserUtil(ResUtil.gs("choose_project_file"), labelProject, new Callback() {
 			@Override
 			public void onResult(boolean isChoose, File file) {
 				if (isChoose) {
@@ -115,32 +116,32 @@ public class CreateProjectDialogController implements Initializable {
 	@FXML
 	public void onClickHelp() {
 		UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
-				"提示", ConstRes.Text_LocationFile_Notice, (Stage) root.getScene().getWindow());
+				ResUtil.gs("tips"), ConstRes.Text_LocationFile_Notice, (Stage) root.getScene().getWindow());
 	}
 
 	@FXML
 	public void done() {
 		if ("".equals(textField.getText())) {
-			ToastUtil.toast("请输入项目名");
+			ToastUtil.toast(ResUtil.gs("input_project_name"));
 			return;
 		}
 		if ("".equals(labelProject.getText())) {
-			ToastUtil.toast("请选择项目路径");
+			ToastUtil.toast(ResUtil.gs("input_project_path"));
 			return;
 		}
 		if (radioButton_file.isSelected() && "".equals(labelLocation.getText())) {
-			ToastUtil.toast("请选择经纬度文件路径");
+			ToastUtil.toast(ResUtil.gs("input_location_path"));
 			return;
 		}
 		File projectFile = new File(labelProject.getText());
 		if (projectFile == null || !projectFile.exists()) {
 			// 项目路径不存在
-			ToastUtil.toast("项目路径失效,请重新设置");
+			ToastUtil.toast(ResUtil.gs("input_error_project_path"));
 			return;
 		}
 		File locationFile = new File(labelLocation.getText());
 		if (radioButton_file.isSelected() && (locationFile == null || !locationFile.exists())) {
-			ToastUtil.toast("经纬度文件路径失效,请重新设置");
+			ToastUtil.toast(ResUtil.gs("input_error_location_path"));
 			return;
 		}
 		int locationFrom = (int) group.getSelectedToggle().getUserData();

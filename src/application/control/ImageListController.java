@@ -48,6 +48,7 @@ import utils.FileChooserUtil;
 import utils.FileUtil;
 import utils.GpsUtil;
 import utils.ImageUtil;
+import utils.ResUtil;
 import utils.SaveProjectsUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
@@ -121,7 +122,7 @@ public class ImageListController implements Initializable {
 					File locationFile = new File(locationPath);
 					if (locationPath == null || "".equals(locationPath) || locationFile == null
 							|| !locationFile.exists()) {
-						ToastUtil.toast("经纬度文件路径无效");
+						ToastUtil.toast(ResUtil.gs("input_error_location_path"));
 						event.consume();
 						return;
 					}
@@ -239,26 +240,27 @@ public class ImageListController implements Initializable {
 
 	@FXML
 	public void onClickSelectLocation() {
-		FileChooserUtil.OpenFileChooserUtil("选择经纬度文件", labelLocation, new FileChooserUtil.Callback() {
-			@Override
-			public void onResult(boolean isChoose, File file) {
-				if (isChoose) {
-					labelLocation.setText(file.getAbsolutePath());
-					labelLocation.setTooltip(new MyToolTip(file.getAbsolutePath()));
-					if (project != null) {
-						project.setLocationFrom(1);
-						project.setProjectLocationFile(file.getAbsolutePath());
-						refreshListData();
+		FileChooserUtil.OpenFileChooserUtil(ResUtil.gs("choose_location_file"), labelLocation,
+				new FileChooserUtil.Callback() {
+					@Override
+					public void onResult(boolean isChoose, File file) {
+						if (isChoose) {
+							labelLocation.setText(file.getAbsolutePath());
+							labelLocation.setTooltip(new MyToolTip(file.getAbsolutePath()));
+							if (project != null) {
+								project.setLocationFrom(1);
+								project.setProjectLocationFile(file.getAbsolutePath());
+								refreshListData();
+							}
+						}
 					}
-				}
-			}
-		});
+				});
 	}
 
 	@FXML
 	public void onClickHelp() {
 		UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
-				"提示", ConstRes.Text_LocationFile_Notice, (Stage) root.getScene().getWindow());
+				ResUtil.gs("tips"), ConstRes.Text_LocationFile_Notice, (Stage) root.getScene().getWindow());
 	}
 
 	@FXML
@@ -268,8 +270,8 @@ public class ImageListController implements Initializable {
 			return;
 		}
 		UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
-				ConstSize.Confirm_Dialog_Frame_Height, "移除图片",
-				"确认将图片:" + selectedItem.getName() + "移出项目?(将移动图片至" + "\"项目路径下/DELETED_IMAGES\"文件夹中)",
+				ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
+				ResUtil.gs("imageList_remove_image_confirm", selectedItem.getName()),
 				(Stage) root.getScene().getWindow(), new CallBack() {
 					@Override
 					public void onCancel() {
@@ -294,17 +296,17 @@ public class ImageListController implements Initializable {
 		try {
 			runtime.exec("cmd /c " + selectedItem.getPath());
 		} catch (IOException e) {
-			ToastUtil.toast("打开图片失败！");
+			ToastUtil.toast(ResUtil.gs("open_image_error"));
 			e.printStackTrace();
 		}
 	}
 
 	@SuppressWarnings("unchecked")
 	private void initTableView() {
-		TableColumn<ImageBean, String> path = new TableColumn<ImageBean, String>("名称");
-		longtitudeCol = new TableColumn<ImageBean, String>("经度");
-		latitudeCol = new TableColumn<ImageBean, String>("纬度");
-		heightCol = new TableColumn<ImageBean, String>("海拔高度(米)");
+		TableColumn<ImageBean, String> path = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_name"));
+		longtitudeCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_long"));
+		latitudeCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_lat"));
+		heightCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_height"));
 		tableView.getColumns().addAll(path, latitudeCol, longtitudeCol, heightCol);
 		path.setPrefWidth(120);
 		path.setMinWidth(120);
@@ -455,7 +457,8 @@ public class ImageListController implements Initializable {
 //		controller.setData(listData);
 
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/GoogleMapFlightLine.fxml",
-				ConstSize.Flight_Width, ConstSize.Flight_Height, project.getProjectName() + "飞行路径");
+				ConstSize.Flight_Width, ConstSize.Flight_Height,
+				project.getProjectName() + " " + ResUtil.gs("imageList_flight"));
 		GoogleMapFlightLineController controller = openFrame.getFxmlLoader().getController();
 		ArrayList<ImageBean> copyListData = new ArrayList<ImageBean>();
 		copyListData.addAll(listData);

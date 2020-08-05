@@ -29,18 +29,20 @@
 				<VBox fx:id="vbox_rightButtons" disable="true"
 					alignment="TOP_CENTER" style="-fx-spacing: 10; "
 					BorderPane.alignment="CENTER">
-					<JFXButton onAction="#onDeleteImg" text="删除图片">
+					<JFXButton onAction="#onDeleteImg"
+						text="%imageList_remove_image">
 						<styleClass>
 							<String fx:value="btn-level-normal" />
 						</styleClass>
 					</JFXButton>
-					<JFXButton onAction="#onSeeImg" text="查看图片">
+					<JFXButton onAction="#onSeeImg"
+						text="%imageList_see_image">
 						<styleClass>
 							<String fx:value="btn-level-normal" />
 						</styleClass>
 					</JFXButton>
 				</VBox>
-				<JFXButton onAction="#onSeeLine" text="查看飞行路线">
+				<JFXButton onAction="#onSeeLine" text="%imageList_flight">
 					<styleClass>
 						<String fx:value="btn-level-normal" />
 					</styleClass>
@@ -57,7 +59,7 @@
 				<HBox alignment="CENTER_LEFT" prefHeight="25.0" spacing="8.0">
 					<children>
 						<Label style="-fx-text-fill: #000; -fx-font-size: 12;"
-							text="项目名称：" wrapText="true" />
+							text="%project_name" wrapText="true" />
 						<JFXTextField fx:id="textField_projectName"
 							focusColor="#FFA500" unFocusColor="#fafafa00" labelFloat="true"
 							prefColumnCount="10" prefHeight="25.0" prefWidth="280.0"
@@ -68,15 +70,16 @@
 				<HBox alignment="CENTER_LEFT" prefHeight="35.0" spacing="5.0">
 					<children>
 						<Label style="-fx-text-fill: #000; -fx-font-size: 12;"
-							text="经纬度输入方式：" wrapText="true" />
+							text="%project_location_way" wrapText="true" />
 						<JFXRadioButton fx:id="radioButton_img"
 							selected="true" selectedColor="#FFA500"
 							style="-fx-text-fill: #000; -fx-font-size: 12;-fx-spacing:4"
-							text="图片中录入">
+							text="%project_location_way_img">
 						</JFXRadioButton>
 						<JFXRadioButton fx:id="radioButton_file"
 							selected="false" selectedColor="#FFA500"
-							style="-fx-text-fill: #000; -fx-font-size: 12;" text="文件中录入" />
+							style="-fx-text-fill: #000; -fx-font-size: 12;"
+							text="%project_location_way_file" />
 					</children>
 				</HBox>
 
@@ -84,7 +87,7 @@
 					disable="true" prefHeight="25.0" spacing="5.0">
 					<children>
 						<Label style="-fx-text-fill: #000; -fx-font-size: 12;"
-							text="经纬度文件路径：" wrapText="true" />
+							text="%project_location_path" wrapText="true" />
 						<Label fx:id="labelLocation" maxWidth="-Infinity"
 							prefWidth="300"
 							style="-fx-text-fill: #000;-fx-font-size: 12;-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
@@ -93,7 +96,7 @@
 							style="-fx-padding: 2;-fx-pref-width:15;-fx-pref-height:15"
 							onAction="#onClickSelectLocation">
 							<tooltip>
-								<MyToolTip text="选择经纬度文件"></MyToolTip>
+								<MyToolTip text="%choose_location_file"></MyToolTip>
 							</tooltip>
 							<graphic>
 								<ImageView fitHeight="20" fitWidth="20"
@@ -107,7 +110,7 @@
 						<JFXButton buttonType="RAISED" onAction="#onClickHelp"
 							style="-fx-padding: 2;-fx-pref-width:15;-fx-pref-height:15">
 							<tooltip>
-								<MyToolTip text="帮助"></MyToolTip>
+								<MyToolTip text="%help"></MyToolTip>
 							</tooltip>
 							<graphic>
 								<ImageView fitHeight="20" fitWidth="20"

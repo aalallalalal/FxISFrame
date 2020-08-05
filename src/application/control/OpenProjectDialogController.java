@@ -20,6 +20,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import utils.ResUtil;
 import utils.SaveProjectsUtil;
 import utils.SaveProjectsUtil.Callback;
 
@@ -59,9 +60,9 @@ public class OpenProjectDialogController implements Initializable {
 
 	@SuppressWarnings("unchecked")
 	private void initTableView() {
-		name_projects = new TableColumn<ProjectBean, String>("工程名称");
-		path_projects = new TableColumn<ProjectBean, String>("路径");
-		time_createProject = new TableColumn<ProjectBean, String>("创建时间");
+		name_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("project_name_simple"));
+		path_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("project_path_simple"));
+		time_createProject = new TableColumn<ProjectBean, String>(ResUtil.gs("project_create_time"));
 		projectTableView.getColumns().addAll(name_projects, path_projects, time_createProject);
 		projectTableView.setItems(projectListData);
 

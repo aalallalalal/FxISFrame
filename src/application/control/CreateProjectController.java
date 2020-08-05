@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXButton;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import utils.ResUtil;
 
 /**
  * 创建项目界面controller
@@ -69,7 +70,7 @@ public class CreateProjectController extends BaseController implements Initializ
 	@Override
 	protected void onSetBottomBtnsAndTitle() {
 		if (title != null) {
-			title.setText("图片拼接");
+			title.setText(ResUtil.gs("software_title"));
 		}
 	}
 
@@ -82,7 +83,6 @@ public class CreateProjectController extends BaseController implements Initializ
 
 	@FXML
 	public void onClickHelp() {
-		System.out.println("帮助界面");
 		if (listener != null) {
 			listener.onClickHelp();
 		}

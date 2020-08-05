@@ -49,7 +49,7 @@
 					AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="5.0"
 					style="-fx-padding:4;-fx-pref-width:26; -fx-focus-color:transparent;">
 					<tooltip>
-						<MyToolTip text="开关飞行路径面板"></MyToolTip>
+						<MyToolTip text="%flight_switcher_pane"></MyToolTip>
 					</tooltip>
 					<graphic>
 						<ImageView fx:id="btn_switch" fitWidth="35.0"
