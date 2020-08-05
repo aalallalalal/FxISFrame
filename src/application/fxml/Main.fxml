@@ -33,7 +33,7 @@
 					style="-fx-background-color:  #F5F5F5;-fx-padding: 10;"
 					prefHeight="200.0" prefWidth="200.0">
 					<children>
-						<Label text="made by *****团队"
+						<Label text="Made by *****团队"
 							style="-fx-text-fill: #c5ab26; -fx-font-size:14;">
 							<effect>
 								<DropShadow color="#f2cd00" radius="10" />

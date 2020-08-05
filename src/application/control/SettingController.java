@@ -5,7 +5,6 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXRadioButton;
-import com.jfoenix.controls.JFXTextField;
 
 import beans.FinalDataBean;
 import beans.ProjectBean;
@@ -18,7 +17,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import utils.SaveLanguageUtil;
 import utils.ToastUtil;
+import views.myTextField.DecimalField;
+import views.myTextField.IntegerField;
 
 /**
  * 设置其他参数界面controller
@@ -33,13 +35,13 @@ public class SettingController extends BaseController implements Initializable {
 	@FXML
 	JFXCheckBox checkBox_preCheck;
 	@FXML
-	JFXTextField textArea_width;
+	IntegerField textArea_width;
 	@FXML
-	JFXTextField textArea_hight;
+	IntegerField textArea_hight;
 	@FXML
-	JFXTextField textArea_flyHeight;
+	DecimalField textArea_flyHeight;
 	@FXML
-	JFXTextField textArea_cameraSize;
+	DecimalField textArea_cameraSize;
 	@FXML
 	HBox hbox_preCheckDetail;
 	@FXML
@@ -57,6 +59,10 @@ public class SettingController extends BaseController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		initCheckBox();
 		initToggleGroup();
+		initTextField();
+	}
+
+	private void initTextField() {
 	}
 
 	private void initToggleGroup() {
@@ -65,6 +71,11 @@ public class SettingController extends BaseController implements Initializable {
 		radioButton_CN.setUserData(0);
 		radioButton_E.setToggleGroup(group);
 		radioButton_E.setUserData(1);
+		if (SaveLanguageUtil.getData() == 0) {
+			group.selectToggle(radioButton_CN);
+		} else {
+			group.selectToggle(radioButton_E);
+		}
 	}
 
 	private void initCheckBox() {
@@ -150,7 +161,7 @@ public class SettingController extends BaseController implements Initializable {
 		setting.setPreCheck(checkBox_preCheck.isSelected());
 		setting.setFlyHeight(textArea_flyHeight.getText());
 		setting.setCameraSize(textArea_cameraSize.getText());
-		setting.setLanguage((int) group.getSelectedToggle().getUserData());
+		setting.setLanguage((int) group.getUserData());
 		FinalDataBean finalDataBean = new FinalDataBean(projectListData, setting);
 		if (listener != null) {
 			listener.onClickStart(finalDataBean);

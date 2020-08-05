@@ -32,8 +32,16 @@
 					</styleClass>
 					<children>
 						<Label fx:id="bar_title" maxWidth="Infinity" text="图片拼接"
-							style="-fx-font-weight: bold; -fx-font-size:18;"
+							style="-fx-font-weight: bold; -fx-font-size:18;" graphicTextGap="8"
 							HBox.hgrow="ALWAYS">
+							<graphic>
+								<ImageView fx:id="img_icon" fitWidth="30.0"
+									preserveRatio="true" smooth="true">
+									<image>
+										<Image url="/resources/software_icon_small.png" />
+									</image>
+								</ImageView>
+							</graphic>
 						</Label>
 						<JFXButton fx:id="btn_hide" onAction="#onClickHide"
 							style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">

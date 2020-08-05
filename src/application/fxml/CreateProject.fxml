@@ -20,10 +20,10 @@
 				<Label alignment="CENTER" contentDisplay="CENTER"
 					style="-fx-font-weight: bold;" BorderPane.alignment="CENTER">
 					<graphic>
-						<ImageView fitHeight="250" fitWidth="400.0"
-							pickOnBounds="true" preserveRatio="true">
+						<ImageView fitHeight="210" fitWidth="400.0"
+							pickOnBounds="true" preserveRatio="true" smooth="true">
 							<image>
-								<Image url="/resources/icon.png" />
+								<Image url="/resources/software_icon_big.png" />
 							</image>
 						</ImageView>
 					</graphic>
@@ -55,9 +55,9 @@
 			BorderPane.alignment="CENTER">
 			<left>
 				<JFXButton buttonType="RAISED"
-					text="%createProject_createproject" prefWidth="220"
-					onAction="#createProject" prefHeight="90"
-					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;
+					text="%createProject_createproject" prefWidth="210"
+					onAction="#createProject" prefHeight="75"
+					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:35;-fx-background-radius:10;
 					-fx-font-size:22; "
 					BorderPane.alignment="CENTER">
 					<graphic>
@@ -72,9 +72,9 @@
 			</left>
 			<right>
 				<JFXButton buttonType="RAISED"
-					text="%createProject_openproject" prefWidth="220" prefHeight="90"
+					text="%createProject_openproject" prefWidth="210" prefHeight="75"
 					onAction="#openProject"
-					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:40;-fx-background-radius:10;
+					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:35;-fx-background-radius:10;
 					-fx-font-size:22; "
 					BorderPane.alignment="CENTER">
 					<graphic>

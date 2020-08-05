@@ -8,6 +8,8 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import views.myTextField.DecimalField?>
+<?import views.myTextField.IntegerField?>
 
 <BorderPane fx:id="root" style="-fx-background-color:#fff"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
@@ -36,12 +38,12 @@
 												<String fx:value="label-leve-normal" />
 											</styleClass>
 										</Label>
-										<JFXTextField fx:id="textArea_width"
+										<IntegerField fx:id="textArea_width"
 											maxWidth="-1" prefColumnCount="10" prefHeight="10.0">
 											<styleClass>
 												<String fx:value="custom-text-field" />
 											</styleClass>
-										</JFXTextField>
+										</IntegerField>
 									</children>
 								</HBox>
 								<HBox alignment="CENTER_LEFT" prefHeight="15.0">
@@ -51,12 +53,12 @@
 												<String fx:value="label-leve-normal" />
 											</styleClass>
 										</Label>
-										<JFXTextField fx:id="textArea_hight"
+										<IntegerField fx:id="textArea_hight"
 											prefColumnCount="10" prefHeight="10">
 											<styleClass>
 												<String fx:value="custom-text-field" />
 											</styleClass>
-										</JFXTextField>
+										</IntegerField>
 									</children>
 								</HBox>
 							</children>
@@ -78,23 +80,23 @@
 									<String fx:value="label-leve-normal" />
 								</styleClass>
 							</Label>
-							<JFXTextField fx:id="textArea_flyHeight"
+							<DecimalField fx:id="textArea_flyHeight"
 								prefHeight="10.0">
 								<styleClass>
 									<String fx:value="custom-text-field" />
 								</styleClass>
-							</JFXTextField>
+							</DecimalField>
 							<Label text="相机像元大小(微米):">
 								<styleClass>
 									<String fx:value="label-leve-normal" />
 								</styleClass>
 							</Label>
-							<JFXTextField fx:id="textArea_cameraSize"
+							<DecimalField fx:id="textArea_cameraSize"
 								prefHeight="10.0">
 								<styleClass>
 									<String fx:value="custom-text-field" />
 								</styleClass>
-							</JFXTextField>
+							</DecimalField>
 						</children>
 						<VBox.margin>
 							<Insets left="10" />
