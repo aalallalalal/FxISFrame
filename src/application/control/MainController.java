@@ -10,7 +10,6 @@ import com.jfoenix.controls.JFXButton;
 
 import application.Main;
 import application.control.CreateProjectDialogController.CallBack;
-import application.control.ProcessingController.MyHBox;
 import beans.FinalDataBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
@@ -202,11 +201,7 @@ public class MainController implements Initializable {
 		@Override
 		public void updateSuccBox() {
 			System.out.println("更新成功界面");
-			MyHBox temp = processingController.list_running.get(0);
-			temp.toSucc();
-			processingController.list_achieve.add(temp);
-			processingController.list_running.remove(0);
-			processingController.tab_achieve.setContent(processingController.listView_achieve);
+			processingController.updateSucc();
 			processingController.updateParam();
 			processingController.nextRun();
 		}
@@ -214,11 +209,7 @@ public class MainController implements Initializable {
 		@Override
 		public void updateFailBox(String reason) {
 			System.out.println("更新失败界面");
-			MyHBox temp = processingController.list_running.get(0);
-			temp.toFailed(reason);
-			processingController.list_failed.add(temp);
-			processingController.list_running.remove(0);
-			processingController.tab_failed.setContent(processingController.listView_failed);
+			processingController.updateFail();
 			processingController.updateParam();
 			processingController.nextRun();
 		}

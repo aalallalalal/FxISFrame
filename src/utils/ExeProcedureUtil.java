@@ -29,14 +29,18 @@ public class ExeProcedureUtil
 	 */
 	public static String execute(String path_Exe, String para_Exe, ProcessingListener listener) 
 	{
-		String[] cmds = {path_Exe, para_Exe};
 		BufferedReader inBr = null;
 		String lineStr = "";
 		String oldString = "";
 		
-		File workDir = new File(System.getProperty("user.dir") + "\\Run");
+		int i = para_Exe.lastIndexOf("%");
+		String name_currentproject = para_Exe.substring(i + 1);
+		File workDir = new File(System.getProperty("user.dir") + "\\Run\\" + name_currentproject);
 		if(!workDir.exists())
 			workDir.mkdir();
+		
+		para_Exe = para_Exe.substring(0, i);
+		String[] cmds = {path_Exe, para_Exe};
 		
 		try {
             Runtime runtime = Runtime.getRuntime();
