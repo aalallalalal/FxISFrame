@@ -64,7 +64,7 @@ public class TabFailedController implements Initializable
 		{
 			// TODO Auto-generated method stub
 			super.layoutChildren();
-			setSpacing(20);
+			setSpacing(50);
 		}
 	}
 
