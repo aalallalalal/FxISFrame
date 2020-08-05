@@ -36,7 +36,7 @@
 						<JFXButton fx:id="btn_close" onAction="#onClickClose"
 							style="-fx-padding: 3;-fx-focus-color: transparent;">
 							<tooltip>
-								<MyToolTip text="关闭"></MyToolTip>
+								<MyToolTip text="%close"></MyToolTip>
 							</tooltip>
 							<graphic>
 								<ImageView fitHeight="22" fitWidth="22"
@@ -54,14 +54,14 @@
 				<JFXTextArea fx:id="textArea_content" prefHeight="200.0"
 					editable="false"
 					style="-fx-font-size: 14; -fx-text-fill: #000; -fx-padding: 12;"
-					text="内容" wrapText="true" BorderPane.alignment="CENTER" />
+					text="---" wrapText="true" BorderPane.alignment="CENTER" />
 			</center>
 			<bottom>
 				<BorderPane prefHeight="50.0" prefWidth="200.0"
 					style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;"
 					BorderPane.alignment="CENTER">
 					<center>
-						<JFXButton onAction="#onConfirm" text="好 的"
+						<JFXButton onAction="#onConfirm" text="%ok"
 							BorderPane.alignment="CENTER">
 							<styleClass>
 								<String fx:value="btn-level-vip" />

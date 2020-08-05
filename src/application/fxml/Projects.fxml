@@ -41,12 +41,12 @@
 			spacing="15.0" BorderPane.alignment="CENTER">
 			<children>
 				<JFXButton fx:id="addProject" onAction="#createProject"
-					text="新建工程">
+					text="%createProject_createproject">
 					<styleClass>
 						<String fx:value="btn-level-projects" />
 					</styleClass>
 				</JFXButton>
-				<JFXButton onAction="#openProject" text="打开工程">
+				<JFXButton onAction="#openProject" text="%createProject_openproject">
 					<styleClass>
 						<String fx:value="btn-level-projects" />
 					</styleClass>
@@ -55,13 +55,13 @@
 					disable="true" BorderPane.alignment="CENTER">
 					<children>
 						<JFXButton fx:id="seeProject"
-							onAction="#onDetailProject" text="查看工程">
+							onAction="#onDetailProject" text="%project_detail">
 							<styleClass>
 								<String fx:value="btn-level-projects" />
 							</styleClass>
 						</JFXButton>
 						<JFXButton fx:id="removeProject" onAction="#onRemove"
-							text="移除工程">
+							text="%project_remove">
 							<styleClass>
 								<String fx:value="btn-level-projects" />
 							</styleClass>

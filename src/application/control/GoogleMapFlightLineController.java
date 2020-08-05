@@ -3,12 +3,10 @@ package application.control;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
-import beans.GoogleMapGeocodingBean;
-import beans.GoogleMapGeocodingBean.Results;
+import beans.AMapGeocodingBean;
 import beans.ImageBean;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
@@ -101,7 +99,7 @@ public class GoogleMapFlightLineController implements Initializable {
 	private boolean isShowFlightPane = true;
 
 	private ArrayList<ImageBean> listData;
-	private GoogleMapGeocodingBean geocodingBean;
+	private AMapGeocodingBean aMapGeocodingBean;
 	private PathTransition pathTransition;
 	@FXML
 	TextArea textArea_place;
@@ -258,7 +256,8 @@ public class GoogleMapFlightLineController implements Initializable {
 				} else {
 					sb.append("\n" + ResUtil.gs("flight_image_long") + imageBean.getLongitudeRef() + ":"
 							+ imageBean.getLongitude());
-					sb.append("\n" + ResUtil.gs("flight_image_lat") + ":" + imageBean.getLatitude());
+					sb.append("\n" + ResUtil.gs("flight_image_lat") + imageBean.getLatitudeRef() + ":"
+							+ imageBean.getLatitude());
 				}
 
 				return sb.toString();
@@ -375,8 +374,10 @@ public class GoogleMapFlightLineController implements Initializable {
 			 */
 			private void initGoogleMapData(ArrayList<ImageBean> listData) {
 				ArrayList<Double> analyGoogleData = analyDataToGoogleData(listData);
+				System.out.println("analyGoogleData" + analyGoogleData.size());
 				if (analyGoogleData != null && analyGoogleData.size() >= 2) {
-					geocodingBean = GoogleMapUtil.getGeocoding(analyGoogleData.get(1), analyGoogleData.get(0));
+//					geocodingBean = GoogleMapUtil.getGeocoding(analyGoogleData.get(1), analyGoogleData.get(0));
+					aMapGeocodingBean = GoogleMapUtil.getAMapGeocoding(analyGoogleData.get(1), analyGoogleData.get(0));
 				}
 				imageMap = GoogleMapUtil.getMapImage(analyGoogleData);
 			}
@@ -433,10 +434,15 @@ public class GoogleMapFlightLineController implements Initializable {
 			}
 
 			@Override
-			protected double[][] call() throws Exception {
-				// 初始化谷歌地图数据
-				initGoogleMapData(listData);
-				double[][] initFlightMapData = initFlightMapData();
+			protected double[][] call() {
+				double[][] initFlightMapData = null;
+				try {
+					// 初始化谷歌地图数据
+					initGoogleMapData(listData);
+					initFlightMapData = initFlightMapData();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 				return initFlightMapData;
 			}
 
@@ -445,19 +451,17 @@ public class GoogleMapFlightLineController implements Initializable {
 				super.succeeded();
 				try {
 					// 设置地图地理位置信息
-					if (geocodingBean != null && "OK".equals(geocodingBean.getStatus())) {
-						List<Results> results = geocodingBean.getResults();
-						if (results != null && results.size() >= 1) {
-							Results resultItem = results.get(0);
-							if (resultItem != null && !"".equals(resultItem.getFormatted_address())) {
-								textArea_place.setVisible(true);
-								// 设置place背景透明
-								Region region = (Region) textArea_place.lookup(".content");
-								region.setBackground(new Background(
-										new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-								region.setStyle("-fx-background-color: rgba(56,56,56,0.4)");
-								textArea_place.setText(ResUtil.gs("flight_geo") + resultItem.getFormatted_address());
-							}
+					if (aMapGeocodingBean != null && "1".equals(aMapGeocodingBean.getStatus())) {
+						if (aMapGeocodingBean.getRegeocode() != null
+								&& !"".equals(aMapGeocodingBean.getRegeocode().getFormatted_address())) {
+							textArea_place.setVisible(true);
+							// 设置place背景透明
+							Region region = (Region) textArea_place.lookup(".content");
+							region.setBackground(
+									new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
+							region.setStyle("-fx-background-color: rgba(56,56,56,0.4)");
+							textArea_place.setText(
+									ResUtil.gs("flight_geo") + aMapGeocodingBean.getRegeocode().getFormatted_address());
 						}
 					}
 

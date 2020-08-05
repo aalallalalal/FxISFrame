@@ -11,28 +11,72 @@ import java.util.ArrayList;
 
 import com.google.gson.Gson;
 
+import beans.AMapGeocodingBean;
 import beans.GoogleMapGeocodingBean;
 import javafx.scene.image.Image;
 
 public class GoogleMapUtil {
 	private static final String GOOGLE_MAP_KEY = "AIzaSyBPUI8p3FaOVNI_MipsHG7s2ESJ8S5-cws";
+	private static final String A_MAP_KEY = "045549c4d5b0b38d1ed3d52e69646705";
 
+	// 谷歌卫星地图api
 	private static final String BASE_STATIC_URL = "http://google.cn/maps/api/staticmap?maptype=satellite&language=zh-CN&sensor=false"
 			+ "&key=" + GOOGLE_MAP_KEY;
+
+	// 谷歌地理信息api.现在此api已被谷歌禁用
 	private static final String BASE_GEOCODING_URL = "https://google.cn/maps/api/geocode/json?&result_type=political&key="
-			+ GOOGLE_MAP_KEY;
+			+ GOOGLE_MAP_KEY + "&language=zh-CN";
+
+	// 高德地理信息api
+	private static final String AMAP_BASE_GEOCODING_URL = "https://restapi.amap.com/v3/geocode/regeo?key=" + A_MAP_KEY;
+
+	/**
+	 * 获取高德地图地理信息
+	 * 
+	 * @param lat
+	 * @param lng
+	 * @return
+	 */
+	public static AMapGeocodingBean getAMapGeocoding(double lat, double lng) {
+		AMapGeocodingBean jsonBean = null;
+		String urlStr = AMAP_BASE_GEOCODING_URL + "&location=" + lng + "," + lat;
+		if (SaveLanguageUtil.getData() == 1) {
+			urlStr = urlStr + "&language=en";
+		}
+		try {
+			URL url = new URL(urlStr);
+			HttpURLConnection openConnection = (HttpURLConnection) url.openConnection();
+			int responseCode = openConnection.getResponseCode();
+			if (responseCode != 200) {
+				ToastUtil.toast(ResUtil.gs("flight_geo_error"));
+			} else {
+				InputStreamReader in = new InputStreamReader(openConnection.getInputStream(), "UTF-8");
+				BufferedReader br = new BufferedReader(in);
+				String line;
+				StringBuffer result = new StringBuffer();
+				while ((line = br.readLine()) != null) {
+					result.append(line);
+				}
+				String jsonStr = result.toString();
+				Gson gson = new Gson();
+				jsonBean = gson.fromJson(jsonStr, AMapGeocodingBean.class);
+				return jsonBean;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		System.out.println("URL Amap Geocoding:" + urlStr);
+		return jsonBean;
+	}
 
 	/**
 	 * 根据经纬度获取到具体地理信息
+	 * 
+	 * @deprecated 此api已被谷歌禁用，使用AMap的
 	 */
 	public static GoogleMapGeocodingBean getGeocoding(double lat, double lng) {
 		GoogleMapGeocodingBean jsonBean = null;
 		String urlStr = BASE_GEOCODING_URL + "&latlng=" + lat + "," + lng;
-		if (SaveLanguageUtil.getData() == 0) {
-			urlStr = urlStr + "&language=zh-CN";
-		} else {
-			urlStr = urlStr + "&language=en";
-		}
 		try {
 			URL url = new URL(urlStr);
 			HttpURLConnection openConnection = (HttpURLConnection) url.openConnection();

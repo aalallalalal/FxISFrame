@@ -78,7 +78,7 @@ public abstract class AbstractTextField extends JFXTextField {
 	 */
 	private boolean isValid(final String value) {
 
-		if ("".equals(value) || value.equals("-")) {
+		if ("".equals(value) || "-".equals(value)) {
 			return true;
 		}
 

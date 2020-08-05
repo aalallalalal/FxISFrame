@@ -16,11 +16,7 @@ import javafx.stage.StageStyle;
  * 弹出框，用于简单提示
  */
 public class ToastUtil {
-	private static Stage stage = new Stage();
-
-	static {
-		stage.initStyle(StageStyle.TRANSPARENT);// 舞台透明
-	}
+	private static Stage stage = new Stage();;
 
 	// 默认3秒
 	public static void toast(String msg) {
@@ -75,6 +71,7 @@ public class ToastUtil {
 
 		Scene scene = new Scene(label, 200, 50);
 		scene.setFill(null);// 场景透明
+		stage.initStyle(StageStyle.TRANSPARENT);// 舞台透明
 		stage.setScene(scene);
 	}
 }

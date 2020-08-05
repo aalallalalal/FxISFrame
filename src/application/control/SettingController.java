@@ -17,6 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import utils.ResUtil;
 import utils.SaveLanguageUtil;
 import utils.ToastUtil;
 import views.myTextField.DecimalField;
@@ -130,9 +131,9 @@ public class SettingController extends BaseController implements Initializable {
 	protected void onSetBottomBtnsAndTitle() {
 		leftBtn.setVisible(true);
 		rightBtn.setVisible(true);
-		rightBtn.setText(" 开 始 ");
-		leftBtn.setText("项目");
-		title.setText("参数设置");
+		rightBtn.setText(ResUtil.gs("start"));
+		leftBtn.setText(ResUtil.gs("project"));
+		title.setText(ResUtil.gs("settings"));
 	}
 
 	@Override
@@ -145,12 +146,12 @@ public class SettingController extends BaseController implements Initializable {
 	@Override
 	protected void onClickRightBtn() {
 		if ("".equals(textArea_width.getText()) || "".equals(textArea_hight.getText())) {
-			ToastUtil.toast("网格大小数据不能为空");
+			ToastUtil.toast(ResUtil.gs("setting_net_error"));
 			return;
 		}
 		if (checkBox_preCheck.isSelected()
 				&& ("".equals(textArea_flyHeight.getText()) || "".equals(textArea_cameraSize.getText()))) {
-			ToastUtil.toast("选择进行先验约束，对应数据不能为空");
+			ToastUtil.toast(ResUtil.gs("setting_pre_check_error"));
 			return;
 		}
 
@@ -161,7 +162,7 @@ public class SettingController extends BaseController implements Initializable {
 		setting.setPreCheck(checkBox_preCheck.isSelected());
 		setting.setFlyHeight(textArea_flyHeight.getText());
 		setting.setCameraSize(textArea_cameraSize.getText());
-		setting.setLanguage((int) group.getUserData());
+		setting.setLanguage((int) group.getSelectedToggle().getUserData());
 		FinalDataBean finalDataBean = new FinalDataBean(projectListData, setting);
 		if (listener != null) {
 			listener.onClickStart(finalDataBean);

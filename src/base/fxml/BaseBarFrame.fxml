@@ -31,9 +31,10 @@
 						<String fx:value="bar-main" />
 					</styleClass>
 					<children>
-						<Label fx:id="bar_title" maxWidth="Infinity" text="图片拼接"
-							style="-fx-font-weight: bold; -fx-font-size:18;" graphicTextGap="8"
-							HBox.hgrow="ALWAYS">
+						<Label fx:id="bar_title" maxWidth="Infinity"
+							text="%software_title"
+							style="-fx-font-weight: bold; -fx-font-size:18;"
+							graphicTextGap="8" HBox.hgrow="ALWAYS">
 							<graphic>
 								<ImageView fx:id="img_icon" fitWidth="30.0"
 									preserveRatio="true" smooth="true">
@@ -46,7 +47,7 @@
 						<JFXButton fx:id="btn_hide" onAction="#onClickHide"
 							style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">
 							<tooltip>
-								<MyToolTip text="最小化"></MyToolTip>
+								<MyToolTip text="%minimize"></MyToolTip>
 							</tooltip>
 							<graphic>
 								<ImageView fx:id="img_hide" fitWidth="24.0"
@@ -60,7 +61,7 @@
 						<JFXButton fx:id="btn_close" onAction="#onClickClose"
 							style="-fx-padding: 4;-fx-pref-width:26 ；-fx-focus-color: transparent;">
 							<tooltip>
-								<MyToolTip text="退出软件"></MyToolTip>
+								<MyToolTip text="%exit"></MyToolTip>
 							</tooltip>
 							<graphic>
 								<ImageView fitWidth="24.0" preserveRatio="true"

@@ -30,7 +30,7 @@
 						<String fx:value="bar-sub" />
 					</styleClass>
 					<children>
-						<Label fx:id="bar_title" maxWidth="Infinity" text="图片拼接"
+						<Label fx:id="bar_title" maxWidth="Infinity" 	text="%software_title"
 							style="-fx-font-weight: bold;-fx-font-size:16;"
 							HBox.hgrow="ALWAYS">
 						</Label>
@@ -40,7 +40,7 @@
 						<JFXButton onAction="#onClickClose" fx:id="close"
 							style="-fx-padding: 4;-fx-focus-color: transparent;">
 							<tooltip>
-								<MyToolTip text="关闭页面"></MyToolTip>
+								<MyToolTip text="%close"></MyToolTip>
 							</tooltip>
 							<graphic>
 								<ImageView smooth="true" fitHeight="25.0"

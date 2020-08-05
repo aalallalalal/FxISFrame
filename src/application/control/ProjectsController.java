@@ -29,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import utils.ResUtil;
 import utils.SaveProjectsUtil;
 import utils.UIUtil;
 
@@ -69,7 +70,7 @@ public class ProjectsController extends BaseController implements Initializable 
 	public void addProject(ProjectBean project) {
 		if (!checkDuplicates(project)) {
 			projectListData.add(project);
-			String bottomtext = "共有" + projectListData.size() + "个项目";
+			String bottomtext = ResUtil.gs("projectList_num", projectListData.size() + "");
 			bottomLabel.setText(bottomtext);
 		}
 	}
@@ -88,12 +89,12 @@ public class ProjectsController extends BaseController implements Initializable 
 	@SuppressWarnings("unchecked")
 	private void initTableView() {
 //		projectTableView.setEditable(true);// 表格设置为可编辑
-		name_projects = new TableColumn<ProjectBean, String>("工程名称");
+		name_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("project_name_simple"));
 //		name_projects.setEditable(true);
 		name_projects.setCellFactory(TextFieldTableCell.forTableColumn());
 
-		path_projects = new TableColumn<ProjectBean, String>("路径");
-		time_createProject = new TableColumn<ProjectBean, String>("创建时间");
+		path_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("project_path_simple"));
+		time_createProject = new TableColumn<ProjectBean, String>(ResUtil.gs("project_create_time"));
 		projectTableView.getColumns().addAll(name_projects, path_projects, time_createProject);
 		projectTableView.setItems(projectListData);
 
@@ -171,7 +172,8 @@ public class ProjectsController extends BaseController implements Initializable 
 		}
 		ProjectBean project = projectListData.get(index);
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml",
-				ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height, "项目" + project.getProjectName());
+				ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height,
+				ResUtil.gs("project") + project.getProjectName());
 		ImageListController controller = openFrame.getFxmlLoader().getController();
 		controller.setProjectInfo(project);
 		controller.setCallBack(new ImageListController.Callback() {
@@ -189,7 +191,8 @@ public class ProjectsController extends BaseController implements Initializable 
 			return;
 		}
 		UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
-				ConstSize.Confirm_Dialog_Frame_Height, "移除项目", "确认将项目:" + selectedItem.getProjectName() + "移出?",
+				ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("projectList_remove"),
+				ResUtil.gs("projectList_remove_confirm", selectedItem.getProjectName()),
 				(Stage) root.getScene().getWindow(), new CallBack() {
 					@Override
 					public void onCancel() {
@@ -198,7 +201,7 @@ public class ProjectsController extends BaseController implements Initializable 
 					@Override
 					public void onConfirm() {
 						projectListData.remove(selectedItem);
-						String bottomtext = "共有" + projectListData.size() + "个项目";
+						String bottomtext = ResUtil.gs("projectList_num", projectListData.size() + "");
 						bottomLabel.setText(bottomtext);
 					}
 				});
@@ -224,8 +227,8 @@ public class ProjectsController extends BaseController implements Initializable 
 	protected void onSetBottomBtnsAndTitle() {
 		leftBtn.setVisible(false);
 		rightBtn.setVisible(true);
-		rightBtn.setText("下一步");
-		title.setText("项目");
+		rightBtn.setText(ResUtil.gs("next_step"));
+		title.setText(ResUtil.gs("project"));
 	}
 
 	@Override

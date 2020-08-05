@@ -116,7 +116,7 @@ public class CreateProjectDialogController implements Initializable {
 	@FXML
 	public void onClickHelp() {
 		UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
-				ResUtil.gs("tips"), ConstRes.Text_LocationFile_Notice, (Stage) root.getScene().getWindow());
+				ResUtil.gs("tips"), ResUtil.gs("Text_LocationFile_Notice"), (Stage) root.getScene().getWindow());
 	}
 
 	@FXML

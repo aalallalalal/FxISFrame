@@ -20,7 +20,7 @@
 			<HBox alignment="CENTER_LEFT" prefHeight="35.0" spacing="5.0">
 				<children>
 					<Label style="-fx-text-fill: #000; -fx-font-size: 12;"
-						text="软件语言：" wrapText="true" />
+						text="%software_language" wrapText="true" />
 					<JFXRadioButton fx:id="radioButton_ch"
 						selected="true" selectedColor="#FFA500"
 						style="-fx-text-fill: #000; -fx-font-size: 12;-fx-spacing:4"
@@ -35,7 +35,7 @@
 	</center>
 	<bottom>
 		<JFXButton fx:id="btnDone" buttonType="RAISED"
-			prefWidth="120.0" onAction="#done" text=" 完 成 "
+			prefWidth="120.0" onAction="#done" text="%done"
 			BorderPane.alignment="CENTER">
 			<styleClass>
 				<String fx:value="btn-level-vip" />

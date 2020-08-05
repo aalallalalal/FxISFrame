@@ -15,7 +15,6 @@ import base.controller.ConfirmDialogController.CallBack;
 import beans.ImageBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
-import consts.ConstRes;
 import consts.ConstSize;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
@@ -260,7 +259,7 @@ public class ImageListController implements Initializable {
 	@FXML
 	public void onClickHelp() {
 		UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
-				ResUtil.gs("tips"), ConstRes.Text_LocationFile_Notice, (Stage) root.getScene().getWindow());
+				ResUtil.gs("tips"), ResUtil.gs("Text_LocationFile_Notice"), (Stage) root.getScene().getWindow());
 	}
 
 	@FXML

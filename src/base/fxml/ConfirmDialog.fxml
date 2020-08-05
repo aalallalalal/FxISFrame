@@ -36,7 +36,7 @@
 						<JFXButton fx:id = "btn_close" onAction="#onClickClose"
 							style="-fx-padding: 4;-fx-focus-color: transparent;">
 							<tooltip>
-								<MyToolTip text="关闭"></MyToolTip>
+								<MyToolTip text="%close"></MyToolTip>
 							</tooltip>
 							<graphic>
 								<ImageView fitHeight="22" fitWidth="22"
@@ -53,14 +53,14 @@
 			<center>
 				<Label fx:id="label_content" prefHeight="200.0"
 					style="-fx-font-size: 14; -fx-text-fill: #000; -fx-padding: 12;"
-					text="内容" wrapText="true" BorderPane.alignment="CENTER" />
+					text="---" wrapText="true" BorderPane.alignment="CENTER" />
 			</center>
 			<bottom>
 				<BorderPane prefHeight="50.0" prefWidth="200.0"
 					style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid; -fx-padding: 5;"
 					BorderPane.alignment="CENTER">
 					<left>
-						<JFXButton onAction="#onCancel" text="取 消"
+						<JFXButton onAction="#onCancel" text="%cancel"
 							prefHeight="30.0" prefWidth="80.0">
 							<styleClass>
 								<String fx:value="btn-level-vip" />
@@ -73,7 +73,7 @@
 						</JFXButton>
 					</left>
 					<right>
-						<JFXButton onAction="#onConfirm" text="确 定"
+						<JFXButton onAction="#onConfirm" text="%confirm"
 							prefHeight="30.0" prefWidth="80.0">
 							<styleClass>
 								<String fx:value="btn-level-vip" />

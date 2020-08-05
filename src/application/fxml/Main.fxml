@@ -33,7 +33,7 @@
 					style="-fx-background-color:  #F5F5F5;-fx-padding: 10;"
 					prefHeight="200.0" prefWidth="200.0">
 					<children>
-						<Label text="Made by *****团队"
+						<Label text="Made by *****Team"
 							style="-fx-text-fill: #c5ab26; -fx-font-size:14;">
 							<effect>
 								<DropShadow color="#f2cd00" radius="10" />
@@ -48,7 +48,7 @@
 					BorderPane.alignment="CENTER">
 					<left>
 						<JFXButton fx:id="btn_pre" buttonType="RAISED"
-							onAction="#leftBtn" text=" 上一步 " BorderPane.alignment="CENTER">
+							onAction="#leftBtn" text="%pre_step" BorderPane.alignment="CENTER">
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0"
 									pickOnBounds="true" preserveRatio="true">
@@ -64,7 +64,7 @@
 					</left>
 					<right>
 						<JFXButton fx:id="btn_next" buttonType="RAISED"
-							onAction="#rightBtn" text=" 下一步 " BorderPane.alignment="CENTER">
+							onAction="#rightBtn" text="%next_step" BorderPane.alignment="CENTER">
 							<styleClass>
 								<String fx:value="btn-level-vip" />
 							</styleClass>

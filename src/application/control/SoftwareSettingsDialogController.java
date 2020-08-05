@@ -58,7 +58,6 @@ public class SoftwareSettingsDialogController implements Initializable {
 				SaveLanguageUtil.saveData(bean.getLanguage());
 				callBack.onDone(bean,true);
 			} else {
-				System.out.println("软件设置没有更改");
 				callBack.onDone(bean,false);
 			}
 		}

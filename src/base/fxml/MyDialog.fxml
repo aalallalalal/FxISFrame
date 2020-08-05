@@ -37,7 +37,7 @@
 						<JFXButton fx:id = "btn_close" onAction="#onClickClose"
 							style="-fx-padding: 3;-fx-focus-color: transparent;">
 							<tooltip>
-								<MyToolTip text="关闭"></MyToolTip>
+								<MyToolTip text="%close"></MyToolTip>
 							</tooltip>
 							<graphic>
 								<ImageView fitHeight="22" fitWidth="22"
