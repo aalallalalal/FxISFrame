@@ -49,6 +49,7 @@ public class TabRunningController implements Initializable
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		System.out.println("初始化running");
+		listView_running.setVisible(false);
 	}
 	
 	//向列表中添加待运行的任务
@@ -61,7 +62,14 @@ public class TabRunningController implements Initializable
 			list_running.add(temp);
 		}
 		listView_running.setItems(list_running);
+		listView_running.setVisible(true);
 		listView_running.refresh();
+	}
+	
+	public void clearItem()
+	{
+		list_running.clear();
+		listView_running.getItems().clear();
 	}
 	
 	protected class RunningHBox extends HBox{
@@ -124,5 +132,7 @@ public class TabRunningController implements Initializable
 			vbox.getChildren().remove(0);
 		}
 	}
+
+	
 	
 }

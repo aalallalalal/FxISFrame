@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXTabPane;
 
 import base.controller.ConfirmDialogController.CallBack;
 import beans.FinalDataBean;
-import beans.MyFxmlBean;
 import beans.ProjectBean;
 import consts.ConstSize;
 import javafx.fxml.Initializable;
@@ -33,8 +32,6 @@ import javafx.fxml.FXML;
 public class ProcessingController extends BaseController implements Initializable {
 
 	public ProcessingListener listener;
-
-	private boolean result;// 运行结果
 
 	private boolean state = true;// 当前状态（是否运行完）
 	
@@ -71,16 +68,6 @@ public class ProcessingController extends BaseController implements Initializabl
 	Tab tab_param = new Tab();
 	@FXML
 	TabParamController tabParamController;
-	
-	public boolean isResult()
-	{
-		return result;
-	}
-
-	public void setResult(boolean result)
-	{
-		this.result = result;
-	}
 
 	public boolean isState()
 	{
@@ -121,9 +108,7 @@ public class ProcessingController extends BaseController implements Initializabl
 		tabAchieveController.init(this);
 		tabFailedController.init(this);
 		tabParamController.init(this);
-		
 		tabPane.getSelectionModel().select(tab_running);
-		tabPane.setRotateGraphic(false);
 		tab_running.setGraphic(new Label("正在拼接"));
 		tab_achieve.setGraphic(new Label("拼接成功"));
 		tab_failed.setGraphic(new Label("拼接失败"));
@@ -135,11 +120,11 @@ public class ProcessingController extends BaseController implements Initializabl
 	public void initPage()
 	{
 		this.setState(true);
-		this.setResult(true);
 		this.textarea.clear();
-		tabRunningController.list_running.clear();
-		tabAchieveController.list_achieve.clear();
-		tabFailedController.list_failed.clear();
+		tabRunningController.clearItem();
+		tabAchieveController.clearItem();
+		tabFailedController.clearItem();
+		FinalDataBean.pathList.clear();
 	}
 	
 	public void setListener(ProcessingListener listener) {
@@ -250,6 +235,11 @@ public class ProcessingController extends BaseController implements Initializabl
 		void openResultFromFileSystem();
 		//更新显示的运行信息
 		void update(String lineStr);
+	}
+
+	public void updatecontrol()
+	{
+		tabRunningController.listView_running.setVisible(false);
 	}
 
 }

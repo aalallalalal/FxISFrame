@@ -3,7 +3,6 @@ package application.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import beans.ProjectBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,14 +36,20 @@ public class TabFailedController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		// TODO Auto-generated method stub
-		
+		listView_failed.setVisible(false);
 	}
 	
 	public void addFailedHBox(String name, String reason)
 	{
 		list_failed.add(new FailedHBox(name, reason));
 		listView_failed.setItems(list_failed);
+		listView_failed.setVisible(true);
+	}
+	
+	public void clearItem()
+	{
+		list_failed.clear();
+		listView_failed.getItems().clear();
 	}
 
 	private class FailedHBox extends HBox{
@@ -68,5 +73,4 @@ public class TabFailedController implements Initializable
 		}
 	}
 
-	
 }

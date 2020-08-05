@@ -234,6 +234,7 @@ public class MainController implements Initializable {
 			processingController.setState(false);
 			processingController.currentProject.setText("");
 			processingController.textarea.clear();
+			processingController.updatecontrol();
 			changeBottomBtnsView(currentController, 3);
 		}
 	}

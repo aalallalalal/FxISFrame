@@ -45,7 +45,7 @@ public class TabAchieveController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		
+		listView_achieve.setVisible(false);
 	}
 	
 	public void addAchieveHBox(ProjectBean project) 
@@ -53,6 +53,13 @@ public class TabAchieveController implements Initializable
 		AchieveHBox temp = new AchieveHBox(project);
 		list_achieve.add(temp);
 		listView_achieve.setItems(list_achieve);
+		listView_achieve.setVisible(true);
+	}
+	
+	public void clearItem() 
+	{
+		list_achieve.clear();
+		listView_achieve.getItems().clear();
 	}
 
 	protected class AchieveHBox extends HBox{

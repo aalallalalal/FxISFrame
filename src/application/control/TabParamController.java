@@ -5,13 +5,13 @@ import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 
 
 public class TabParamController implements Initializable
 {
 	@FXML
-	AnchorPane root;
+	BorderPane root;
 	
 	private ProcessingController processingController;
 	public void init(ProcessingController controller) 
