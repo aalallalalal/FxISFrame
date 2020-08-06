@@ -63,7 +63,7 @@ public class TabRunningController implements Initializable
 		}
 		listView_running.setItems(list_running);
 		listView_running.setVisible(true);
-		listView_running.refresh();
+//		listView_running.refresh();
 	}
 	
 	public void clearItem()
@@ -108,7 +108,7 @@ public class TabRunningController implements Initializable
 									System.out.println("取消该拼接任务！");
 									int i = listView_running.getSelectionModel().getSelectedIndex();
 									list_running.remove(i);
-									listView_running.refresh();
+//									listView_running.refresh();
 									FinalDataBean.pathList.remove(i - 1); 
 								}
 							});

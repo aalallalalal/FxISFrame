@@ -155,6 +155,19 @@ public class SettingController extends BaseController implements Initializable {
 			return;
 		}
 
+		int width, height;
+		try {
+			width = Integer.parseInt(textArea_width.getText());
+			height = Integer.parseInt(textArea_hight.getText());
+			if (width < 10 || height < 10) {
+				ToastUtil.toast(ResUtil.gs("setting_net_size_error"));
+				return;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return;
+		}
+
 		SettingsBean setting = new SettingsBean();
 		setting.setSaveMiddle(checkBox_SaveMiddle.isSelected());
 		setting.setNetWidth(textArea_width.getText());
