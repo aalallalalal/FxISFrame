@@ -167,7 +167,7 @@ public class MainController implements Initializable {
 			if (processingController != null) {
 				FinalDataBean.setting = finalData.toSettingParameter();
 				finalData.toPathParameter();
-				processingController.startExec();
+				processingController.startExec(finalData.getSettings());
 			}
 		}
 

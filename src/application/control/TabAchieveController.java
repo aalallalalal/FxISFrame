@@ -77,7 +77,6 @@ public class TabAchieveController implements Initializable
 		{
 			project_name.setText(project.getProjectName());
 			openinFile.setGraphic(imageView_open);
-			
 			openinFile.setOnAction(new EventHandler<ActionEvent>()
 			{
 				

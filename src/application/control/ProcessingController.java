@@ -3,12 +3,12 @@ package application.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 import com.jfoenix.controls.JFXTabPane;
 
 import base.controller.ConfirmDialogController.CallBack;
 import beans.FinalDataBean;
 import beans.ProjectBean;
+import beans.SettingsBean;
 import consts.ConstSize;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -85,7 +85,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	 * @param finalData
 	 * @throws Exception
 	 */
-	public void startExec()
+	public void startExec(SettingsBean settings)
 	{
 		service = new ExeService(this.listener);
 		 //异常监听 监听现在状态是否有异常并打印
@@ -97,6 +97,7 @@ public class ProcessingController extends BaseController implements Initializabl
         });
         System.out.println("开始");
         tabRunningController.addServiceToList();
+		tabParamController.init(this, settings);
         updateParam();
         nextRun();
 	}
@@ -107,7 +108,6 @@ public class ProcessingController extends BaseController implements Initializabl
 		tabRunningController.init(this);
 		tabAchieveController.init(this);
 		tabFailedController.init(this);
-		tabParamController.init(this);
 		tabPane.getSelectionModel().select(tab_running);
 		tab_running.setGraphic(new Label("正在拼接"));
 		tab_achieve.setGraphic(new Label("拼接成功"));
