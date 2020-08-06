@@ -10,31 +10,31 @@
 visibility: hidden;
 }
 .bar-main{
-	-fx-background-color: #608DFA; -fx-pref-height: 70.0; -fx-padding: 10.0;-fx-spacing:1.0;
+	-fx-background-color: linear-gradient(to right,#4952E8 0.0%,#608DFA 40.0%,#608DFA 60.0%,#4952E8 100.0%); -fx-pref-height: 70.0; -fx-padding: 10.0;-fx-spacing:1.0;
 }
 .bar-sub{
-	-fx-background-color: #608DFA; -fx-pref-height: 50.0; -fx-padding: 8.0;-fx-spacing:1.0;
+	-fx-background-color: linear-gradient(to right,#4952E8 0.0%,#608DFA 40.0%,#608DFA 60.0%,#4952E8 100.0%); -fx-pref-height: 50.0; -fx-padding: 8.0;-fx-spacing:1.0;
 }
 .bar-dialog{
-	-fx-background-color:  #608DFA; -fx-pref-height: 30.0; -fx-padding: 6.0;-fx-spacing:1.0;
+	-fx-background-color:  linear-gradient(to right,#4952E8 0.0%,#608DFA 40.0%,#608DFA 60.0%,#4952E8 100.0%); -fx-pref-height: 30.0; -fx-padding: 6.0;-fx-spacing:1.0;
 }
 .bar-confirm-dialog{
-	-fx-background-color:  #608DFA; -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
+	-fx-background-color:   linear-gradient(to right,#4952E8 0.0%,#608DFA 40.0%,#608DFA 60.0%,#4952E8 100.0%);-fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
 }
 .bar-notice-dialog{
-	-fx-background-color:  #608DFA; -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
+	-fx-background-color:   linear-gradient(to right,#4952E8 0.0%,#608DFA 40.0%,#608DFA 60.0%,#4952E8 100.0%); -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
 }
 .frame-pane{
 	-fx-background-radius: 10.0; -fx-background-color: #ffffff;-fx-border-radius:10.0;
 }
 .btn-level-vip{
-	-fx-background-color: #FFA500;-fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:14.0;
+	-fx-background-color: linear-gradient(to right,#FFB731 0.0%,#FFBD43 45.0%,#FFBD43 55.0%,#FFB731 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:14.0;
 }
 .btn-level-normal{
-	-fx-background-color: #608DFA;-fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:14.0;
+	-fx-background-color: linear-gradient(to right,#4379FC 0.0%,#608DFA 50.0%,#4379FC 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:14.0;
 }
 .btn-level-projects{
-	-fx-background-color: #608DFA;-fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:16.0;
+	-fx-background-color:linear-gradient(to right,#4379FC 0.0%,#608DFA 50.0%,#4379FC 100.0%);-fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:16.0;
 }
 
 .custom-jfx-check-box{
@@ -150,9 +150,9 @@ visibility: hidden;
 }
 
 .text-area{
-    -fx-background-insets: 0;
+    -fx-background-insets: 0.0;
     -fx-background-color: transparent, white, transparent, white;
-    -fx-font-size: 13px;
+    -fx-font-size: 13.0px;
 }
 .text-area .content {
     -fx-background-color: transparent, white, transparent, white;
@@ -185,8 +185,8 @@ visibility: hidden;
 
 /* Tab选中的时候选中其边框并修改样式 */
 .jfx-tab-pane:focused >.tab-header-area >.headers-region >.tab:selected >.focus-indicator {
-    -fx-border-radius: 0px;
-    -fx-border-width: 1px 1px 1px 1px;
+    -fx-border-radius: 0.0px;
+    -fx-border-width: 1.0px 1.0px 1.0px 1.0px;
     -fx-border-color: white;
 }
 
@@ -202,11 +202,11 @@ visibility: hidden;
 
 .list-cell *.button{
 	-fx-text-fill:black;
-	-fx-font-size: 16px;
+	-fx-font-size: 16.0px;
 }
 
 .list-cell *.label{
-	-fx-font-size: 18px;
+	-fx-font-size: 18.0px;
 }
 
 .list-cell:empty {

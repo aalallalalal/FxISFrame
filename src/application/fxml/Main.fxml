@@ -31,7 +31,7 @@
 		<StackPane prefHeight="40.0" BorderPane.alignment="CENTER">
 			<children>
 				<FlowPane fx:id="bottomGroupPane" alignment="CENTER_RIGHT"
-					style="-fx-background-color:  #AAAAAA;-fx-padding: 10;"
+					style="-fx-background-color:linear-gradient(to right, #AAAAAA 0.0%,#C9C7C7 40.0%,#C9C7C7 60.0%, #AAAAAA 100.0%);-fx-padding: 10;"
 					prefHeight="30.0" prefWidth="200.0">
 					<children>
 						<Label text="Made by UAV-TIR Team"
@@ -45,7 +45,7 @@
 			</children>
 			<children>
 				<BorderPane prefHeight="40.0" fx:id="bottomBtnsPane"
-					style="-fx-background-color:  #FAFAFA;-fx-padding: 10;"
+					style="-fx-background-color: #FAFAFA;-fx-padding: 10;"
 					BorderPane.alignment="CENTER">
 					<left>
 						<JFXButton fx:id="btn_pre" buttonType="RAISED"
