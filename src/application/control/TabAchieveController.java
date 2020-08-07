@@ -121,7 +121,6 @@ public class TabAchieveController implements Initializable
 					path = path + "\\Run\\" + project.getProjectName() + "\\Result\\0_results\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
 					System.out.println(path);
 					runtime.exec("cmd /c " + path);
-					System.out.println("查看结果");
 				} catch (IOException e) {
 					ToastUtil.toast(ResUtil.gs("open_image_error"));
 					e.printStackTrace();
