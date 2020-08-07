@@ -1,6 +1,7 @@
 package application.control;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -20,10 +21,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
@@ -78,10 +79,21 @@ public class ProjectsController extends BaseController implements Initializable 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTableView();
-		projectTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {
+		projectTableView.setRowFactory(new Callback<TableView<ProjectBean>, TableRow<ProjectBean>>() {
 			@Override
-			public void handle(MouseEvent event) {
-				onTestMouse(event);
+			public TableRow<ProjectBean> call(TableView<ProjectBean> param) {
+				{
+					TableRow<ProjectBean> row = new TableRow<ProjectBean>();
+					row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+						@Override
+						public void handle(MouseEvent event) {
+							if (event.getClickCount() == 2 && (!row.isEmpty())) {
+								onDetailProject();
+							}
+						}
+					});
+					return row;
+				}
 			}
 		});
 	}
@@ -91,13 +103,13 @@ public class ProjectsController extends BaseController implements Initializable 
 //		projectTableView.setEditable(true);// 表格设置为可编辑
 		name_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("project_name_simple"));
 //		name_projects.setEditable(true);
-		name_projects.setCellFactory(TextFieldTableCell.forTableColumn());
+//		name_projects.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		path_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("project_path_simple"));
 		time_createProject = new TableColumn<ProjectBean, String>(ResUtil.gs("project_create_time"));
 		projectTableView.getColumns().addAll(name_projects, path_projects, time_createProject);
 		projectTableView.setItems(projectListData);
-
+		
 		name_projects.setPrefWidth(130);
 		path_projects.setPrefWidth(270);
 		time_createProject.setPrefWidth(140);
@@ -147,13 +159,6 @@ public class ProjectsController extends BaseController implements Initializable 
 				}
 			}
 		});
-	}
-
-	// 列表双击事件
-	protected void onTestMouse(MouseEvent event) {
-		if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
-			onDetailProject();
-		}
 	}
 
 	// 添加工程的事件响应

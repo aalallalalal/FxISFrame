@@ -123,12 +123,10 @@ public class GoogleMapUtil {
 				InputStream is = openConnection.getInputStream();
 				imageMap = new Image(is);
 			}
-		} catch (MalformedURLException e) {
-			e.printStackTrace();
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			ToastUtil.toast(ResUtil.gs("flight_map_error_no_net"));
-		}
+		} 
 		System.out.println("URL mapimage:" + urlStr);
 		return imageMap;
 	}

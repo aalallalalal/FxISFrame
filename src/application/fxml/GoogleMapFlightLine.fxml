@@ -13,61 +13,62 @@
 <?import java.lang.String?>
 <?import views.MyToolTip?>
 
-<BorderPane fx:id="root" style="-fx-background-color:#fff;"
+<BorderPane fx:id="root"
+	style="-fx-background-color:#EAEAEA;"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.GoogleMapFlightLineController">
 	<center>
-		<AnchorPane fx:id="pane" opacity="0"
-			style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;-fx-padding:2"
-			BorderPane.alignment="CENTER">
-			<children>
-				<GesturePane fx:id="gesturePane"
-					AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
-					AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-					<ImageView fx:id="imageView" pickOnBounds="true"
-						style="-fx-background-color:#fff" preserveRatio="true"
-						fitHeight="626" fitWidth="976" />
-				</GesturePane>
 
-				<TextArea fx:id="textArea_tip" prefHeight="80.0"
-					prefWidth="160" editable="false" wrapText="true"
-					AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"
-					visible="false"
-					style="-fx-font-size:10;-fx-padding:3;-fx-text-fill: #fff;-fx-background-color:rgba(56,56,56,0.4);-fx-border-radius: 10;-fx-background-radius: 10">
-				</TextArea>
+		<GesturePane fx:id="largePane">
+			<AnchorPane fx:id="pane" opacity="0"
+				style="-fx-border-color:#fafafa;-fx-border-width:2;-fx-border-style:solid;-fx-padding:5"
+				BorderPane.alignment="CENTER">
+				<children>
+					<GesturePane fx:id="gesturePane" visible="false"
+						AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+						AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+						<ImageView fx:id="imageView" pickOnBounds="true"
+							style="-fx-background-color:#fff" preserveRatio="true"
+							fitHeight="626" fitWidth="976" />
+					</GesturePane>
+
+					<TextArea fx:id="textArea_tip" prefHeight="80.0"
+						prefWidth="160" editable="false" wrapText="true"
+						AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"
+						visible="false"
+						style="-fx-font-size:10;-fx-padding:3;-fx-text-fill: #fff;-fx-background-color:rgba(56,56,56,0.4);-fx-border-radius: 10;-fx-background-radius: 10">
+					</TextArea>
 
 
-				<TextArea fx:id="textArea_place" prefHeight="30.0"
-					prefWidth="180" editable="false" wrapText="true"
-					AnchorPane.rightAnchor="5.0" AnchorPane.bottomAnchor="25.0"
-					visible="false"
-					style="-fx-font-size:12;-fx-padding:3;-fx-text-fill: #fff;-fx-background-color:rgba(56,56,56,0.4);-fx-border-radius: 
-					10;-fx-background-radius: 10">
-				</TextArea>
+					<TextArea fx:id="textArea_place" prefHeight="30.0"
+						prefWidth="180" editable="false" wrapText="true"
+						AnchorPane.rightAnchor="5.0" AnchorPane.bottomAnchor="25.0"
+						visible="false" style="-fx-font-size:10;-fx-text-fill: #fff;">
+					</TextArea>
 
-				<JFXButton onAction="#onClickPaneSwitch"
-					AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="5.0"
-					style="-fx-padding:4;-fx-pref-width:26; -fx-focus-color:transparent;">
-					<tooltip>
-						<MyToolTip text="%flight_switcher_pane"></MyToolTip>
-					</tooltip>
-					<graphic>
-						<ImageView fx:id="btn_switch" fitWidth="35.0"
-							preserveRatio="true" smooth="true">
-							<image>
-								<Image url="/resources/icon_switch_off.png" />
-							</image>
-						</ImageView>
-					</graphic>
-				</JFXButton>
+					<JFXButton onAction="#onClickPaneSwitch" visible="false"
+						AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="5.0"
+						style="-fx-padding:4;-fx-pref-width:26; -fx-focus-color:transparent;">
+						<tooltip>
+							<MyToolTip text="%flight_switcher_pane"></MyToolTip>
+						</tooltip>
+						<graphic>
+							<ImageView fx:id="btn_switch" fitWidth="35.0"
+								preserveRatio="true" smooth="true">
+								<image>
+									<Image url="/resources/icon_switch_off.png" />
+								</image>
+							</ImageView>
+						</graphic>
+					</JFXButton>
 
-				<GesturePane fx:id="gesturePaneFlight"
-					AnchorPane.bottomAnchor="70.0" prefHeight="450" prefWidth="450"
-					style="-fx-background-color:rgba(56,56,56,0.4);-fx-border-color:#fafafa;-fx-border-radius:5;-fx-border-width:2;-fx-border-style:solid;"
-					AnchorPane.leftAnchor="5.0">
-					<Pane fx:id="pane_Canvas" prefHeight="450" prefWidth="450" />
-				</GesturePane>
-			</children>
-		</AnchorPane>
+					<Pane fx:id="gesturePaneFlight"
+						AnchorPane.bottomAnchor="0.0" prefHeight="450" prefWidth="450"
+						AnchorPane.leftAnchor="0.0">
+						<Pane fx:id="pane_Canvas" prefHeight="450" prefWidth="450" />
+					</Pane>
+				</children>
+			</AnchorPane>
+		</GesturePane>
 	</center>
 </BorderPane>

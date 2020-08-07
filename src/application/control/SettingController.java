@@ -14,11 +14,14 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import utils.ResUtil;
 import utils.SaveLanguageUtil;
+import utils.StrUtil;
 import utils.ToastUtil;
 import views.myTextField.DecimalField;
 import views.myTextField.IntegerField;
@@ -44,13 +47,19 @@ public class SettingController extends BaseController implements Initializable {
 	@FXML
 	DecimalField textArea_cameraSize;
 	@FXML
-	HBox hbox_preCheckDetail;
+	DecimalField textArea_gsd;
+	@FXML
+	VBox Vbox_prechecks;
 	@FXML
 	BorderPane root;
 	@FXML
-	private JFXRadioButton radioButton_CN;
+	private JFXRadioButton radioButton_way1;
 	@FXML
-	private JFXRadioButton radioButton_E;
+	private JFXRadioButton radioButton_way2;
+	@FXML
+	private HBox hbox_way1;
+	@FXML
+	private HBox hbox_way2;
 
 	private ToggleGroup group;
 
@@ -68,15 +77,23 @@ public class SettingController extends BaseController implements Initializable {
 
 	private void initToggleGroup() {
 		group = new ToggleGroup();
-		radioButton_CN.setToggleGroup(group);
-		radioButton_CN.setUserData(0);
-		radioButton_E.setToggleGroup(group);
-		radioButton_E.setUserData(1);
-		if (SaveLanguageUtil.getData() == 0) {
-			group.selectToggle(radioButton_CN);
-		} else {
-			group.selectToggle(radioButton_E);
-		}
+		radioButton_way1.setToggleGroup(group);
+		radioButton_way1.setUserData(0);
+		radioButton_way2.setToggleGroup(group);
+		radioButton_way2.setUserData(1);
+		group.selectedToggleProperty().addListener(new ChangeListener<Toggle>() {
+			@Override
+			public void changed(ObservableValue<? extends Toggle> observable, Toggle oldValue, Toggle newValue) {
+				if ((int) group.getSelectedToggle().getUserData() == 0) {
+					hbox_way1.setDisable(false);
+					hbox_way2.setDisable(true);
+				}
+				if ((int) group.getSelectedToggle().getUserData() == 1) {
+					hbox_way1.setDisable(true);
+					hbox_way2.setDisable(false);
+				}
+			}
+		});
 	}
 
 	private void initCheckBox() {
@@ -84,9 +101,9 @@ public class SettingController extends BaseController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) {
 				if (newValue) {
-					hbox_preCheckDetail.setDisable(false);
+					Vbox_prechecks.setDisable(false);
 				} else {
-					hbox_preCheckDetail.setDisable(true);
+					Vbox_prechecks.setDisable(true);
 				}
 			}
 		});
@@ -145,12 +162,17 @@ public class SettingController extends BaseController implements Initializable {
 
 	@Override
 	protected void onClickRightBtn() {
-		if ("".equals(textArea_width.getText()) || "".equals(textArea_hight.getText())) {
+		if (StrUtil.isEmpty(textArea_width.getText()) || StrUtil.isEmpty(textArea_hight.getText())) {
 			ToastUtil.toast(ResUtil.gs("setting_net_error"));
 			return;
 		}
-		if (checkBox_preCheck.isSelected()
-				&& ("".equals(textArea_flyHeight.getText()) || "".equals(textArea_cameraSize.getText()))) {
+		if (checkBox_preCheck.isSelected() && (int) group.getSelectedToggle().getUserData() == 0
+				&& (StrUtil.isEmpty(textArea_flyHeight.getText())) || StrUtil.isEmpty(textArea_cameraSize.getText())) {
+			ToastUtil.toast(ResUtil.gs("setting_pre_check_error"));
+			return;
+		}
+		if (checkBox_preCheck.isSelected() && (int) group.getSelectedToggle().getUserData() == 1
+				&& StrUtil.isEmpty(textArea_gsd.getText())) {
 			ToastUtil.toast(ResUtil.gs("setting_pre_check_error"));
 			return;
 		}
@@ -173,9 +195,11 @@ public class SettingController extends BaseController implements Initializable {
 		setting.setNetWidth(textArea_width.getText());
 		setting.setNetHeight(textArea_hight.getText());
 		setting.setPreCheck(checkBox_preCheck.isSelected());
+		setting.setPreCheckWay((int) group.getSelectedToggle().getUserData());
+		setting.setGsd(textArea_gsd.getText());
 		setting.setFlyHeight(textArea_flyHeight.getText());
 		setting.setCameraSize(textArea_cameraSize.getText());
-		setting.setLanguage((int) group.getSelectedToggle().getUserData());
+		setting.setLanguage(SaveLanguageUtil.getData());
 		FinalDataBean finalDataBean = new FinalDataBean(projectListData, setting);
 		if (listener != null) {
 			listener.onClickStart(finalDataBean);

@@ -54,7 +54,7 @@ public abstract class AbstractTextField extends JFXTextField {
 			return getText();
 		}
 		String currString = null;
-		if (!"".equals(getText())) {
+		if (getText()!=null&&!"".equals(getText())) {
 			if (getText().endsWith(".") || getText().endsWith(getCurrencySymbols())) {
 				return getText();
 			}
@@ -103,7 +103,7 @@ public abstract class AbstractTextField extends JFXTextField {
 	 */
 	protected Integer getIntegerValue() {
 
-		if ("".equals(getText()) || "-".equals(getText())) {
+		if (getText()==null||"".equals(getText()) || "-".equals(getText())) {
 			return null;
 		}
 		return Integer.valueOf(getText().replace(",", ""));
@@ -131,7 +131,7 @@ public abstract class AbstractTextField extends JFXTextField {
 
 	private BigDecimal getDecimalValue(final char separator) {
 
-		if ("".equals(getText()) || "-".equals(getText())) {
+		if (getText()==null||"".equals(getText()) || "-".equals(getText())) {
 			return null;
 		}
 		int pos = getText().indexOf(separator);

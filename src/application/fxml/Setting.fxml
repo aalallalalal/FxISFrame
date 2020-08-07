@@ -39,7 +39,8 @@
 											</styleClass>
 										</Label>
 										<IntegerField fx:id="textArea_width"
-											maxWidth="-1" prefColumnCount="10" prefHeight="10.0">
+											prefWidth="80" maxWidth="-1" prefColumnCount="10"
+											prefHeight="10.0">
 											<styleClass>
 												<String fx:value="custom-text-field" />
 											</styleClass>
@@ -54,7 +55,7 @@
 											</styleClass>
 										</Label>
 										<IntegerField fx:id="textArea_hight"
-											prefColumnCount="10" prefHeight="10">
+											prefWidth="80" prefColumnCount="10" prefHeight="10">
 											<styleClass>
 												<String fx:value="custom-text-field" />
 											</styleClass>
@@ -72,36 +73,72 @@
 							<String fx:value="custom-jfx-check-box" />
 						</styleClass>
 					</JFXCheckBox>
-					<HBox fx:id="hbox_preCheckDetail" alignment="CENTER_LEFT"
-						disable="true" prefHeight="10.0" spacing="6.0">
-						<children>
-							<Label text="%setting_flight_height">
-								<styleClass>
-									<String fx:value="label-leve-normal" />
-								</styleClass>
-							</Label>
-							<DecimalField fx:id="textArea_flyHeight"
-								prefWidth="100" prefHeight="10.0">
-								<styleClass>
-									<String fx:value="custom-text-field" />
-								</styleClass>
-							</DecimalField>
-							<Label text="%setting_camera_size">
-								<styleClass>
-									<String fx:value="label-leve-normal" />
-								</styleClass>
-							</Label>
-							<DecimalField fx:id="textArea_cameraSize"
-								prefWidth="100" prefHeight="10.0">
-								<styleClass>
-									<String fx:value="custom-text-field" />
-								</styleClass>
-							</DecimalField>
-						</children>
-						<VBox.margin>
-							<Insets left="10" />
-						</VBox.margin>
-					</HBox>
+					<VBox spacing="5" fx:id="Vbox_prechecks" disable="true">
+						<HBox fx:id="hbox_preCheckDetail1" alignment="CENTER_LEFT"
+							prefHeight="10.0" spacing="6.0">
+							<children>
+								<JFXRadioButton text="" selected="true"
+									selectedColor="#FFA500" fx:id="radioButton_way1"
+									style="-fx-text-fill: #000; -fx-font-size: 14;-fx-spacing:4">
+								</JFXRadioButton>
+								<HBox spacing="6.0" fx:id="hbox_way1"
+									alignment="CENTER_LEFT">
+									<Label text="%setting_flight_height">
+										<styleClass>
+											<String fx:value="label-leve-normal" />
+										</styleClass>
+									</Label>
+									<DecimalField fx:id="textArea_flyHeight"
+										prefWidth="80" prefHeight="10.0">
+										<styleClass>
+											<String fx:value="custom-text-field" />
+										</styleClass>
+									</DecimalField>
+									<Label text="%setting_camera_size">
+										<styleClass>
+											<String fx:value="label-leve-normal" />
+										</styleClass>
+									</Label>
+									<DecimalField fx:id="textArea_cameraSize"
+										prefWidth="80" prefHeight="10.0">
+										<styleClass>
+											<String fx:value="custom-text-field" />
+										</styleClass>
+									</DecimalField>
+								</HBox>
+							</children>
+							<VBox.margin>
+								<Insets left="10" />
+							</VBox.margin>
+						</HBox>
+
+						<HBox fx:id="hbox_preCheckDetail2" alignment="CENTER_LEFT"
+							prefHeight="10.0" spacing="6.0">
+							<children>
+								<JFXRadioButton text="" selectedColor="#FFA500"
+									fx:id="radioButton_way2"
+									style="-fx-text-fill: #000; -fx-font-size: 14;-fx-spacing:4">
+								</JFXRadioButton>
+								<HBox spacing="6.0" fx:id="hbox_way2" disable="true"
+									alignment="CENTER_LEFT">
+									<Label text="%setting_gsd">
+										<styleClass>
+											<String fx:value="label-leve-normal" />
+										</styleClass>
+									</Label>
+									<DecimalField fx:id="textArea_gsd" prefWidth="80"
+										prefHeight="10.0">
+										<styleClass>
+											<String fx:value="custom-text-field" />
+										</styleClass>
+									</DecimalField>
+								</HBox>
+							</children>
+							<VBox.margin>
+								<Insets left="10" />
+							</VBox.margin>
+						</HBox>
+					</VBox>
 				</VBox>
 				<JFXCheckBox fx:id="checkBox_SaveMiddle"
 					selected="false" text="%setting_save_middle">
@@ -109,21 +146,6 @@
 						<String fx:value="custom-jfx-check-box" />
 					</styleClass>
 				</JFXCheckBox>
-
-				<HBox alignment="CENTER_LEFT" prefHeight="40.0" spacing="5.0">
-					<children>
-						<Label style="-fx-text-fill: #000; -fx-font-size: 14;"
-							text="%setting_out_language" wrapText="true" />
-						<JFXRadioButton text="中文" selected="true"
-							selectedColor="#FFA500" fx:id="radioButton_CN"
-							style="-fx-text-fill: #000; -fx-font-size: 14;-fx-spacing:4">
-						</JFXRadioButton>
-						<JFXRadioButton text="English" selected="false"
-							selectedColor="#FFA500" fx:id="radioButton_E"
-							style="-fx-text-fill: #000; -fx-font-size: 14;" />
-					</children>
-				</HBox>
-
 			</children>
 			<BorderPane.margin>
 				<Insets bottom="35.0" left="35.0" right="35.0" top="35.0" />

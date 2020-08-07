@@ -125,6 +125,23 @@ public class MainController implements Initializable {
 				});
 			}
 		}
+
+		@Override
+		public void onClickChangeLanguage(int afterLanguage) {
+			String strlanguage = afterLanguage == 0 ? "简体中文" : "English";
+			ToastUtil.toast(ResUtil.gs("restart_note", strlanguage) + ResUtil.gs("restart"));
+			MyPlatform.runLater(new Runnable() {
+				@Override
+				public void run() {
+					getStage().close();
+					try {
+						new Main().start(new Stage());
+					} catch (Exception e) {
+						e.printStackTrace();
+					}
+				}
+			}, 2000);
+		}
 	}
 
 	/**
@@ -445,7 +462,8 @@ public class MainController implements Initializable {
 	private void openOpenProjectDialog(boolean isToNextPage) {
 		MyFxmlBean openDialog;
 		openDialog = UIUtil.openDialog(getClass(), "/application/fxml/OpenProjectDialog.fxml",
-				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("createProject_openproject"), getStage());
+				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("createProject_openproject"),
+				getStage());
 		if (openDialog != null) {
 			OpenProjectDialogController controller = openDialog.getFxmlLoader().getController();
 			controller.initData();
@@ -499,7 +517,8 @@ public class MainController implements Initializable {
 	private void openChangeProjectDialog(ProjectBean bean, boolean isToNextPage) {
 		MyFxmlBean changeDialog;
 		changeDialog = UIUtil.openDialog(getClass(), "/application/fxml/ChangeProjectDialog.fxml",
-				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("createProject_changeproject"), getStage());
+				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("createProject_changeproject"),
+				getStage());
 		if (changeDialog != null) {
 			ChangeProjectDialogController controller = changeDialog.getFxmlLoader().getController();
 			controller.setInitData(bean);
@@ -528,7 +547,8 @@ public class MainController implements Initializable {
 	private void openCreateProjectDialog(boolean isToNextPage) {
 		MyFxmlBean createDialog;
 		createDialog = UIUtil.openDialog(getClass(), "/application/fxml/CreateProjectDialog.fxml",
-				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("createProject_createproject"), getStage());
+				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("createProject_createproject"),
+				getStage());
 		if (createDialog != null) {
 			CreateProjectDialogController controller = createDialog.getFxmlLoader().getController();
 			controller.setCallBack(new CallBack() {

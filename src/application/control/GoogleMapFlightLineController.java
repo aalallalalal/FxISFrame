@@ -8,6 +8,7 @@ import java.util.concurrent.ExecutionException;
 
 import beans.AMapGeocodingBean;
 import beans.ImageBean;
+import consts.ConstSize;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
@@ -51,7 +52,10 @@ import views.MyToolTip;
 
 public class GoogleMapFlightLineController implements Initializable {
 	private static final String TIP = ResUtil.gs("flight_tips");
-	private static final double FlightPaneWH = 450;
+	private static final double FrameW = ConstSize.Flight_Width;
+	private static final double FrameH = ConstSize.Flight_Height;
+	private static final double FlightPaneW = FrameW - 40;
+	private static final double FlightPaneH = FrameH - 40 - 50;
 	private static final double FlightDataOffset = 20;
 
 	private final Image camera = new Image(getClass().getResourceAsStream("/resources/camera-fill-normal.png"), 14, 14,
@@ -79,7 +83,7 @@ public class GoogleMapFlightLineController implements Initializable {
 	@FXML
 	Pane pane_Canvas;
 	@FXML
-	GesturePane gesturePaneFlight;
+	Pane gesturePaneFlight;
 	@FXML
 	ImageView btn_switch;
 
@@ -103,6 +107,8 @@ public class GoogleMapFlightLineController implements Initializable {
 	private PathTransition pathTransition;
 	@FXML
 	TextArea textArea_place;
+	@FXML
+	GesturePane largePane;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -270,15 +276,19 @@ public class GoogleMapFlightLineController implements Initializable {
 			 * @return
 			 */
 			private void initFlightMapView(double[][] analyData) {
-				double canvasW = FlightPaneWH, canvasH = FlightPaneWH;
+				double canvasW = FlightPaneW, canvasH = FlightPaneH;
 				if (radioType == 0) {
 					// 飞行路线为瘦高，固定高，缩小宽
-					canvasW = FlightPaneWH / radioData + 2 * FlightDataOffset;
-					canvasH = FlightPaneWH;
+					canvasW = FlightPaneH / radioData + 2 * FlightDataOffset;
+					canvasH = FlightPaneH;
+					AnchorPane.setLeftAnchor(gesturePaneFlight, (FlightPaneW - canvasW) / 2);
+					AnchorPane.setBottomAnchor(gesturePaneFlight, (double) 0);
 				} else {
 					// 飞行路线为矮胖，固定宽，缩小高
-					canvasW = FlightPaneWH;
-					canvasH = FlightPaneWH * radioData + 2 * FlightDataOffset;
+					canvasW = FlightPaneW;
+					canvasH = FlightPaneW * radioData + 2 * FlightDataOffset;
+					AnchorPane.setLeftAnchor(gesturePaneFlight, (double) 0);
+					AnchorPane.setBottomAnchor(gesturePaneFlight, (FlightPaneH - canvasH) / 2);
 				}
 				pane_Canvas.setPrefSize(canvasW, canvasH);
 				gesturePaneFlight.setPrefSize(canvasW, canvasH);
@@ -379,7 +389,7 @@ public class GoogleMapFlightLineController implements Initializable {
 //					geocodingBean = GoogleMapUtil.getGeocoding(analyGoogleData.get(1), analyGoogleData.get(0));
 					aMapGeocodingBean = GoogleMapUtil.getAMapGeocoding(analyGoogleData.get(1), analyGoogleData.get(0));
 				}
-				imageMap = GoogleMapUtil.getMapImage(analyGoogleData);
+//				imageMap = GoogleMapUtil.getMapImage(analyGoogleData);
 			}
 
 			/**
@@ -392,17 +402,27 @@ public class GoogleMapFlightLineController implements Initializable {
 				double[][] afterData = new double[2][];
 				try {
 					radioData = distY / distX;
+					double windowsRadioData = FlightPaneH / FlightPaneW;
 					// 1.选择按x还是y
 					scale = 0;
-					if (radioData >= 1) {
-						// 瘦高，固定高
-						scale = (FlightPaneWH - FlightDataOffset * 2) / distY;
+					if (radioData >= windowsRadioData) {
+						// 图像比控件更瘦高,使用高来比
+						scale = (FlightPaneH - FlightDataOffset * 2) / distY;
 						radioType = 0;
 					} else {
-						// 矮胖，固定宽
-						scale = (FlightPaneWH - FlightDataOffset * 2) / distX;
+						// 图像比控件更矮胖,使用宽来比
+						scale = (FlightPaneW - FlightDataOffset * 2) / distX;
 						radioType = 1;
 					}
+//					if (radioData >= 1) {
+//						// 瘦高，固定高
+//						scale = (FlightPaneH - FlightDataOffset * 2) / distY;
+//						radioType = 0;
+//					} else {
+//						// 矮胖，固定宽
+//						scale = (FlightPaneW - FlightDataOffset * 2) / distX;
+//						radioType = 1;
+//					}
 					System.out.println("radioData" + radioData + "scale" + scale);
 					// 2.重置数据大小
 					double[] xList = new double[listData.size()];
@@ -435,6 +455,11 @@ public class GoogleMapFlightLineController implements Initializable {
 
 			@Override
 			protected double[][] call() {
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e1) {
+					e1.printStackTrace();
+				}
 				double[][] initFlightMapData = null;
 				try {
 					// 初始化谷歌地图数据
@@ -492,7 +517,7 @@ public class GoogleMapFlightLineController implements Initializable {
 			@Override
 			protected void unSucceeded() {
 				super.unSucceeded();
-				ToastUtil.toast(ResUtil.gs("load_data_error"));
+//				ToastUtil.toast(ResUtil.gs("load_data_error"));
 			}
 
 		}, (Stage) root.getParent().getScene().getWindow());
@@ -516,8 +541,8 @@ public class GoogleMapFlightLineController implements Initializable {
 				}
 			}
 		});
-		gesturePaneFlight.setMaxSize(FlightPaneWH, FlightPaneWH);
-		gesturePaneFlight.setScrollBarPolicy(GesturePane.ScrollBarPolicy.NEVER);
+		gesturePaneFlight.setMaxSize(FlightPaneW, FlightPaneH);
+		largePane.setScrollBarPolicy(GesturePane.ScrollBarPolicy.NEVER);
 	}
 
 	private void initTextData() {

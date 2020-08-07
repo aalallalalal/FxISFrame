@@ -24,7 +24,10 @@ public class ToastUtil {
 
 	// 默认3秒
 	public static void toast(String msg) {
-		toast(msg, 2000);
+		if(stage.isShowing()) {
+			return;
+		}
+		toast(msg, 3000);
 	}
 
 	/**
@@ -53,7 +56,7 @@ public class ToastUtil {
 	private static void init(String msg) {
 		Label label = new Label(msg);// 默认信息
 		label.setText(msg);
-		label.setPrefWidth(220);
+		label.setPrefWidth(240);
 		label.setStyle(
 				"-fx-text-fill: #fff;-fx-background: rgba(56,56,56,0.4);-fx-border-radius: 25;-fx-background-radius: 25");// label透明,圆角
 		label.setPrefHeight(50);
@@ -73,7 +76,7 @@ public class ToastUtil {
 //		textArea.setStyle(
 //				"-fx-text-fill: #fff;-fx-background: rgba(56,56,56,0.4);-fx-border-radius: 25;-fx-background-radius: 25");// label透明,圆角
 
-		Scene scene = new Scene(label, 200, 50);
+		Scene scene = new Scene(label, 240, 50);
 		scene.setFill(null);// 场景透明
 		stage.setScene(scene);
 	}

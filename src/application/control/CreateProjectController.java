@@ -14,6 +14,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import utils.ResUtil;
+import utils.SaveLanguageUtil;
 
 /**
  * 创建项目界面controller
@@ -30,6 +31,9 @@ public class CreateProjectController extends BaseController implements Initializ
 	@FXML
 	JFXButton btn_open;
 	private DropShadow effectOn;
+	@FXML
+	JFXButton button_language;
+	private int initSelectedLanguage;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -37,6 +41,12 @@ public class CreateProjectController extends BaseController implements Initializ
 			listener.onClearData();
 		}
 		initButtonEffect();
+		initSelectedLanguage = SaveLanguageUtil.getData();
+		if(initSelectedLanguage == 0) {
+			button_language.setText("English");
+		}else {
+			button_language.setText("简体中文");
+		}
 	}
 
 	private void initButtonEffect() {
@@ -105,6 +115,8 @@ public class CreateProjectController extends BaseController implements Initializ
 		void onClickHelp();
 
 		void onClickSet();
+
+		void onClickChangeLanguage(int afterLanguage);
 	}
 
 	@Override
@@ -140,10 +152,19 @@ public class CreateProjectController extends BaseController implements Initializ
 		}
 	}
 
+//	@FXML
+//	public void onClickSetting() {
+//		if (listener != null) {
+//			listener.onClickSet();
+//		}
+//	}
+
 	@FXML
-	public void onClickSetting() {
+	public void onClickChangeLanguage() {
+		int afterLanguage = 1- initSelectedLanguage;
+		SaveLanguageUtil.saveData(afterLanguage);
 		if (listener != null) {
-			listener.onClickSet();
+			listener.onClickChangeLanguage(afterLanguage);
 		}
 	}
 }

@@ -31,8 +31,8 @@ public class ProjectBean implements Serializable {
 		this.projectDir = projectDir;
 		this.setLocationFrom(locationFrom);
 		this.projectLocationFile = projectLocationFile;
-		this.id = System.currentTimeMillis();
-		this.lastUsedTime = id;
+		this.setId(System.currentTimeMillis());
+		this.lastUsedTime = getId();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 		this.createTime = df.format(new Date());// new Date()为获取当前系统时间
 	}
@@ -116,5 +116,9 @@ public class ProjectBean implements Serializable {
 		}
 		parameter += '"' + this.getProjectDir() + '"';
 		return parameter;
+	}
+	
+	public void setId(long id) {
+		this.id = id;
 	}
 }

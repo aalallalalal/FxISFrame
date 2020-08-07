@@ -11,10 +11,12 @@ public class SettingsBean {
 	private boolean isSaveMiddle;
 	private String netWidth, netHeight;
 	private boolean isPreCheck;
-	private String flyHeight;
-	private String cameraSize;
+	private int preCheckWay;// 0,1
+	private String flyHeight; //way0
+	private String cameraSize;//way0
+	private String gsd; //way1
 	private int language; // 0中文，1英文
-	
+
 	public boolean isSaveMiddle() {
 		return isSaveMiddle;
 	}
@@ -69,6 +71,22 @@ public class SettingsBean {
 
 	public void setLanguage(int language) {
 		this.language = language;
+	}
+
+	public int getPreCheckWay() {
+		return preCheckWay;
+	}
+
+	public void setPreCheckWay(int preCheckWay) {
+		this.preCheckWay = preCheckWay;
+	}
+
+	public String getGsd() {
+		return gsd;
+	}
+
+	public void setGsd(String gsd) {
+		this.gsd = gsd;
 	}
 
 }
