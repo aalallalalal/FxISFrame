@@ -85,7 +85,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	 * @param finalData
 	 * @throws Exception
 	 */
-	public void startExec(SettingsBean settings)
+	public void startExec(FinalDataBean finalData)
 	{
 		service = new ExeService(this.listener);
 		 //异常监听 监听现在状态是否有异常并打印
@@ -95,9 +95,7 @@ public class ProcessingController extends BaseController implements Initializabl
                 listener.updateFailBox(newValue.toString());
             }
         });
-        System.out.println("开始");
-        tabRunningController.addServiceToList();
-		tabParamController.init(this, settings);
+        tabRunningController.addServiceToList(finalData);
         updateParam();
         nextRun();
 	}
@@ -124,7 +122,6 @@ public class ProcessingController extends BaseController implements Initializabl
 		tabRunningController.clearItem();
 		tabAchieveController.clearItem();
 		tabFailedController.clearItem();
-		FinalDataBean.pathList.clear();
 	}
 	
 	public void setListener(ProcessingListener listener) {
@@ -185,9 +182,9 @@ public class ProcessingController extends BaseController implements Initializabl
 	
 	public void updateParam() {
 		ProjectBean next;
- 		if(!FinalDataBean.pathList.isEmpty())
+ 		if(!tabRunningController.getList_current().isEmpty())
  		{
- 			next = FinalDataBean.pathList.get(0);
+ 			next = tabRunningController.getList_current().get(0);
  			FinalDataBean.para_Exe = FinalDataBean.setting + next.getParam() + "%" + next.getProjectName();
  			currentProject.setText(next.getProjectName() + " . . .");
  			System.out.println(currentProject.getText());
@@ -196,9 +193,9 @@ public class ProcessingController extends BaseController implements Initializabl
 	
 	public void nextRun()
 	{
-		if(!FinalDataBean.pathList.isEmpty())
+		if(!tabRunningController.getList_current().isEmpty())
 		{
-			tabRunningController.list_running.get(0).toRunning();
+			tabRunningController.toRunning();
 			service.reset();
 			service.start();
 		}else {
@@ -208,16 +205,14 @@ public class ProcessingController extends BaseController implements Initializabl
 	
 	public void updateSucc()
 	{
-		tabAchieveController.addAchieveHBox(FinalDataBean.pathList.get(0));
-		tabRunningController.list_running.remove(0);
-		FinalDataBean.pathList.remove(0);
+		tabAchieveController.addAchieveHBox(tabRunningController.getList_current().get(0));
+		tabRunningController.updatelist(0);
 	}
 	
 	public void updateFail()
 	{
-		tabFailedController.addFailedHBox(FinalDataBean.pathList.get(0).getProjectName(), service.getValue());
-		tabRunningController.list_running.remove(0);
-		FinalDataBean.pathList.remove(0);
+		tabFailedController.addFailedHBox(tabRunningController.getList_current().get(0), service.getValue());
+		tabRunningController.updatelist(0);
 	}
 	
 	public interface ProcessingListener {
@@ -239,7 +234,16 @@ public class ProcessingController extends BaseController implements Initializabl
 
 	public void updatecontrol()
 	{
-		tabRunningController.listView_running.setVisible(false);
+		//tabRunningController.listView_running.setVisible(false);
+	}
+	
+	/**
+	 * 子页面中重新运行时调用
+	 * @param project
+	 */
+	public void addnewservice(ProjectBean project)
+	{
+		
 	}
 
 }

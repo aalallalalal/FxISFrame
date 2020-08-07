@@ -4,10 +4,13 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import beans.MyFxmlBean;
 import beans.ProjectBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -22,16 +25,18 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import utils.UIUtil;
 
 public class TabAchieveController implements Initializable
 {
 	@FXML
 	AnchorPane root;
 
-	ObservableList<AchieveHBox> list_achieve = FXCollections.observableArrayList();
+	ObservableList<HBox> list_achieve = FXCollections.observableArrayList();
 	
 	@FXML
-	ListView<AchieveHBox> listView_achieve = new ListView<AchieveHBox>();
+	ListView<HBox> listView_achieve = new ListView<HBox>();
+	List<ProjectBean> list_current = new ArrayList<ProjectBean>();
 	
 	Image image_succ = new Image("resources/nosucced.png");
 	ImageView imageView_succed = new ImageView(image_succ);
@@ -50,78 +55,86 @@ public class TabAchieveController implements Initializable
 	
 	public void addAchieveHBox(ProjectBean project) 
 	{
-		AchieveHBox temp = new AchieveHBox(project);
+		MyFxmlBean fxmlbean = UIUtil.loadFxml(getClass(), "/application/fxml/AchieveHBox.fxml");
+		HBox temp = (HBox)fxmlbean.getPane();
+		setContent(project, temp);
 		list_achieve.add(temp);
+		list_current.add(project);
 		listView_achieve.setItems(list_achieve);
 		listView_achieve.setVisible(true);
 	}
 	
+	/**
+	 * 设置新添加的hbox的内容
+	 * @param project
+	 * @param temp
+	 */
+	private void setContent(ProjectBean project, HBox temp)
+	{
+		Label project_name = (Label)temp.lookup("#project_name");
+		project_name.setText(project.getProjectName());
+		Label achieve_time = (Label)temp.lookup("#achieve_time");
+		achieve_time.setText(project.getCreateTime());
+		
+		//打开文件夹所在位置
+		JFXButton openfile = (JFXButton)temp.lookup("#openfile");
+		openfile.setGraphic(new ImageView(new Image("resources/wenjian1.png")));
+		openfile.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				try {
+					String path = System.getProperty("user.dir");
+					Desktop.getDesktop().open(new File(path + "\\Run\\" + project.getProjectName() + "\\Result"));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		});
+		
+		//修改参数
+		JFXButton modifyParam = (JFXButton)temp.lookup("#modifyParam");
+		modifyParam.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				System.out.println("修改参数");
+			}
+		});
+		
+		//查看结果
+		JFXButton result = (JFXButton)temp.lookup("#view_result");
+		result.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				System.out.println("查看结果");
+			}
+		});
+		
+		//重新运行
+		JFXButton restart = (JFXButton)temp.lookup("#restart");
+		restart.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				processingController.addnewservice(project);
+			}
+		});
+		
+	}
+
+	/**
+	 * 清空list信息
+	 */
 	public void clearItem() 
 	{
 		list_achieve.clear();
 		listView_achieve.getItems().clear();
-	}
-
-	protected class AchieveHBox extends HBox{
-		
-		Label project_name = new Label();   //工程名
-		
-		JFXButton result_picture = new JFXButton("查看拼接结果");
-		JFXButton result_mid = new JFXButton("查看中间结果");
-		
-		Button openinFile = new Button();
-		Image image_openFile = new Image("resources/guanbi.png");
-		ImageView imageView_open = new ImageView(image_openFile);
-		
-		public AchieveHBox(ProjectBean project)
-		{
-			project_name.setText(project.getProjectName());
-			openinFile.setGraphic(imageView_open);
-			openinFile.setOnAction(new EventHandler<ActionEvent>()
-			{
-				
-				@Override
-				public void handle(ActionEvent event)
-				{
-					try {
-						String path = System.getProperty("user.dir");
-						Desktop.getDesktop().open(new File(path + "\\Run\\Result\\" + project.getProjectName()));
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				}
-			});
-			
-			result_picture.setOnAction(new EventHandler<ActionEvent>()
-			{
-				
-				@Override
-				public void handle(ActionEvent event)
-				{
-					
-				}
-			});
-			
-			result_mid.setOnAction(new EventHandler<ActionEvent>()
-			{
-				
-				@Override
-				public void handle(ActionEvent event)
-				{
-					
-				}
-			});
-			
-			super.getChildren().addAll(project_name, result_picture, result_mid);
-		}
-
-		@Override
-		protected void layoutChildren()
-		{
-			// TODO Auto-generated method stub
-			super.layoutChildren();
-			setSpacing(20);
-		}
-		
+		list_current.clear();
 	}
 }

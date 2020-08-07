@@ -17,7 +17,6 @@ public class FinalDataBean {
 	private SettingsBean settings;
 	public static String para_Exe;
 	public static String setting;
-	public static List<ProjectBean> pathList = new ArrayList<ProjectBean>();
 
 	public FinalDataBean(ObservableList<ProjectBean> projectListData, SettingsBean settings) {
 		super();
@@ -39,21 +38,6 @@ public class FinalDataBean {
 
 	public void setSettings(SettingsBean settings) {
 		this.settings = settings;
-	}
-
-	
-	/**
-	 * 将项目列表的路径参数和其他参数转换成String形式
-	 * @return
-	 */
-	public void toPathParameter()
-	{
-		Iterator<ProjectBean> iter =  this.projectListData.iterator();
-		while(iter.hasNext())
-		{
-			ProjectBean temp = iter.next();
-			pathList.add(temp);
-		}
 	}
 	
 	public String toSettingParameter() {

@@ -3,6 +3,8 @@ package application.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import beans.MyFxmlBean;
+import beans.ProjectBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -13,16 +15,17 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import utils.UIUtil;
 
 public class TabFailedController implements Initializable
 {
 	@FXML
 	AnchorPane root;
 	
-	ObservableList<FailedHBox> list_failed = FXCollections.observableArrayList();
+	ObservableList<HBox> list_failed = FXCollections.observableArrayList();
 	
 	@FXML
-	ListView<FailedHBox> listView_failed = new ListView<FailedHBox>();
+	ListView<HBox> listView_failed = new ListView<HBox>();
 
 	Image image_failed = new Image("resources/nofailed.png");
 	ImageView imageView_failed = new ImageView(image_failed);
@@ -39,38 +42,35 @@ public class TabFailedController implements Initializable
 		listView_failed.setVisible(false);
 	}
 	
-	public void addFailedHBox(String name, String reason)
+	public void addFailedHBox(ProjectBean project, String reason)
 	{
-		list_failed.add(new FailedHBox(name, reason));
+		MyFxmlBean fxmlbean = UIUtil.loadFxml(getClass(), "/application/fxml/FailedHBox.fxml");
+		HBox temp = (HBox)fxmlbean.getPane();
+		setContent(temp, project, reason);
+		list_failed.add(temp);
 		listView_failed.setItems(list_failed);
 		listView_failed.setVisible(true);
 	}
 	
+	/**
+	 * 设置新添加的运行失败的item
+	 * @param name
+	 * @param reason
+	 */
+	private void setContent(HBox temp, ProjectBean project, String reason)
+	{
+		Label project_name = (Label)temp.lookup("#project_name");
+		project_name.setText(project.getProjectName());
+		Label faileddetail = (Label)temp.lookup("#faildetailinfo");
+		faileddetail.setText(reason);
+	}
+
 	public void clearItem()
 	{
 		list_failed.clear();
 		listView_failed.getItems().clear();
 	}
 
-	private class FailedHBox extends HBox{
-		
-		Label project_name = new Label();   //工程名
-		Label FailDetailInfo = new Label();
-		
-		public FailedHBox(String project_name, String reason) 
-		{
-			this.project_name.setText(project_name);
-			FailDetailInfo.setText(reason);
-			super.getChildren().addAll(this.project_name, FailDetailInfo);
-		}
-
-		@Override
-		protected void layoutChildren()
-		{
-			// TODO Auto-generated method stub
-			super.layoutChildren();
-			setSpacing(50);
-		}
-	}
+	
 
 }

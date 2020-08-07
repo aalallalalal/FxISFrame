@@ -183,8 +183,7 @@ public class MainController implements Initializable {
 			nextPage();
 			if (processingController != null) {
 				FinalDataBean.setting = finalData.toSettingParameter();
-				finalData.toPathParameter();
-				processingController.startExec(finalData.getSettings());
+				processingController.startExec(finalData);
 			}
 		}
 

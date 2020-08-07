@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fx:id="imageView_failed" fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+         <image>
+            <Image url="@../../../bin/resources/shibai1.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="450.0">
+         <children>
+            <Label fx:id="project_name" prefHeight="20.0" prefWidth="450.0" text="Label" />
+            <Label fx:id="faildetailinfo" prefHeight="20.0" prefWidth="450.0" text="Label" />
+         </children>
+         <HBox.margin>
+            <Insets left="5.0" />
+         </HBox.margin>
+      </VBox>
+      <JFXButton text="修改参数">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </JFXButton>
+      <JFXButton text="重新运行">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
+      </JFXButton>
+   </children>
+</HBox>

@@ -1,18 +1,17 @@
 package application.control;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
-import base.controller.ConfirmDialogController.CallBack;
 import beans.FinalDataBean;
+import beans.MyFxmlBean;
 import beans.ProjectBean;
-import consts.ConstSize;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -23,21 +22,36 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 import utils.UIUtil;
+
 
 public class TabRunningController implements Initializable
 {
 	@FXML
-	AnchorPane root;
+	private AnchorPane root;
 	
-	ObservableList<RunningHBox> list_running = FXCollections.observableArrayList();
+	private ObservableList<HBox> list_running = FXCollections.observableArrayList();
 	@FXML
-	ListView<RunningHBox> listView_running = new ListView<RunningHBox>();
+	private ListView<HBox> listView_running = new ListView<HBox>();
+	
+	private List<ProjectBean> list_current = new ArrayList<ProjectBean>();
 	
 	Image image_running = new Image("resources/norunning.png");
 	ImageView imageView_running = new ImageView(image_running);
 	
+	
+
+	public List<ProjectBean> getList_current()
+	{
+		return list_current;
+	}
+
+	public void setList_current(List<ProjectBean> list_current)
+	{
+		this.list_current = list_current;
+	}
+
+
 	private ProcessingController processingController;
 	//注入processingcontroller
 	public void init(ProcessingController controller) 
@@ -52,29 +66,73 @@ public class TabRunningController implements Initializable
 		listView_running.setVisible(false);
 	}
 	
-	//向列表中添加待运行的任务
-	void addServiceToList() 
+	/**
+	 * 将即将运行的任务全部添加到list_running中
+	 * 并设置成等待状态
+	 */
+	void addServiceToList(FinalDataBean finalData) 
 	{
-		System.out.println("加入数据");
-		for(int i = 0 ; i < FinalDataBean.pathList.size() ; i ++) 
+		for(int i = 0 ; i < finalData.getProjectListData().size() ; i ++) 
 		{
-			RunningHBox temp = new RunningHBox(FinalDataBean.pathList.get(i));
+			MyFxmlBean fxmlbean = UIUtil.loadFxml(getClass(), "/application/fxml/RunningHBox.fxml");
+			HBox temp = (HBox)fxmlbean.getPane();
+			ProjectBean project = finalData.getProjectListData().get(i);
+			setContent(project, temp);
 			list_running.add(temp);
+			list_current.add(project);
 		}
 		listView_running.setItems(list_running);
 		listView_running.setVisible(true);
-//		listView_running.refresh();
 	}
 	
+	/**
+	 * 清空lsit中所有内容
+	 */
 	public void clearItem()
 	{
 		list_running.clear();
 		listView_running.getItems().clear();
+		list_current.clear();
+	}
+	
+	/**
+	 * 将listView的第一个设置为正在运行的状态
+	 */
+	public void toRunning()
+	{
+		Label currentState = (Label)list_running.get(0).lookup("#currentState");
+		currentState.setText("正在运行...");
+		ProgressBar progressbar = (ProgressBar)list_running.get(0).lookup("#progress");
+		progressbar.setProgress(-1);
+	}
+	
+	/**
+	 * 将生成的hbox设置成等待运行状态
+	 * @param project
+	 * @param temp
+	 */
+	public void setContent(ProjectBean project, HBox temp) {
+		Label project_name = (Label)temp.lookup("#project_name");
+		project_name.setText(project.getProjectName());
+		Label currentState = (Label)temp.lookup("#currentState");
+		currentState.setText("等待运行...");
+	}
+	
+	/**
+	 * 更新此controller中的数据
+	 * @author window's xp
+	 *
+	 */
+	public void updatelist(int i)
+	{
+		list_running.remove(i);
+		list_current.remove(i);
+		listView_running.setItems(list_running);
 	}
 	
 	protected class RunningHBox extends HBox{
 		
-		Label project_name = new Label();   //工程名
+		Label project_name;   //工程名
 		
 		VBox vbox = new VBox();
 		ProgressBar p = new ProgressBar(0);//bar
@@ -83,56 +141,5 @@ public class TabRunningController implements Initializable
 		JFXButton cancel = new JFXButton(); //取消进程按钮
 		Image image_cancel = new Image("resources/guanbi.png");
 		ImageView imageView_cancel = new ImageView(image_cancel);
-		
-		public RunningHBox(ProjectBean project) 
-		{
-			project_name.setText(project.getProjectName());
-			System.out.println(project.getProjectName());
-			vbox.getChildren().addAll(p, currentState);
-			
-			cancel.setGraphic(imageView_cancel);
-			cancel.setOnAction(new EventHandler<ActionEvent>()
-			{
-				@Override
-				public void handle(ActionEvent event)
-				{
-					UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
-							ConstSize.Confirm_Dialog_Frame_Height, "取消", "等待拼接中，确定取消该拼接任务？",
-							(Stage) root.getScene().getWindow(), new CallBack() {
-								@Override
-								public void onCancel() {
-								}
-
-								@Override
-								public void onConfirm() {
-									System.out.println("取消该拼接任务！");
-									int i = listView_running.getSelectionModel().getSelectedIndex();
-									list_running.remove(i);
-//									listView_running.refresh();
-									FinalDataBean.pathList.remove(i - 1); 
-								}
-							});
-				}
-			});
-			
-			super.getChildren().addAll(project_name);
-			
-		}
-		
-		@Override
-		protected void layoutChildren()
-		{
-			super.layoutChildren();
-			setSpacing(50);
-		}
-		
-		void toRunning()
-		{
-			currentState.setText("正在运行，请稍候...");
-			vbox.getChildren().remove(0);
-		}
 	}
-
-	
-	
 }
