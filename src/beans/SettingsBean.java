@@ -1,13 +1,19 @@
 package beans;
 
+import java.io.Serializable;
+
 /**
  * 参数实体类
  * 
  * @author DP
  *
  */
-public class SettingsBean {
+public class SettingsBean implements Serializable {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private boolean isSaveMiddle;
 	private String netWidth, netHeight;
 	private boolean isPreCheck;

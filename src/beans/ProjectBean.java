@@ -22,8 +22,8 @@ public class ProjectBean implements Serializable {
 	private String createTime;
 	private long lastUsedTime;
 	private String path_result; // 结果图片路径
-
 	private int locationFrom; // 0:从图片，1：从文件
+	private SettingsBean settings;
 
 	public ProjectBean(String projectName, String projectDir, int locationFrom, String projectLocationFile) {
 		super();
@@ -102,14 +102,12 @@ public class ProjectBean implements Serializable {
 	public void setLastUsedTime(long lastUsedTime) {
 		this.lastUsedTime = lastUsedTime;
 	}
-	
-	public String getParam()
-	{
+
+	public String getParam() {
 		String parameter = " \"-read_LatALon\" ";
-		if(this.getLocationFrom() == 0)
+		if (this.getLocationFrom() == 0)
 			parameter += "\"_img\" ";
-		else
-		{
+		else {
 			parameter += "\"_file \"";
 			parameter += this.getProjectLocationFile();
 			parameter += " ";
@@ -117,8 +115,16 @@ public class ProjectBean implements Serializable {
 		parameter += '"' + this.getProjectDir() + '"';
 		return parameter;
 	}
-	
+
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public SettingsBean getSettings() {
+		return settings;
+	}
+
+	public void setSettings(SettingsBean settings) {
+		this.settings = settings;
 	}
 }
