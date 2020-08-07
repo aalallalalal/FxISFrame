@@ -185,7 +185,7 @@ public class ProcessingController extends BaseController implements Initializabl
  		if(!tabRunningController.getList_current().isEmpty())
  		{
  			next = tabRunningController.getList_current().get(0);
- 			FinalDataBean.para_Exe = FinalDataBean.setting + next.getParam() + "%" + next.getProjectName();
+ 			FinalDataBean.para_Exe = next.toSettingParameter() + next.getParam() + "%" + next.getProjectName();
  			currentProject.setText(next.getProjectName() + " . . .");
  			System.out.println(currentProject.getText());
  		}

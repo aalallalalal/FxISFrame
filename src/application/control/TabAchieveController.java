@@ -25,6 +25,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import utils.ResUtil;
+import utils.ToastUtil;
 import utils.UIUtil;
 
 public class TabAchieveController implements Initializable
@@ -111,7 +113,19 @@ public class TabAchieveController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				System.out.println("查看结果");
+				Runtime runtime = Runtime.getRuntime();
+				try {
+					String path = System.getProperty("user.dir");
+					int i = project.getProjectDir().lastIndexOf("/");
+					String name_dir = project.getProjectDir().substring(i + 1);
+					path = path + "\\Run\\" + project.getProjectName() + "\\Result\\0_results\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
+					System.out.println(path);
+					runtime.exec("cmd /c " + path);
+					System.out.println("查看结果");
+				} catch (IOException e) {
+					ToastUtil.toast(ResUtil.gs("open_image_error"));
+					e.printStackTrace();
+				}
 			}
 		});
 		

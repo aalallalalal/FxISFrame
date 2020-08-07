@@ -182,7 +182,6 @@ public class MainController implements Initializable {
 		public void onClickStart(FinalDataBean finalData) {
 			nextPage();
 			if (processingController != null) {
-				FinalDataBean.setting = finalData.toSettingParameter();
 				processingController.startExec(finalData);
 			}
 		}

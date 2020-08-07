@@ -1,9 +1,5 @@
 package beans;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import javafx.collections.ObservableList;
 
 /**
@@ -16,12 +12,15 @@ public class FinalDataBean {
 	private ObservableList<ProjectBean> projectListData;
 	private SettingsBean settings;
 	public static String para_Exe;
-	public static String setting;
 
 	public FinalDataBean(ObservableList<ProjectBean> projectListData, SettingsBean settings) {
 		super();
 		this.projectListData = projectListData;
 		this.settings = settings;
+		for(ProjectBean project : this.projectListData)
+		{
+			project.setSettings(this.settings);
+		}
 	}
 
 	public ObservableList<ProjectBean> getProjectListData() {
