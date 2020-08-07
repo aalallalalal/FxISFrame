@@ -167,7 +167,7 @@ public class SettingController extends BaseController implements Initializable {
 			return;
 		}
 		if (checkBox_preCheck.isSelected() && (int) group.getSelectedToggle().getUserData() == 0
-				&& (StrUtil.isEmpty(textArea_flyHeight.getText())) || StrUtil.isEmpty(textArea_cameraSize.getText())) {
+				&& (StrUtil.isEmpty(textArea_flyHeight.getText()) || StrUtil.isEmpty(textArea_cameraSize.getText()))) {
 			ToastUtil.toast(ResUtil.gs("setting_pre_check_error"));
 			return;
 		}
