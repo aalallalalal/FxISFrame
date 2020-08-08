@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
@@ -27,12 +28,12 @@
             <Insets left="5.0" />
          </HBox.margin>
       </VBox>
-      <JFXButton text="修改参数">
+      <JFXButton fx:id="paramDetail" text="查看参数">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
       </JFXButton>
-      <JFXButton text="重新运行">
+      <JFXButton fx:id="restart" text="重新运行">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>

@@ -25,16 +25,16 @@
          </HBox.margin>
       </Label>
       <Label fx:id="achieve_time" prefHeight="20.0" prefWidth="150.0" text="Label">
-         <font>
+         
             <Font size="10.0" />
-         </font>
+         
       </Label>
       <JFXButton fx:id = "view_result" text="查看结果">
          <HBox.margin>
             <Insets left="50.0" />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="modifyParam" buttonType="RAISED" text="修改参数">
+      <JFXButton fx:id="paramDetail" buttonType="RAISED" text="查看参数">
          <HBox.margin>
             <Insets left="15.0" />
          </HBox.margin>

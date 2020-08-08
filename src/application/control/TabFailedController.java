@@ -3,10 +3,14 @@ package application.control;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+
 import beans.MyFxmlBean;
 import beans.ProjectBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -63,8 +67,32 @@ public class TabFailedController implements Initializable
 		project_name.setText(project.getProjectName());
 		Label faileddetail = (Label)temp.lookup("#faildetailinfo");
 		faileddetail.setText(reason);
+		faileddetail.setStyle("-fx-font-size:13px");
+		
+		JFXButton paramDetail = (JFXButton)temp.lookup("#paramDetail");
+		paramDetail.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				
+			}
+		});
+		
+		JFXButton restart = (JFXButton)temp.lookup("#restart");
+		restart.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				processingController.addnewservice(project);
+			}
+		});
 	}
 
+	/**
+	 * 清空fail tab中的数据
+	 */
 	public void clearItem()
 	{
 		list_failed.clear();

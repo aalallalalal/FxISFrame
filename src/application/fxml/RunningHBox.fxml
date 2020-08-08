@@ -23,7 +23,7 @@
                </VBox.margin></Label>
          </children>
       </VBox>
-      <JFXButton fx:id="modifyParam" text="修改参数">
+      <JFXButton fx:id="paramDetail" text="修改参数">
          <HBox.margin>
             <Insets left="40.0" />
          </HBox.margin></JFXButton>

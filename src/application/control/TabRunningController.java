@@ -74,15 +74,36 @@ public class TabRunningController implements Initializable
 	{
 		for(int i = 0 ; i < finalData.getProjectListData().size() ; i ++) 
 		{
-			MyFxmlBean fxmlbean = UIUtil.loadFxml(getClass(), "/application/fxml/RunningHBox.fxml");
-			HBox temp = (HBox)fxmlbean.getPane();
 			ProjectBean project = finalData.getProjectListData().get(i);
-			setContent(project, temp);
-			list_running.add(temp);
-			list_current.add(project);
+			add(project);
 		}
 		listView_running.setItems(list_running);
 		listView_running.setVisible(true);
+	}
+	
+	/**
+	 * 添加新成员，初始化成等待运行
+	 * @param project
+	 */
+	public void add(ProjectBean project)
+	{
+		MyFxmlBean fxmlbean = UIUtil.loadFxml(getClass(), "/application/fxml/RunningHBox.fxml");
+		HBox temp = (HBox)fxmlbean.getPane();
+		setContent(project, temp);
+		list_running.add(temp);
+		list_current.add(project);
+	}
+	
+	/**
+	 * 将生成的hbox设置成等待运行状态
+	 * @param project
+	 * @param temp
+	 */
+	public void setContent(ProjectBean project, HBox temp) {
+		Label project_name = (Label)temp.lookup("#project_name");
+		project_name.setText(project.getProjectName());
+		Label currentState = (Label)temp.lookup("#currentState");
+		currentState.setText("等待运行...");
 	}
 	
 	/**
@@ -107,39 +128,14 @@ public class TabRunningController implements Initializable
 	}
 	
 	/**
-	 * 将生成的hbox设置成等待运行状态
-	 * @param project
-	 * @param temp
-	 */
-	public void setContent(ProjectBean project, HBox temp) {
-		Label project_name = (Label)temp.lookup("#project_name");
-		project_name.setText(project.getProjectName());
-		Label currentState = (Label)temp.lookup("#currentState");
-		currentState.setText("等待运行...");
-	}
-	
-	/**
 	 * 更新此controller中的数据
 	 * @author window's xp
 	 *
 	 */
-	public void updatelist(int i)
+	public void updateRemove(int i)
 	{
 		list_running.remove(i);
 		list_current.remove(i);
 		listView_running.setItems(list_running);
-	}
-	
-	protected class RunningHBox extends HBox{
-		
-		Label project_name;   //工程名
-		
-		VBox vbox = new VBox();
-		ProgressBar p = new ProgressBar(0);//bar
-		Label currentState = new Label("等待运行");
-		
-		JFXButton cancel = new JFXButton(); //取消进程按钮
-		Image image_cancel = new Image("resources/guanbi.png");
-		ImageView imageView_cancel = new ImageView(image_cancel);
 	}
 }

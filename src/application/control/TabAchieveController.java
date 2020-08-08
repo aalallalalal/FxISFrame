@@ -18,7 +18,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
@@ -95,14 +94,14 @@ public class TabAchieveController implements Initializable
 			}
 		});
 		
-		//修改参数
-		JFXButton modifyParam = (JFXButton)temp.lookup("#modifyParam");
-		modifyParam.setOnAction(new EventHandler<ActionEvent>()
+		//查看参数
+		JFXButton paramDetail = (JFXButton)temp.lookup("#paramDetail");
+		paramDetail.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override
 			public void handle(ActionEvent event)
 			{
-				System.out.println("修改参数");
+				System.out.println("查看参数");
 			}
 		});
 		
@@ -119,7 +118,6 @@ public class TabAchieveController implements Initializable
 					int i = project.getProjectDir().lastIndexOf("/");
 					String name_dir = project.getProjectDir().substring(i + 1);
 					path = path + "\\Run\\" + project.getProjectName() + "\\Result\\0_results\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
-					System.out.println(path);
 					runtime.exec("cmd /c " + path);
 				} catch (IOException e) {
 					ToastUtil.toast(ResUtil.gs("open_image_error"));

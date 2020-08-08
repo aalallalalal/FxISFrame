@@ -98,6 +98,7 @@ public class ProcessingController extends BaseController implements Initializabl
         tabRunningController.addServiceToList(finalData);
         updateParam();
         nextRun();
+        System.out.println(service.getState());
 	}
 
 	@Override
@@ -180,6 +181,9 @@ public class ProcessingController extends BaseController implements Initializabl
 		}
 	}
 	
+	/**
+	 * 更新下一个任务的参数
+	 */
 	public void updateParam() {
 		ProjectBean next;
  		if(!tabRunningController.getList_current().isEmpty())
@@ -190,7 +194,9 @@ public class ProcessingController extends BaseController implements Initializabl
  			System.out.println(currentProject.getText());
  		}
 	}
-	
+	/**
+	 * 判断是否还有任务及对应操作
+	 */
 	public void nextRun()
 	{
 		if(!tabRunningController.getList_current().isEmpty())
@@ -203,17 +209,23 @@ public class ProcessingController extends BaseController implements Initializabl
 		}
 	}
 	
+	/**
+	 * 运行成功后更新tab页面
+	 */
 	public void updateSucc()
 	{
 		tabAchieveController.addAchieveHBox(tabRunningController.getList_current().get(0));
-		tabRunningController.updatelist(0);
+		tabRunningController.updateRemove(0);
 	}
-	
+	/**
+	 * 运行失败后更新tab页面
+	 */
 	public void updateFail()
 	{
 		tabFailedController.addFailedHBox(tabRunningController.getList_current().get(0), service.getValue());
-		tabRunningController.updatelist(0);
+		tabRunningController.updateRemove(0);
 	}
+	
 	
 	public interface ProcessingListener {
 		//转到项目列表界面
@@ -243,7 +255,45 @@ public class ProcessingController extends BaseController implements Initializabl
 	 */
 	public void addnewservice(ProjectBean project)
 	{
-		
+		if(tabRunningController.getList_current().isEmpty())
+		{
+			tabRunningController.add(project);
+			updateParam();
+			nextRun();
+		}
+		else if(service.getState().toString() != "SUCCEEDED" || service.getState().toString() != "FAILED")
+		{
+			tabRunningController.add(project);
+		}
+		else 
+		{
+			System.out.println("重新启动失败，请重试！");
+		}
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

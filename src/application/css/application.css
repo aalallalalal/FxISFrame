@@ -48,7 +48,7 @@ visibility: hidden;
 }
 
 .label-paramsetting{
-	-fx-text-fill: #000; -fx-font-size: 15.0; -fx-wrap-text:true 
+	-fx-text-fill: #000; -fx-font-size: 10.0; -fx-wrap-text:true 
 }
 
 
