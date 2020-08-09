@@ -13,6 +13,7 @@ import application.control.CreateProjectDialogController.CallBack;
 import beans.FinalDataBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
+import beans.SettingsBean;
 import beans.SoftwareSettingsBean;
 import consts.ConstSize;
 import javafx.collections.ObservableList;
@@ -190,6 +191,22 @@ public class MainController implements Initializable {
 		public void onClickLeftBtn() {
 			prePage();
 		}
+
+		@Override
+		public void onClickAddSettings(ObservableList<ProjectBean> projectListData) {
+			MyFxmlBean settingDialogBean = UIUtil.openDialog(getClass(), "/application/fxml/SettingsDialog.fxml",
+					ConstSize.Main_Frame_Width, ConstSize.Main_Frame_Height, ResUtil.gs("setting_new_temp"),
+					getStage());
+			SettingsDialogController settingDialogController = settingDialogBean.getFxmlLoader().getController();
+			settingDialogController.initExtraData(2, projectListData, null);
+			settingDialogController.setCallBack(new application.control.SettingsDialogController.CallBack() {
+				@Override
+				public void onReturn(SettingsBean settings) {
+					settingController.addSettingResult(settings);
+					settingDialogBean.getStage().close();
+				}
+			});			
+		}
 	}
 
 	/**
@@ -278,6 +295,7 @@ public class MainController implements Initializable {
 			if (createProjectController == null) {
 				createProjectController = fxmlLoader.getController();
 				createProjectController.setListener(new CreateProjListener());
+				createProjectController.setMainStage(getStage());
 			}
 			currentController = createProjectController;
 			currentPane = createProjPane;
@@ -292,6 +310,7 @@ public class MainController implements Initializable {
 			if (projectsController == null) {
 				projectsController = fxmlLoader.getController();
 				projectsController.setListener(new ProjectsListener());
+				projectsController.setMainStage(getStage());
 			}
 			currentController = projectsController;
 			currentPane = projectsPane;
@@ -306,6 +325,7 @@ public class MainController implements Initializable {
 			if (settingController == null) {
 				settingController = fxmlLoader.getController();
 				settingController.setListener(new SettingListener());
+				settingController.setMainStage(getStage());
 			}
 			currentController = settingController;
 			currentPane = settingPane;
@@ -320,6 +340,7 @@ public class MainController implements Initializable {
 			if (processingController == null) {
 				processingController = fxmlLoader.getController();
 				processingController.setListener(new ProcessingListener());
+				processingController.setMainStage(getStage());
 			}
 			currentController = processingController;
 			currentPane = ProcessingPane;

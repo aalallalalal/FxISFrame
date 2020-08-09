@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import utils.ResUtil;
+
 /**
  * 项目实体类
  * 
@@ -127,23 +129,45 @@ public class ProjectBean implements Serializable {
 	public void setSettings(SettingsBean settings) {
 		this.settings = settings;
 	}
-	
+
+	/**
+	 * 若无参数：0 有未命名参数:1 模板参数 ：2；
+	 * 
+	 * @return
+	 */
+	public int getSettingType() {
+		if (settings == null) {
+			return 0;
+		}
+		return settings.getSettingType();
+	}
+
+	public String getSettingName() {
+		if (settings == null) {
+			return ResUtil.gs("setting_name_empty");
+		} else {
+			return settings.getName();
+		}
+	}
+
 	public String toSettingParameter() {
 		String settingPara = "";
-		//网格大小
+		// 网格大小
 		settingPara += "\"-grid_w\"" + " \"" + settings.getNetWidth();
 		settingPara += "\" " + "\"-grid_h\"" + " \"" + settings.getNetHeight();
-		
-		//是否重叠度先验
-		settingPara += "\" " + "\"-try_OP\"" + " " + (settings.isPreCheck() ? 
-						("\"yes\"" + " " + "\"-hight\"" + " \"" + settings.getFlyHeight() + "\" " + "\"-Focal\"" + " \"" + settings.getCameraSize() + '"') 
-						:"\"no\"");
-		
-		//是否保存中间结果
+
+		// 是否重叠度先验
+		settingPara += "\" " + "\"-try_OP\"" + " "
+				+ (settings.isPreCheck()
+						? ("\"yes\"" + " " + "\"-hight\"" + " \"" + settings.getFlyHeight() + "\" " + "\"-Focal\""
+								+ " \"" + settings.getCameraSize() + '"')
+						: "\"no\"");
+
+		// 是否保存中间结果
 		settingPara += " " + "\"-save_mid\"" + " " + (settings.isSaveMiddle() ? "\"yes\"" : "\"no\"") + " ";
-		
-		//中英文
-		settingPara += "\"-languages\" " +  '"' + (settings.getLanguage() == 0 ? "Chinese" : "English") + '"';
+
+		// 中英文
+		settingPara += "\"-languages\" " + '"' + (settings.getLanguage() == 0 ? "Chinese" : "English") + '"';
 		return settingPara;
 	}
 }

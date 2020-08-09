@@ -1,47 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
 <?import com.jfoenix.controls.*?>
 <?import java.lang.*?>
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.HBox?>
+<?import views.MyToolTip?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import views.myTextField.DecimalField?>
 <?import views.myTextField.IntegerField?>
-<?import javafx.scene.layout.VBox?>
-<?import com.jfoenix.controls.JFXButton?>
-<?import javafx.scene.layout.FlowPane?>
-<?import javafx.scene.control.ScrollPane?>
 
-<BorderPane fx:id="root"
-	style="-fx-background-color:#fff;-fx-padding:4"
+<BorderPane fx:id="root1"
+	style="-fx-background-color: #fefefe; -fx-padding: 10;"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-	fx:controller="application.control.SettingController">
-	<left>
-		<VBox spacing="3.0" prefWidth="140.0"
-			BorderPane.alignment="CENTER">
-			<Label text="%project"
-				style="-fx-text-fill: #4f4f4f;-fx-font-size: 14.0">
-				<HBox.margin>
-					<Insets top="3.5" left="2" />
-				</HBox.margin>
-			</Label>
-
-			<ListView fx:id="listView_projects" 
-				style=" -fx-background-color: #fafafa;-fx-padding:2;" />
-		</VBox>
-	</left>
-
+	fx:controller="application.control.SettingsDialogController">
 	<center>
-		<VBox spacing="24.0" fx:id="setting_pane" visible="false"
+		<VBox spacing="24.0"
 			style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;-fx-padding: 14;"
 			BorderPane.alignment="CENTER">
 			<children>
-				<Label fx:id="label_project_name"
-					style="-fx-text-fill: #4f4f4f;-fx-font-size: 14.0">
-				</Label>
+				<HBox spacing="14.0" alignment="CENTER_LEFT">
+					<Label text="%setting_name">
+						<styleClass>
+							<String fx:value="label-level-setting-normal" />
+						</styleClass>
+					</Label>
+					<JFXTextField fx:id="text_setting_name" prefWidth="80"
+						prefColumnCount="10" prefHeight="10">
+						<styleClass>
+							<String fx:value="custom-text-field" />
+						</styleClass>
+					</JFXTextField>
+				</HBox>
 				<HBox spacing="14.0">
 					<children>
 						<Label text="%setting_net">
@@ -169,13 +163,6 @@
 						<String fx:value="custom-jfx-check-box" />
 					</styleClass>
 				</JFXCheckBox>
-
-				<JFXButton onAction="#onSaveSetting" text="%setting_save">
-					<styleClass>
-						<String fx:value="btn-level-normal" />
-					</styleClass>
-				</JFXButton>
-
 			</children>
 			<BorderPane.margin>
 				<Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
@@ -184,20 +171,36 @@
 	</center>
 
 	<right>
-		<VBox spacing="5.0" alignment="CENTER" style="-fx-background-color: #fff; -fx-border-width: 1; -fx-border-color: #fafafa;">
-			<JFXButton onAction="#onAddSetting" text="%settings_add">
-				<styleClass>
-					<String fx:value="btn-level-normal" />
-				</styleClass>
-			</JFXButton>
-			<Label text="%listview_setting_tips"
-				style="-fx-text-fill: #8f8f8f;-fx-font-size: 10.0">
+		<VBox fx:id="vbox_projectlist" spacing="3.0" prefWidth="180.0"
+			BorderPane.alignment="CENTER">
+			<Label text="%apply_temp_setting_project"
+				style="-fx-text-fill: #4f4f4f;-fx-font-size: 12.0">
+				<HBox.margin>
+					<Insets top="3.5" left="2" right="2" />
+				</HBox.margin>
 			</Label>
-			<ListView fx:id="listView_settings"
-				style="-fx-background-color: #fff;-fx-padding:2;" prefWidth="100.0" />
-			<BorderPane.margin>
-				<Insets  right="5.0" />
-			</BorderPane.margin>
+			<JFXCheckBox fx:id="checkBox_selectAll" selected="false"
+				text="%setting_select_all">
+				<styleClass>
+					<String fx:value="custom-jfx-check-box" />
+				</styleClass>
+			</JFXCheckBox>
+			<ListView fx:id="listView_projects"
+				style=" -fx-background-color: #fafafa;-fx-padding:2;" />
 		</VBox>
 	</right>
+
+	<bottom>
+		<JFXButton fx:id="btnDone" buttonType="RAISED"
+			prefWidth="120.0" onAction="#done" text="%done"
+			BorderPane.alignment="CENTER">
+			<styleClass>
+				<String fx:value="btn-level-vip" />
+			</styleClass>
+			<BorderPane.margin>
+				<Insets bottom="10.0" />
+				<Insets top="10.0" />
+			</BorderPane.margin>
+		</JFXButton>
+	</bottom>
 </BorderPane>

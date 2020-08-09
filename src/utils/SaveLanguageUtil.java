@@ -9,10 +9,15 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class SaveLanguageUtil {
-	
+	private static String path = System.getProperty("user.dir") + "/Datas";
+	private static String fileName = "Language_Data";
+
+	static {
+		checkFile();
+	}
+
 	public static int getData() {
-		String path = System.getProperty("user.dir");
-		File writeName = new File(path, "language"); // 相对路径，如果没有则要建立一个新的output.txt文件
+		File writeName = checkFile();
 		if (!writeName.exists() || writeName.length() == 0) {
 			return 0;
 		}
@@ -33,11 +38,7 @@ public class SaveLanguageUtil {
 
 	public static void saveData(int i) {
 		try {
-			String path = System.getProperty("user.dir");
-			File writeName = new File(path, "language"); // 相对路径，如果没有则要建立一个新的output.txt文件
-			if (!writeName.exists()) {
-				writeName.createNewFile(); // 创建新文件,有同名的文件的话直接覆盖
-			}
+			File writeName = checkFile();
 			FileOutputStream writer = new FileOutputStream(writeName);
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer);
 			objectOutputStream.writeObject(i);
@@ -46,5 +47,22 @@ public class SaveLanguageUtil {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	private static File checkFile() {
+		File folder = new File(path);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+		File writeName = new File(folder, fileName); // 相对路径，如果没有则要建立一个新的output.txt文件
+		if (!writeName.exists()) {
+			try {
+				writeName.createNewFile();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		File file = new File(path, fileName);
+		return file;
 	}
 }

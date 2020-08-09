@@ -2,6 +2,8 @@ package beans;
 
 import java.io.Serializable;
 
+import utils.ResUtil;
+
 /**
  * 参数实体类
  * 
@@ -13,15 +15,23 @@ public class SettingsBean implements Serializable {
 	/**
 	 * 
 	 */
+	private int settingType = 1;// 1：未命名参数 2：模板参数
+	private long id = 0;
+	private String name = "";
 	private static final long serialVersionUID = 1L;
 	private boolean isSaveMiddle;
 	private String netWidth, netHeight;
 	private boolean isPreCheck;
 	private int preCheckWay;// 0,1
-	private String flyHeight; //way0
-	private String cameraSize;//way0
-	private String gsd; //way1
-	private int language; // 0中文，1英文
+	private String flyHeight; // way0
+	private String cameraSize;// way0
+	private String gsd; // way1
+	private long lastUserTime = 0;
+
+	public SettingsBean() {
+		this.id = System.currentTimeMillis();
+		this.setLastUsedTime(this.id);
+	}
 
 	public boolean isSaveMiddle() {
 		return isSaveMiddle;
@@ -71,14 +81,6 @@ public class SettingsBean implements Serializable {
 		this.cameraSize = cameraSize;
 	}
 
-	public int getLanguage() {
-		return language;
-	}
-
-	public void setLanguage(int language) {
-		this.language = language;
-	}
-
 	public int getPreCheckWay() {
 		return preCheckWay;
 	}
@@ -95,4 +97,79 @@ public class SettingsBean implements Serializable {
 		this.gsd = gsd;
 	}
 
+	public String getName() {
+		if (getSettingType() == 1) {
+			return ResUtil.gs("setting_name_not");
+		}
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+		setSettingType(2);
+	}
+
+	public int getSettingType() {
+		return settingType;
+	}
+
+	public void setSettingType(int settingType) {
+		this.settingType = settingType;
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	/**
+	 * 一样的数据new个settingsbean出来
+	 * 
+	 * @return
+	 */
+	public SettingsBean copyToANew(String name) {
+		SettingsBean temp = new SettingsBean();
+		temp.setCameraSize(getCameraSize());
+		temp.setSettingType(getSettingType());
+		temp.setFlyHeight(getFlyHeight());
+		temp.setGsd(getGsd());
+		temp.setName(name);
+		temp.setNetHeight(getNetHeight());
+		temp.setNetWidth(getNetWidth());
+		temp.setPreCheck(isPreCheck());
+		temp.setPreCheckWay(getPreCheckWay());
+		temp.setSaveMiddle(isSaveMiddle());
+		return temp;
+	}
+
+	/**
+	 * 模板转为临时
+	 * 
+	 * @return
+	 */
+	public SettingsBean changeTempToCustom() {
+		SettingsBean custom = new SettingsBean();
+		custom.setCameraSize(getCameraSize());
+		custom.setSettingType(1);
+		custom.setFlyHeight(getFlyHeight());
+		custom.setGsd(getGsd());
+		custom.setName("");
+		custom.setNetHeight(getNetHeight());
+		custom.setNetWidth(getNetWidth());
+		custom.setPreCheck(isPreCheck());
+		custom.setPreCheckWay(getPreCheckWay());
+		custom.setSaveMiddle(isSaveMiddle());
+		return custom;
+	}
+
+	public int getLanguage() {
+		return 0;
+	}
+
+	public long getLastUserTime() {
+		return lastUserTime;
+	}
+
+	public void setLastUsedTime(long lastUserTime) {
+		this.lastUserTime = lastUserTime;
+	}
 }

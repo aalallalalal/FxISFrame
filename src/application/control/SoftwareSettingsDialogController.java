@@ -13,7 +13,7 @@ import javafx.scene.control.ToggleGroup;
 import utils.SaveLanguageUtil;
 
 /**
- * 创建项目dialog界面controller
+ * 软件设置界面界面controller
  * 
  * @author DP
  */

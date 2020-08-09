@@ -23,6 +23,11 @@ public class FinalDataBean {
 		}
 	}
 
+	public FinalDataBean(ObservableList<ProjectBean> projectListData) {
+		super();
+		this.projectListData = projectListData;
+	}
+	
 	public ObservableList<ProjectBean> getProjectListData() {
 		return projectListData;
 	}

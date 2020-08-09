@@ -10,6 +10,7 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import utils.ResUtil;
 import utils.SaveLanguageUtil;
+import utils.UIUtil;
 
 public abstract class BaseApplication extends Application {
 	
@@ -24,6 +25,7 @@ public abstract class BaseApplication extends Application {
 			scene.getStylesheets().add(getClass().getResource(getCSSPath()).toExternalForm());
 			primaryStage.initStyle(StageStyle.TRANSPARENT);// 设定窗口无边框
 			primaryStage.show();
+			UIUtil.centerWindow(primaryStage, 0);
 			uiPane.requestFocus();
 		} catch (Exception e) {
 			e.printStackTrace();

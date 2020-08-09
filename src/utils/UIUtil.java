@@ -84,6 +84,7 @@ public class UIUtil {
 			setFrameCanDrag(framePane, anotherStage);
 			transparentFrame(anotherStage, scene);
 			anotherStage.show();
+			centerWindow(anotherStage,10);
 			framePane.requestFocus();
 			loadFxml.setScene(scene);
 			loadFxml.setStage(anotherStage);
@@ -124,6 +125,7 @@ public class UIUtil {
 			transparentFrame(anotherStage, scene);
 			setFrameCanDrag(framePane, anotherStage);
 			anotherStage.show();
+			centerWindow(anotherStage,10);
 			framePane.requestFocus();
 			loadFxml.setScene(scene);
 			loadFxml.setStage(anotherStage);
@@ -253,6 +255,18 @@ public class UIUtil {
 
 	public static void setFrameCss(Class<?> clz, Scene scene) {
 		scene.getStylesheets().add(clz.getResource(ConstRes.CSS_Path).toExternalForm());
+	}
+	
+	/**
+	 * Set window center on the screen.
+	 * 
+	 * @param win
+	 *            the current window
+	 */
+	public static void centerWindow(Stage win,double offset) {
+		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
+		win.setX((screenBounds.getWidth() - win.getWidth()) / 2+offset); 
+		win.setY((screenBounds.getHeight() - win.getHeight()) / 2+offset);  
 	}
 
 }

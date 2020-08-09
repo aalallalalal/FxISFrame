@@ -11,24 +11,24 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.concurrent.ExecutionException;
 
-import beans.ProjectBean;
+import beans.SettingsBean;
 import javafx.stage.Stage;
 import utils.ProgressTask.ProgressTask;
 
 /**
- * 保存、读取存储在本地的项目数据
+ * 保存、读取存储在本地的参数模板数据
  * 
  * @author DP
  *
  */
-public class SaveProjectsUtil {
+public class SaveSettingsUtil {
 	private static String path = System.getProperty("user.dir") + "/Datas";
-	private static String fileName = "Projects_Data";
+	private static String fileName = "Settings_Data";
 
-	private static final int MAX_SIZE = 50;// 最大保存项目数量50
+	private static final int MAX_SIZE = 100;// 最大保存项目数量100
 	private static final long MAX_TIME = 1000 * 60 * 60 * 24 * 30 * 2; // 两个月
 
-	private static ProjectBeanComparator comparator = new ProjectBeanComparator();
+	private static SettingsBeanComparator comparator = new SettingsBeanComparator();
 
 	static {
 		checkFile();
@@ -39,7 +39,7 @@ public class SaveProjectsUtil {
 	 * 
 	 * @param bean
 	 */
-	public static void upDataProjectData(ProjectBean bean) {
+	public static void upDataSettingsData(ArrayList<SettingsBean> beans) {
 		ProgressTask task = new ProgressTask(new ProgressTask.MyTask<Void>() {
 			@Override
 			protected void succeeded() {
@@ -48,14 +48,16 @@ public class SaveProjectsUtil {
 
 			@Override
 			protected Void call() {
-				ArrayList<ProjectBean> projectsData = getProjectsDataNoInThread();
-				for (ProjectBean item : projectsData) {
-					if (item.getId() == bean.getId()) {
-						item.setLastUsedTime(System.currentTimeMillis());
-						break;
+				ArrayList<SettingsBean> projectsData = getProjectsDataNoInThread();
+				for(SettingsBean itemSelected:beans) {
+					for (SettingsBean item : projectsData) {
+						if (item.getId() == itemSelected.getId()) {
+							item.setLastUsedTime(System.currentTimeMillis());
+							break;
+						}
 					}
 				}
-				saveProjectsData(projectsData);
+				saveSettingsData(projectsData);
 				return null;
 			}
 		});
@@ -68,7 +70,7 @@ public class SaveProjectsUtil {
 	 * @param bean
 	 * @param stage null：不显示加载弹出框
 	 */
-	public static void changeProjectData(ProjectBean bean, Stage stage) {
+	public static void changeSettingData(SettingsBean bean, Stage stage) {
 		ProgressTask task = new ProgressTask(new ProgressTask.MyTask<Void>() {
 			@Override
 			protected void succeeded() {
@@ -77,18 +79,23 @@ public class SaveProjectsUtil {
 
 			@Override
 			protected Void call() {
-				ArrayList<ProjectBean> projectsData = getProjectsDataNoInThread();
-				for (ProjectBean item : projectsData) {
+				ArrayList<SettingsBean> projectsData = getProjectsDataNoInThread();
+				for (SettingsBean item : projectsData) {
 					if (item.getId() == bean.getId()) {
-						item.setProjectName(bean.getProjectName());
-						item.setProjectDir(bean.getProjectDir());
-						item.setLastUsedTime(System.currentTimeMillis());
-						item.setLocationFrom(bean.getLocationFrom());
-						item.setProjectLocationFile(bean.getProjectLocationFile());
+						item.setCameraSize(bean.getCameraSize());
+						item.setSettingType(bean.getSettingType());
+						item.setFlyHeight(bean.getFlyHeight());
+						item.setGsd(bean.getGsd());
+						item.setName(bean.getName());
+						item.setNetHeight(bean.getNetHeight());
+						item.setNetWidth(bean.getNetWidth());
+						item.setPreCheck(bean.isPreCheck());
+						item.setPreCheckWay(bean.getPreCheckWay());
+						item.setSaveMiddle(bean.isSaveMiddle());
 						break;
 					}
 				}
-				saveProjectsData(projectsData);
+				saveSettingsData(projectsData);
 				return null;
 			}
 		}, stage);
@@ -101,7 +108,7 @@ public class SaveProjectsUtil {
 	 * @param proj
 	 * @param stage
 	 */
-	public static void saveProject(ProjectBean proj, Stage stage) {
+	public static void saveProject(SettingsBean proj, Stage stage) {
 		ProgressTask task = new ProgressTask(new ProgressTask.MyTask<Void>() {
 			@Override
 			protected void succeeded() {
@@ -110,12 +117,12 @@ public class SaveProjectsUtil {
 
 			@Override
 			protected Void call() {
-				ArrayList<ProjectBean> list = getProjectsDataNoInThread();
+				ArrayList<SettingsBean> list = getProjectsDataNoInThread();
 				if (list == null) {
-					list = new ArrayList<ProjectBean>();
+					list = new ArrayList<SettingsBean>();
 				}
 				list.add(proj);
-				saveProjectsData(list);
+				saveSettingsData(list);
 				return null;
 			}
 		}, stage);
@@ -128,14 +135,14 @@ public class SaveProjectsUtil {
 	 * @param stage
 	 * @param callback
 	 */
-	public static void getProjectsData(Stage stage, Callback callback) {
-		ProgressTask task = new ProgressTask(new ProgressTask.MyTask<ArrayList<ProjectBean>>() {
+	public static void getSettingsData(Stage stage, Callback callback) {
+		ProgressTask task = new ProgressTask(new ProgressTask.MyTask<ArrayList<SettingsBean>>() {
 			@Override
 			protected void succeeded() {
 				super.succeeded();
 				try {
 					if (callback != null) {
-						ArrayList<ProjectBean> arrayList = get();
+						ArrayList<SettingsBean> arrayList = get();
 						callback.onGetData(arrayList);
 					}
 				} catch (InterruptedException | ExecutionException e) {
@@ -144,8 +151,8 @@ public class SaveProjectsUtil {
 			}
 
 			@Override
-			protected ArrayList<ProjectBean> call() {
-				ArrayList<ProjectBean> projectsDataNoInThread = getProjectsDataNoInThread();
+			protected ArrayList<SettingsBean> call() {
+				ArrayList<SettingsBean> projectsDataNoInThread = getProjectsDataNoInThread();
 				return projectsDataNoInThread;
 			}
 		}, stage);
@@ -158,17 +165,18 @@ public class SaveProjectsUtil {
 	 * @return
 	 */
 	@SuppressWarnings("unchecked")
-	private static ArrayList<ProjectBean> getProjectsDataNoInThread() {
-		File writeName = checkFile();
+	private static ArrayList<SettingsBean> getProjectsDataNoInThread() {
+
+		File writeName = checkFile(); // 相对路径，如果没有则要建立一个新的output.txt文件
 		if (!writeName.exists() || writeName.length() == 0) {
-			return new ArrayList<ProjectBean>();
+			return new ArrayList<SettingsBean>();
 		}
 		FileInputStream writer;
-		ArrayList<ProjectBean> data = null;
+		ArrayList<SettingsBean> data = null;
 		try {
 			writer = new FileInputStream(writeName);
 			ObjectInputStream objectinputStream = new ObjectInputStream(writer);
-			data = (ArrayList<ProjectBean>) objectinputStream.readObject();
+			data = (ArrayList<SettingsBean>) objectinputStream.readObject();
 			objectinputStream.close();
 		} catch (EOFException e) {
 			e.printStackTrace();
@@ -179,11 +187,11 @@ public class SaveProjectsUtil {
 		return data;
 	}
 
-	private static void saveProjectsData(ArrayList<ProjectBean> list) {
+	private static void saveSettingsData(ArrayList<SettingsBean> list) {
 		controlListSize(list);
 
 		try {
-			File writeName = checkFile();
+			File writeName = checkFile(); // 相对路径，如果没有则要建立一个新的output.txt文件
 			FileOutputStream writer = new FileOutputStream(writeName);
 			ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer);
 			objectOutputStream.writeObject(list);
@@ -201,7 +209,7 @@ public class SaveProjectsUtil {
 	 * 
 	 * @param list
 	 */
-	private static void controlListSize(ArrayList<ProjectBean> list) {
+	private static void controlListSize(ArrayList<SettingsBean> list) {
 		if (list == null || list.size() == 0) {
 			return;
 		}
@@ -209,22 +217,22 @@ public class SaveProjectsUtil {
 			return;
 		}
 		list.sort(comparator);
-		ProjectBean projectBean = list.get(MAX_SIZE);
-		long dist = System.currentTimeMillis() - projectBean.getLastUsedTime();
+		SettingsBean settingsBean = list.get(MAX_SIZE);
+		long dist = System.currentTimeMillis() - settingsBean.getLastUserTime();
 		if (dist >= MAX_TIME) {
-			ArrayList<ProjectBean> sublist = (ArrayList<ProjectBean>) list.subList(MAX_SIZE, list.size());
+			ArrayList<SettingsBean> sublist = (ArrayList<SettingsBean>) list.subList(MAX_SIZE, list.size());
 			list.removeAll(sublist);
 		}
 	}
 
 	public interface Callback {
-		void onGetData(ArrayList<ProjectBean> list);
+		void onGetData(ArrayList<SettingsBean> list);
 	}
 
-	private static class ProjectBeanComparator implements Comparator<ProjectBean> {
+	private static class SettingsBeanComparator implements Comparator<SettingsBean> {
 		@Override
-		public int compare(ProjectBean o1, ProjectBean o2) {
-			long dist = o2.getLastUsedTime() - o1.getLastUsedTime();
+		public int compare(SettingsBean o1, SettingsBean o2) {
+			long dist = o2.getLastUserTime() - o1.getLastUserTime();
 			if (dist > 0) {
 				return 1;
 			} else if (dist == 0) {

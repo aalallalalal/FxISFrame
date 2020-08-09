@@ -2,7 +2,7 @@
 .root {
  -fx-font-size:16.0pt; 
  -fx-font-family:"Microsoft YaHei"; 
- -fx-base:#0a0a0a; 
+ -fx-base:#4f4f4f; 
 } 
   
 
@@ -40,20 +40,20 @@ visibility: hidden;
 .custom-jfx-check-box{
    -jfx-checked-color: #FFA500;  
    -jfx-unchecked-color: #608DFA;
-   -fx-text-fill: #000; -fx-font-size: 14.0; -fx-wrap-text:true 
+   -fx-text-fill:  #5f5f5f; -fx-font-size: 14.0; -fx-wrap-text:true 
 }
 
-.label-leve-normal{
-	-fx-text-fill: #000; -fx-font-size: 14.0; -fx-wrap-text:true 
+.label-level-setting-normal{
+	-fx-text-fill: #5f5f5f; -fx-font-size: 12.0; -fx-wrap-text:true 
 }
 
 .label-paramsetting{
-	-fx-text-fill: #000; -fx-font-size: 10.0; -fx-wrap-text:true 
+	-fx-text-fill:#4f4f4f; -fx-font-size: 15.0; -fx-wrap-text:true 
 }
 
 
 .custom-text-field{
-	-fx-text-fill: #000; -fx-border-color:#fafafa;-fx-border-width:2.0;-fx-border-style:solid;
+	-fx-text-fill: #4f4f4f; -fx-border-color:#fafafa;-fx-border-width:2.0;-fx-border-style:solid;
 	-fx-font-size: 14.0; -fx-padding:2.0;-jfx-focus-color:#FFA500;-jfx-unfocus-color:#fafafa00;
 }
 
@@ -85,7 +85,7 @@ visibility: hidden;
  */
 .table-column .label{
     -fx-background-color: #fff;
-    -fx-text-fill: #000 ;
+    -fx-text-fill: #4f4f4f ;
     -fx-text-alignment: center ;
      -fx-font-size: 14.0;
 }
@@ -96,7 +96,7 @@ visibility: hidden;
      -fx-background-color: white;    
 }
  .table-view .table-cell {
-	 -fx-text-fill:#000; 
+	 -fx-text-fill:#4f4f4f; 
         -fx-font-size:14.0
 } 
  .table-view .table-row-cell {
@@ -206,7 +206,7 @@ visibility: hidden;
 }
 
 .list-cell *.button{
-	-fx-text-fill:black;
+	-fx-text-fill:#4f4f4f;
 	-fx-font-size: 16.0px;
 }
 
