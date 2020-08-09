@@ -180,9 +180,9 @@ public class ProcessingController extends BaseController implements Initializabl
 	 */
 	public void updateParam() {
 		ProjectBean next;
- 		if(!tabRunningController.getList_current().isEmpty())
+ 		if(!tabRunningController.getList_running().isEmpty())
  		{
- 			next = tabRunningController.getList_current().get(0);
+ 			next = tabRunningController.getList_running().get(0);
  			FinalDataBean.para_Exe = next.toSettingParameter() + next.getParam() + "%" + next.getProjectName(); ;
  			currentProject.setText(next.getProjectName() + " . . .");
  			System.out.println(currentProject.getText());
@@ -193,7 +193,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	 */
 	public void nextRun()
 	{
-		if(!tabRunningController.getList_current().isEmpty())
+		if(!tabRunningController.getList_running().isEmpty())
 		{
 			tabRunningController.toRunning();
 			service.reset();
@@ -208,7 +208,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	 */
 	public void updateSucc()
 	{
-		tabAchieveController.addAchieveHBox(tabRunningController.getList_current().get(0));
+		tabAchieveController.addAchieveHBox(tabRunningController.getList_running().get(0));
 		tabRunningController.updateRemove(0);
 	}
 	/**
@@ -216,7 +216,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	 */
 	public void updateFail(String reason)
 	{
-		tabFailedController.addFailedHBox(tabRunningController.getList_current().get(0), reason);
+		tabFailedController.addFailedHBox(tabRunningController.getList_running().get(0), reason);
 		tabRunningController.updateRemove(0);
 	}
 	
@@ -231,7 +231,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	 */
 	public void addnewservice(ProjectBean project)
 	{
-		if(tabRunningController.getList_current().isEmpty())
+		if(tabRunningController.getList_running().isEmpty())
 		{
 			tabRunningController.add(project);
 			updateParam();
@@ -249,7 +249,7 @@ public class ProcessingController extends BaseController implements Initializabl
 
 	public void closeService(int select)
 	{
-		ProjectBean project = tabRunningController.getList_current().get(select);
+		ProjectBean project = tabRunningController.getList_running().get(select);
 		if(select == 0)
 		{
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,

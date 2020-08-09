@@ -5,17 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
 import beans.MyFxmlBean;
 import beans.ProjectBean;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -39,11 +35,10 @@ public class TabAchieveController implements Initializable
 	@FXML
 	AnchorPane root;
 
-	ObservableList<HBox> list_achieve = FXCollections.observableArrayList();
+	ObservableList<ProjectBean> list_achieve = FXCollections.observableArrayList();
 	
 	@FXML
-	ListView<HBox> listView_achieve = new ListView<HBox>();
-	List<ProjectBean> list_current = new ArrayList<ProjectBean>();
+	ListView<ProjectBean> listView_achieve = new ListView<ProjectBean>();
 	
 	Image image_succ = new Image("resources/nosucced.png");
 	ImageView imageView_succed = new ImageView(image_succ);
@@ -58,22 +53,48 @@ public class TabAchieveController implements Initializable
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		listView_achieve.setVisible(false);
+		listView_achieve.setItems(list_achieve);
+		listView_achieve.setCellFactory(new Callback<ListView<ProjectBean>, ListCell<ProjectBean>>()
+		{
+			
+			@Override
+			public ListCell<ProjectBean> call(ListView<ProjectBean> param)
+			{
+				ListCell<ProjectBean> cell = new ListCell<ProjectBean>() {
+
+					@Override
+					protected void updateItem(ProjectBean item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false)
+						{
+							MyFxmlBean fxmlbean = UIUtil.loadFxml(getClass(), "/application/fxml/AchieveHBox.fxml");
+							HBox temp = (HBox)fxmlbean.getPane();
+							setContent(item, temp);
+							this.setGraphic(temp);
+						}
+						else
+						{
+							this.setGraphic(null);
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
 		
 	}
 	
 	public void addAchieveHBox(ProjectBean project) 
 	{
-		MyFxmlBean fxmlbean = UIUtil.loadFxml(getClass(), "/application/fxml/AchieveHBox.fxml");
-		HBox temp = (HBox)fxmlbean.getPane();
-		setContent(project, temp);
-		list_achieve.add(temp);
-		list_current.add(project);
-		listView_achieve.setItems(list_achieve);
+		list_achieve.add(project);
 		listView_achieve.setVisible(true);
 	}
 	
 	/**
-	 * 设置新添加的hbox的内容
+	 * 设置新添加的cell的内容
 	 * @param project
 	 * @param temp
 	 */
@@ -94,7 +115,7 @@ public class TabAchieveController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				listView_achieve.getSelectionModel().select(temp);
+				listView_achieve.getSelectionModel().select(project);
 				try {
 					String path = System.getProperty("user.dir");
 					Desktop.getDesktop().open(new File(path + "\\Run\\" + project.getProjectName() + "\\Result"));
@@ -111,7 +132,7 @@ public class TabAchieveController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				listView_achieve.getSelectionModel().select(temp);
+				listView_achieve.getSelectionModel().select(project);
 				System.out.println("查看参数");
 			}
 		});
@@ -123,7 +144,7 @@ public class TabAchieveController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				listView_achieve.getSelectionModel().select(temp);
+				listView_achieve.getSelectionModel().select(project);
 				System.out.println(listView_achieve.getSelectionModel().getSelectedIndex());
 				Runtime runtime = Runtime.getRuntime();
 				try {
@@ -146,7 +167,7 @@ public class TabAchieveController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				listView_achieve.getSelectionModel().select(temp);
+				listView_achieve.getSelectionModel().select(project);
 				processingController.addnewservice(project);
 			}
 		});
@@ -160,6 +181,5 @@ public class TabAchieveController implements Initializable
 	{
 		list_achieve.clear();
 		listView_achieve.getItems().clear();
-		list_current.clear();
 	}
 }

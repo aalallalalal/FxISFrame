@@ -26,6 +26,7 @@ public class ProjectBean implements Serializable {
 	private String path_result; // 结果图片路径
 	private int locationFrom; // 0:从图片，1：从文件
 	private SettingsBean settings;
+	private String info;
 
 	public ProjectBean(String projectName, String projectDir, int locationFrom, String projectLocationFile) {
 		super();
@@ -37,6 +38,7 @@ public class ProjectBean implements Serializable {
 		this.lastUsedTime = getId();
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 		this.createTime = df.format(new Date());// new Date()为获取当前系统时间
+		this.info = "等待运行...";
 	}
 
 	public String getProjectName() {
@@ -148,6 +150,16 @@ public class ProjectBean implements Serializable {
 		} else {
 			return settings.getName();
 		}
+	}
+	
+	public String getState()
+	{
+		return info;
+	}
+
+	public void setState(String state)
+	{
+		this.info = state;
 	}
 
 	public String toSettingParameter() {
