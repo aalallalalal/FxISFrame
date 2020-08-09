@@ -94,6 +94,7 @@ public class TabAchieveController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
+				listView_achieve.getSelectionModel().select(temp);
 				try {
 					String path = System.getProperty("user.dir");
 					Desktop.getDesktop().open(new File(path + "\\Run\\" + project.getProjectName() + "\\Result"));
@@ -110,6 +111,7 @@ public class TabAchieveController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
+				listView_achieve.getSelectionModel().select(temp);
 				System.out.println("查看参数");
 			}
 		});
@@ -144,6 +146,7 @@ public class TabAchieveController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
+				listView_achieve.getSelectionModel().select(temp);
 				processingController.addnewservice(project);
 			}
 		});

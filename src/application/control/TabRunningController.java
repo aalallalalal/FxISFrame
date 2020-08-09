@@ -58,7 +58,6 @@ public class TabRunningController implements Initializable
 
 
 	private ProcessingController processingController;
-	//注入processingcontroller
 	public void init(ProcessingController controller) 
 	{
 		processingController = controller;
@@ -142,11 +141,6 @@ public class TabRunningController implements Initializable
 		p.setVisible(true);
 		runInfo = (Label)list_running.get(0).lookup("#runningInfo");
 		runInfo.setText("正在运行...");
-		/*
-		 * ProgressBar progressbar =
-		 * (ProgressBar)list_running.get(0).lookup("#progress");
-		 * progressbar.setProgress(-1);
-		 */
 	}
 	
 	/**
@@ -161,8 +155,9 @@ public class TabRunningController implements Initializable
 		listView_running.setItems(list_running);
 	}
 
-	/*public void updateRunningInfo(String lineStr)
+	public void updatecontrol()
 	{
-		runInfo.setText(lineStr);
-	}*/
+		listView_running.setVisible(false);
+	}
+
 }

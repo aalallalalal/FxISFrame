@@ -80,7 +80,7 @@ public class TabFailedController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
-				
+				listView_failed.getSelectionModel().select(temp);
 			}
 		});
 		
@@ -90,6 +90,7 @@ public class TabFailedController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
+				listView_failed.getSelectionModel().select(temp);
 				processingController.addnewservice(project);
 			}
 		});

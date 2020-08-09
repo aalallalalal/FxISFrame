@@ -183,7 +183,7 @@ public class ProcessingController extends BaseController implements Initializabl
  		if(!tabRunningController.getList_current().isEmpty())
  		{
  			next = tabRunningController.getList_current().get(0);
- 			FinalDataBean.para_Exe = next.toSettingParameter() + next.getParam() + "%" + next.getProjectName();
+ 			FinalDataBean.para_Exe = next.toSettingParameter() + next.getParam() + "%" + next.getProjectName(); ;
  			currentProject.setText(next.getProjectName() + " . . .");
  			System.out.println(currentProject.getText());
  		}
@@ -222,7 +222,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	
 	public void updatecontrol()
 	{
-		//tabRunningController.listView_running.setVisible(false);
+		tabRunningController.updatecontrol();
 	}
 	
 	/**
@@ -301,29 +301,5 @@ public class ProcessingController extends BaseController implements Initializabl
 		//更新显示的运行信息
 		void update(String lineStr);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 }
