@@ -112,9 +112,9 @@ public class ProjectBean implements Serializable {
 		if (this.getLocationFrom() == 0)
 			parameter += "\"_img\" ";
 		else {
-			parameter += "\"_file \"";
+			parameter += "\"_file\" \"";
 			parameter += this.getProjectLocationFile();
-			parameter += " ";
+			parameter += "\" ";
 		}
 		parameter += '"' + this.getProjectDir() + '"';
 		return parameter;

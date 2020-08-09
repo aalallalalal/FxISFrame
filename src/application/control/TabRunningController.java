@@ -104,7 +104,6 @@ public class TabRunningController implements Initializable
 		{
 			add(finalData.getProjectListData().get(i));
 		}
-		listView_running.setVisible(true);
 	}
 	
 	/**
@@ -114,6 +113,7 @@ public class TabRunningController implements Initializable
 	public void add(ProjectBean project)
 	{
 		list_running.add(project);
+		listView_running.setVisible(true);
 	}
 	
 	/**

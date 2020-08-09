@@ -8,7 +8,6 @@ import com.jfoenix.controls.JFXTabPane;
 import base.controller.ConfirmDialogController.CallBack;
 import beans.FinalDataBean;
 import beans.ProjectBean;
-import beans.SettingsBean;
 import consts.ConstSize;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -98,12 +97,10 @@ public class ProcessingController extends BaseController implements Initializabl
         tabRunningController.addServiceToList(finalData);
         updateParam();
         nextRun();
-        System.out.println(service.getState());
 	}
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
-		System.out.println("初始化");
 		tabRunningController.init(this);
 		tabAchieveController.init(this);
 		tabFailedController.init(this);
@@ -150,13 +147,16 @@ public class ProcessingController extends BaseController implements Initializabl
 
 	@Override
 	protected void onClickLeftBtn() {
-		
-		listener.tofirstpage();
+		if(!state)
+			listener.tofirstpage();
+		else
+		{
+			System.out.println("添加新任务");
+		}
 	}
 
 	@Override
 	protected void onClickRightBtn() {
-		// TODO Auto-generated method stub
 		if (!state) {
 			listener.toprojects();
 		} else {
@@ -217,6 +217,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	public void updateFail(String reason)
 	{
 		tabFailedController.addFailedHBox(tabRunningController.getList_running().get(0), reason);
+		listener.update("\n" + reason);
 		tabRunningController.updateRemove(0);
 	}
 	

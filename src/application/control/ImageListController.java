@@ -244,11 +244,13 @@ public class ImageListController implements Initializable {
 					@Override
 					public void onResult(boolean isChoose, File file) {
 						if (isChoose) {
-							labelLocation.setText(file.getAbsolutePath());
+							String path = file.getAbsolutePath();
+							path = path.replaceAll("\\\\", "/");
+							labelLocation.setText(path);
 							labelLocation.setTooltip(new MyToolTip(file.getAbsolutePath()));
 							if (project != null) {
 								project.setLocationFrom(1);
-								project.setProjectLocationFile(file.getAbsolutePath());
+								project.setProjectLocationFile(path);
 								refreshListData();
 							}
 						}

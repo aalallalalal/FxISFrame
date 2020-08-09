@@ -88,7 +88,7 @@ public class TabFailedController implements Initializable
 	}
 	
 	/**
-	 * 设置新添加的运行失败的item
+	 * 设置添加的运行失败的item
 	 * @param name
 	 * @param reason
 	 */
@@ -113,6 +113,7 @@ public class TabFailedController implements Initializable
 			}
 		});
 		
+		//重新运行
 		JFXButton restart = (JFXButton)temp.lookup("#restart");
 		restart.setOnAction(new EventHandler<ActionEvent>()
 		{
