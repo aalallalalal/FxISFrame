@@ -470,6 +470,7 @@ public class SettingController extends BaseController implements Initializable {
 		if (checkFinalData) {
 			FinalDataBean finalDataBean = new FinalDataBean(projectListData);
 			if (listener != null) {
+				listener.onClickStart(finalDataBean);
 			}
 		}
 	}

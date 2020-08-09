@@ -111,7 +111,6 @@ public class ProcessingController extends BaseController implements Initializabl
 		tab_running.setGraphic(new Label("正在拼接"));
 		tab_achieve.setGraphic(new Label("拼接成功"));
 		tab_failed.setGraphic(new Label("拼接失败"));
-		tab_param.setGraphic(new Label("当前参数"));
 	}
 	
 	//取消进程，返回主界面之后初始化进程界面,
@@ -121,7 +120,6 @@ public class ProcessingController extends BaseController implements Initializabl
 		this.setState(true);
 		this.textarea.clear();
 		tabRunningController.clearItem();
-		tabAchieveController.clearItem();
 		tabFailedController.clearItem();
 	}
 	
@@ -134,20 +132,17 @@ public class ProcessingController extends BaseController implements Initializabl
 		if (state) 
 		{
 			title.setText("拼接中");
-			// TODO 根据情况显示：上一步；或不显示
-			leftBtn.setVisible(false);
+			leftBtn.setVisible(true);
+			leftBtn.setText("添加新任务");
 			rightBtn.setVisible(true);
-			// TODO 根据情况显示：重新拼接；完成
-			rightBtn.setText("  取 消  ");
+			rightBtn.setText("  全部取消  ");
 		} 
 		else 
 		{
 			title.setText("拼接完成");
-			// TODO 根据情况显示：上一步；或不显示
 			leftBtn.setVisible(true);
 			leftBtn.setText("返回首页");
 			rightBtn.setVisible(true);
-			// TODO 根据情况显示：重新拼接；完成
 			rightBtn.setText("项目列表");
 		}
 
@@ -155,6 +150,7 @@ public class ProcessingController extends BaseController implements Initializabl
 
 	@Override
 	protected void onClickLeftBtn() {
+		
 		listener.tofirstpage();
 	}
 
@@ -173,9 +169,7 @@ public class ProcessingController extends BaseController implements Initializabl
 
 						@Override
 						public void onConfirm() {
-							System.out.println("取消进程！");
 							service.cancel();
-							System.out.println(service.isRunning());
 						}
 					});
 		}
@@ -220,30 +214,12 @@ public class ProcessingController extends BaseController implements Initializabl
 	/**
 	 * 运行失败后更新tab页面
 	 */
-	public void updateFail()
+	public void updateFail(String reason)
 	{
-		tabFailedController.addFailedHBox(tabRunningController.getList_current().get(0), service.getValue());
+		tabFailedController.addFailedHBox(tabRunningController.getList_current().get(0), reason);
 		tabRunningController.updateRemove(0);
 	}
 	
-	
-	public interface ProcessingListener {
-		//转到项目列表界面
-		void toprojects();
-		//转到首页
-		void tofirstpage();
-		//更新成功界面
-		void updateSuccBox();
-		//更新失败界面
-		void updateFailBox(String result);
-		//更新拼接完成界面
-		void updateFinish();
-		//打开文件系统的结果目录
-		void openResultFromFileSystem();
-		//更新显示的运行信息
-		void update(String lineStr);
-	}
-
 	public void updatecontrol()
 	{
 		//tabRunningController.listView_running.setVisible(false);
@@ -271,6 +247,60 @@ public class ProcessingController extends BaseController implements Initializabl
 		}
 	}
 
+	public void closeService(int select)
+	{
+		ProjectBean project = tabRunningController.getList_current().get(select);
+		if(select == 0)
+		{
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, "取消此任务","任务" + project.getProjectName() + "正在运行中，确定取消此任务？",
+					(Stage) root.getScene().getWindow(), new CallBack() {
+						@Override
+						public void onCancel() {
+						}
+
+						@Override
+						public void onConfirm() {
+							service.cancel();
+							listener.updateFailBox("此任务已被取消");
+						}
+					});
+		}
+		else
+		{
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, "取消此任务","确定取消此任务？",
+					(Stage) root.getScene().getWindow(), new CallBack() {
+						@Override
+						public void onCancel() {
+						}
+
+						@Override
+						public void onConfirm() {
+							tabFailedController.addFailedHBox(project, "此任务已被取消");
+							tabRunningController.updateRemove(select);
+						}
+					});
+			
+		}
+		
+	}
+	public interface ProcessingListener {
+		//转到项目列表界面
+		void toprojects();
+		//转到首页
+		void tofirstpage();
+		//更新成功界面
+		void updateSuccBox();
+		//更新失败界面
+		void updateFailBox(String result);
+		//更新拼接完成界面
+		void updateFinish();
+		//打开文件系统的结果目录
+		void openResultFromFileSystem();
+		//更新显示的运行信息
+		void update(String lineStr);
+	}
 	
 	
 	

@@ -19,31 +19,46 @@
             <Image url="@../../../bin/resources/chenggong1.png" />
          </image>
       </ImageView>
-      <Label fx:id="project_name" prefHeight="20.0" prefWidth="150.0" text="Label">
+      <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+         <children>
+            <Label fx:id="project_name" prefHeight="20.0" prefWidth="150.0" text="Label">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="achieve_time" prefHeight="20.0" prefWidth="150.0" text="Label">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+         </children>
          <HBox.margin>
-            <Insets left="5.0" />
+            <Insets left="10.0" />
          </HBox.margin>
-      </Label>
-      <Label fx:id="achieve_time" prefHeight="20.0" prefWidth="150.0" text="Label">
-         
-            <Font size="10.0" />
-         
-      </Label>
-      <JFXButton fx:id = "view_result" text="查看结果">
+      </VBox>
+      <JFXButton fx:id="view_result" buttonType="RAISED" text="查看结果">
          <HBox.margin>
-            <Insets left="50.0" />
+            <Insets left="10.0" />
+         </HBox.margin>
+      </JFXButton>
+      <JFXButton fx:id="midresult" buttonType="RAISED" text="中间结果">
+         <HBox.margin>
+            <Insets left="10.0" />
          </HBox.margin>
       </JFXButton>
       <JFXButton fx:id="paramDetail" buttonType="RAISED" text="查看参数">
          <HBox.margin>
-            <Insets left="15.0" />
+            <Insets left="10.0" />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="restart" buttonType="RAISED" text="重新运行">
+      <JFXButton fx:id="restart" buttonType="RAISED" text="参数&amp;重试">
          <HBox.margin>
-            <Insets left="15.0" />
+            <Insets left="10.0" />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="openfile" buttonType="RAISED" />
+      <JFXButton fx:id="openfile" buttonType="RAISED">
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin></JFXButton>
    </children>
 </HBox>

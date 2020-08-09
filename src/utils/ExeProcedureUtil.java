@@ -54,7 +54,6 @@ public class ExeProcedureUtil
             while((lineStr=inBr.readLine())!=null){
                 System.out.println(lineStr);
                 bos.write((lineStr + "\n").getBytes("UTF-8"));
-                //task.updateMessage(lineStr);
                 oldString = lineStr;
                 final String newStr = lineStr;
                 

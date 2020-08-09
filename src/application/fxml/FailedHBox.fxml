@@ -21,8 +21,27 @@
       </ImageView>
       <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="450.0">
          <children>
-            <Label fx:id="project_name" prefHeight="20.0" prefWidth="450.0" text="Label" />
-            <Label fx:id="faildetailinfo" prefHeight="20.0" prefWidth="450.0" text="Label" />
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Label fx:id="project_name" prefHeight="22.0" prefWidth="150.0" text="Label">
+                     <font>
+                        <Font size="16.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="currenttime" prefHeight="20.0" prefWidth="150.0" text="Label">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
+            <Label fx:id="faildetailinfo" prefHeight="20.0" prefWidth="450.0" text="Label">
+               <font>
+                  <Font size="13.0" />
+               </font></Label>
          </children>
          <HBox.margin>
             <Insets left="5.0" />
