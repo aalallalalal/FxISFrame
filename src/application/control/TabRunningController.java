@@ -12,11 +12,14 @@ import beans.MyFxmlBean;
 import beans.ProjectBean;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -35,6 +38,8 @@ public class TabRunningController implements Initializable
 	private ListView<HBox> listView_running = new ListView<HBox>();
 	
 	private List<ProjectBean> list_current = new ArrayList<ProjectBean>();
+	
+	private Label runInfo;
 	
 	Image image_running = new Image("resources/norunning.png");
 	ImageView imageView_running = new ImageView(image_running);
@@ -90,6 +95,7 @@ public class TabRunningController implements Initializable
 		MyFxmlBean fxmlbean = UIUtil.loadFxml(getClass(), "/application/fxml/RunningHBox.fxml");
 		HBox temp = (HBox)fxmlbean.getPane();
 		setContent(project, temp);
+		
 		list_running.add(temp);
 		list_current.add(project);
 	}
@@ -102,8 +108,19 @@ public class TabRunningController implements Initializable
 	public void setContent(ProjectBean project, HBox temp) {
 		Label project_name = (Label)temp.lookup("#project_name");
 		project_name.setText(project.getProjectName());
-		Label currentState = (Label)temp.lookup("#currentState");
-		currentState.setText("等待运行...");
+		runInfo= (Label)temp.lookup("#runningInfo");
+		runInfo.setText("等待运行...");
+		JFXButton close = (JFXButton)temp.lookup("#close");
+		close.setOnAction(new EventHandler<ActionEvent>()
+		{
+			@Override
+			public void handle(ActionEvent event)
+			{
+				listView_running.getSelectionModel().select(temp);
+				int select = listView_running.getSelectionModel().getSelectedIndex();
+				processingController.closeService(select);
+			}
+		});
 	}
 	
 	/**
@@ -121,10 +138,15 @@ public class TabRunningController implements Initializable
 	 */
 	public void toRunning()
 	{
-		Label currentState = (Label)list_running.get(0).lookup("#currentState");
-		currentState.setText("正在运行...");
-		ProgressBar progressbar = (ProgressBar)list_running.get(0).lookup("#progress");
-		progressbar.setProgress(-1);
+		ProgressIndicator p = (ProgressIndicator)list_running.get(0).lookup("#run");
+		p.setVisible(true);
+		runInfo = (Label)list_running.get(0).lookup("#runningInfo");
+		runInfo.setText("正在运行...");
+		/*
+		 * ProgressBar progressbar =
+		 * (ProgressBar)list_running.get(0).lookup("#progress");
+		 * progressbar.setProgress(-1);
+		 */
 	}
 	
 	/**
@@ -138,4 +160,9 @@ public class TabRunningController implements Initializable
 		list_current.remove(i);
 		listView_running.setItems(list_running);
 	}
+
+	/*public void updateRunningInfo(String lineStr)
+	{
+		runInfo.setText(lineStr);
+	}*/
 }

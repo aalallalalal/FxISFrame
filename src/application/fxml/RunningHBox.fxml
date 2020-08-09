@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
 <?import com.jfoenix.controls.*?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
@@ -9,29 +11,41 @@
 
 <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="project_name" prefHeight="20.0" prefWidth="200.0" text="Label">
+      <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
-      </Label>
-      <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
+         <image>
+            <Image url="@../../../bin/resources/renwu.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="150.0">
          <children>
-            <ProgressBar fx:id="progress" maxHeight="23.0" prefHeight="23.0" prefWidth="195.0" progress="0.0" />
-            <Label fx:id="currentState" prefHeight="20.0" prefWidth="100.0" text="Label">
-               <VBox.margin>
-                  <Insets left="3.0" top="3.0" />
-               </VBox.margin></Label>
+            <Label fx:id="project_name" prefHeight="20.0" prefWidth="150.0" text="Label">
+               <font>
+                  <Font size="16.0" />
+               </font>
+            </Label>
+            <Label fx:id="runningInfo" prefHeight="18.0" prefWidth="440.0" text="Label">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
          </children>
+         <HBox.margin>
+            <Insets left="10.0" />
+         </HBox.margin>
       </VBox>
-      <JFXButton fx:id="paramDetail" text="修改参数">
+      <ProgressIndicator fx:id="run" prefHeight="16.0" prefWidth="20.0" visible="false">
          <HBox.margin>
-            <Insets left="40.0" />
-         </HBox.margin></JFXButton>
-      <JFXButton fx:id="restart" text="重新运行">
+            <Insets left="50.0" />
+         </HBox.margin>
+      </ProgressIndicator>
+      <JFXButton fx:id="paramDetail" buttonType="RAISED" text="查看参数">
          <HBox.margin>
-            <Insets left="20.0" />
+            <Insets left="260.0" />
          </HBox.margin></JFXButton>
-      <JFXButton text="关闭">
+      <JFXButton fx:id="close" text="关闭">
          <HBox.margin>
             <Insets left="20.0" />
          </HBox.margin>

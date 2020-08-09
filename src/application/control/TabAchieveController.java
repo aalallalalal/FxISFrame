@@ -4,7 +4,9 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -12,6 +14,8 @@ import com.jfoenix.controls.JFXButton;
 
 import beans.MyFxmlBean;
 import beans.ProjectBean;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -19,11 +23,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 import utils.ResUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
@@ -52,6 +58,7 @@ public class TabAchieveController implements Initializable
 	public void initialize(URL location, ResourceBundle resources)
 	{
 		listView_achieve.setVisible(false);
+		
 	}
 	
 	public void addAchieveHBox(ProjectBean project) 
@@ -75,7 +82,9 @@ public class TabAchieveController implements Initializable
 		Label project_name = (Label)temp.lookup("#project_name");
 		project_name.setText(project.getProjectName());
 		Label achieve_time = (Label)temp.lookup("#achieve_time");
-		achieve_time.setText(project.getCreateTime());
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
+		String achieveTime = df.format(new Date());// new Date()为获取当前系统时间
+		achieve_time.setText(achieveTime);
 		
 		//打开文件夹所在位置
 		JFXButton openfile = (JFXButton)temp.lookup("#openfile");
@@ -112,6 +121,8 @@ public class TabAchieveController implements Initializable
 			@Override
 			public void handle(ActionEvent event)
 			{
+				listView_achieve.getSelectionModel().select(temp);
+				System.out.println(listView_achieve.getSelectionModel().getSelectedIndex());
 				Runtime runtime = Runtime.getRuntime();
 				try {
 					String path = System.getProperty("user.dir");

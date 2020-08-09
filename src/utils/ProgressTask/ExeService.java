@@ -47,7 +47,6 @@ public class ExeService extends Service<String>
 	protected void cancelled()
 	{
 		super.cancelled();
-		listener.toprojects();
     	System.out.println("关闭exe进程：" + ExeProcedureUtil.closeExe());
 	}
 

@@ -34,9 +34,6 @@
             <Tab fx:id="tab_failed">
             	<fx:include fx:id = "tabFailed" source = "TabFailed.fxml" />
             </Tab>
-            <Tab fx:id="tab_param">
-            	<fx:include fx:id = "tabParam" source = "TabParam.fxml" />
-            </Tab>
          </tabs>
          <BorderPane.margin>
             <Insets left="10.0" right="10.0" top="20.0" />

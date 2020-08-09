@@ -240,8 +240,7 @@ public class MainController implements Initializable {
 
 		@Override
 		public void updateFailBox(String reason) {
-			System.out.println("更新失败界面");
-			processingController.updateFail();
+			processingController.updateFail(reason);
 			processingController.updateParam();
 			processingController.nextRun();
 		}
@@ -265,7 +264,6 @@ public class MainController implements Initializable {
 		public void updateFinish() {
 			processingController.setState(false);
 			processingController.currentProject.setText("");
-			processingController.textarea.clear();
 			processingController.updatecontrol();
 			changeBottomBtnsView(currentController, 3);
 		}

@@ -1,6 +1,8 @@
 package application.control;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -67,7 +69,10 @@ public class TabFailedController implements Initializable
 		project_name.setText(project.getProjectName());
 		Label faileddetail = (Label)temp.lookup("#faildetailinfo");
 		faileddetail.setText(reason);
-		faileddetail.setStyle("-fx-font-size:13px");
+		Label currenttime = (Label)temp.lookup("#currenttime");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
+		String time = df.format(new Date());// new Date()为获取当前系统时间
+		currenttime.setText(time);
 		
 		JFXButton paramDetail = (JFXButton)temp.lookup("#paramDetail");
 		paramDetail.setOnAction(new EventHandler<ActionEvent>()
