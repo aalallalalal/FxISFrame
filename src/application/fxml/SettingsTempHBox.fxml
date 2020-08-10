@@ -9,8 +9,8 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<HBox fx:id="root" alignment="CENTER_LEFT"
-	xmlns="http://javafx.com/javafx/8" style="-fx-padding:4;" spacing="6"
+<HBox fx:id="root" alignment="CENTER_LEFT"  maxWidth="100"
+	xmlns="http://javafx.com/javafx/8" style="-fx-padding:2;" spacing="6"
 	xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<Label fx:id="name" maxWidth="90" prefHeight="18.0"

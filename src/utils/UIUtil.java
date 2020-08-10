@@ -266,7 +266,7 @@ public class UIUtil {
 	public static void centerWindow(Stage win,double offset) {
 		Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
 		win.setX((screenBounds.getWidth() - win.getWidth()) / 2+offset); 
-		win.setY((screenBounds.getHeight() - win.getHeight()) / 2+offset);  
+		win.setY((screenBounds.getHeight() - win.getHeight()) / 2+offset-15);  
 	}
 
 }

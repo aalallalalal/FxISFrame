@@ -35,6 +35,7 @@ import utils.SaveSettingsUtil;
 import utils.StrUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
+import views.MyToolTip;
 import views.myTextField.DecimalField;
 import views.myTextField.IntegerField;
 
@@ -134,9 +135,16 @@ public class SettingController extends BaseController implements Initializable {
 		}
 	}
 
+	/**
+	 * 设置setting列表的item内容
+	 * 
+	 * @param setting
+	 * @param temp
+	 */
 	private void setItemSettingContent(SettingsBean setting, HBox temp) {
 		Label name = (Label) temp.lookup("#name");
 		name.setText(setting.getName());
+		name.setTooltip(new MyToolTip(setting.transToTipStr()));
 	}
 
 	private void initListView() {
@@ -178,7 +186,8 @@ public class SettingController extends BaseController implements Initializable {
 						@Override
 						public void onReturn(SettingsBean settings) {
 							refreshProjectListView();
-							if(currentProject!=null) {
+							refreshSettingListView(settings);
+							if (currentProject != null) {
 								setSettingViews(currentProject.getSettings(), false);
 							}
 							SaveSettingsUtil.changeSettingData(settings, null);
@@ -188,6 +197,25 @@ public class SettingController extends BaseController implements Initializable {
 				}
 			}
 		});
+	}
+
+	/**
+	 * 刷新参数列表。如果settings为空，全部刷新，如果不为空，刷新对应单个
+	 */
+	private void refreshSettingListView(SettingsBean settings) {
+		if (settings == null) {
+			// 暂时不做，不需要
+		} else {
+			for (int i = 0; i < settingListData.size(); i++) {
+				SettingsBean item = settingListData.get(i);
+				if (item.getId() == settings.getId()) {
+					if (i >= 0 && i < listViewData_setting.size()) {
+						setItemSettingContent(settings, listViewData_setting.get(i));
+					}
+					break;
+				}
+			}
+		}
 	}
 
 	/**
@@ -308,6 +336,7 @@ public class SettingController extends BaseController implements Initializable {
 	private void setItemProjectContent(ProjectBean project, HBox temp) {
 		Label project_name = (Label) temp.lookup("#project_name");
 		project_name.setText(project.getProjectName());
+		project_name.setTooltip(new MyToolTip(project.transToTipStr(false)));
 		changeButtonView(temp, project.getSettings());
 	}
 
@@ -383,9 +412,11 @@ public class SettingController extends BaseController implements Initializable {
 	 */
 	private void changeButtonView(HBox item, SettingsBean setting) {
 		JFXButton settingBtn = (JFXButton) item.lookup("#setting");
+		MyToolTip toolTip = new MyToolTip();
 		if (setting == null) {
 			settingBtn.setText(ResUtil.gs("setting_name_empty"));
 			settingBtn.setStyle(style_no);
+			toolTip.setText(ResUtil.gs("setting_has_no_set"));
 		} else {
 			settingBtn.setText(setting.getName());
 			if (setting.getSettingType() == 1) {
@@ -393,7 +424,9 @@ public class SettingController extends BaseController implements Initializable {
 			} else {
 				settingBtn.setStyle(style_temp);
 			}
+			toolTip.setText(setting.transToTipStr());
 		}
+		settingBtn.setTooltip(toolTip);
 	}
 
 	/**
@@ -403,7 +436,7 @@ public class SettingController extends BaseController implements Initializable {
 	 */
 	public void addSettingResult(SettingsBean settings) {
 		refreshProjectListView();
-		if(currentProject!=null) {
+		if (currentProject != null) {
 			setSettingViews(currentProject.getSettings(), false);
 		}
 		SaveSettingsUtil.saveProject(settings, null);

@@ -31,6 +31,7 @@ import utils.ResUtil;
 import utils.StrUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
+import views.MyToolTip;
 import views.myTextField.DecimalField;
 import views.myTextField.IntegerField;
 
@@ -335,6 +336,7 @@ public class SettingsDialogController implements Initializable {
 	private boolean setItemProjectContent(ProjectBean project, HBox temp) {
 		Label project_name = (Label) temp.lookup("#project_name");
 		project_name.setText(project.getProjectName());
+		project_name.setTooltip(new MyToolTip(project.transToTipStr(false)));
 		JFXCheckBox checkBox_select = (JFXCheckBox) temp.lookup("#checkBox_select");
 		checkBox_select.setVisible(true);
 		if (project.getSettings() != null && project.getSettings().getId() == returnSettings.getId()) {
@@ -378,9 +380,11 @@ public class SettingsDialogController implements Initializable {
 	 */
 	private void changeButtonView(HBox item, SettingsBean setting) {
 		JFXButton settingBtn = (JFXButton) item.lookup("#setting");
+		MyToolTip toolTip = new MyToolTip();
 		if (setting == null) {
 			settingBtn.setText(ResUtil.gs("setting_name_empty"));
 			settingBtn.setStyle(SettingController.style_no);
+			toolTip.setText(ResUtil.gs("setting_has_no_set"));
 		} else {
 			settingBtn.setText(setting.getName());
 			if (setting.getSettingType() == 1) {
@@ -388,7 +392,9 @@ public class SettingsDialogController implements Initializable {
 			} else {
 				settingBtn.setStyle(SettingController.style_temp);
 			}
+			toolTip.setText(setting.transToTipStr());
 		}
+		settingBtn.setTooltip(toolTip);
 	}
 
 	/**

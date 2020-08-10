@@ -40,26 +40,22 @@ public class ProjectBean implements Serializable {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 		this.createTime = df.format(new Date());// new Date()为获取当前系统时间
 		this.info = 0;
-		
+
 	}
 
-	public String getErroDetail()
-	{
+	public String getErroDetail() {
 		return erroDetail;
 	}
 
-	public void setErroDetail(String erroDetail)
-	{
+	public void setErroDetail(String erroDetail) {
 		this.erroDetail = erroDetail;
 	}
 
-	public int getInfo()
-	{
+	public int getInfo() {
 		return info;
 	}
 
-	public void setInfo(int info)
-	{
+	public void setInfo(int info) {
 		this.info = info;
 	}
 
@@ -193,5 +189,28 @@ public class ProjectBean implements Serializable {
 		// 中英文
 		settingPara += "\"-languages\" " + '"' + (settings.getLanguage() == 0 ? "Chinese" : "English") + '"';
 		return settingPara;
+	}
+
+	public String transToTipStr(boolean isShowSettings) {
+		StringBuffer sb = new StringBuffer(ResUtil.gs("project_name"));
+		sb.append(getProjectName());
+		sb.append("\n");
+		sb.append(ResUtil.gs("project_create_time") + ":" + getCreateTime());
+		sb.append("\n");
+		sb.append(ResUtil.gs("project_path") + getProjectDir());
+		sb.append("\n");
+		sb.append(ResUtil.gs("project_location_way"));
+		if (getLocationFrom() == 0) {
+			sb.append(ResUtil.gs("project_location_way_img"));
+		} else {
+			sb.append(ResUtil.gs("project_location_way_file"));
+			sb.append("\n");
+			sb.append(ResUtil.gs("project_location_path") + getProjectLocationFile());
+		}
+		if (isShowSettings && getSettings() != null) {
+			sb.append("\n");
+			sb.append(getSettings().transToTipStr());
+		}
+		return sb.toString();
 	}
 }

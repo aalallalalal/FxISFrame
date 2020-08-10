@@ -172,4 +172,33 @@ public class SettingsBean implements Serializable {
 	public void setLastUsedTime(long lastUserTime) {
 		this.lastUserTime = lastUserTime;
 	}
+	
+	/**
+	 * 将settingsBean 转化为tip可用字符串
+	 * @param setting
+	 * @return
+	 */
+	public String transToTipStr() {
+		StringBuffer sb = new StringBuffer(ResUtil.gs("setting_name"));
+		sb.append(getName());
+		sb.append("\n");
+		sb.append(ResUtil.gs("setting_tips_netsize", getNetWidth(), getNetHeight()));
+		sb.append("\n");
+		sb.append(ResUtil.gs("setting_tips_pre_check"));
+		if (!isPreCheck()) {
+			sb.append(ResUtil.gs("setting_tips_no"));
+		} else {
+			sb.append(ResUtil.gs("setting_tips_yes"));
+			sb.append("\n");
+			if (getPreCheckWay() == 0) {
+				sb.append(ResUtil.gs("setting_tips_way1", getFlyHeight(), getCameraSize()));
+			} else {
+				sb.append(ResUtil.gs("setting_tips_way2", getGsd()));
+			}
+		}
+		sb.append("\n");
+		sb.append(ResUtil.gs("setting_tips_save_middle",
+				isSaveMiddle() ? ResUtil.gs("setting_tips_yes") : ResUtil.gs("setting_tips_no")));
+		return sb.toString();
+	}
 }

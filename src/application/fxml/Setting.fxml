@@ -20,7 +20,8 @@
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.SettingController">
 	<left>
-		<VBox spacing="3.0" prefWidth="140.0"
+		<VBox spacing="3.0" prefWidth="150.0"
+			style="-fx-background-color: #fff; -fx-border-width: 1; -fx-border-color: #f1f1f1;"
 			BorderPane.alignment="CENTER">
 			<Label text="%project"
 				style="-fx-text-fill: #4f4f4f;-fx-font-size: 14.0">
@@ -29,8 +30,8 @@
 				</HBox.margin>
 			</Label>
 
-			<ListView fx:id="listView_projects" 
-				style=" -fx-background-color: #fafafa;-fx-padding:2;" />
+			<ListView fx:id="listView_projects"
+				style="-fx-background-color: #fff;-fx-padding:2;" />
 		</VBox>
 	</left>
 
@@ -170,10 +171,13 @@
 					</styleClass>
 				</JFXCheckBox>
 
-				<JFXButton onAction="#onSaveSetting" text="%setting_save">
+				<JFXButton onAction="#onSaveSetting" text="%setting_save" >
 					<styleClass>
 						<String fx:value="btn-level-normal" />
 					</styleClass>
+					<VBox.margin>
+						<Insets top="10"></Insets>
+					</VBox.margin>
 				</JFXButton>
 
 			</children>
@@ -184,7 +188,8 @@
 	</center>
 
 	<right>
-		<VBox spacing="5.0" alignment="CENTER" style="-fx-background-color: #fff; -fx-border-width: 1; -fx-border-color: #fafafa;">
+		<VBox spacing="5.0" alignment="CENTER"
+			style="-fx-background-color: #fff; -fx-border-width: 1; -fx-border-color: #f1f1f1;">
 			<JFXButton onAction="#onAddSetting" text="%settings_add">
 				<styleClass>
 					<String fx:value="btn-level-normal" />
@@ -194,9 +199,9 @@
 				style="-fx-text-fill: #8f8f8f;-fx-font-size: 10.0">
 			</Label>
 			<ListView fx:id="listView_settings"
-				style="-fx-background-color: #fff;-fx-padding:2;" prefWidth="100.0" />
+				style="-fx-background-color: #fff;-fx-padding:2;" prefWidth="110.0" />
 			<BorderPane.margin>
-				<Insets  right="5.0" />
+				<Insets right="5.0" />
 			</BorderPane.margin>
 		</VBox>
 	</right>

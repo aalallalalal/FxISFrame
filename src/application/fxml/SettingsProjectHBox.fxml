@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<HBox fx:id="root" alignment="CENTER_LEFT"
+<HBox fx:id="root" alignment="CENTER_LEFT" maxWidth="130"
 	xmlns="http://javafx.com/javafx/8" style="-fx-padding:4;" spacing="6"
 	xmlns:fx="http://javafx.com/fxml/1">
 	<children>
@@ -17,7 +17,7 @@
 			style="-fx-text-fill: #4f4f4f;-fx-font-size: 12.0;" text="--">
 		</Label>
 
-		<JFXButton fx:id="setting" buttonType="FLAT" maxWidth="100"
+		<JFXButton fx:id="setting" buttonType="FLAT" maxWidth="110" wrapText="true"
 			text="%setting_name_not">
 		</JFXButton>
 

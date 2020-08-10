@@ -116,7 +116,7 @@ visibility: hidden;
  .table-view > .virtual-flow >.scroll-bar:horizontal{
     -fx-background-color: #f1f1f1;
     -fx-background-radius: 5.0;
-    -fx-pref-height: 15.0
+    -fx-pref-height: 12.0
 }
  .table-view > .virtual-flow >.scroll-bar:horizontal .track{
     -fx-background-color: #f1f1f1;
@@ -127,7 +127,7 @@ visibility: hidden;
  .table-view > .virtual-flow >.scroll-bar:vertical{
     -fx-background-color: #f1f1f1;
     -fx-background-radius: 5.0;
-    -fx-pref-width: 15.0
+    -fx-pref-width: 12.0
 }
  .table-view > .virtual-flow >.scroll-bar:vertical .track{
     -fx-background-color: #f1f1f1;
@@ -139,6 +139,27 @@ visibility: hidden;
     -fx-background-color: #87CEEB;
     -fx-background-insets: 0.0;
     -fx-background-radius: 1.0;
+}
+
+ .table-view > .virtual-flow >.scroll-bar:vertical .decrement-button {
+    -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+    -fx-background-color: #fff;
+}
+ .table-view > .virtual-flow >.scroll-bar:horizontal  .decrement-button{
+   -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+     -fx-background-color: #fff;
+}
+ .table-view > .virtual-flow >.scroll-bar:vertical  .increment-button{
+   -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+     -fx-background-color: #fff;
+}
+ .table-view > .virtual-flow >.scroll-bar:horizontal   .increment-button{
+   -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+     -fx-background-color: #fff;
 }
 
 .label-detailInfo
@@ -169,15 +190,15 @@ visibility: hidden;
 
 .jfx-tab-pane *.tab-header-area *.tab-header-background {
   -fx-background-color:transparent;
-  -fx-tab-min-width:120px;
-  -fx-tab-max-width:120px;
-  -fx-tab-min-height:50px;
-  -fx-tab-max-height:50px;
+  -fx-tab-min-width:120.0px;
+  -fx-tab-max-width:120.0px;
+  -fx-tab-min-height:50.0px;
+  -fx-tab-max-height:50.0px;
 }
 
 .tab {
   -fx-font-family: Arial;
-  -fx-font-size: 18;
+  -fx-font-size: 18.0;
   -fx-background-color:royalblue ;
 }
 
@@ -186,7 +207,7 @@ visibility: hidden;
 }
 
 .list-cell:even {
-    -fx-background-color: white;
+    -fx-background-color: #f1f1f1;
 }
 .list-cell:odd {
     -fx-background-color: white;
@@ -205,6 +226,50 @@ visibility: hidden;
 .list-cell:empty {
     -fx-background-color: white;
 }
-
-
+ .list-view > .virtual-flow >.scroll-bar:horizontal{
+    -fx-background-color: #f1f1f1;
+    -fx-background-radius: 5.0;
+    -fx-pref-height:12.0
+}
+ .list-view > .virtual-flow >.scroll-bar:horizontal .track{
+    -fx-background-color: #f1f1f1;
+    -fx-pref-height:12.0
+}
+ .list-view > .virtual-flow >.scroll-bar:horizontal .thumb{
+    -fx-background-color: #608DFA;
+     -fx-pref-height:12.0
+}
+ .list-view > .virtual-flow >.scroll-bar:vertical{
+    -fx-background-color: #f1f1f1;
+    -fx-background-radius: 5.0;
+    -fx-pref-width: 12.0
+}
+ .list-view > .virtual-flow >.scroll-bar:vertical .track{
+    -fx-background-color: #f1f1f1;
+     -fx-pref-width: 12.0
+}
+ .list-view > .virtual-flow >.scroll-bar:vertical .thumb{
+    -fx-background-color: #608DFA;
+    -fx-pref-width: 12.0
+}
+ .list-view > .virtual-flow >.scroll-bar:vertical .decrement-button {
+    -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+    -fx-background-color: #fff;
+}
+ .list-view > .virtual-flow >.scroll-bar:horizontal  .decrement-button{
+   -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+     -fx-background-color: #fff;
+}
+ .list-view > .virtual-flow >.scroll-bar:vertical  .increment-button{
+   -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+     -fx-background-color: #fff;
+}
+ .list-view > .virtual-flow >.scroll-bar:horizontal   .increment-button{
+   -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+     -fx-background-color: #fff;
+}
 
