@@ -13,17 +13,19 @@
 	xmlns="http://javafx.com/javafx/8" style="-fx-padding:4;" spacing="6"
 	xmlns:fx="http://javafx.com/fxml/1">
 	<children>
-		<Label fx:id="name" maxWidth="90" prefHeight="18.0"
+		<JFXCheckBox fx:id="checkBox_select" selected="false" visible="true">
+			<styleClass>
+				<String fx:value="custom-jfx-check-box" />
+			</styleClass>
+		</JFXCheckBox>
+
+		<Label fx:id="project_name"  HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="18.0" 
 			style="-fx-text-fill: #4f4f4f;-fx-font-size: 12.0;" text="--">
-			<graphic>
-				<ImageView fitHeight="22.0" fitWidth="22.0"
-					pickOnBounds="true" preserveRatio="true">
-					<image>
-						<Image url="/resources/setting_icon.png" />
-					</image>
-				</ImageView>
-			</graphic>
 		</Label>
+
+		<JFXButton fx:id="setting" buttonType="FLAT" maxWidth="100"
+			text="%setting_name_not">
+		</JFXButton>
 
 	</children>
 </HBox>

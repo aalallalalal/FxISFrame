@@ -213,13 +213,19 @@ public class SettingsDialogController implements Initializable {
 	 * @param type            2:显示project列表数据，需要project列表数据，但settings可空，空的时候表示是新建模板，回调会返回一个新的settings。
 	 *                        非空表示修改模板，只会 修改传入的settings，返回的不是new 的settings。
 	 *                        1：不显示project列表数据，projectlistdata可以为空，settings可空，返回的是一个new
-	 *                        settings
+	 *                        settings 0:只是查看，不可编辑
 	 * @param projectListData
 	 * @param settings
 	 */
 	public void initExtraData(int type, ObservableList<ProjectBean> projectListData, SettingsBean settings) {
 		this.type = type;
 		this.projectListData = projectListData;
+		if (type == 0) {
+			// 仅仅是查看参数，不可修改，不可操作
+			justSeeSettings(settings);
+			return;
+		}
+
 		if (settings == null) {
 			this.returnSettings = new SettingsBean();
 			if (type == 2) {
@@ -238,12 +244,45 @@ public class SettingsDialogController implements Initializable {
 
 		if (type == 1) {
 			vbox_projectlist.setVisible(false);
+			root.setRight(null);
 		} else if (type == 2) {
 			vbox_projectlist.setVisible(true);
 			initListView();
 		}
 
 		returnSettingsView();
+	}
+
+	private void justSeeSettings(SettingsBean settings) {
+		vbox_projectlist.setVisible(false);
+		root.setRight(null);
+		text_setting_name.setVisible(true);
+		text_setting_name.setEditable(false);
+		checkBox_SaveMiddle.setDisable(true);
+		checkBox_preCheck.setDisable(true);
+		textArea_width.setEditable(false);
+		textArea_hight.setEditable(false);
+		textArea_gsd.setEditable(false);
+		textArea_cameraSize.setEditable(false);
+		textArea_flyHeight.setEditable(false);
+		radioButton_way1.setDisable(true);
+		radioButton_way2.setDisable(true);
+		if (settings == null) {
+			return;
+		}
+		text_setting_name.setText(settings.getName());
+		checkBox_SaveMiddle.setSelected(settings.isSaveMiddle());
+		checkBox_preCheck.setSelected(settings.isPreCheck());
+		textArea_width.setText(settings.getNetWidth());
+		textArea_hight.setText(settings.getNetHeight());
+		textArea_gsd.setText(settings.getGsd());
+		textArea_cameraSize.setText(settings.getCameraSize());
+		textArea_flyHeight.setText(settings.getFlyHeight());
+		if (settings.getPreCheckWay() == 0) {
+			group.selectToggle(radioButton_way1);
+		} else {
+			group.selectToggle(radioButton_way2);
+		}
 	}
 
 	private void returnSettingsView() {
@@ -272,7 +311,7 @@ public class SettingsDialogController implements Initializable {
 		listView_proj.clear();
 		int selectCount = 0;
 		for (int i = 0; i < projectListData.size(); i++) {
-			MyFxmlBean fxmlbean = UIUtil.loadFxml(getClass(), "/application/fxml/SettingsProjectHBox.fxml");
+			MyFxmlBean fxmlbean = UIUtil.loadFxml(getClass(), "/application/fxml/SettingsDialogProjectHBox.fxml");
 			HBox temp = (HBox) fxmlbean.getPane();
 			ProjectBean project = projectListData.get(i);
 			if (setItemProjectContent(project, temp)) {

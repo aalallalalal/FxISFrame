@@ -49,7 +49,7 @@ public class SaveSettingsUtil {
 			@Override
 			protected Void call() {
 				ArrayList<SettingsBean> projectsData = getProjectsDataNoInThread();
-				for(SettingsBean itemSelected:beans) {
+				for (SettingsBean itemSelected : beans) {
 					for (SettingsBean item : projectsData) {
 						if (item.getId() == itemSelected.getId()) {
 							item.setLastUsedTime(System.currentTimeMillis());
@@ -173,15 +173,23 @@ public class SaveSettingsUtil {
 		}
 		FileInputStream writer;
 		ArrayList<SettingsBean> data = null;
+		ObjectInputStream objectinputStream = null;
 		try {
 			writer = new FileInputStream(writeName);
-			ObjectInputStream objectinputStream = new ObjectInputStream(writer);
+			objectinputStream = new ObjectInputStream(writer);
 			data = (ArrayList<SettingsBean>) objectinputStream.readObject();
-			objectinputStream.close();
 		} catch (EOFException e) {
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
+		} finally {
+			if (objectinputStream != null) {
+				try {
+					objectinputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		data.sort(comparator);
 		return data;
@@ -189,16 +197,23 @@ public class SaveSettingsUtil {
 
 	private static void saveSettingsData(ArrayList<SettingsBean> list) {
 		controlListSize(list);
-
+		ObjectOutputStream objectOutputStream = null;
 		try {
 			File writeName = checkFile(); // 相对路径，如果没有则要建立一个新的output.txt文件
 			FileOutputStream writer = new FileOutputStream(writeName);
-			ObjectOutputStream objectOutputStream = new ObjectOutputStream(writer);
+			objectOutputStream = new ObjectOutputStream(writer);
 			objectOutputStream.writeObject(list);
 			objectOutputStream.flush(); // 把缓存区内容压入文件
-			objectOutputStream.close();
 		} catch (IOException e) {
 			e.printStackTrace();
+		} finally {
+			if (objectOutputStream != null) {
+				try {
+					objectOutputStream.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 
