@@ -146,7 +146,14 @@ public class SettingsDialogController implements Initializable {
 
 	@FXML
 	public void done() {
-		boolean isDone = checkAndSave();
+		if (type == 0) {
+			if (callBack != null) {
+				callBack.onReturn(null);
+			}
+			return;
+		}
+
+		boolean isDone = checkAndNew();
 		if (isDone) {
 
 			if (type == 2) {
@@ -402,7 +409,7 @@ public class SettingsDialogController implements Initializable {
 	 * 
 	 * @return
 	 */
-	private boolean checkAndSave() {
+	private boolean checkAndNew() {
 		if (StrUtil.isEmpty(textArea_width.getText()) || StrUtil.isEmpty(textArea_hight.getText())) {
 			ToastUtil.toast(ResUtil.gs("setting_net_error"));
 			return false;
