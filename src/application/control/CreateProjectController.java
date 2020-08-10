@@ -10,7 +10,11 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import utils.ResUtil;
@@ -34,19 +38,54 @@ public class CreateProjectController extends BaseController implements Initializ
 	@FXML
 	JFXButton button_language;
 	private int initSelectedLanguage;
+	@FXML
+	BorderPane root;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
+		initDragFile();
+
 		if (listener != null) {
 			listener.onClearData();
 		}
 		initButtonEffect();
 		initSelectedLanguage = SaveLanguageUtil.getData();
-		if(initSelectedLanguage == 0) {
+		if (initSelectedLanguage == 0) {
 			button_language.setText("English");
-		}else {
+		} else {
 			button_language.setText("简体中文");
 		}
+	}
+
+	/**
+	 * 拖拽文件夹打开创建项目功能
+	 */
+	private void initDragFile() {
+		root.addEventHandler(DragEvent.DRAG_OVER, new EventHandler<DragEvent>() {
+			@Override
+			public void handle(DragEvent event) {
+				if (event.getGestureSource() != root && event.getDragboard().hasFiles()) {
+					event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+				}
+				event.consume();
+			}
+		});
+		root.addEventHandler(DragEvent.DRAG_DROPPED, new EventHandler<DragEvent>() {
+			@Override
+			public void handle(DragEvent event) {
+				Dragboard db = event.getDragboard();
+				boolean success = false;
+				if (db.hasFiles()) {
+					if (listener != null && db.getFiles().size() >= 0) {
+						listener.onOpenProject(db.getFiles().get(0).getAbsolutePath());
+					}
+					success = true;
+				}
+				event.setDropCompleted(success);
+				event.consume();
+			}
+		});
+
 	}
 
 	private void initButtonEffect() {
@@ -108,6 +147,8 @@ public class CreateProjectController extends BaseController implements Initializ
 	public interface CreateProjectListener {
 		void onCreateProject();
 
+		void onOpenProject(String filePath);
+
 		void onOpenProject();
 
 		void onClearData();
@@ -161,7 +202,7 @@ public class CreateProjectController extends BaseController implements Initializ
 
 	@FXML
 	public void onClickChangeLanguage() {
-		int afterLanguage = 1- initSelectedLanguage;
+		int afterLanguage = 1 - initSelectedLanguage;
 		SaveLanguageUtil.saveData(afterLanguage);
 		if (listener != null) {
 			listener.onClickChangeLanguage(afterLanguage);

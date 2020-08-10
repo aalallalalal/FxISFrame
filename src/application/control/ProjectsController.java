@@ -23,7 +23,10 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -78,6 +81,7 @@ public class ProjectsController extends BaseController implements Initializable 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTableView();
+		 initDragFile() ;
 		projectTableView.setRowFactory(new Callback<TableView<ProjectBean>, TableRow<ProjectBean>>() {
 			@Override
 			public TableRow<ProjectBean> call(TableView<ProjectBean> param) {
@@ -225,6 +229,8 @@ public class ProjectsController extends BaseController implements Initializable 
 		 */
 		void onClickRightBtn(ObservableList<ProjectBean> projectListData);
 
+		void onOpenProject(String absolutePath);
+
 	}
 
 	@Override
@@ -275,4 +281,34 @@ public class ProjectsController extends BaseController implements Initializable 
 		return false;
 	}
 
+	/**
+	 * 拖拽文件夹打开创建项目功能
+	 */
+	private void initDragFile() {
+		root.addEventHandler(DragEvent.DRAG_OVER, new EventHandler<DragEvent>() {
+			@Override
+			public void handle(DragEvent event) {
+				if (event.getGestureSource() != root && event.getDragboard().hasFiles()) {
+					event.acceptTransferModes(TransferMode.COPY_OR_MOVE);
+				}
+				event.consume();
+			}
+		});
+		root.addEventHandler(DragEvent.DRAG_DROPPED, new EventHandler<DragEvent>() {
+			@Override
+			public void handle(DragEvent event) {
+				Dragboard db = event.getDragboard();
+				boolean success = false;
+				if (db.hasFiles()) {
+					if (listener != null && db.getFiles().size() >= 0) {
+						listener.onOpenProject(db.getFiles().get(0).getAbsolutePath());
+					}
+					success = true;
+				}
+				event.setDropCompleted(success);
+				event.consume();
+			}
+		});
+	}
+	
 }

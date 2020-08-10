@@ -9,7 +9,6 @@ import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
 import beans.ProjectBean;
-import consts.ConstRes;
 import consts.ConstSize;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -22,12 +21,13 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import utils.FileChooserUtil;
-import utils.ResUtil;
 import utils.FileChooserUtil.Callback;
-import views.MyToolTip;
+import utils.ResUtil;
 import utils.SaveProjectsUtil;
+import utils.StrUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
+import views.MyToolTip;
 
 /**
  * 创建项目dialog界面controller
@@ -159,5 +159,13 @@ public class CreateProjectDialogController implements Initializable {
 
 	public interface CallBack {
 		void onDone(ProjectBean project);
+	}
+
+	public void setInitProjectPath(String projectPath) {
+		if (!StrUtil.isEmpty(projectPath)) {
+			String projectPath1 = projectPath.replaceAll("\\\\", "/");
+			labelProject.setText(projectPath1);
+			labelProject.setTooltip(new MyToolTip(projectPath1));
+		}
 	}
 }

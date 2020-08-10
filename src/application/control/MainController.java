@@ -76,7 +76,7 @@ public class MainController implements Initializable {
 
 		@Override
 		public void onCreateProject() {
-			openCreateProjectDialog(true);
+			openCreateProjectDialog(true, "");
 		}
 
 		@Override
@@ -143,6 +143,11 @@ public class MainController implements Initializable {
 				}
 			}, 2000);
 		}
+
+		@Override
+		public void onOpenProject(String projectPath) {
+			openCreateProjectDialog(true, projectPath);
+		}
 	}
 
 	/**
@@ -154,7 +159,7 @@ public class MainController implements Initializable {
 	private class ProjectsListener implements ProjectsController.ProjectsListener {
 		@Override
 		public void onCreateProject() {
-			openCreateProjectDialog(false);
+			openCreateProjectDialog(false, "");
 		}
 
 		@Override
@@ -168,6 +173,11 @@ public class MainController implements Initializable {
 		@Override
 		public void onOpenProject() {
 			openOpenProjectDialog(false);
+		}
+
+		@Override
+		public void onOpenProject(String absolutePath) {
+			openCreateProjectDialog(false, absolutePath);
 		}
 	}
 
@@ -205,7 +215,7 @@ public class MainController implements Initializable {
 					settingController.addSettingResult(settings);
 					settingDialogBean.getStage().close();
 				}
-			});			
+			});
 		}
 	}
 
@@ -563,14 +573,17 @@ public class MainController implements Initializable {
 
 	/**
 	 * 打开新建项目dialog
+	 * 
+	 * @param projectPath
 	 */
-	private void openCreateProjectDialog(boolean isToNextPage) {
+	private void openCreateProjectDialog(boolean isToNextPage, String projectPath) {
 		MyFxmlBean createDialog;
 		createDialog = UIUtil.openDialog(getClass(), "/application/fxml/CreateProjectDialog.fxml",
 				ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height, ResUtil.gs("createProject_createproject"),
 				getStage());
 		if (createDialog != null) {
 			CreateProjectDialogController controller = createDialog.getFxmlLoader().getController();
+			controller.setInitProjectPath(projectPath);
 			controller.setCallBack(new CallBack() {
 				@Override
 				public void onDone(ProjectBean project) {
