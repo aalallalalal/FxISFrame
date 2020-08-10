@@ -40,6 +40,7 @@ public class ExeProcedureUtil
 			workDir.mkdir();
 		
 		para_Exe = para_Exe.substring(0, i);
+		System.out.println(para_Exe);
 		String[] cmds = {path_Exe, para_Exe};
 		
 		try {
