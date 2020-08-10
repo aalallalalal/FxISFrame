@@ -68,6 +68,7 @@ public class ProjectsController extends BaseController implements Initializable 
 	 */
 	public void addProject(ProjectBean project) {
 		if (!checkDuplicates(project)) {
+			project.setInfo(0);
 			projectListData.add(project);
 			String bottomtext = ResUtil.gs("projectList_num", projectListData.size() + "");
 			bottomLabel.setText(bottomtext);

@@ -81,7 +81,7 @@ public class TabFailedController implements Initializable
 	
 	public void addFailedHBox(ProjectBean project, String reason)
 	{
-		project.setState(reason);
+		project.setErroDetail(reason);
 		list_failed.add(project);
 		listView_failed.setItems(list_failed);
 		listView_failed.setVisible(true);
@@ -97,7 +97,7 @@ public class TabFailedController implements Initializable
 		Label project_name = (Label)temp.lookup("#project_name");
 		project_name.setText(project.getProjectName());
 		Label faileddetail = (Label)temp.lookup("#faildetailinfo");
-		faileddetail.setText(project.getState());
+		faileddetail.setText(project.getErroDetail());
 		Label currenttime = (Label)temp.lookup("#currenttime");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 		String time = df.format(new Date());// new Date()为获取当前系统时间

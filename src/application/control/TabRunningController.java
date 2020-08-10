@@ -125,9 +125,14 @@ public class TabRunningController implements Initializable
 		Label project_name = (Label)temp.lookup("#project_name");
 		project_name.setText(project.getProjectName());
 		runInfo= (Label)temp.lookup("#runningInfo");
-		runInfo.setText(project.getState());
-		if(project.getState().equals("正在运行..."))
+		
+		if(project.getInfo() == 0)
 		{	
+			runInfo.setText("等待运行...");
+		}
+		else
+		{
+			runInfo.setText("正在运行...");
 			ProgressIndicator p = (ProgressIndicator)temp.lookup("#run"); 
 			p.setVisible(true);
 		}
@@ -140,6 +145,7 @@ public class TabRunningController implements Initializable
 			{
 				listView_running.getSelectionModel().select(project);
 				int select = listView_running.getSelectionModel().getSelectedIndex();
+				System.out.println(select);
 				processingController.closeService(select);
 			}
 		});
@@ -159,7 +165,7 @@ public class TabRunningController implements Initializable
 	 */
 	  public void toRunning() 
 	  { 
-		  list_running.get(0).setState("正在运行...");
+		  list_running.get(0).setInfo(1);
 	  }
 	 
 	

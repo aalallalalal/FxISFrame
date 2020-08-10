@@ -24,6 +24,7 @@ public class ExeService extends Service<String>
 			{
 				String path = System.getProperty("user.dir");
 		    	String path_Exe = path + "\\ExeProcedure\\ImageStitching.exe";//exe文件的结果路径
+		    	System.out.println("call");
 		    	String lastLine = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe, listener);//参数
 				return	lastLine;
 			}
@@ -31,10 +32,32 @@ public class ExeService extends Service<String>
 		return task;
 	}
 	
+	
+	
     @Override
+	protected void ready()
+	{
+		// TODO Auto-generated method stub
+		super.ready();
+		System.out.println("ready");
+	}
+
+    
+    
+	@Override
+	public void reset()
+	{
+		// TODO Auto-generated method stub
+		System.out.println("reset");
+		super.reset();
+		
+	}
+
+	@Override
 	protected void succeeded()
 	{
     	super.succeeded();
+    	System.out.println("succeed");
     	String result = getValue();
     	if(result.equals("Stitch Finished!") || result.equals("图像拼接完成！"))
     		listener.updateSuccBox();
@@ -47,7 +70,7 @@ public class ExeService extends Service<String>
 	protected void cancelled()
 	{
 		super.cancelled();
-    	ExeProcedureUtil.closeExe();
+    	System.out.println("关闭：" + ExeProcedureUtil.closeExe());
 	}
 
 	@Override

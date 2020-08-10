@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
+import java.util.concurrent.TimeUnit;
 
 import application.control.ProcessingController.ProcessingListener;
 import javafx.application.Platform;
@@ -37,7 +38,7 @@ public class ExeProcedureUtil
 		String name_currentproject = para_Exe.substring(i + 1);
 		File workDir = new File(System.getProperty("user.dir") + "\\Run\\" + name_currentproject);
 		if(!workDir.exists())
-			workDir.mkdir();
+			workDir.mkdirs();
 		
 		para_Exe = para_Exe.substring(0, i);
 		System.out.println(para_Exe);
@@ -46,7 +47,8 @@ public class ExeProcedureUtil
 		try {
             Runtime runtime = Runtime.getRuntime();
             process = runtime.exec(cmds, null, workDir);
-            InputStreamReader in=new InputStreamReader(process.getInputStream(), Charset.forName("GBK"));
+            System.out.println("运行");
+            InputStreamReader in = new InputStreamReader(process.getInputStream(), Charset.forName("GBK"));
             inBr = new BufferedReader(in);
             
             FileOutputStream fos = new FileOutputStream(workDir + "\\RuntimeDetialInfo.txt");
@@ -67,13 +69,20 @@ public class ExeProcedureUtil
                 
             bos.flush();
 			bos.close();
-            process.getInputStream().close();
-            process.getOutputStream().close();
-            inBr.close();
-            in.close();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }finally {
+        	try
+			{
+				process.getInputStream().close();
+				process.getOutputStream().close();
+			} catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            
+		}
 		workDir.delete();
 		return oldString;
 	}
@@ -82,15 +91,23 @@ public class ExeProcedureUtil
 	public static boolean closeExe()
 	{
 		String command = "taskkill /f /im ImageStitching.exe";
+		process.destroyForcibly();
 		try
 		{
-			Runtime.getRuntime().exec(command);
-		} catch (IOException e)
+			System.out.println("标志:" + process.waitFor());
+		} catch (InterruptedException e)
 		{
-			// TODO Auto-generated catch block
+			System.out.println("未关闭");
+			try
+			{
+				Runtime.getRuntime().exec(command);
+				Thread.sleep(3000);
+			} catch (Exception event)
+			{
+				event.printStackTrace();
+			}
 			e.printStackTrace();
 		}
-		process.destroy();
 		if(process.isAlive())
 			return false;
 		return true;

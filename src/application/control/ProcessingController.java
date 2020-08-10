@@ -91,6 +91,7 @@ public class ProcessingController extends BaseController implements Initializabl
         service.exceptionProperty().addListener(new ChangeListener<Throwable>() {
             @Override
             public void changed(ObservableValue<? extends Throwable> observable, Throwable oldValue, Throwable newValue) {
+            	System.out.println("出错了");
                 listener.updateFailBox(newValue.toString());
             }
         });
@@ -170,6 +171,8 @@ public class ProcessingController extends BaseController implements Initializabl
 						@Override
 						public void onConfirm() {
 							service.cancel();
+							tabRunningController.clearItem();
+							tabRunningController.updatecontrol();
 						}
 					});
 		}
@@ -224,6 +227,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	public void updatecontrol()
 	{
 		tabRunningController.updatecontrol();
+		tabPane.getSelectionModel().select(tab_achieve);
 	}
 	
 	/**
@@ -234,12 +238,14 @@ public class ProcessingController extends BaseController implements Initializabl
 	{
 		if(tabRunningController.getList_running().isEmpty())
 		{
+			project.setInfo(1);
 			tabRunningController.add(project);
 			updateParam();
 			nextRun();
 		}
 		else if(service.getState().toString() != "SUCCEEDED" || service.getState().toString() != "FAILED")
 		{
+			project.setInfo(0);
 			tabRunningController.add(project);
 		}
 		else 
@@ -251,6 +257,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	public void closeService(int select)
 	{
 		ProjectBean project = tabRunningController.getList_running().get(select);
+		System.out.println(project);
 		if(select == 0)
 		{
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
