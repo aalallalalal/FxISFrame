@@ -325,6 +325,9 @@ public class SettingController extends BaseController implements Initializable {
 			setItemProjectContent(project, temp);
 			listViewData_proj.add(temp);
 		}
+		if(listViewData_proj.size()>=1) {
+			listView_projects.getSelectionModel().select(0);
+		}
 	}
 
 	/**
