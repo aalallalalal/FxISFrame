@@ -18,7 +18,7 @@
             <Insets left="10.0" />
          </HBox.margin>
          <image>
-            <Image url="@../../../bin/resources/renwusucceed.png" />
+            <Image url="/resources/renwusucceed.png" />
          </image>
       </ImageView>
       <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">

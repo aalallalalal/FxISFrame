@@ -24,7 +24,6 @@ public class ExeService extends Service<String>
 			{
 				String path = System.getProperty("user.dir");
 		    	String path_Exe = path + "\\ExeProcedure\\ImageStitching.exe";//exe文件的结果路径
-		    	System.out.println("call");
 		    	String lastLine = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe, listener);//参数
 				return	lastLine;
 			}

@@ -27,7 +27,7 @@ public class ProjectBean implements Serializable {
 	private int locationFrom; // 0:从图片，1：从文件
 	private SettingsBean settings;
 	private int info;
-	private String erroDetail="";
+	private String erroDetail;
 
 	public ProjectBean() {
 		super();
@@ -41,23 +41,11 @@ public class ProjectBean implements Serializable {
 		this.projectLocationFile = projectLocationFile;
 		this.setId(System.currentTimeMillis());
 		this.lastUsedTime = getId();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd-HH:mm:ss");// 设置日期格式
 		this.createTime = df.format(new Date());// new Date()为获取当前系统时间
 		this.info = 0;
 
 	}
-	public ProjectBean(ProjectBean project) {
-		this.projectName = project.getProjectName();
-		this.projectDir = project.getProjectDir();
-		this.setLocationFrom(project.getLocationFrom());
-		this.projectLocationFile = project.getProjectLocationFile();
-		this.setId(System.currentTimeMillis());
-		this.lastUsedTime = getId();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
-		this.createTime = df.format(new Date());// new Date()为获取当前系统时间
-		this.info = 0;
-	}
-	
 	
 	public String getErroDetail() {
 		return erroDetail;

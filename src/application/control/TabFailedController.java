@@ -22,7 +22,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -33,6 +32,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import utils.FileUtil;
 import utils.UIUtil;
+import views.MyToolTip;
 
 public class TabFailedController implements Initializable
 {
@@ -43,9 +43,6 @@ public class TabFailedController implements Initializable
 	
 	@FXML
 	ListView<ProjectBean> listView_failed = new ListView<ProjectBean>();
-
-	Image image_failed = new Image("resources/nofailed.png");
-	ImageView imageView_failed = new ImageView(image_failed);
 	
 	private ProcessingController processingController;
 	public void init(ProcessingController controller) 
@@ -56,7 +53,7 @@ public class TabFailedController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		BackgroundImage myBI= new BackgroundImage(new Image("resources/wushuju.png"), 
+		BackgroundImage myBI= new BackgroundImage(new Image("/resources/wushuju.png"), 
 			     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, 
 			      BackgroundSize.DEFAULT); 
 			//then you set to your node 
@@ -96,6 +93,7 @@ public class TabFailedController implements Initializable
 	public void addFailedHBox(ProjectBean project, String reason)
 	{
 		project.setErroDetail(reason);
+		removeProjectDir(project.getProjectName() + project.getId() + "\\" + project.getCreateTime());
 		list_failed.add(project);
 		listView_failed.setItems(list_failed);
 		listView_failed.setVisible(true);
@@ -110,6 +108,7 @@ public class TabFailedController implements Initializable
 	{
 		Label project_name = (Label)temp.lookup("#project_name");
 		project_name.setText(project.getProjectName());
+		project_name.setTooltip(new MyToolTip(project.transToTipStr(true)));
 		Label faileddetail = (Label)temp.lookup("#faildetailinfo");
 		faileddetail.setText(project.getErroDetail());
 		Label currenttime = (Label)temp.lookup("#currenttime");
@@ -157,8 +156,8 @@ public class TabFailedController implements Initializable
 					public void onReturn(SettingsBean settings) {
 						project.setSettings(settings);
 						settingDialogBean.getStage().close();
-						remove(listView_failed.getSelectionModel().getSelectedIndex());
 						processingController.addNewService(project);
+						removeInlist_failed(listView_failed.getSelectionModel().getSelectedIndex());
 					}
 				});
 			}
@@ -166,10 +165,12 @@ public class TabFailedController implements Initializable
 		
 	}
 
-	public void remove(int selectedIndex)
+	/**
+	 * 从list_failed中删除
+	 * @param selectedIndex
+	 */
+	public void removeInlist_failed(int selectedIndex)
 	{
-		File file = new File(System.getProperty("user.dir") + "\\Run\\" + list_failed.get(selectedIndex).getProjectName());
-		FileUtil.deleteRunDir(file);
 		list_failed.remove(selectedIndex);
 		if(list_failed.isEmpty())
 			listView_failed.setVisible(false);
@@ -184,6 +185,13 @@ public class TabFailedController implements Initializable
 		listView_failed.setVisible(false);
 	}
 
-	
+	/**
+	 * 删除失败项目对应的文件目录
+	 */
+	public void removeProjectDir(String project_dir)
+	{
+		File file = new File(System.getProperty("user.dir") + "\\logs\\" + project_dir);
+		FileUtil.deleteRunDir(file);
+	}
 
 }

@@ -1,6 +1,8 @@
 package application.control;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -21,7 +23,6 @@ import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundImage;
@@ -32,6 +33,7 @@ import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import utils.ResUtil;
 import utils.UIUtil;
+import views.MyToolTip;
 
 
 public class TabRunningController implements Initializable
@@ -44,11 +46,6 @@ public class TabRunningController implements Initializable
 	private ListView<ProjectBean> listView_running = new ListView<ProjectBean>();
 	
 	private Label runInfo;
-	
-	Image image_running = new Image("resources/norunning.png");
-	ImageView imageView_running = new ImageView(image_running);
-	
-	
 	
 	public ObservableList<ProjectBean> getList_running()
 	{
@@ -69,7 +66,7 @@ public class TabRunningController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		BackgroundImage myBI= new BackgroundImage(new Image("resources/wushuju.png"), 
+		BackgroundImage myBI= new BackgroundImage(new Image("/resources/wushuju.png"), 
 			     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, 
 			      BackgroundSize.DEFAULT); 
 			//then you set to your node 
@@ -137,6 +134,7 @@ public class TabRunningController implements Initializable
 	public void setContent(ProjectBean project, HBox temp) {
 		Label project_name = (Label)temp.lookup("#project_name");
 		project_name.setText(project.getProjectName());
+		project_name.setTooltip(new MyToolTip(project.transToTipStr(true)));
 		runInfo= (Label)temp.lookup("#runningInfo");
 		
 		if(project.getInfo() == 0)

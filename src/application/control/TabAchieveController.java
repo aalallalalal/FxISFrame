@@ -5,11 +5,13 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
+import beans.DBRecordBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
 import beans.SettingsBean;
@@ -33,10 +35,11 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
-import utils.FileUtil;
+import utils.DBUtil;
 import utils.ResUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
+import views.MyToolTip;
 
 public class TabAchieveController implements Initializable
 {
@@ -57,7 +60,7 @@ public class TabAchieveController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		BackgroundImage myBI= new BackgroundImage(new Image("resources/wushuju.png"), 
+		BackgroundImage myBI= new BackgroundImage(new Image("/resources/wushuju.png"), 
 			     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, 
 			      BackgroundSize.DEFAULT); 
 			//then you set to your node 
@@ -99,17 +102,16 @@ public class TabAchieveController implements Initializable
 	public void addAchieveHBox(ProjectBean project) 
 	{
 		list_achieve.add(project);
+		writeInfoToDataBase(project);
 		listView_achieve.setVisible(true);
 	}
 	
 	/**
-	 * 删除此任务同时删除结果目录
+	 * 界面上删除此条信息
 	 * @param i
 	 */
 	public void remove(int i)
 	{
-		File file = new File(System.getProperty("user.dir") + "\\Run\\" + list_achieve.get(i).getProjectName());
-		FileUtil.deleteRunDir(file);
 		list_achieve.remove(i);
 		if(list_achieve.isEmpty())
 			listView_achieve.setVisible(false);
@@ -124,6 +126,7 @@ public class TabAchieveController implements Initializable
 	{
 		Label project_name = (Label)temp.lookup("#project_name");
 		project_name.setText(project.getProjectName());
+		project_name.setTooltip(new MyToolTip(project.transToTipStr(true)));
 		Label achieve_time = (Label)temp.lookup("#achieve_time");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 		String achieveTime = df.format(new Date());// new Date()为获取当前系统时间
@@ -140,7 +143,7 @@ public class TabAchieveController implements Initializable
 				listView_achieve.getSelectionModel().select(project);
 				try {
 					String path = System.getProperty("user.dir");
-					Desktop.getDesktop().open(new File(path + "\\Run\\" + project.getProjectName() + "\\Result"));
+					Desktop.getDesktop().open(new File(path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + project.getCreateTime()));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -183,7 +186,7 @@ public class TabAchieveController implements Initializable
 					String path = System.getProperty("user.dir");
 					int i = project.getProjectDir().lastIndexOf("/");
 					String name_dir = project.getProjectDir().substring(i + 1);
-					path = path + "\\Run\\" + project.getProjectName() + "\\Result\\0_results\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
+					path = path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + project.getCreateTime() + "\\Result\\0_results\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
 					runtime.exec("cmd /c " + path);
 				} catch (IOException e) {
 					ToastUtil.toast(ResUtil.gs("open_image_error"));
@@ -206,7 +209,7 @@ public class TabAchieveController implements Initializable
 						String path = System.getProperty("user.dir");
 						int i = project.getProjectDir().lastIndexOf("/");
 						String name_dir = project.getProjectDir().substring(i + 1);
-						Desktop.getDesktop().open(new File(path + "\\Run\\" + project.getProjectName() + "\\Result\\1_debugs\\" + name_dir + "-debug"));
+						Desktop.getDesktop().open(new File(path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + project.getCreateTime() + "\\Result\\1_debugs\\" + name_dir + "-debug"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -253,5 +256,20 @@ public class TabAchieveController implements Initializable
 		list_achieve.clear();
 		listView_achieve.getItems().clear();
 		listView_achieve.setVisible(false);
+	}
+	
+	/**
+	 * 将信息写进数据库
+	 */
+	private void writeInfoToDataBase(ProjectBean project) 
+	{
+		DBRecordBean bean = new DBRecordBean();
+		bean.setProject(project);
+		bean.setRunTime(System.currentTimeMillis());
+		String path = System.getProperty("user.dir");
+		bean.setResultPath(path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + project.getCreateTime());
+		DBUtil.insert(bean);
+		ArrayList<DBRecordBean> list = DBUtil.selectAll();
+		System.out.println("size"+list.size());
 	}
 }

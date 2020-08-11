@@ -1,6 +1,8 @@
 package application.control;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXTabPane;
@@ -174,9 +176,12 @@ public class ProcessingController extends BaseController implements Initializabl
  		if(!tabRunningController.getList_running().isEmpty())
  		{
  			next = tabRunningController.getList_running().get(0);
- 			FinalDataBean.para_Exe = next.toSettingParameter() + next.getParam() + "%" + next.getProjectName(); ;
+ 			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
+ 			next.setCreateTime(df.format(new Date()));// new Date()为获取当前系统时间
+ 			System.out.println(next.getCreateTime());
+ 			FinalDataBean.para_Exe = next.toSettingParameter() + next.getParam() + "%" + next.getProjectName() + next.getId() + "\\" + next.getCreateTime();
+ 			System.out.println(FinalDataBean.para_Exe);
  			currentProject.setText(next.getProjectName() + " . . .");
- 			System.out.println(currentProject.getText());
  		}
 	}
 	/**

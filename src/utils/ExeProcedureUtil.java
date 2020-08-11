@@ -33,11 +33,10 @@ public class ExeProcedureUtil
 		String oldString = "";
 		
 		int i = para_Exe.lastIndexOf("%");
-		String name_currentproject = para_Exe.substring(i + 1);
-		File workDir = new File(System.getProperty("user.dir") + "\\Run\\" + name_currentproject);
+		String dir_currentproject = para_Exe.substring(i + 1);
+		File workDir = new File(System.getProperty("user.dir") + "\\logs\\" + dir_currentproject);
 		if(!workDir.exists())
 			workDir.mkdirs();
-		
 		para_Exe = para_Exe.substring(0, i);
 		System.out.println(para_Exe);
 		String[] cmds = {path_Exe, para_Exe};
