@@ -27,7 +27,7 @@
 						style="-fx-font-weight: bold;"
 						BorderPane.alignment="CENTER">
 						<graphic>
-							<ImageView fitHeight="210" pickOnBounds="true"
+							<ImageView fitHeight="230" pickOnBounds="true"
 								preserveRatio="true" smooth="true">
 								<image>
 									<Image url="/resources/software_big_simple.png" />
@@ -47,8 +47,8 @@
 					<Image url="/resources/set.png" /> </image> </ImageView> </graphic> </JFXButton> -->
 			</BorderPane>
 			<JFXButton fx:id="button_language" buttonType="FLAT"
-				style="-fx-background-color: #ffffff;-fx-text-fill:#AAAAAA ;-fx-background-radius:4;
-					-fx-font-size:12; "
+				style="-fx-background-color: #ffffff;-fx-text-fill:#888888 ;-fx-background-radius:4;
+					-fx-font-size:14; "
 				AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"
 				onAction="#onClickChangeLanguage">
 				<tooltip>

@@ -205,7 +205,7 @@ public class MainController implements Initializable {
 		@Override
 		public void onClickAddSettings(ObservableList<ProjectBean> projectListData) {
 			MyFxmlBean settingDialogBean = UIUtil.openDialog(getClass(), "/application/fxml/SettingsDialog.fxml",
-					ConstSize.Main_Frame_Width, ConstSize.Main_Frame_Height, ResUtil.gs("setting_new_temp"),
+					ConstSize.Main_Frame_Width, ConstSize.Second_Frame_Height, ResUtil.gs("setting_new_temp"),
 					getStage());
 			SettingsDialogController settingDialogController = settingDialogBean.getFxmlLoader().getController();
 			settingDialogController.initExtraData(2, projectListData, null);

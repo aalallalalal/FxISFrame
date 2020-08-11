@@ -60,10 +60,11 @@ public class ToastUtil {
 		label.setStyle(
 				"-fx-text-fill: #fff;-fx-background: rgba(56,56,56,0.4);-fx-border-radius: 25;-fx-background-radius: 25");// label透明,圆角
 		label.setPrefHeight(50);
-		label.setMaxWidth(800);
+		label.setMaxWidth(300);
+		label.setWrapText(true);
 		label.setPadding(new Insets(5));
 		label.setAlignment(Pos.CENTER);// 居中
-		label.setFont(new Font(10));// 字体大小
+		label.setFont(new Font(12));// 字体大小
 		
 		
 //		textArea = new TextArea(msg);

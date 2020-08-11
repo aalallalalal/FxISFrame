@@ -20,11 +20,11 @@
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.SettingController">
 	<left>
-		<VBox spacing="3.0" prefWidth="150.0"
+		<VBox spacing="3.0" prefWidth="180.0"
 			style="-fx-background-color: #fff; -fx-border-width: 1; -fx-border-color: #f1f1f1;"
 			BorderPane.alignment="CENTER">
 			<Label text="%project"
-				style="-fx-text-fill: #4f4f4f;-fx-font-size: 14.0">
+				style="-fx-text-fill: #4f4f4f;-fx-font-size: 16.0">
 				<HBox.margin>
 					<Insets top="3.5" left="2" />
 				</HBox.margin>
@@ -196,10 +196,10 @@
 				</styleClass>
 			</JFXButton>
 			<Label text="%listview_setting_tips"
-				style="-fx-text-fill: #8f8f8f;-fx-font-size: 10.0">
+				style="-fx-text-fill: #8f8f8f;-fx-font-size: 12.0">
 			</Label>
 			<ListView fx:id="listView_settings"
-				style="-fx-background-color: #fff;-fx-padding:2;" prefWidth="110.0" />
+				style="-fx-background-color: #fff;-fx-padding:2;" prefWidth="160.0" />
 			<BorderPane.margin>
 				<Insets right="5.0" />
 			</BorderPane.margin>

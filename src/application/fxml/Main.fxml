@@ -35,7 +35,7 @@
 					prefHeight="30.0" prefWidth="200.0">
 					<children>
 						<Label text="Made by UAV-TIR Team"
-							style="-fx-text-fill: #F1F1F1; -fx-font-size:14;">
+							style="-fx-text-fill: #ffffff; -fx-font-size:15;">
 							<effect>
 								<DropShadow color="#FAFAFA" radius="10" />
 							</effect>

@@ -114,7 +114,7 @@ public class ProjectsController extends BaseController implements Initializable 
 		projectTableView.setItems(projectListData);
 		
 		name_projects.setPrefWidth(130);
-		path_projects.setPrefWidth(270);
+		path_projects.setPrefWidth(385);
 		time_createProject.setPrefWidth(140);
 		path_projects.setSortable(false);
 
@@ -180,7 +180,7 @@ public class ProjectsController extends BaseController implements Initializable 
 		}
 		ProjectBean project = projectListData.get(index);
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml",
-				ConstSize.Main_Frame_Width, ConstSize.Main_Frame_Height,
+				ConstSize.Main_Frame_Width-80, ConstSize.Main_Frame_Height,
 				ResUtil.gs("project") + project.getProjectName());
 		ImageListController controller = openFrame.getFxmlLoader().getController();
 		controller.setProjectInfo(project);

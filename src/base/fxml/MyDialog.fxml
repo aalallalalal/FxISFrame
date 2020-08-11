@@ -31,7 +31,7 @@
 					</styleClass>
 					<children>
 						<Label fx:id="bar_title" maxWidth="Infinity" text="TITLE"
-							style="-fx-font-weight: bold;-fx-font-size:14;"
+							style="-fx-font-weight: bold;-fx-font-size:16;"
 							HBox.hgrow="ALWAYS">
 						</Label>
 						<JFXButton fx:id = "btn_close" onAction="#onClickClose"

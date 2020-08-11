@@ -40,10 +40,10 @@
 					</TextArea>
 
 
-					<TextArea fx:id="textArea_place" prefHeight="30.0"
-						prefWidth="180" editable="false" wrapText="true"
+					<TextArea fx:id="textArea_place" prefHeight="50.0"
+						prefWidth="220" editable="false" wrapText="true"
 						AnchorPane.rightAnchor="5.0" AnchorPane.bottomAnchor="25.0"
-						visible="false" style="-fx-font-size:10;-fx-text-fill: #fff;">
+						visible="false" style="-fx-font-size:13;-fx-text-fill: #608DFA;">
 					</TextArea>
 
 					<JFXButton onAction="#onClickPaneSwitch" visible="false"

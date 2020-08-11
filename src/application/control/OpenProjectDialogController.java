@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -67,8 +68,8 @@ public class OpenProjectDialogController implements Initializable {
 		projectTableView.setItems(projectListData);
 
 		name_projects.setPrefWidth(80);
-		path_projects.setPrefWidth(180);
-		time_createProject.setPrefWidth(170);
+		path_projects.setPrefWidth(243);
+		time_createProject.setPrefWidth(150);
 		path_projects.setSortable(false);
 
 		name_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectName"));
@@ -78,21 +79,24 @@ public class OpenProjectDialogController implements Initializable {
 				new javafx.util.Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 					@Override
 					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
-						return new ToolTipTableCell<ProjectBean>();
+						ToolTipTableCell<ProjectBean> toolTipTableCell = new ToolTipTableCell<ProjectBean>();
+						return toolTipTableCell ;
 					}
 				});
 		path_projects.setCellFactory(
 				new javafx.util.Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 					@Override
 					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
-						return new ToolTipTableCell<ProjectBean>();
+						ToolTipTableCell<ProjectBean> toolTipTableCell = new ToolTipTableCell<ProjectBean>();
+						return toolTipTableCell ;
 					}
 				});
 		time_createProject.setCellFactory(
 				new javafx.util.Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 					@Override
 					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
-						return new ToolTipTableCell<ProjectBean>();
+						ToolTipTableCell<ProjectBean> toolTipTableCell = new ToolTipTableCell<ProjectBean>();
+						return toolTipTableCell ;
 					}
 				});
 		projectTableView.setOnMouseClicked(new EventHandler<MouseEvent>() {

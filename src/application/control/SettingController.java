@@ -46,9 +46,9 @@ import views.myTextField.IntegerField;
  *
  */
 public class SettingController extends BaseController implements Initializable {
-	public static final String style_temp = "-fx-background-color:#5AF102;-fx-text-fill: white;-fx-padding:2.0;-fx-font-size:10.0;";
-	public static final String style_unname = "-fx-background-color:#FFB731;-fx-text-fill: white;-fx-padding:2.0;-fx-font-size:10.0;";
-	public static final String style_no = "-fx-background-color:#FF8282;-fx-text-fill: white;-fx-padding:2.0;-fx-font-size:10.0;";
+	public static final String style_temp = "-fx-background-color:#5AF102;-fx-text-fill: white;-fx-padding:2.0;-fx-font-size:14.0;";
+	public static final String style_unname = "-fx-background-color:#FFB731;-fx-text-fill: white;-fx-padding:2.0;-fx-font-size:14.0;";
+	public static final String style_no = "-fx-background-color:#FF8282;-fx-text-fill: white;-fx-padding:2.0;-fx-font-size:14.0;";
 
 	private SettingListener listener;
 	@FXML
@@ -178,7 +178,7 @@ public class SettingController extends BaseController implements Initializable {
 					}
 					MyFxmlBean settingDialogBean = UIUtil.openDialog(getClass(),
 							"/application/fxml/SettingsDialog.fxml", ConstSize.Main_Frame_Width,
-							ConstSize.Main_Frame_Height, settings.getName(), stage);
+							ConstSize.Second_Frame_Height, settings.getName(), stage);
 					SettingsDialogController settingDialogController = settingDialogBean.getFxmlLoader()
 							.getController();
 					settingDialogController.initExtraData(2, projectListData, settings);

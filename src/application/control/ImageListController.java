@@ -315,8 +315,8 @@ public class ImageListController implements Initializable {
 		tableView.getColumns().addAll(path, latitudeCol, longtitudeCol, heightCol);
 		path.setPrefWidth(120);
 		path.setMinWidth(120);
-		longtitudeCol.setPrefWidth(110);
-		latitudeCol.setPrefWidth(110);
+		longtitudeCol.setPrefWidth(180);
+		latitudeCol.setPrefWidth(180);
 		heightCol.setPrefWidth(100);
 
 		path.setSortable(false);

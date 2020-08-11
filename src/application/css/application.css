@@ -28,10 +28,10 @@ visibility: hidden;
 	-fx-background-radius: 10.0; -fx-background-color: #ffffff;-fx-border-radius:10.0;
 }
 .btn-level-vip{
-	-fx-background-color: linear-gradient(to right,#FFB731 0.0%,#FFBD43 45.0%,#FFBD43 55.0%,#FFB731 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:14.0;
+	-fx-background-color: linear-gradient(to right,#F69F00 0.0%,#FFA500 50.0%,#F69F00 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:16.0;
 }
 .btn-level-normal{
-	-fx-background-color: linear-gradient(to right,#4379FC 0.0%,#608DFA 50.0%,#4379FC 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:14.0;
+	-fx-background-color: linear-gradient(to right,#4379FC 0.0%,#608DFA 50.0%,#4379FC 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:16.0;
 }
 .btn-level-projects{
 	-fx-background-color:linear-gradient(to right,#4379FC 0.0%,#608DFA 50.0%,#4379FC 100.0%);-fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:16.0;
@@ -44,7 +44,7 @@ visibility: hidden;
 }
 
 .label-level-setting-normal{
-	-fx-text-fill: #5f5f5f; -fx-font-size: 12.0; -fx-wrap-text:true 
+	-fx-text-fill: #5f5f5f; -fx-font-size: 14.0; -fx-wrap-text:true 
 }
 
 
@@ -75,7 +75,7 @@ visibility: hidden;
 .table-view {
  -fx-background-color:#fff;
 } 
- 
+
  /**
  * 表头背景颜色变化
  */
@@ -83,13 +83,18 @@ visibility: hidden;
     -fx-background-color: #fff;
     -fx-text-fill: #4f4f4f ;
     -fx-text-alignment: center ;
-     -fx-font-size: 14.0;
+     -fx-font-size: 15.0;
 }
 .table-column{
-    -fx-padding:0.0;
+    -fx-padding:0;
+    -fx-alignment: center;
+}
+.table-view .column-header{
+    -fx-border-color:white lightgray white white;  
+    -fx-border-width:1
 }
 .table-view .filler{
-     -fx-background-color: white;    
+     -fx-background-color: #fff;    
 }
  .table-view .table-cell {
 	 -fx-text-fill:#4f4f4f; 

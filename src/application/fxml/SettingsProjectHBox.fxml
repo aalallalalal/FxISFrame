@@ -9,15 +9,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<HBox fx:id="root" alignment="CENTER_LEFT" maxWidth="130"
+<HBox fx:id="root" alignment="CENTER_LEFT" maxWidth="180"
 	xmlns="http://javafx.com/javafx/8" style="-fx-padding:4;" spacing="6"
 	xmlns:fx="http://javafx.com/fxml/1">
 	<children>
 		<Label fx:id="project_name"  HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="18.0" 
-			style="-fx-text-fill: #4f4f4f;-fx-font-size: 12.0;" text="--">
+			style="-fx-text-fill: #4f4f4f;-fx-font-size: 14.0;" text="--">
 		</Label>
 
-		<JFXButton fx:id="setting" buttonType="FLAT" maxWidth="110" wrapText="true"
+		<JFXButton fx:id="setting" buttonType="FLAT" maxWidth="140" wrapText="true"
 			text="%setting_name_not">
 		</JFXButton>
 
