@@ -18,17 +18,21 @@ public class ProjectBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private long id;
-	private String projectName;
-	private String projectDir;
-	private String projectLocationFile;
-	private String createTime;
+	private String projectName="";
+	private String projectDir="";
+	private String projectLocationFile="";
+	private String createTime="";
 	private long lastUsedTime;
-	private String path_result; // 结果图片路径
+	private String path_result=""; // 结果图片路径
 	private int locationFrom; // 0:从图片，1：从文件
 	private SettingsBean settings;
 	private int info;
-	private String erroDetail;
+	private String erroDetail="";
 
+	public ProjectBean() {
+		super();
+	}
+	
 	public ProjectBean(String projectName, String projectDir, int locationFrom, String projectLocationFile) {
 		super();
 		this.projectName = projectName;

@@ -21,12 +21,12 @@ public class SettingsBean implements Serializable {
 	private String name = "";
 	private static final long serialVersionUID = 1L;
 	private boolean isSaveMiddle;
-	private String netWidth, netHeight;
+	private String netWidth="", netHeight="";
 	private boolean isPreCheck;
 	private int preCheckWay;// 0,1
-	private String flyHeight; // way0
-	private String cameraSize;// way0
-	private String gsd; // way1
+	private String flyHeight=""; // way0
+	private String cameraSize="";// way0
+	private String gsd=""; // way1
 	private long lastUserTime = 0;
 
 	public SettingsBean() {
@@ -71,6 +71,10 @@ public class SettingsBean implements Serializable {
 	}
 
 	public void setFlyHeight(String flyHeight) {
+		if(flyHeight==null) {
+			this.flyHeight ="";
+			return;
+		}
 		this.flyHeight = flyHeight;
 	}
 
@@ -79,6 +83,10 @@ public class SettingsBean implements Serializable {
 	}
 
 	public void setCameraSize(String cameraSize) {
+		if(cameraSize==null) {
+			this.cameraSize ="";
+			return;
+		}
 		this.cameraSize = cameraSize;
 	}
 
@@ -95,6 +103,10 @@ public class SettingsBean implements Serializable {
 	}
 
 	public void setGsd(String gsd) {
+		if(gsd==null) {
+			this.gsd ="";
+			return;
+		}
 		this.gsd = gsd;
 	}
 

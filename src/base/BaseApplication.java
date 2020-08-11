@@ -8,6 +8,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import utils.DBUtil;
 import utils.ResUtil;
 import utils.SaveLanguageUtil;
 import utils.UIUtil;
@@ -17,6 +18,7 @@ public abstract class BaseApplication extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
+			DBUtil.initDB();
 			ResUtil.initLanguage(SaveLanguageUtil.getData());
 			Pane uiPane = FXMLLoader.load(getClass().getResource(getUIPath()), ResUtil.getResource());
 			Scene scene = getScene(uiPane, primaryStage);

@@ -26,7 +26,7 @@ public class SaveProjectsUtil {
 	private static String fileName = "Projects_Data";
 
 	private static final int MAX_SIZE = 50;// 最大保存项目数量50
-	private static final long MAX_TIME = 1000 * 60 * 60 * 24 * 30 * 2; // 两个月
+	private static final long MAX_TIME = 1000 * 60 * 60 * 24 * 30 * 3; // 两个月
 
 	private static ProjectBeanComparator comparator = new ProjectBeanComparator();
 

@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="libs/xmpcore-5.1.2.jar"/>
 	<classpathentry kind="lib" path="libs/gesturefx-0.6.0.jar"/>
 	<classpathentry kind="lib" path="libs/gson-2.8.5.jar"/>
+	<classpathentry kind="lib" path="libs/sqlitejdbc-v056.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
