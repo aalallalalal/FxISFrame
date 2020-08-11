@@ -8,6 +8,8 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.String?>
+<?import views.MyToolTip?>
 
 <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -16,17 +18,17 @@
             <Insets left="10.0" />
          </HBox.margin>
          <image>
-            <Image url="@../../../bin/resources/chenggong1.png" />
+            <Image url="@../../../bin/resources/renwusucceed.png" />
          </image>
       </ImageView>
       <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
          <children>
-            <Label fx:id="project_name" prefHeight="20.0" prefWidth="150.0" >
+            <Label fx:id="project_name" prefHeight="20.0" prefWidth="150.0">
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="achieve_time" prefHeight="20.0" prefWidth="150.0" >
+            <Label fx:id="achieve_time" prefHeight="20.0" prefWidth="150.0">
                <font>
                   <Font size="13.0" />
                </font>
@@ -36,27 +38,30 @@
             <Insets left="10.0" />
          </HBox.margin>
       </VBox>
-      <JFXButton fx:id="view_result" buttonType="RAISED" text="%Result_Final">
+      <JFXButton fx:id="view_result" text="%Result_Final">
+         <HBox.margin>
+            <Insets left="30.0" />
+         </HBox.margin>
+      </JFXButton>
+      <JFXButton fx:id="midresult" text="%Result_Mid">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="midresult" buttonType="RAISED" text="%Result_Mid">
+      <JFXButton fx:id="paramDetail" text="%ParamDetail">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="paramDetail" buttonType="RAISED" text="%ParamDetail">
+      <JFXButton fx:id="restart" text="%Param&amp;Restart">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="restart" buttonType="RAISED" text="%Param&amp;Restart">
-         <HBox.margin>
-            <Insets left="10.0" />
-         </HBox.margin>
-      </JFXButton>
-      <JFXButton fx:id="openfile" buttonType="RAISED">
+      <JFXButton fx:id="openfile">
+      	 <tooltip>
+			<MyToolTip text="%openfile"></MyToolTip>
+		 </tooltip>
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin></JFXButton>

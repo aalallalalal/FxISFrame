@@ -8,6 +8,8 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import java.lang.String?>
+<?import views.MyToolTip?>
 
 <HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
@@ -41,11 +43,22 @@
             <Insets left="50.0" />
          </HBox.margin>
       </ProgressIndicator>
-      <JFXButton fx:id="paramDetail" buttonType="RAISED" text="%ParamDetail">
+      <JFXButton fx:id="paramDetail" text="%ParamDetail">
          <HBox.margin>
-            <Insets left="260.0" />
+            <Insets left="300.0" />
          </HBox.margin></JFXButton>
-      <JFXButton fx:id="close" text="%Shut">
+      <JFXButton fx:id="close" style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">
+      	 <tooltip>
+			<MyToolTip text="%Shut"></MyToolTip>
+		 </tooltip>
+		 <graphic>
+			<ImageView fx:id="img_hide" fitWidth="24.0"
+				preserveRatio="true" smooth="true">
+				<image>
+					<Image url="/resources/cancel.png" />
+				</image>
+			</ImageView>
+		 </graphic>
          <HBox.margin>
             <Insets left="20.0" />
          </HBox.margin>

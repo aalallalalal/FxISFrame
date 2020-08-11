@@ -26,6 +26,11 @@ import javafx.scene.control.ListView;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.BackgroundImage;
+import javafx.scene.layout.BackgroundPosition;
+import javafx.scene.layout.BackgroundRepeat;
+import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import utils.FileUtil;
@@ -52,6 +57,11 @@ public class TabAchieveController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
+		BackgroundImage myBI= new BackgroundImage(new Image("resources/wushuju.png"), 
+			     BackgroundRepeat.NO_REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.CENTER, 
+			      BackgroundSize.DEFAULT); 
+			//then you set to your node 
+		root.setBackground(new Background(myBI)); 
 		listView_achieve.setVisible(false);
 		listView_achieve.setItems(list_achieve);
 		listView_achieve.setCellFactory(new Callback<ListView<ProjectBean>, ListCell<ProjectBean>>()
@@ -121,7 +131,7 @@ public class TabAchieveController implements Initializable
 		
 		//打开文件夹所在位置
 		JFXButton openfile = (JFXButton)temp.lookup("#openfile");
-		openfile.setGraphic(new ImageView(new Image("resources/wenjian1.png")));
+		openfile.setGraphic(new ImageView(new Image("resources/wenjianjia.png")));
 		openfile.setOnAction(new EventHandler<ActionEvent>()
 		{
 			@Override

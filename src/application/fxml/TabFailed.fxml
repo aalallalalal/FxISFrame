@@ -9,7 +9,6 @@
 		maxHeight="-Infinity" maxWidth="-Infinity" 
 		minHeight="-Infinity" minWidth="-Infinity" 
 		prefHeight="335.0" prefWidth="780.0" 
-		style="-fx-background-image: url(resources/nofailed.png); -fx-background-position: center; "
 		xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
 		fx:controller="application.control.TabFailedController">
    <children>

@@ -230,6 +230,8 @@ public class ProcessingController extends BaseController implements Initializabl
 			tabRunningController.add(project);
 			updateParam();
 			nextRun();
+			setState(true);
+			leftBtn.setVisible(false);
 			tabRunningController.appointSelect(project);
 			tabPane.getSelectionModel().select(tab_running);
 		}

@@ -196,7 +196,7 @@ visibility: hidden;
     -fx-background-color:white ;
     -fx-text-fill:black;
 	-fx-font-weight: normal;
-	-fx-font-size: 18.0px;
+	-fx-font-size: 16.0px;
 }
 
 .tab:selected {
@@ -210,12 +210,12 @@ visibility: hidden;
     -fx-background-color: white;
 }
 .list-cell:selected {
-    -fx-background-color: #0099FF;
+    -fx-background-color: #1ABDE6;
 }
 
 .list-cell *.button{
 	-fx-text-fill:#4f4f4f;
-	-fx-font-size: 16.0px;
+	-fx-font-size: 15.0px;
 }
 
 .list-cell:empty {
