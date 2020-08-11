@@ -31,33 +31,11 @@ public class ExeService extends Service<String>
 		};
 		return task;
 	}
-	
-	
-	
-    @Override
-	protected void ready()
-	{
-		// TODO Auto-generated method stub
-		super.ready();
-		System.out.println("ready");
-	}
-
-    
-    
-	@Override
-	public void reset()
-	{
-		// TODO Auto-generated method stub
-		System.out.println("reset");
-		super.reset();
-		
-	}
 
 	@Override
 	protected void succeeded()
 	{
     	super.succeeded();
-    	System.out.println("succeed");
     	String result = getValue();
     	if(result.equals("Stitch Finished!") || result.equals("图像拼接完成！"))
     		listener.updateSuccBox();

@@ -21,12 +21,12 @@
       </ImageView>
       <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
          <children>
-            <Label fx:id="project_name" prefHeight="20.0" prefWidth="150.0" text="Label">
+            <Label fx:id="project_name" prefHeight="20.0" prefWidth="150.0" >
                <font>
                   <Font size="16.0" />
                </font>
             </Label>
-            <Label fx:id="achieve_time" prefHeight="20.0" prefWidth="150.0" text="Label">
+            <Label fx:id="achieve_time" prefHeight="20.0" prefWidth="150.0" >
                <font>
                   <Font size="13.0" />
                </font>
@@ -36,22 +36,22 @@
             <Insets left="10.0" />
          </HBox.margin>
       </VBox>
-      <JFXButton fx:id="view_result" buttonType="RAISED" text="查看结果">
+      <JFXButton fx:id="view_result" buttonType="RAISED" text="%Result_Final">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="midresult" buttonType="RAISED" text="中间结果">
+      <JFXButton fx:id="midresult" buttonType="RAISED" text="%Result_Mid">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="paramDetail" buttonType="RAISED" text="查看参数">
+      <JFXButton fx:id="paramDetail" buttonType="RAISED" text="%ParamDetail">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
       </JFXButton>
-      <JFXButton fx:id="restart" buttonType="RAISED" text="参数&amp;重试">
+      <JFXButton fx:id="restart" buttonType="RAISED" text="%Param&amp;Restart">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>

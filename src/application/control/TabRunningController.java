@@ -8,6 +8,8 @@ import com.jfoenix.controls.JFXButton;
 import beans.FinalDataBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
+import beans.SettingsBean;
+import consts.ConstSize;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +25,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
+import utils.ResUtil;
 import utils.UIUtil;
 
 
@@ -128,11 +131,11 @@ public class TabRunningController implements Initializable
 		
 		if(project.getInfo() == 0)
 		{	
-			runInfo.setText("等待运行...");
+			runInfo.setText(ResUtil.gs("wait"));
 		}
 		else
 		{
-			runInfo.setText("正在运行...");
+			runInfo.setText(ResUtil.gs("running"));
 			ProgressIndicator p = (ProgressIndicator)temp.lookup("#run"); 
 			p.setVisible(true);
 		}
@@ -145,8 +148,28 @@ public class TabRunningController implements Initializable
 			{
 				listView_running.getSelectionModel().select(project);
 				int select = listView_running.getSelectionModel().getSelectedIndex();
-				System.out.println(select);
 				processingController.closeService(select);
+			}
+		});
+		//查看参数
+		JFXButton projectDetail = (JFXButton)temp.lookup("#paramDetail");
+		projectDetail.setOnAction(new EventHandler<ActionEvent>()
+		{
+			
+			@Override
+			public void handle(ActionEvent event)
+			{
+				MyFxmlBean settingDialogBean = UIUtil.openDialog(getClass(),
+						"/application/fxml/SettingsDialog.fxml", ConstSize.Main_Frame_Width,
+						ConstSize.Main_Frame_Height, project.getProjectName(), processingController.stage);
+				SettingsDialogController settingDialogController = settingDialogBean.getFxmlLoader().getController();
+				settingDialogController.initExtraData(0, null, project.getSettings());
+				settingDialogController.setCallBack(new application.control.SettingsDialogController.CallBack() {
+					@Override
+					public void onReturn(SettingsBean settings) {
+						settingDialogBean.getStage().close();
+					}
+				});
 			}
 		});
 	}
@@ -154,7 +177,7 @@ public class TabRunningController implements Initializable
 	/**
 	 * 清空lsit中所有内容
 	 */
-	public void clearItem()
+	public void clearItems()
 	{
 		list_running.clear();
 		listView_running.getItems().clear();
@@ -183,6 +206,11 @@ public class TabRunningController implements Initializable
 	public void updatecontrol()
 	{
 		listView_running.setVisible(false);
+	}
+
+	public void appointSelect(ProjectBean project)
+	{
+		listView_running.getSelectionModel().select(project);
 	}
 
 }

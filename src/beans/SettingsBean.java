@@ -3,6 +3,7 @@ package beans;
 import java.io.Serializable;
 
 import utils.ResUtil;
+import utils.SaveLanguageUtil;
 
 /**
  * 参数实体类
@@ -162,7 +163,7 @@ public class SettingsBean implements Serializable {
 	}
 
 	public int getLanguage() {
-		return 0;
+		return SaveLanguageUtil.getData();
 	}
 
 	public long getLastUserTime() {

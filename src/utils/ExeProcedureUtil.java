@@ -7,8 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
-import java.util.concurrent.TimeUnit;
-
 import application.control.ProcessingController.ProcessingListener;
 import javafx.application.Platform;
 

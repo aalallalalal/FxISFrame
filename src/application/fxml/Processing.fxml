@@ -25,18 +25,18 @@
    <center>
       <JFXTabPane fx:id="tabPane" BorderPane.alignment="CENTER">
          <tabs>
-            <Tab fx:id="tab_running">
+            <Tab fx:id="tab_running" text = "%Running">
             	<fx:include fx:id = "tabRunning" source = "TabRunning.fxml" />
             </Tab>
-            <Tab fx:id="tab_achieve">
+            <Tab fx:id="tab_achieve" text = "%Achieved">
             	<fx:include fx:id = "tabAchieve" source = "TabAchieve.fxml" />
             </Tab>
-            <Tab fx:id="tab_failed">
+            <Tab fx:id="tab_failed" text = "%Failed">
             	<fx:include fx:id = "tabFailed" source = "TabFailed.fxml" />
             </Tab>
          </tabs>
          <BorderPane.margin>
-            <Insets left="10.0" right="10.0" top="20.0" />
+            <Insets left="10.0" right="10.0" top="10.0" />
          </BorderPane.margin>
       </JFXTabPane>
    </center>

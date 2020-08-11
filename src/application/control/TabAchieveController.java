@@ -12,6 +12,8 @@ import com.jfoenix.controls.JFXButton;
 
 import beans.MyFxmlBean;
 import beans.ProjectBean;
+import beans.SettingsBean;
+import consts.ConstSize;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -26,6 +28,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
+import utils.FileUtil;
 import utils.ResUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
@@ -39,9 +42,6 @@ public class TabAchieveController implements Initializable
 	
 	@FXML
 	ListView<ProjectBean> listView_achieve = new ListView<ProjectBean>();
-	
-	Image image_succ = new Image("resources/nosucced.png");
-	ImageView imageView_succed = new ImageView(image_succ);
 	
 	private ProcessingController processingController;
 	public void init(ProcessingController controller) 
@@ -79,7 +79,6 @@ public class TabAchieveController implements Initializable
 							this.setGraphic(null);
 						}
 					}
-					
 				};
 				return cell;
 			}
@@ -91,6 +90,19 @@ public class TabAchieveController implements Initializable
 	{
 		list_achieve.add(project);
 		listView_achieve.setVisible(true);
+	}
+	
+	/**
+	 * 删除此任务同时删除结果目录
+	 * @param i
+	 */
+	public void remove(int i)
+	{
+		File file = new File(System.getProperty("user.dir") + "\\Run\\" + list_achieve.get(i).getProjectName());
+		FileUtil.deleteRunDir(file);
+		list_achieve.remove(i);
+		if(list_achieve.isEmpty())
+			listView_achieve.setVisible(false);
 	}
 	
 	/**
@@ -133,7 +145,17 @@ public class TabAchieveController implements Initializable
 			public void handle(ActionEvent event)
 			{
 				listView_achieve.getSelectionModel().select(project);
-				System.out.println("查看参数");
+				MyFxmlBean settingDialogBean = UIUtil.openDialog(getClass(),
+						"/application/fxml/SettingsDialog.fxml", ConstSize.Main_Frame_Width,
+						ConstSize.Main_Frame_Height, project.getProjectName(), processingController.stage);
+				SettingsDialogController settingDialogController = settingDialogBean.getFxmlLoader().getController();
+				settingDialogController.initExtraData(0, null, project.getSettings());
+				settingDialogController.setCallBack(new application.control.SettingsDialogController.CallBack() {
+					@Override
+					public void onReturn(SettingsBean settings) {
+						settingDialogBean.getStage().close();
+					}
+				});
 			}
 		});
 		
@@ -160,6 +182,32 @@ public class TabAchieveController implements Initializable
 			}
 		});
 		
+		//中间结果
+		JFXButton midResult = (JFXButton)temp.lookup("#midresult");
+		midResult.setOnAction(new EventHandler<ActionEvent>()
+		{
+			
+			@Override
+			public void handle(ActionEvent event)
+			{
+				listView_achieve.getSelectionModel().select(project);
+				if(list_achieve.get(listView_achieve.getSelectionModel().getSelectedIndex()).getSettings().isSaveMiddle()){
+					try {
+						String path = System.getProperty("user.dir");
+						int i = project.getProjectDir().lastIndexOf("/");
+						String name_dir = project.getProjectDir().substring(i + 1);
+						Desktop.getDesktop().open(new File(path + "\\Run\\" + project.getProjectName() + "\\Result\\1_debugs\\" + name_dir + "-debug"));
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+				}
+				else
+				{
+					ToastUtil.toast(ResUtil.gs("no-midResult"));
+				}
+			}	
+		});
+		
 		//重新运行
 		JFXButton restart = (JFXButton)temp.lookup("#restart");
 		restart.setOnAction(new EventHandler<ActionEvent>()
@@ -168,7 +216,20 @@ public class TabAchieveController implements Initializable
 			public void handle(ActionEvent event)
 			{
 				listView_achieve.getSelectionModel().select(project);
-				processingController.addnewservice(project);
+				MyFxmlBean settingDialogBean = UIUtil.openDialog(getClass(),
+						"/application/fxml/SettingsDialog.fxml", ConstSize.Main_Frame_Width,
+						ConstSize.Main_Frame_Height, project.getProjectName(), processingController.stage);
+				SettingsDialogController settingDialogController = settingDialogBean.getFxmlLoader().getController();				
+				settingDialogController.initExtraData(1, null, project.getSettings());
+				settingDialogController.setCallBack(new application.control.SettingsDialogController.CallBack() {
+					@Override
+					public void onReturn(SettingsBean settings) {
+						project.setSettings(settings);
+						settingDialogBean.getStage().close();
+						remove(listView_achieve.getSelectionModel().getSelectedIndex());
+						processingController.addNewService(project);
+					}
+				});
 			}
 		});
 		
@@ -181,5 +242,6 @@ public class TabAchieveController implements Initializable
 	{
 		list_achieve.clear();
 		listView_achieve.getItems().clear();
+		listView_achieve.setVisible(false);
 	}
 }

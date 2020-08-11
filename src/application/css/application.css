@@ -47,10 +47,6 @@ visibility: hidden;
 	-fx-text-fill: #5f5f5f; -fx-font-size: 12.0; -fx-wrap-text:true 
 }
 
-.label-paramsetting{
-	-fx-text-fill:#4f4f4f; -fx-font-size: 15.0; -fx-wrap-text:true 
-}
-
 
 .custom-text-field{
 	-fx-text-fill: #4f4f4f; -fx-border-color:#fafafa;-fx-border-width:2.0;-fx-border-style:solid;
@@ -189,21 +185,22 @@ visibility: hidden;
 
 
 .jfx-tab-pane *.tab-header-area *.tab-header-background {
-  -fx-background-color:transparent;
+  -fx-background-color:white;
   -fx-tab-min-width:120.0px;
   -fx-tab-max-width:120.0px;
   -fx-tab-min-height:50.0px;
   -fx-tab-max-height:50.0px;
 }
 
-.tab {
-  -fx-font-family: Arial;
-  -fx-font-size: 18.0;
-  -fx-background-color:royalblue ;
+.tab-label{
+    -fx-background-color:white ;
+    -fx-text-fill:black;
+	-fx-font-weight: normal;
+	-fx-font-size: 18.0px;
 }
 
 .tab:selected {
-    -fx-background-color:blue ;
+    -fx-background-color:white ;
 }
 
 .list-cell:even {
@@ -213,7 +210,7 @@ visibility: hidden;
     -fx-background-color: white;
 }
 .list-cell:selected {
-    -fx-background-color: #608DFA;
+    -fx-background-color: #0099FF;
 }
 
 .list-cell *.button{
@@ -221,11 +218,14 @@ visibility: hidden;
 	-fx-font-size: 16.0px;
 }
 
-
-
 .list-cell:empty {
     -fx-background-color: white;
 }
+
+.list-view {
+	-fx-background-color:white;
+}
+
  .list-view > .virtual-flow >.scroll-bar:horizontal{
     -fx-background-color: #f1f1f1;
     -fx-background-radius: 5.0;

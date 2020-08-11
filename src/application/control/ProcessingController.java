@@ -15,6 +15,8 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import utils.ResUtil;
+import utils.ToastUtil;
 import utils.UIUtil;
 import utils.ProgressTask.ExeService;
 import javafx.beans.value.ChangeListener;
@@ -31,8 +33,8 @@ import javafx.fxml.FXML;
 public class ProcessingController extends BaseController implements Initializable {
 
 	public ProcessingListener listener;
-
-	private boolean state = true;// 当前状态（是否运行完）
+	
+	private boolean state = true;
 	
 	Service<String> service;
 	
@@ -62,21 +64,6 @@ public class ProcessingController extends BaseController implements Initializabl
 	Tab tab_failed = new Tab();
 	@FXML
 	TabFailedController tabFailedController;
-	
-	@FXML
-	Tab tab_param = new Tab();
-	@FXML
-	TabParamController tabParamController;
-
-	public boolean isState()
-	{
-		return state;
-	}
-
-	public void setState(boolean state)
-	{
-		this.state = state;
-	}
 
 	/**
 	 * 开始执行程序，程序运行结束后改变页面
@@ -91,7 +78,6 @@ public class ProcessingController extends BaseController implements Initializabl
         service.exceptionProperty().addListener(new ChangeListener<Throwable>() {
             @Override
             public void changed(ObservableValue<? extends Throwable> observable, Throwable oldValue, Throwable newValue) {
-            	System.out.println("出错了");
                 listener.updateFailBox(newValue.toString());
             }
         });
@@ -106,63 +92,61 @@ public class ProcessingController extends BaseController implements Initializabl
 		tabAchieveController.init(this);
 		tabFailedController.init(this);
 		tabPane.getSelectionModel().select(tab_running);
-		tab_running.setGraphic(new Label("正在拼接"));
-		tab_achieve.setGraphic(new Label("拼接成功"));
-		tab_failed.setGraphic(new Label("拼接失败"));
 	}
 	
 	//取消进程，返回主界面之后初始化进程界面,
 	//在listener中的toprojects，tofirstpage方法中调用
 	public void initPage()
 	{
-		this.setState(true);
 		this.textarea.clear();
-		tabRunningController.clearItem();
-		tabFailedController.clearItem();
+		tabAchieveController.clearItem();
+		tabRunningController.clearItems();
+		tabFailedController.clearItems();
+		this.setState(true);
+		tabPane.getSelectionModel().select(tab_running);
 	}
 	
 	public void setListener(ProcessingListener listener) {
 		this.listener = listener;
 	}
 
+	
+	public boolean isState()
+	{
+		return state;
+	}
+
+	public void setState(boolean state)
+	{
+		this.state = state;
+	}
+
 	@Override
 	protected void onSetBottomBtnsAndTitle() {
-		if (state) 
+		title.setText(ResUtil.gs("splicing-service"));
+		rightBtn.setVisible(true);
+		rightBtn.setText(ResUtil.gs("all_close"));
+		if(state)
+			leftBtn.setVisible(false);
+		else
 		{
-			title.setText("拼接中");
 			leftBtn.setVisible(true);
-			leftBtn.setText("添加新任务");
-			rightBtn.setVisible(true);
-			rightBtn.setText("  全部取消  ");
-		} 
-		else 
-		{
-			title.setText("拼接完成");
-			leftBtn.setVisible(true);
-			leftBtn.setText("返回首页");
-			rightBtn.setVisible(true);
-			rightBtn.setText("项目列表");
+			leftBtn.setText(ResUtil.gs("project-list"));
 		}
-
 	}
 
 	@Override
 	protected void onClickLeftBtn() {
-		if(!state)
-			listener.tofirstpage();
-		else
-		{
-			System.out.println("添加新任务");
-		}
+		listener.toprojects();
 	}
 
 	@Override
 	protected void onClickRightBtn() {
-		if (!state) {
-			listener.toprojects();
+		if (tabRunningController.getList_running().isEmpty()) {
+			ToastUtil.toast(ResUtil.gs("Don't-have-running-service"));
 		} else {
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
-					ConstSize.Confirm_Dialog_Frame_Height, "取消拼接", "拼接运行中，确定取消所有任务？",
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("all_close"), ResUtil.gs("is_running_are_you_sure"),
 					(Stage) root.getScene().getWindow(), new CallBack() {
 						@Override
 						public void onCancel() {
@@ -171,8 +155,12 @@ public class ProcessingController extends BaseController implements Initializabl
 						@Override
 						public void onConfirm() {
 							service.cancel();
-							tabRunningController.clearItem();
+							for(ProjectBean project : tabRunningController.getList_running())
+								tabFailedController.addFailedHBox(project, ResUtil.gs("this-service-have-cancelled"));
+							tabRunningController.clearItems();
 							tabRunningController.updatecontrol();
+							listener.updateFinish();
+							tabPane.getSelectionModel().select(tab_failed);
 						}
 					});
 		}
@@ -234,7 +222,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	 * 子页面中重新运行时调用
 	 * @param project
 	 */
-	public void addnewservice(ProjectBean project)
+	public void addNewService(ProjectBean project)
 	{
 		if(tabRunningController.getList_running().isEmpty())
 		{
@@ -242,26 +230,29 @@ public class ProcessingController extends BaseController implements Initializabl
 			tabRunningController.add(project);
 			updateParam();
 			nextRun();
+			tabRunningController.appointSelect(project);
+			tabPane.getSelectionModel().select(tab_running);
 		}
 		else if(service.getState().toString() != "SUCCEEDED" || service.getState().toString() != "FAILED")
 		{
 			project.setInfo(0);
 			tabRunningController.add(project);
+			tabRunningController.appointSelect(project);
+			tabPane.getSelectionModel().select(tab_running);
 		}
 		else 
 		{
-			System.out.println("重新启动失败，请重试！");
+			ToastUtil.toast(ResUtil.gs("restart_failed_please_retry"));
 		}
 	}
 
 	public void closeService(int select)
 	{
 		ProjectBean project = tabRunningController.getList_running().get(select);
-		System.out.println(project);
 		if(select == 0)
 		{
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
-					ConstSize.Confirm_Dialog_Frame_Height, "取消此任务","任务" + project.getProjectName() + "正在运行中，确定取消此任务？",
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("cancel_service"),ResUtil.gs("is_running_are_you_sure"),
 					(Stage) root.getScene().getWindow(), new CallBack() {
 						@Override
 						public void onCancel() {
@@ -270,14 +261,14 @@ public class ProcessingController extends BaseController implements Initializabl
 						@Override
 						public void onConfirm() {
 							service.cancel();
-							listener.updateFailBox("此任务已被取消");
+							listener.updateFailBox(ResUtil.gs("this-service-have-cancelled"));
 						}
 					});
 		}
 		else
 		{
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
-					ConstSize.Confirm_Dialog_Frame_Height, "取消此任务","确定取消此任务？",
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("cancel_service"),ResUtil.gs("cancel_sure"),
 					(Stage) root.getScene().getWindow(), new CallBack() {
 						@Override
 						public void onCancel() {
@@ -285,7 +276,7 @@ public class ProcessingController extends BaseController implements Initializabl
 
 						@Override
 						public void onConfirm() {
-							tabFailedController.addFailedHBox(project, "此任务已被取消");
+							tabFailedController.addFailedHBox(project, ResUtil.gs("this-service-have-cancelled"));
 							tabRunningController.updateRemove(select);
 						}
 					});
@@ -296,8 +287,6 @@ public class ProcessingController extends BaseController implements Initializabl
 	public interface ProcessingListener {
 		//转到项目列表界面
 		void toprojects();
-		//转到首页
-		void tofirstpage();
 		//更新成功界面
 		void updateSuccBox();
 		//更新失败界面

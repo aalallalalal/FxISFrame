@@ -234,15 +234,7 @@ public class MainController implements Initializable {
 		}
 
 		@Override
-		public void tofirstpage() {
-			mPagination.setCurrentPageIndex(0);
-			projectsController.clearData(); // 清空
-			processingController.initPage();
-		}
-
-		@Override
 		public void updateSuccBox() {
-			System.out.println("更新成功界面");
 			processingController.updateSucc();
 			processingController.updateParam();
 			processingController.nextRun();
@@ -250,11 +242,8 @@ public class MainController implements Initializable {
 
 		@Override
 		public void updateFailBox(String reason) {
-			System.out.println(11);
 			processingController.updateFail(reason);
-			System.out.println(12);
 			processingController.updateParam();
-			System.out.println(13);
 			processingController.nextRun();
 		}
 
