@@ -12,6 +12,7 @@ import consts.ConstSize;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
+import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -102,7 +103,7 @@ public class GoogleMapFlightLineController implements Initializable {
 
 	private boolean isShowFlightPane = true;
 
-	private ArrayList<ImageBean> listData;
+	private ObservableList<ImageBean> listData;
 	private AMapGeocodingBean aMapGeocodingBean;
 	private PathTransition pathTransition;
 	@FXML
@@ -121,7 +122,7 @@ public class GoogleMapFlightLineController implements Initializable {
 		initTextData();
 	}
 
-	public void setData(ArrayList<ImageBean> listData) {
+	public void setData(ObservableList<ImageBean> listData) {
 		this.listData = listData;
 		if (listData == null || listData.size() == 0) {
 			System.out.println("飞机界面数据：" + listData.size());
@@ -309,7 +310,7 @@ public class GoogleMapFlightLineController implements Initializable {
 			 * @param listData
 			 * @return
 			 */
-			private ArrayList<Double> analyDataToGoogleData(ArrayList<ImageBean> listData) {
+			private ArrayList<Double> analyDataToGoogleData(ObservableList<ImageBean> listData) {
 				xMax = listData.get(0).getLongitude();
 				xMin = listData.get(0).getLongitude();
 				yMax = listData.get(0).getLatitude();
@@ -382,7 +383,7 @@ public class GoogleMapFlightLineController implements Initializable {
 			 * @param listData
 			 * @return
 			 */
-			private void initGoogleMapData(ArrayList<ImageBean> listData) {
+			private void initGoogleMapData(ObservableList<ImageBean> listData) {
 				ArrayList<Double> analyGoogleData = analyDataToGoogleData(listData);
 				System.out.println("analyGoogleData" + analyGoogleData.size());
 				if (analyGoogleData != null && analyGoogleData.size() >= 2) {

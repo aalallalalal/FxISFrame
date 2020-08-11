@@ -18,6 +18,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import utils.AnimatorUtil;
+import utils.DBUtil;
 import javafx.scene.image.ImageView;
 
 /**
@@ -110,6 +111,7 @@ public class BaseBarController implements Initializable {
 		// 这里是取到Stage的具体代码
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.close();
+		DBUtil.close();
 		System.exit(0);
 	}
 

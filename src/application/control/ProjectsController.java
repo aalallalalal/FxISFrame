@@ -180,7 +180,7 @@ public class ProjectsController extends BaseController implements Initializable 
 		}
 		ProjectBean project = projectListData.get(index);
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml",
-				ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height,
+				ConstSize.Main_Frame_Width, ConstSize.Main_Frame_Height,
 				ResUtil.gs("project") + project.getProjectName());
 		ImageListController controller = openFrame.getFxmlLoader().getController();
 		controller.setProjectInfo(project);

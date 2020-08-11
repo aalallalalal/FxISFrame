@@ -461,9 +461,7 @@ public class ImageListController implements Initializable {
 				ConstSize.Flight_Width, ConstSize.Flight_Height,
 				project.getProjectName() + " " + ResUtil.gs("imageList_flight"));
 		GoogleMapFlightLineController controller = openFrame.getFxmlLoader().getController();
-		ArrayList<ImageBean> copyListData = new ArrayList<ImageBean>();
-		copyListData.addAll(listData);
-		controller.setData(copyListData);
+		controller.setData(listData);
 	}
 
 	private Callback callBack;

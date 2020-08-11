@@ -19,13 +19,14 @@ public class DBUtil {
 			+ "is_pre_check TINYINT(1),pre_check_way TINYINT(1), fly_height VARCHAR(30), camera_size VARCHAR(30),"
 			+ "gsd VARCHAR(30), result_file_path VARCHAR(150)," + "extra VARCHAR(150) " + ");";
 
+	private static Connection conn;
+
 	public static void initDB() {
 		try {
-			Connection conn = getConn();
+			conn = getConn();
 			Statement stat = conn.createStatement();
 			stat.executeUpdate(SQL_CreateTable_History);
 			conn.commit();
-			conn.close(); // 结束数据库的连接
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -34,7 +35,6 @@ public class DBUtil {
 	public static ArrayList<DBRecordBean> selectAll() {
 		ArrayList<DBRecordBean> datas = new ArrayList<DBRecordBean>();
 		try {
-			Connection conn = getConn();
 			ResultSet rs = conn.createStatement().executeQuery("select * from table_history;");
 			while (rs.next()) { // 将查询到的数据打印出来
 				DBRecordBean bean = new DBRecordBean();
@@ -52,12 +52,10 @@ public class DBUtil {
 		int executeUpdate = 0;
 		String insertSQL = record.toInsertSQL();
 
-		Connection conn = getConn();
 		System.out.println("insert sql:" + insertSQL);
 		try {
 			executeUpdate = conn.createStatement().executeUpdate(insertSQL);
 			conn.commit();
-			conn.close(); // 结束数据库的连接
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -76,5 +74,15 @@ public class DBUtil {
 			e.printStackTrace();
 		}
 		return conn;
+	}
+
+	public static void close() {
+		System.out.println("db关闭");
+		try {
+			if (conn != null)
+				conn.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} // 结束数据库的连接
 	}
 }
