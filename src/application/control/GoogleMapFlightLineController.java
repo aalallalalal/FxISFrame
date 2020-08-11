@@ -3,9 +3,11 @@ package application.control;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
+import base.controller.ConfirmDialogController.CallBack;
 import beans.AMapGeocodingBean;
 import beans.ImageBean;
 import consts.ConstSize;
@@ -13,6 +15,7 @@ import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -21,7 +24,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Point2D;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -48,6 +53,7 @@ import utils.AnimatorUtil;
 import utils.GoogleMapUtil;
 import utils.ResUtil;
 import utils.ToastUtil;
+import utils.UIUtil;
 import utils.ProgressTask.ProgressTask;
 import views.MyToolTip;
 
@@ -59,10 +65,14 @@ public class GoogleMapFlightLineController implements Initializable {
 	private static final double FlightPaneH = FrameH - 40 - 50;
 	private static final double FlightDataOffset = 20;
 
-	private final Image camera = new Image(getClass().getResourceAsStream("/resources/camera-fill-normal.png"), 14, 14,
+	private HashMap<ImageBean, Label> labelMap = new HashMap<ImageBean, Label>();
+
+	private final Image camera = new Image(getClass().getResourceAsStream("/resources/camera-fill-normal.png"), 16, 16,
 			false, false);
-	private final Image cameraFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill-focus.png"), 14,
-			14, false, false);
+	private final Image cameraFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill-focus.png"), 16,
+			16, false, false);
+	private final Image cameraDeleted = new Image(getClass().getResourceAsStream("/resources/camera-fill-deleted.png"),
+			16, 16, false, false);
 	private final Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight.png"), 25, 25, false,
 			true);
 	private final Image imageSwitchOn = new Image(getClass().getResourceAsStream("/resources/icon_switch_on.png"), 35,
@@ -203,6 +213,7 @@ public class GoogleMapFlightLineController implements Initializable {
 			 */
 			private Label generateLabel(ImageBean imageBean) {
 				Label item = new Label();
+				item.setId(imageBean.getName());
 				item.setPrefHeight(14);
 				item.setPrefWidth(14);
 				item.setMaxWidth(14);
@@ -220,19 +231,22 @@ public class GoogleMapFlightLineController implements Initializable {
 
 					@Override
 					public void handle(MouseEvent e) {
-						if (e.getEventType() == MouseEvent.MOUSE_PRESSED) { // 鼠标按下的事件
+						if (e.getEventType() == MouseEvent.MOUSE_PRESSED && e.getButton() == MouseButton.PRIMARY) { // 鼠标按下的事件
 							this.oldScreenX = e.getScreenX();
 							this.oldScreenY = e.getScreenY();
-						} else if (e.getEventType() == MouseEvent.MOUSE_RELEASED) { // 鼠标抬起的事件
+						} else if (e.getEventType() == MouseEvent.MOUSE_RELEASED
+								&& e.getButton() == MouseButton.PRIMARY) { // 鼠标抬起的事件
 							double nowX = e.getScreenX();
 							double nowY = e.getScreenY();
 							if (Math.abs(oldScreenX - nowX) <= GAP && Math.abs(oldScreenY - nowY) <= GAP) {
-								Runtime runtime = Runtime.getRuntime();
-								try {
-									runtime.exec("cmd /c " + imageBean.getPath());
-								} catch (IOException exc) {
-									ToastUtil.toast(ResUtil.gs("open_image_error"));
-									exc.printStackTrace();
+								if (labelMap.get(imageBean) != null) {
+									Runtime runtime = Runtime.getRuntime();
+									try {
+										runtime.exec("cmd /c " + imageBean.getPath());
+									} catch (IOException exc) {
+										ToastUtil.toast(ResUtil.gs("open_image_error"));
+										exc.printStackTrace();
+									}
 								}
 							}
 							oldScreenX = nowX;
@@ -242,6 +256,10 @@ public class GoogleMapFlightLineController implements Initializable {
 				});
 				MyToolTip myToolTip = new MyToolTip(generateToolTipInfo(imageBean));
 				item.setTooltip(myToolTip);
+
+				item.setContextMenu(new MyContextMenu(imageBean));
+
+				labelMap.put(imageBean, item);
 				return item;
 			}
 
@@ -583,6 +601,9 @@ public class GoogleMapFlightLineController implements Initializable {
 		@Override
 		public void handle(Event event) {
 			label.setGraphic(new ImageView(cameraFocus));
+			if (callback != null) {
+				callback.onFocusChange(label.getId(), true);
+			}
 		}
 	}
 
@@ -601,6 +622,93 @@ public class GoogleMapFlightLineController implements Initializable {
 		@Override
 		public void handle(Event event) {
 			label.setGraphic(new ImageView(camera));
+			if (callback != null) {
+				callback.onFocusChange(label.getId(), false);
+			}
+		}
+	}
+
+	/**
+	 * 图片列表界面删除数据
+	 * 
+	 * @param selectedItem
+	 */
+	public void onImageDelete(ImageBean selectedItem) {
+		if (labelMap.size() > 0) {
+			Label label = labelMap.get(selectedItem);
+			if (label != null) {
+				label.setDisable(true);
+				label.setGraphic(new ImageView(cameraDeleted));
+				labelMap.remove(selectedItem);
+			}
+		}
+	}
+
+	/**
+	 * 图片列表界面选择了某个image
+	 * 
+	 * @param oldValue
+	 * @param newValue
+	 */
+	public void onImageSelected(ImageBean oldValue, ImageBean newValue) {
+		if (labelMap.size() > 0) {
+			Label old = labelMap.get(oldValue);
+			Label newLabel = labelMap.get(newValue);
+			if (old != null) {
+				old.setGraphic(new ImageView(camera));
+			}
+			if (newLabel != null) {
+				newLabel.setGraphic(new ImageView(cameraFocus));
+			}
+		}
+	}
+
+	public void setCallback(FlightLineCallBack callback) {
+		this.callback = callback;
+	}
+
+	private FlightLineCallBack callback;
+
+	public interface FlightLineCallBack {
+		void onDeleteImage(ImageBean image);
+
+		void onFocusChange(String id, boolean b);
+	}
+
+	class MyContextMenu extends ContextMenu {
+		ImageBean bean;
+
+		public MyContextMenu(ImageBean bean) {
+			this.bean = bean;
+			MenuItem delete = new MenuItem(ResUtil.gs("remove"));
+			delete.setStyle("-fx-font-size:12;");
+			delete.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+							ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
+							ResUtil.gs("imageList_remove_image_confirm", bean.getName()), (Stage) root.getScene().getWindow(),
+							new CallBack() {
+								@Override
+								public void onCancel() {
+								}
+
+								@Override
+								public void onConfirm() {
+									Label label = labelMap.get(bean);
+									if (label != null) {
+										label.setDisable(true);
+										label.setGraphic(new ImageView(cameraDeleted));
+										if (callback != null) {
+											callback.onDeleteImage(bean);
+										}
+										listData.remove(bean);
+										labelMap.remove(bean);
+									}
+								}
+							});
+				}
+			});
+			getItems().addAll(delete);
 		}
 	}
 

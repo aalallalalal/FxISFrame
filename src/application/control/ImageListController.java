@@ -11,6 +11,7 @@ import com.drew.imaging.ImageProcessingException;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
+import application.control.GoogleMapFlightLineController.FlightLineCallBack;
 import base.controller.ConfirmDialogController.CallBack;
 import beans.ImageBean;
 import beans.MyFxmlBean;
@@ -281,6 +282,9 @@ public class ImageListController implements Initializable {
 					@Override
 					public void onConfirm() {
 						listData.remove(selectedItem);
+						if(flightController!=null) {
+							flightController.onImageDelete(selectedItem);
+						}
 						FileUtil.deleteImage(selectedItem.getPath());
 						FileUtil.deleteTxt(project.getProjectDir());
 					}
@@ -395,6 +399,9 @@ public class ImageListController implements Initializable {
 				if (newValue != null) {
 					vbox_rightButtons.setDisable(false);
 					initImageView(newValue);
+					if(flightController!=null) {
+						flightController.onImageSelected(oldValue,newValue);
+					}
 				} else {
 					vbox_rightButtons.setDisable(true);
 				}
@@ -460,11 +467,22 @@ public class ImageListController implements Initializable {
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/GoogleMapFlightLine.fxml",
 				ConstSize.Flight_Width, ConstSize.Flight_Height,
 				project.getProjectName() + " " + ResUtil.gs("imageList_flight"));
-		GoogleMapFlightLineController controller = openFrame.getFxmlLoader().getController();
-		controller.setData(listData);
+		flightController = openFrame.getFxmlLoader().getController();
+		flightController.setData(listData);
+		flightController.setCallback(new FlightLineCallBack() {
+			@Override
+			public void onDeleteImage(ImageBean image) {
+				FileUtil.deleteImage(image.getPath());
+				FileUtil.deleteTxt(project.getProjectDir());
+			}
+			@Override
+			public void onFocusChange(String imageName, boolean isEnter) {
+			}
+		});
 	}
 
 	private Callback callBack;
+	private GoogleMapFlightLineController flightController;
 
 	public void setCallBack(Callback callBack) {
 		this.callBack = callBack;
