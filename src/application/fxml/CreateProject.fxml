@@ -95,7 +95,7 @@
 				</JFXButton>
 			</right>
 			<BorderPane.margin>
-				<Insets left="140.0" right="140.0" />
+				<Insets left="150.0" right="150.0" />
 			</BorderPane.margin>
 		</BorderPane>
 	</center>

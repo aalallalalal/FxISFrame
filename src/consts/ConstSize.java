@@ -10,7 +10,7 @@ public final class ConstSize {
 	public static final double Dialog_Frame_Width=520;
 	public static final double Dialog_Frame_Height=390;
 	public static final double Confirm_Dialog_Frame_Width=360;
-	public static final double Confirm_Dialog_Frame_Height=270;
+	public static final double Confirm_Dialog_Frame_Height=240;
 	public static final double Notice_Dialog_Frame_Width=360;
 	public static final double Notice_Dialog_Frame_Height=270;
 

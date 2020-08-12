@@ -13,13 +13,13 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import utils.AnimatorUtil;
-import utils.DBUtil;
-import javafx.scene.image.ImageView;
 
 /**
  * 主界面的controller
@@ -107,12 +107,9 @@ public class BaseBarController implements Initializable {
 
 	@FXML
 	public void onClickClose(ActionEvent event) {
-		System.out.println("关闭整个程序");
 		// 这里是取到Stage的具体代码
 		Stage stage = (Stage) root.getScene().getWindow();
-		stage.close();
-		DBUtil.close();
-		System.exit(0);
+		stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
 
 }
