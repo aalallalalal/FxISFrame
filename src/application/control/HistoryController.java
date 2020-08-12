@@ -36,6 +36,7 @@ import javafx.util.Callback;
 import utils.DBUtil;
 import utils.FileUtil;
 import utils.ResUtil;
+import utils.StrUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
 
@@ -126,7 +127,7 @@ public class HistoryController implements Initializable
 				}
 			}
 		});
-		label.setText(ResUtil.gs("total") + list.size() + ResUtil.gs("historyitem"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
+		label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
 	}
 
 	/**
@@ -282,7 +283,7 @@ public class HistoryController implements Initializable
 			@Override
 			public ObservableValue<Boolean> call(CellDataFeatures<DBRecordBean, Boolean> param)
 			{
-				SimpleBooleanProperty flag = new SimpleBooleanProperty(param.getValue().getProject().getErroDetail() == null);
+				SimpleBooleanProperty flag = new SimpleBooleanProperty(StrUtil.isEmpty(param.getValue().getProject().getErroDetail()));
 				return flag;
 			}
 		});
@@ -320,6 +321,7 @@ public class HistoryController implements Initializable
 						}
 						ToastUtil.toast(ResUtil.gs("clear") + DBUtil.clearAll() + ResUtil.gs("historyitem"));
 						list.clear();
+						label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));
 					}
 				});
 		
@@ -351,6 +353,7 @@ public class HistoryController implements Initializable
 							ToastUtil.toast(ResUtil.gs("clear") + " " + DBUtil.clear(list_temp) + " " + ResUtil.gs("historyitem"));
 							for(DBRecordBean tempbean : list_temp)
 								list.remove(tempbean);
+							label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));
 						}
 					});
 			

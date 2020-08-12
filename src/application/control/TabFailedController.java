@@ -102,6 +102,7 @@ public class TabFailedController implements Initializable {
 		project_name.setTooltip(new MyToolTip(project.transToTipStr(true)));
 		Label faileddetail = (Label) temp.lookup("#faildetailinfo");
 		faileddetail.setText(project.getErroDetail());
+		faileddetail.setTooltip(new MyToolTip(project.getErroDetail()));
 		Label currenttime = (Label) temp.lookup("#currenttime");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
 		String time = df.format(new Date());// new Date()为获取当前系统时间

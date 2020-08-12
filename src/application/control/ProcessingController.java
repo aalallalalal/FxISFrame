@@ -214,7 +214,6 @@ public class ProcessingController extends BaseController implements Initializabl
 		dbRecord.setRunTime(System.currentTimeMillis());
 		DBUtil.insert(dbRecord);
 		ArrayList<DBRecordBean> listarray = DBUtil.selectAll();
-		System.out.println(listarray.size());
 	}
 	
 	/**
@@ -285,14 +284,18 @@ public class ProcessingController extends BaseController implements Initializabl
 
 						@Override
 						public void onConfirm() {
-							service.cancel();
-							listener.updateFailBox(ResUtil.gs("this-service-have-cancelled"));
+							if(tabRunningController.getList_running().contains(project)) {
+								service.cancel();
+								listener.updateFailBox(ResUtil.gs("this-service-have-cancelled"));
+							}else
+							{
+								ToastUtil.toast(ResUtil.gs("the_service_have_achieved"));
+							}
 						}
 					});
 		}
 		else
 		{
-			
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
 					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("cancel_service"),ResUtil.gs("cancel_sure"),
 					(Stage) root.getScene().getWindow(), new CallBack() {
@@ -302,8 +305,19 @@ public class ProcessingController extends BaseController implements Initializabl
 
 						@Override
 						public void onConfirm() {
-							tabFailedController.addFailedHBox(project, ResUtil.gs("this-service-have-cancelled"));
-							tabRunningController.updateRemove(select);
+							if(tabRunningController.getList_running().contains(project)) {
+								if(project.equals(tabRunningController.getList_running().get(0))) {
+									service.cancel();
+									listener.updateFailBox(ResUtil.gs("this-service-have-cancelled"));
+								}else
+								{
+									tabFailedController.addFailedHBox(project, ResUtil.gs("this-service-have-cancelled"));
+									tabRunningController.updateRemove(project);
+								}
+							}else {
+								ToastUtil.toast(ResUtil.gs("the_service_have_achieved"));
+							}
+							
 						}
 					});
 			

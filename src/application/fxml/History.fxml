@@ -87,6 +87,11 @@
                   <Insets left="20.0" />
                </HBox.margin>
 	              </JFXButton>
+            <Label fx:id="tip" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="950.0" text="%multiseletedtip" style="-fx-font-style:oblique; -fx-text-fill:#4f4f4f; -fx-font-size:14px;">
+               <HBox.margin>
+                  <Insets top="20.0" />
+               </HBox.margin>
+            </Label>
          </children>
          <BorderPane.margin>
             <Insets top="5.0" />
