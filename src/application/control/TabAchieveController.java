@@ -4,14 +4,13 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.acl.LastOwnerException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
-import beans.DBRecordBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
 import beans.SettingsBean;
@@ -35,7 +34,6 @@ import javafx.scene.layout.BackgroundRepeat;
 import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
-import utils.DBUtil;
 import utils.ResUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
@@ -143,7 +141,9 @@ public class TabAchieveController implements Initializable
 				listView_achieve.getSelectionModel().select(project);
 				try {
 					String path = System.getProperty("user.dir");
-					Desktop.getDesktop().open(new File(path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + project.getCreateTime()));
+					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
+					String lastUsedTime = df.format(project.getLastUsedTime());
+					Desktop.getDesktop().open(new File(path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + lastUsedTime));
 				} catch (IOException e) {
 					e.printStackTrace();
 				}
@@ -186,7 +186,9 @@ public class TabAchieveController implements Initializable
 					String path = System.getProperty("user.dir");
 					int i = project.getProjectDir().lastIndexOf("/");
 					String name_dir = project.getProjectDir().substring(i + 1);
-					path = path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + project.getCreateTime() + "\\Result\\0_results\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
+					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
+					String lastUsedTime = df.format(project.getLastUsedTime());
+					path = path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + lastUsedTime + "\\Result\\0_results\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
 					runtime.exec("cmd /c " + path);
 				} catch (IOException e) {
 					ToastUtil.toast(ResUtil.gs("open_image_error"));
@@ -209,7 +211,9 @@ public class TabAchieveController implements Initializable
 						String path = System.getProperty("user.dir");
 						int i = project.getProjectDir().lastIndexOf("/");
 						String name_dir = project.getProjectDir().substring(i + 1);
-						Desktop.getDesktop().open(new File(path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + project.getCreateTime() + "\\Result\\1_debugs\\" + name_dir + "-debug"));
+						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
+						String lastUsedTime = df.format(project.getLastUsedTime());
+						Desktop.getDesktop().open(new File(path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + lastUsedTime + "\\Result\\1_debugs\\" + name_dir + "-debug"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
@@ -263,13 +267,6 @@ public class TabAchieveController implements Initializable
 	 */
 	private void writeInfoToDataBase(ProjectBean project) 
 	{
-		DBRecordBean bean = new DBRecordBean();
-		bean.setProject(project);
-		bean.setRunTime(System.currentTimeMillis());
-		String path = System.getProperty("user.dir");
-		bean.setResultPath(path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + project.getCreateTime());
-		DBUtil.insert(bean);
-		ArrayList<DBRecordBean> list = DBUtil.selectAll();
-		System.out.println("size"+list.size());
+		processingController.writeToDB();
 	}
 }

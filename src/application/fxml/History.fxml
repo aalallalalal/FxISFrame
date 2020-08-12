@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.paint.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.text.*?>
+<?import com.jfoenix.controls.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.control.Label?>
+<?import java.lang.String?>
+
+<BorderPane fx:id="root" prefHeight="618.0" prefWidth="1016.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.HistoryController">
+	<center>
+		<VBox fx:id="vbox" prefHeight="480.0" prefWidth="540.0" BorderPane.alignment="CENTER">
+			<children>
+				<TableView fx:id="HistoryTableView" prefHeight="405.0" prefWidth="560.0" style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;">
+               <columns>
+                  <TableColumn fx:id="project_name" prefWidth="75.0" text="%project_name_simple" />
+                  <TableColumn fx:id="pictures_dir" prefWidth="75.0" text="%project_path_simple" />
+                  <TableColumn fx:id="inputway" prefWidth="75.0" text="%locationway" />
+                  <TableColumn fx:id="location_dir" prefWidth="75.0" text="%locationpath" />
+                  <TableColumn fx:id="height_net" prefWidth="75.0" text="%net_height" />
+                  <TableColumn fx:id="width_net" prefWidth="75.0" text="%net_width" />
+                  <TableColumn fx:id="isPreCheck" prefWidth="75.0" text="%isPreCheck" />
+                  <TableColumn fx:id="flyHeight" prefWidth="75.0" text="%flyHeight" />
+                  <TableColumn fx:id="CameraSize" prefWidth="75.0" text="%CameraSize" />
+                  <TableColumn fx:id="Gsd" prefWidth="75.0" text="%Gsd" />
+                  <TableColumn fx:id="isSave_middle" prefWidth="75.0" text="%isSave_middle" />
+                  <TableColumn fx:id="runntime" prefWidth="75.0" text="%runtime" />
+               </columns></TableView>
+				<HBox prefHeight="64.0" prefWidth="200.0">
+					<children>
+						<Label fx:id="label" prefHeight="30.0" prefWidth="500.0" style="-fx-font-size:12.0;" text="Lable" textFill="#000000">
+							<HBox.margin>
+								<Insets bottom="34.0" top="10.0" />
+							</HBox.margin>
+						</Label>
+					</children>
+				</HBox>
+			</children>
+		</VBox>
+	</center>
+</BorderPane>
