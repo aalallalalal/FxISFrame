@@ -41,9 +41,6 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.CycleMethod;
-import javafx.scene.paint.LinearGradient;
-import javafx.scene.paint.Stop;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.StrokeLineJoin;
 import javafx.stage.Stage;
@@ -67,12 +64,12 @@ public class GoogleMapFlightLineController implements Initializable {
 
 	private HashMap<ImageBean, Label> labelMap = new HashMap<ImageBean, Label>();
 
-	private final Image camera = new Image(getClass().getResourceAsStream("/resources/camera-fill-normal.png"), 16, 16,
-			false, false);
-	private final Image cameraFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill-focus.png"), 16,
-			16, false, false);
+	private final Image camera = new Image(getClass().getResourceAsStream("/resources/camera-fill-normal.png"), 20, 20,
+			false, true);
+	private final Image cameraFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill-focus.png"), 20,
+			20, false, true);
 	private final Image cameraDeleted = new Image(getClass().getResourceAsStream("/resources/camera-fill-deleted.png"),
-			16, 16, false, false);
+			20, 20, false, true);
 	private final Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight.png"), 25, 25, false,
 			true);
 	private final Image imageSwitchOn = new Image(getClass().getResourceAsStream("/resources/icon_switch_on.png"), 35,
@@ -154,9 +151,9 @@ public class GoogleMapFlightLineController implements Initializable {
 			 */
 			private void drawShapes(GraphicsContext gc, double[] xList, double[] yList, int size) {
 				// 画线
-				LinearGradient linearGradient1 = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
-						new Stop[] { new Stop(0, Color.LIGHTGREEN), new Stop(1, Color.LIGHTSKYBLUE) });
-				gc.setStroke(linearGradient1);
+//				LinearGradient linearGradient1 = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
+//						new Stop[] { new Stop(0, Color.LIGHTGREEN), new Stop(1, Color.LIGHTSKYBLUE) });
+				gc.setStroke( Color.LIGHTGREEN);
 				gc.setLineWidth(3);
 				gc.setLineJoin(StrokeLineJoin.ROUND);
 				gc.strokePolyline(xList, yList, size);
@@ -697,12 +694,12 @@ public class GoogleMapFlightLineController implements Initializable {
 									Label label = labelMap.get(bean);
 									if (label != null) {
 										label.setDisable(true);
-										label.setGraphic(new ImageView(cameraDeleted));
 										if (callback != null) {
 											callback.onDeleteImage(bean);
 										}
 										listData.remove(bean);
 										labelMap.remove(bean);
+										label.setGraphic(new ImageView(cameraDeleted));
 									}
 								}
 							});

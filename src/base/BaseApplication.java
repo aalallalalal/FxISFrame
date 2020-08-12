@@ -35,7 +35,7 @@ public abstract class BaseApplication extends Application {
 	}
 
 	protected double frameWidth() {
-		return ConstSize.Main_Frame_Width;
+		return ConstSize.Main_Frame_Width+40;
 	}
 
 	protected double frameHeight() {

@@ -49,6 +49,7 @@ public class ProjectsController extends BaseController implements Initializable 
 	private TableView<ProjectBean> projectTableView;
 	private TableColumn<ProjectBean, String> name_projects;
 	private TableColumn<ProjectBean, String> path_projects;
+	private TableColumn<ProjectBean, String> location_path_projects;
 	private TableColumn<ProjectBean, String> time_createProject;
 	@FXML
 	VBox Rvbox;
@@ -109,16 +110,19 @@ public class ProjectsController extends BaseController implements Initializable 
 //		name_projects.setCellFactory(TextFieldTableCell.forTableColumn());
 
 		path_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("project_path_simple"));
+		location_path_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("locationpath"));
 		time_createProject = new TableColumn<ProjectBean, String>(ResUtil.gs("project_create_time"));
-		projectTableView.getColumns().addAll(name_projects, path_projects, time_createProject);
+		projectTableView.getColumns().addAll(name_projects, path_projects, time_createProject,location_path_projects);
 		projectTableView.setItems(projectListData);
 		
-		name_projects.setPrefWidth(130);
-		path_projects.setPrefWidth(385);
+		name_projects.setPrefWidth(100);
+		path_projects.setPrefWidth(310);
+		location_path_projects.setPrefWidth(145);
 		time_createProject.setPrefWidth(140);
 		path_projects.setSortable(false);
 
 		name_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectName"));
+		location_path_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectLocationFile"));
 		time_createProject.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("createTime"));
 		path_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectDir"));
 		time_createProject
@@ -129,6 +133,12 @@ public class ProjectsController extends BaseController implements Initializable 
 					}
 				});
 		name_projects.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
+			@Override
+			public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
+				return new ToolTipTableCell<ProjectBean>();
+			}
+		});
+		location_path_projects.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 			@Override
 			public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
 				return new ToolTipTableCell<ProjectBean>();

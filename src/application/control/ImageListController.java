@@ -313,8 +313,7 @@ public class ImageListController implements Initializable {
 		latitudeCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_lat"));
 		heightCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_height"));
 		tableView.getColumns().addAll(path, latitudeCol, longtitudeCol, heightCol);
-		path.setPrefWidth(120);
-		path.setMinWidth(120);
+		path.setPrefWidth(142);
 		longtitudeCol.setPrefWidth(180);
 		latitudeCol.setPrefWidth(180);
 		heightCol.setPrefWidth(100);
