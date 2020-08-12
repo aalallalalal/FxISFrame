@@ -306,7 +306,6 @@ public class HistoryController implements Initializable
 							FileUtil.deleteDir(new File(temp.getResultPath()));
 						}
 						list.clear();
-						HistoryTableView.refresh();
 					}
 				});
 		
@@ -321,7 +320,6 @@ public class HistoryController implements Initializable
 		DBRecordBean temp = HistoryTableView.getSelectionModel().getSelectedItem();
 		FileUtil.deleteDir(new File(temp.getResultPath()));
 		list.remove(temp);
-		HistoryTableView.refresh();
 	}
 	
 	/**

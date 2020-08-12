@@ -3,6 +3,7 @@ package utils;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -37,6 +38,60 @@ public class DBUtil {
 		}
 	}
 
+	/**
+	 * 清空数据库数据
+	 * 
+	 * @return
+	 */
+	public static int clearAll() {
+		String sqlDeleteAll = "delete from table_history;";
+		int num = 0;
+		try {
+			PreparedStatement prepareStatement = conn.prepareStatement(sqlDeleteAll);
+			num = prepareStatement.executeUpdate();
+			conn.commit();
+			System.out.println("数据库清空数据" + num);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return num;
+	}
+
+	/**
+	 * 数据批量删除
+	 * 
+	 * @param list
+	 * @return
+	 */
+	public static int clear(ArrayList<DBRecordBean> list) {
+		int num = 0;
+		try {
+			String deleteSql = "delete  from table_history where project_new_id =?";
+			PreparedStatement stmt = conn.prepareStatement(deleteSql);
+			for (DBRecordBean item : list) {
+				// 1是占位符的位置，i是取代占位符的值
+				stmt.setString(1, item.getProject().getId() + item.getRunTime() + "");
+				// 添加到批量
+				stmt.addBatch();
+			}
+			// 返回批量执行的条数
+			int[] result = stmt.executeBatch();
+			conn.commit();
+			num = result.length;
+			System.out.println("批量删除行数：" + result.length);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		return num;
+	}
+
+	/**
+	 * 读取数据
+	 * 
+	 * @return
+	 */
 	public static ArrayList<DBRecordBean> selectAll() {
 		ArrayList<DBRecordBean> datas = new ArrayList<DBRecordBean>();
 		try {
@@ -53,6 +108,12 @@ public class DBUtil {
 		return datas;
 	}
 
+	/**
+	 * 数据插入
+	 * 
+	 * @param record
+	 * @return
+	 */
 	public static int insert(DBRecordBean record) {
 		int executeUpdate = 0;
 		String insertSQL = record.toInsertSQL();
@@ -81,6 +142,9 @@ public class DBUtil {
 		return conn;
 	}
 
+	/**
+	 * 关闭数据库连接
+	 */
 	public static void close() {
 		System.out.println("db关闭");
 		try {
