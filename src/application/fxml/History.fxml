@@ -11,17 +11,17 @@
 <?import javafx.scene.control.Label?>
 <?import java.lang.String?>
 
-<BorderPane fx:id="root" prefHeight="618.0" prefWidth="1248.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.HistoryController">
+<BorderPane fx:id="root" prefHeight="618.0" prefWidth="1280.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.HistoryController">
 	<center>
 		<VBox fx:id="vbox" prefHeight="480.0" prefWidth="540.0" BorderPane.alignment="CENTER">
 			<children>
-				<TableView fx:id="HistoryTableView" prefHeight="405.0" prefWidth="560.0" style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;">
+				<TableView fx:id="HistoryTableView" fixedCellSize="30.0" prefHeight="500.0" prefWidth="1270.0" style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;">
                <columns>
                   <TableColumn fx:id="project_name" prefWidth="70.0" text="%project_name_simple" />
                   <TableColumn fx:id="pictures_dir" prefWidth="310.0" text="%project_path_simple" />
                   <TableColumn fx:id="inputway" prefWidth="75.0" text="%locationway" />
                   <TableColumn fx:id="location_dir" prefWidth="75.0" text="%locationpath" />
-                  <TableColumn fx:id="paramInfogroup" prefWidth="75.0" text="%parameters_info" >
+                  <TableColumn fx:id="paramInfogroup" prefWidth="75.0" text="%parameters_info">
                      <columns>
                         <TableColumn fx:id="height_net" prefWidth="75.0" text="%net_height" />
                         <TableColumn fx:id="width_net" prefWidth="75.0" text="%net_width" />
@@ -32,7 +32,7 @@
                         <TableColumn fx:id="isSave_middle" prefWidth="75.0" text="%isSave_middle" />
                      </columns>
                   </TableColumn>
-                  <TableColumn fx:id="runinfo" prefWidth="75.0" text="%runinfo" >
+                  <TableColumn fx:id="runinfo" prefWidth="75.0" text="%runinfo">
                      <columns>
                         <TableColumn fx:id="starttime" prefWidth="75.0" text="%starttime" />
                         <TableColumn fx:id="endtime" prefWidth="75.0" text="%endtime" />
@@ -41,16 +41,56 @@
                      </columns>
                   </TableColumn>
                </columns></TableView>
-				<HBox prefHeight="64.0" prefWidth="200.0">
+				<HBox prefHeight="64.0">
 					<children>
-						<Label fx:id="label" prefHeight="30.0" prefWidth="500.0" style="-fx-font-size:12.0;" text="Lable" textFill="#000000">
+						<Label fx:id="label" prefHeight="20.0" prefWidth="200.0" style="-fx-font-size:12.0;" text="Lable" textFill="#000000">
 							<HBox.margin>
-								<Insets bottom="34.0" top="10.0" />
+								<Insets bottom="34.0" left="5.0" top="10.0" />
 							</HBox.margin>
 						</Label>
+                  <HBox alignment="TOP_RIGHT" prefHeight="64.0" prefWidth="1070.0">
+                     <children>
+                        <JFXButton fx:id="clearAll" onAction="#onClearAll" text="%clearall">
+                        		<styleClass>
+            						<String fx:value="btn-level-projects" />
+            					</styleClass>
+                           <HBox.margin>
+                              <Insets right="10.0" />
+                           </HBox.margin>
+                        </JFXButton>
+                     </children>
+                  </HBox>
 					</children>
 				</HBox>
 			</children>
+         <BorderPane.margin>
+            <Insets left="5.0" right="5.0" top="5.0" />
+         </BorderPane.margin>
 		</VBox>
 	</center>
+   <top>
+      <HBox prefHeight="35.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
+         <children>
+            <JFXButton fx:id="clear" onAction="#onClear" text="%clearsome">
+            	<styleClass>
+            		<String fx:value="btn-level-projects" />
+            	</styleClass>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+            </JFXButton>
+            <JFXButton fx:id="open" onAction="#onOpenFileSystem" text="%openhistory">
+	                  <styleClass>
+	            		<String fx:value="btn-level-projects" />
+	            	  </styleClass>
+               <HBox.margin>
+                  <Insets left="20.0" />
+               </HBox.margin>
+	              </JFXButton>
+         </children>
+         <BorderPane.margin>
+            <Insets top="5.0" />
+         </BorderPane.margin>
+      </HBox>
+   </top>
 </BorderPane>

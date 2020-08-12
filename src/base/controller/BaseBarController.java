@@ -123,9 +123,8 @@ public class BaseBarController implements Initializable {
 	@FXML
 	public void onClickHistory(ActionEvent event) {
 		MyFxmlBean  history = UIUtil.openDialog(getClass(),
-				"/application/fxml/History.fxml", ConstSize.Main_Frame_Width + 440,
-				ConstSize.Main_Frame_Height, "历史记录", (Stage) root.getScene().getWindow());
-		HistoryController historyController = history.getFxmlLoader().getController();
+				"/application/fxml/History.fxml", ConstSize.Main_Frame_Width + 420,
+				ConstSize.Main_Frame_Height + 50, "历史记录", (Stage) root.getScene().getWindow());
 	}
 
 }

@@ -76,7 +76,6 @@ public class TabAchieveController implements Initializable
 					@Override
 					protected void updateItem(ProjectBean item, boolean empty)
 					{
-						System.out.println("updata方法");
 						super.updateItem(item, empty);
 						if(empty == false)
 						{

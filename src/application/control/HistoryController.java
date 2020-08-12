@@ -14,7 +14,6 @@ import base.controller.ConfirmDialogController.CallBack;
 import beans.DBRecordBean;
 import consts.ConstSize;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -25,8 +24,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
-import javafx.scene.input.MouseButton;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.layout.BorderPane;
@@ -89,33 +90,43 @@ public class HistoryController implements Initializable
 	@FXML
 	private JFXButton clear;
 	
+	@FXML
+	private JFXButton open;
+	
+	Image image = new Image("/resources/wushuju.png");
+	ImageView imageView = new ImageView(image);
+	
 	ObservableList<DBRecordBean> list = FXCollections.observableArrayList();
-	ArrayList<DBRecordBean> listarray = DBUtil.selectAll();
+	
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
+		ArrayList<DBRecordBean> listarray = DBUtil.selectAll();
 		for(DBRecordBean temp : listarray)
 			list.add(temp);
 		HistoryTableView.setItems(list);
 		
 		initTableView();
 		//鼠标双击事件
-		HistoryTableView.setOnMouseClicked(new EventHandler<MouseEvent>()
-		{
-
+		HistoryTableView.setRowFactory(new Callback<TableView<DBRecordBean>, TableRow<DBRecordBean>>() {
 			@Override
-			public void handle(MouseEvent event)
-			{
-				if(event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+			public TableRow<DBRecordBean> call(TableView<DBRecordBean> param) {
 				{
-					System.out.println("历史记录，双击打开");
-					onOpenFileSystem();
+					TableRow<DBRecordBean> row = new TableRow<DBRecordBean>();
+					row.setOnMouseClicked(new EventHandler<MouseEvent>() {
+						@Override
+						public void handle(MouseEvent event) {
+							if (event.getClickCount() == 2 && (!row.isEmpty())) {
+								onOpenFileSystem();
+							}
+						}
+					});
+					return row;
 				}
 			}
 		});
-		
-		label.setText(ResUtil.gs("total") + list.size() + ResUtil.gs("item"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
+		label.setText(ResUtil.gs("total") + list.size() + ResUtil.gs("historyitem"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
 	}
 
 	/**
@@ -127,6 +138,7 @@ public class HistoryController implements Initializable
 		HistoryTableView.setEditable(false);
 		HistoryTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		HistoryTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		HistoryTableView.setPlaceholder(imageView);
 		project_name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,String>, ObservableValue<String>>()
 		{
 			
@@ -306,6 +318,7 @@ public class HistoryController implements Initializable
 						for(DBRecordBean temp : list) {
 							FileUtil.deleteDir(new File(temp.getResultPath()));
 						}
+						ToastUtil.toast(ResUtil.gs("clear") + DBUtil.clearAll() + ResUtil.gs("historyitem"));
 						list.clear();
 					}
 				});
@@ -318,29 +331,56 @@ public class HistoryController implements Initializable
 	@FXML
 	void onClear() 
 	{
-		DBRecordBean temp = HistoryTableView.getSelectionModel().getSelectedItem();
-		FileUtil.deleteDir(new File(temp.getResultPath()));
-		list.remove(temp);
+		ObservableList<DBRecordBean> temp = HistoryTableView.getSelectionModel().getSelectedItems();
+		if(!temp.isEmpty()) {
+			ArrayList<DBRecordBean> list_temp = new ArrayList<DBRecordBean>();
+			for(DBRecordBean tempbean : temp)
+				list_temp.add(tempbean);
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("Clear_selected"), ResUtil.gs("are_you_sure_to_clear_selected_item"),
+					(Stage) root.getScene().getWindow(), new CallBack() {
+						@Override
+						public void onCancel() {
+						}
+
+						@Override
+						public void onConfirm() {
+							for(DBRecordBean t : temp) {
+								FileUtil.deleteDir(new File(t.getResultPath()));
+							}
+							ToastUtil.toast(ResUtil.gs("clear") + " " + DBUtil.clear(list_temp) + " " + ResUtil.gs("historyitem"));
+							for(DBRecordBean tempbean : list_temp)
+								list.remove(tempbean);
+						}
+					});
+			
+			 
+		}else {
+			ToastUtil.toast(ResUtil.gs("no_seleted_records"));
+		}
 	}
 	
 	/**
-	 * 打开文件夹 所在位置
+	 * 打开文件夹所在位置
 	 */
 	@FXML
 	void onOpenFileSystem()
 	{
 		DBRecordBean temp = HistoryTableView.getSelectionModel().getSelectedItem();
-		try
-		{
-			Desktop.getDesktop().open(new File(temp.getResultPath()));
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-			ToastUtil.toast(ResUtil.gs("Failed_to_open_folder"));
+		if(temp != null) {
+			try
+			{
+				Desktop.getDesktop().open(new File(temp.getResultPath()));
+			} catch (IOException e)
+			{
+				e.printStackTrace();
+				ToastUtil.toast(ResUtil.gs("Failed_to_open_folder"));
+			}
 		}
+		else
+		{
+			ToastUtil.toast(ResUtil.gs("no_seleted_records"));
+		}
+		
 	}
-	
-	
-	
-
 }
