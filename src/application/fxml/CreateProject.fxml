@@ -47,7 +47,7 @@
 					<Image url="/resources/set.png" /> </image> </ImageView> </graphic> </JFXButton> -->
 			</BorderPane>
 			<JFXButton fx:id="button_language" buttonType="FLAT"
-				style="-fx-background-color: #ffffff;-fx-text-fill:#888888 ;-fx-background-radius:4;
+				style="-fx-background-color: #ffffff;-fx-text-fill:#4f4f4f ;-fx-background-radius:4;
 					-fx-font-size:14; "
 				AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0"
 				onAction="#onClickChangeLanguage">

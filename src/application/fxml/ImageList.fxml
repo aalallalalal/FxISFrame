@@ -32,19 +32,19 @@
 					<JFXButton onAction="#onDeleteImg"
 						text="%imageList_remove_image">
 						<styleClass>
-							<String fx:value="btn-level-normal" />
+							<String fx:value="btn-level-projects" />
 						</styleClass>
 					</JFXButton>
 					<JFXButton onAction="#onSeeImg"
 						text="%imageList_see_image">
 						<styleClass>
-							<String fx:value="btn-level-normal" />
+							<String fx:value="btn-level-projects" />
 						</styleClass>
 					</JFXButton>
 				</VBox>
 				<JFXButton onAction="#onSeeLine" text="%imageList_flight">
 					<styleClass>
-						<String fx:value="btn-level-normal" />
+						<String fx:value="btn-level-projects" />
 					</styleClass>
 				</JFXButton>
 				<ImageView fx:id="imageview" fitHeight="100.0"

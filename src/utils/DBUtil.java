@@ -1,5 +1,6 @@
 package utils;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -23,6 +24,10 @@ public class DBUtil {
 
 	public static void initDB() {
 		try {
+			File folder = new File(System.getProperty("user.dir") + "/Datas");
+			if (!folder.exists()) {
+				folder.mkdirs();
+			}
 			conn = getConn();
 			Statement stat = conn.createStatement();
 			stat.executeUpdate(SQL_CreateTable_History);

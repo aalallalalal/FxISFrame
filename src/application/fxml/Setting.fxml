@@ -196,7 +196,7 @@
 				</styleClass>
 			</JFXButton>
 			<Label text="%listview_setting_tips"
-				style="-fx-text-fill: #8f8f8f;-fx-font-size: 12.0">
+				style="-fx-text-fill: #6f6f6f;-fx-font-size: 12.0">
 			</Label>
 			<ListView fx:id="listView_settings"
 				style="-fx-background-color: #fff;-fx-padding:2;" prefWidth="160.0" />

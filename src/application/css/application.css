@@ -28,13 +28,13 @@ visibility: hidden;
 	-fx-background-radius: 10.0; -fx-background-color: #ffffff;-fx-border-radius:10.0;
 }
 .btn-level-vip{
-	-fx-background-color: linear-gradient(to right,#F69F00 0.0%,#FFA500 50.0%,#F69F00 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:16.0;
+	-fx-background-color: linear-gradient(to right,#FF9500 0.0%,#FFA500 50.0%,#FF9500 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:16.0;
 }
 .btn-level-normal{
-	-fx-background-color: linear-gradient(to right,#4379FC 0.0%,#608DFA 50.0%,#4379FC 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:16.0;
+	-fx-background-color: linear-gradient(to right,#4379FC 0.0%,#608DFA 50.0%,#4379FC 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-size:16.0;
 }
 .btn-level-projects{
-	-fx-background-color:linear-gradient(to right,#4379FC 0.0%,#608DFA 50.0%,#4379FC 100.0%);-fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:16.0;
+	-fx-background-color:linear-gradient(to right,#4379FC 0.0%,#608DFA 50.0%,#4379FC 100.0%);-fx-text-fill: white;-fx-padding:10.0;-fx-font-size:16.0;-fx-min-width: 83
 }
 
 .custom-jfx-check-box{
