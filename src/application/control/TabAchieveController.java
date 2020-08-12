@@ -100,7 +100,7 @@ public class TabAchieveController implements Initializable
 	public void addAchieveHBox(ProjectBean project) 
 	{
 		list_achieve.add(project);
-		project.setErroDetail(null);
+		project.setErroDetail("");
 		writeInfoToDataBase(project);
 		listView_achieve.setVisible(true);
 	}
