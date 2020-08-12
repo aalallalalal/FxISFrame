@@ -28,7 +28,7 @@ public class ProjectBean implements Serializable {
 	private int locationFrom; // 0:从图片，1：从文件
 	private SettingsBean settings;
 	private int info;
-	private String erroDetail;
+	private String erroDetail="";
 
 	public ProjectBean() {
 		super();

@@ -51,6 +51,8 @@ public class DBRecordBean {
 			setting.setCameraSize(rs.getString(14));
 			setting.setGsd(rs.getString(15));
 			setResultPath(rs.getString(16));
+			project.setErroDetail(rs.getString(17));
+			project.setLastRuntime(Long.parseLong(rs.getString(18)));
 			project.setSettings(setting);
 			setProject(project);
 		} catch (SQLException e) {
@@ -76,6 +78,8 @@ public class DBRecordBean {
 		sb.append("'" + getProject().getSettings().getCameraSize() + "',");
 		sb.append("'" + getProject().getSettings().getGsd() + "',");
 		sb.append("'" + getResultPath() + "',");
+		sb.append("'" + getProject().getErroDetail() + "',");
+		sb.append("'" + getProject().getLastRuntime() + "',");
 		sb.append("'');");
 		return sb.toString();
 	}

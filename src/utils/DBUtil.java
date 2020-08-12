@@ -12,14 +12,15 @@ import java.util.ArrayList;
 import beans.DBRecordBean;
 
 public class DBUtil {
-	private static final String DB_VERSION = "v1";
+	private static final String DB_VERSION = "v2";
 
 	private static final String SQL_CreateTable_History = "create table if not exists table_history("
 			+ "project_new_id varchar(30),project_name varchar(20) , run_time VARCHAR(30) , create_time VARCHAR(30),"
 			+ "img_path varchar(150), location_path varchar(150), "
 			+ "setting_name  varchar(20), is_save_middle TINYINT(1), net_width VARCHAR(30),net_height VARCHAR(30),"
 			+ "is_pre_check TINYINT(1),pre_check_way TINYINT(1), fly_height VARCHAR(30), camera_size VARCHAR(30),"
-			+ "gsd VARCHAR(30), result_file_path VARCHAR(150)," + "extra VARCHAR(150) " + ");";
+			+ "gsd VARCHAR(30), result_file_path VARCHAR(150),project_errorDetail VARCHAR(150),start_run_time VARCHAR(30)," 
+			+ "extra VARCHAR(150) " + ");";
 
 	private static Connection conn;
 
