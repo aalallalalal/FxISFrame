@@ -11,7 +11,7 @@
 <?import javafx.scene.control.Label?>
 <?import java.lang.String?>
 
-<BorderPane fx:id="root" prefHeight="618.0" prefWidth="1016.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.HistoryController">
+<BorderPane fx:id="root" prefHeight="618.0" prefWidth="1248.0" style="-fx-background-color: #ffffff;" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.HistoryController">
 	<center>
 		<VBox fx:id="vbox" prefHeight="480.0" prefWidth="540.0" BorderPane.alignment="CENTER">
 			<children>
@@ -21,14 +21,25 @@
                   <TableColumn fx:id="pictures_dir" prefWidth="75.0" text="%project_path_simple" />
                   <TableColumn fx:id="inputway" prefWidth="75.0" text="%locationway" />
                   <TableColumn fx:id="location_dir" prefWidth="75.0" text="%locationpath" />
-                  <TableColumn fx:id="height_net" prefWidth="75.0" text="%net_height" />
-                  <TableColumn fx:id="width_net" prefWidth="75.0" text="%net_width" />
-                  <TableColumn fx:id="isPreCheck" prefWidth="75.0" text="%isPreCheck" />
-                  <TableColumn fx:id="flyHeight" prefWidth="75.0" text="%flyHeight" />
-                  <TableColumn fx:id="CameraSize" prefWidth="75.0" text="%CameraSize" />
-                  <TableColumn fx:id="Gsd" prefWidth="75.0" text="%Gsd" />
-                  <TableColumn fx:id="isSave_middle" prefWidth="75.0" text="%isSave_middle" />
-                  <TableColumn fx:id="runntime" prefWidth="75.0" text="%runtime" />
+                  <TableColumn fx:id="paramInfogroup" prefWidth="75.0" text="%parameters_info">
+                     <columns>
+                        <TableColumn fx:id="height_net" prefWidth="75.0" text="%net_height" />
+                        <TableColumn fx:id="width_net" prefWidth="75.0" text="%net_width" />
+                        <TableColumn fx:id="isPreCheck" prefWidth="75.0" text="%isPreCheck" />
+                        <TableColumn fx:id="flyHeight" prefWidth="75.0" text="%flyHeight" />
+                        <TableColumn fx:id="CameraSize" prefWidth="75.0" text="%CameraSize" />
+                        <TableColumn fx:id="Gsd" prefWidth="75.0" text="%Gsd" />
+                        <TableColumn fx:id="isSave_middle" prefWidth="75.0" text="%isSave_middle" />
+                     </columns>
+                  </TableColumn>
+                  <TableColumn fx:id="runinfo"prefWidth="75.0" text="%runinfo">
+                     <columns>
+                        <TableColumn fx:id="starttime" prefWidth="75.0" text="%starttime" />
+                        <TableColumn fx:id="endtime" prefWidth="75.0" text="%endtime" />
+                        <TableColumn fx:id="state" prefWidth="75.0" text="%resultstate" />
+                        <TableColumn fx:id="failreason" prefWidth="75.0" text="%failreason" />
+                     </columns>
+                  </TableColumn>
                </columns></TableView>
 				<HBox prefHeight="64.0" prefWidth="200.0">
 					<children>

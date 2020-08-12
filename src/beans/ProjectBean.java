@@ -22,7 +22,8 @@ public class ProjectBean implements Serializable {
 	private String projectDir="";
 	private String projectLocationFile="";
 	private String createTime="";
-	private long lastUsedTime;
+	private long lastUsedTime;     //工程最后导入时间
+	private long lastRuntime;
 	private String path_result=""; // 结果图片路径
 	private int locationFrom; // 0:从图片，1：从文件
 	private SettingsBean settings;
@@ -53,6 +54,16 @@ public class ProjectBean implements Serializable {
 
 	public void setErroDetail(String erroDetail) {
 		this.erroDetail = erroDetail;
+	}
+	
+	public long getLastRuntime()
+	{
+		return lastRuntime;
+	}
+
+	public void setLastRuntime(long lastRuntime)
+	{
+		this.lastRuntime = lastRuntime;
 	}
 
 	public int getInfo() {

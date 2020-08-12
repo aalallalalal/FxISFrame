@@ -182,8 +182,8 @@ public class ProcessingController extends BaseController implements Initializabl
  			next = tabRunningController.getList_running().get(0);
  			dbRecord.setProject(next);
  			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
- 			next.setLastUsedTime(System.currentTimeMillis());
- 			String time = df.format(next.getLastUsedTime());
+ 			next.setLastRuntime(System.currentTimeMillis());
+ 			String time = df.format(next.getLastRuntime());
  			String path = System.getProperty("user.dir");
  			dbRecord.setResultPath(path + "\\logs\\" + next.getProjectName() + next.getId() + "\\" + time);
  			FinalDataBean.para_Exe = next.toSettingParameter() + next.getParam() + "%" + next.getProjectName() + next.getId() + "\\" + time;

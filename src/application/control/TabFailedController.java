@@ -179,7 +179,7 @@ public class TabFailedController implements Initializable {
 	 */
 	public void removeProjectDir(String project_dir) {
 		File file = new File(System.getProperty("user.dir") + "\\logs\\" + project_dir);
-		FileUtil.deleteRunDir(file);
+		FileUtil.deleteDir(file);
 	}
 	
 	/**

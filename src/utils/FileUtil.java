@@ -67,7 +67,7 @@ public class FileUtil {
 		}
 	}
 	
-	public static void deleteRunDir(File file)
+	public static void deleteDir(File file)
 	{
 		if(file.exists()) {//判断路径是否存在
 			if(file.isFile()){//boolean isFile():测试此抽象路径名表示的文件是否是一个标准文件。 
@@ -81,7 +81,7 @@ public class FileUtil {
 				File[] listFiles = file.listFiles();//listFiles方法：返回file路径下所有文件和文件夹的绝对路径
 
 				for (File file2 : listFiles) {
-					deleteRunDir(file2);
+					deleteDir(file2);
 				}
 			}
 			file.delete();

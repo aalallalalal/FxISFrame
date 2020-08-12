@@ -81,7 +81,7 @@ public class TabRunningController implements Initializable
 					@Override
 					protected void updateItem(ProjectBean item, boolean empty)
 					{
-						// TODO Auto-generated method stub
+						System.out.println("running update");
 						super.updateItem(item, empty);
 						if(empty == false)
 						{

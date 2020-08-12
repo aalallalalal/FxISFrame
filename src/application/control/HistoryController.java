@@ -1,26 +1,42 @@
 package application.control;
 
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import com.jfoenix.controls.JFXButton;
+
+import base.controller.ConfirmDialogController.CallBack;
 import beans.DBRecordBean;
+import consts.ConstSize;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 import utils.DBUtil;
+import utils.FileUtil;
+import utils.ResUtil;
+import utils.ToastUtil;
+import utils.UIUtil;
 
 public class HistoryController implements Initializable
 {
@@ -38,6 +54,8 @@ public class HistoryController implements Initializable
 	@FXML
 	private TableColumn<DBRecordBean, String> location_dir;
 	@FXML
+	private TableColumn<DBRecordBean, Object> paramInfogroup;
+	@FXML
 	private TableColumn<DBRecordBean, String> height_net;
 	@FXML
 	private TableColumn<DBRecordBean, String> width_net;
@@ -52,10 +70,24 @@ public class HistoryController implements Initializable
 	@FXML
 	private TableColumn<DBRecordBean, Boolean> isSave_middle;
 	@FXML
-	private TableColumn<DBRecordBean, String> runntime;
+	private TableColumn<DBRecordBean, Object> runinfo;
+	@FXML
+	private TableColumn<DBRecordBean, String> starttime;
+	@FXML
+	private TableColumn<DBRecordBean, String> endtime;
+	@FXML
+	private TableColumn<DBRecordBean, Boolean> state;
+	@FXML
+	private TableColumn<DBRecordBean, String> failreason;
 	
 	@FXML
 	private Label label;
+	
+	@FXML
+	private JFXButton clearAll;
+	
+	@FXML
+	private JFXButton clear;
 	
 	ObservableList<DBRecordBean> list = FXCollections.observableArrayList();
 	ArrayList<DBRecordBean> listarray = DBUtil.selectAll();
@@ -63,17 +95,38 @@ public class HistoryController implements Initializable
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		HistoryTableView.setItems(list);
 		for(DBRecordBean temp : listarray)
-		{
 			list.add(temp);
-		}
+		HistoryTableView.setItems(list);
+		
 		initTableView();
+		//鼠标双击事件
+		HistoryTableView.setOnMouseClicked(new EventHandler<MouseEvent>()
+		{
+
+			@Override
+			public void handle(MouseEvent event)
+			{
+				if(event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2)
+				{
+					System.out.println("历史记录，双击打开");
+					onOpenFileSystem();
+				}
+			}
+		});
+		
+		label.setText(ResUtil.gs("total") + list.size() + ResUtil.gs("item"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
 	}
 
-	
+	/**
+	 * 填充historytableview
+	 */
 	private void initTableView()
 	{
+		HistoryTableView.setTableMenuButtonVisible(true);
+		HistoryTableView.setEditable(false);
+		HistoryTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+		HistoryTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		project_name.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,String>, ObservableValue<String>>()
 		{
 			
@@ -184,7 +237,20 @@ public class HistoryController implements Initializable
 			}
 		});
 		
-		runntime.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,String>, ObservableValue<String>>()
+		starttime.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,String>, ObservableValue<String>>()
+		{
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param)
+			{
+				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String dateStr = dateformat.format(param.getValue().getProject().getLastRuntime());
+				SimpleStringProperty time = new SimpleStringProperty(dateStr);
+				return time;
+			}
+		});
+		
+		endtime.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,String>, ObservableValue<String>>()
 		{
 			
 			@Override
@@ -192,11 +258,90 @@ public class HistoryController implements Initializable
 			{
 				SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 				String dateStr = dateformat.format(param.getValue().getRunTime());
-				SimpleStringProperty size = new SimpleStringProperty(dateStr);
-				return size;
+				SimpleStringProperty time = new SimpleStringProperty(dateStr);
+				return time;
 			}
 		});
+	
+		state.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,Boolean>, ObservableValue<Boolean>>()
+		{
+			
+			@Override
+			public ObservableValue<Boolean> call(CellDataFeatures<DBRecordBean, Boolean> param)
+			{
+				SimpleBooleanProperty flag = new SimpleBooleanProperty(param.getValue().getProject().getErroDetail().equals(null));
+				return flag;
+			}
+		});
+
+		failreason.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,String>, ObservableValue<String>>()
+		{
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param)
+			{
+				SimpleStringProperty temp = new SimpleStringProperty(param.getValue().getProject().getErroDetail());
+				return temp;
+			}
+		});
+
 	}
+	
+	/**
+	 * 清空全部历史记录
+	 */
+	@FXML
+	void onClearAll()
+	{
+		UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+				ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("Clear_All"), ResUtil.gs("are_you_sure_to_clear_all"),
+				(Stage) root.getScene().getWindow(), new CallBack() {
+					@Override
+					public void onCancel() {
+					}
+
+					@Override
+					public void onConfirm() {
+						for(DBRecordBean temp : list) {
+							FileUtil.deleteDir(new File(temp.getResultPath()));
+						}
+						list.clear();
+						HistoryTableView.refresh();
+					}
+				});
+		
+	}
+	
+	/**
+	 * 删除某一项历史记录
+	 */
+	@FXML
+	void onClear() 
+	{
+		DBRecordBean temp = HistoryTableView.getSelectionModel().getSelectedItem();
+		FileUtil.deleteDir(new File(temp.getResultPath()));
+		list.remove(temp);
+		HistoryTableView.refresh();
+	}
+	
+	/**
+	 * 打开文件夹 所在位置
+	 */
+	@FXML
+	void onOpenFileSystem()
+	{
+		DBRecordBean temp = HistoryTableView.getSelectionModel().getSelectedItem();
+		try
+		{
+			Desktop.getDesktop().open(new File(temp.getResultPath()));
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+			ToastUtil.toast(ResUtil.gs("Failed_to_open_folder"));
+		}
+	}
+	
+	
 	
 
 }
