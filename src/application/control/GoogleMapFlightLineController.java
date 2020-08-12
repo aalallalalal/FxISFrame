@@ -70,7 +70,7 @@ public class GoogleMapFlightLineController implements Initializable {
 			20, false, true);
 	private final Image cameraDeleted = new Image(getClass().getResourceAsStream("/resources/camera-fill-deleted.png"),
 			20, 20, false, true);
-	private final Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight.png"), 25, 25, false,
+	private final Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight_uav.png"), 25, 25, false,
 			true);
 	private final Image imageSwitchOn = new Image(getClass().getResourceAsStream("/resources/icon_switch_on.png"), 35,
 			35, false, true);
