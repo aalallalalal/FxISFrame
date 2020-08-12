@@ -3,6 +3,8 @@ package beans;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import utils.StrUtil;
+
 public class DBRecordBean {
 	private ProjectBean project;
 	private long runTime; // 运行时间。传运行成功时间
@@ -53,6 +55,7 @@ public class DBRecordBean {
 			setResultPath(rs.getString(16));
 			project.setErroDetail(rs.getString(17));
 			project.setLastRuntime(Long.parseLong(rs.getString(18)));
+			project.setId(Long.parseLong(rs.getString(19)));
 			project.setSettings(setting);
 			setProject(project);
 		} catch (SQLException e) {
@@ -60,15 +63,21 @@ public class DBRecordBean {
 		}
 	}
 
+	private String placeOneCom(String str) {
+		if (StrUtil.isEmpty(str))
+			return "";
+		return str.replace("'", "''");
+	}
+
 	public String toInsertSQL() {
 		StringBuffer sb = new StringBuffer("insert into table_history values(");
-		sb.append("'" + getProject().getId() + getRunTime() + "',");
-		sb.append("'" + getProject().getProjectName() + "',");
+		sb.append("'" + placeOneCom(getProject().getId() + "" + getRunTime()) + "',");
+		sb.append("'" + placeOneCom(getProject().getProjectName()) + "',");
 		sb.append("'" + getRunTime() + "',");
-		sb.append("'" + getProject().getCreateTime() + "',");
-		sb.append("'" + getProject().getProjectDir() + "',");
-		sb.append("'" + getProject().getProjectLocationFile() + "',");
-		sb.append("'" + getProject().getSettings().getName() + "',");
+		sb.append("'" + placeOneCom(getProject().getCreateTime()) + "',");
+		sb.append("'" + placeOneCom(getProject().getProjectDir()) + "',");
+		sb.append("'" + placeOneCom(getProject().getProjectLocationFile()) + "',");
+		sb.append("'" + placeOneCom(getProject().getSettings().getName()) + "',");
 		sb.append((getProject().getSettings().isSaveMiddle() ? 1 : 0) + ",");
 		sb.append("'" + getProject().getSettings().getNetWidth() + "',");
 		sb.append("'" + getProject().getSettings().getNetHeight() + "',");
@@ -77,9 +86,10 @@ public class DBRecordBean {
 		sb.append("'" + getProject().getSettings().getFlyHeight() + "',");
 		sb.append("'" + getProject().getSettings().getCameraSize() + "',");
 		sb.append("'" + getProject().getSettings().getGsd() + "',");
-		sb.append("'" + getResultPath() + "',");
-		sb.append("'" + getProject().getErroDetail() + "',");
+		sb.append("'" + placeOneCom(getResultPath()) + "',");
+		sb.append("'" + (getProject().getErroDetail()) + "',");
 		sb.append("'" + getProject().getLastRuntime() + "',");
+		sb.append("'" + getProject().getId() + "',");
 		sb.append("'');");
 		return sb.toString();
 	}

@@ -134,7 +134,7 @@ public class TabFailedController implements Initializable {
 			public void handle(ActionEvent event) {
 				listView_failed.getSelectionModel().select(project);
 				MyFxmlBean settingDialogBean = UIUtil.openDialog(getClass(), "/application/fxml/SettingsDialog.fxml",
-						ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height, project.getProjectName(),
+						ConstSize.Dialog_Frame_Width, ConstSize.Dialog_Frame_Height + 80, project.getProjectName(),
 						processingController.stage);
 				SettingsDialogController settingDialogController = settingDialogBean.getFxmlLoader().getController();
 				settingDialogController.initExtraData(1, null, project.getSettings());

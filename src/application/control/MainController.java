@@ -16,6 +16,7 @@ import beans.ProjectBean;
 import beans.SettingsBean;
 import beans.SoftwareSettingsBean;
 import consts.ConstSize;
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import utils.DBUtil;
 import utils.MyPlatform;
 import utils.ResUtil;
 import utils.ToastUtil;
@@ -135,6 +137,7 @@ public class MainController implements Initializable {
 				@Override
 				public void run() {
 					getStage().close();
+					DBUtil.close();
 					try {
 						new Main().start(new Stage());
 					} catch (Exception e) {

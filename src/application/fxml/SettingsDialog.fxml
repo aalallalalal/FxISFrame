@@ -23,7 +23,7 @@
 			style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;-fx-padding: 14;"
 			BorderPane.alignment="CENTER">
 			<children>
-				<HBox spacing="14.0" alignment="CENTER_LEFT">
+				<HBox fx:id="hbox_name" spacing="14.0" alignment="CENTER_LEFT" visible="true">
 					<Label text="%setting_name">
 						<styleClass>
 							<String fx:value="label-level-setting-normal" />

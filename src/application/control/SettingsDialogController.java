@@ -84,6 +84,7 @@ public class SettingsDialogController implements Initializable {
 	VBox vbox_projectlist;
 	private ObservableList<ProjectBean> projectListData;
 	private SettingsBean returnSettings;
+	@FXML HBox hbox_name;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -258,6 +259,11 @@ public class SettingsDialogController implements Initializable {
 			initListView();
 		}
 
+		if(type==1||type==0) {
+			//隐藏名字
+			hbox_name.setVisible(false);
+		}
+		
 		returnSettingsView();
 	}
 
