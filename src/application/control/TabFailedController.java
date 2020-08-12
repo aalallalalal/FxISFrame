@@ -144,7 +144,7 @@ public class TabFailedController implements Initializable {
 						project.setSettings(settings);
 						settingDialogBean.getStage().close();
 						removeInlist_failed(listView_failed.getSelectionModel().getSelectedIndex());
-						project.setErroDetail(null);
+						project.setErroDetail("");
 						processingController.addNewService(project);
 						
 					}

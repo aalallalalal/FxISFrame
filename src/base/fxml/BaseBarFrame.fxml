@@ -47,6 +47,20 @@
 								</ImageView>
 							</graphic>
 						</Label>
+						<JFXButton fx:id="btn_history" onAction="#onClickHistory"
+							style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">
+							<tooltip>
+								<MyToolTip text="%history"></MyToolTip>
+							</tooltip>
+							<graphic>
+								<ImageView fx:id="img_history" fitWidth="24.0"
+									preserveRatio="true" smooth="true">
+									<image>
+										<Image url="/resources/history.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
 						<JFXButton fx:id="btn_hide" onAction="#onClickHide"
 							style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">
 							<tooltip>

@@ -50,7 +50,7 @@ public class HistoryController implements Initializable
 	@FXML
 	private TableColumn<DBRecordBean, String> pictures_dir;
 	@FXML
-	private TableColumn<DBRecordBean, Number> inputway;
+	private TableColumn<DBRecordBean, String> inputway;
 	@FXML
 	private TableColumn<DBRecordBean, String> location_dir;
 	@FXML
@@ -149,14 +149,15 @@ public class HistoryController implements Initializable
 			}
 		});
 		
-		inputway.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,Number>, ObservableValue<Number>>()
+		inputway.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,String>, ObservableValue<String>>()
 		{
 			
 			@Override
-			public ObservableValue<Number> call(CellDataFeatures<DBRecordBean, Number> param)
+			public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param)
 			{
-				SimpleIntegerProperty way = new SimpleIntegerProperty(param.getValue().getProject().getLocationFrom());
-				return way;
+				SimpleStringProperty temp = new SimpleStringProperty(param.getValue().getProject().getLocationFrom() == 0 ?
+						ResUtil.gs("picture") : ResUtil.gs("file"));
+				return temp;
 			}
 		});
 
@@ -269,7 +270,7 @@ public class HistoryController implements Initializable
 			@Override
 			public ObservableValue<Boolean> call(CellDataFeatures<DBRecordBean, Boolean> param)
 			{
-				SimpleBooleanProperty flag = new SimpleBooleanProperty(param.getValue().getProject().getErroDetail().equals(null));
+				SimpleBooleanProperty flag = new SimpleBooleanProperty(param.getValue().getProject().getErroDetail() == null);
 				return flag;
 			}
 		});
