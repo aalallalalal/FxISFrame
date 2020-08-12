@@ -83,7 +83,8 @@ public class TabFailedController implements Initializable {
 
 	public void addFailedHBox(ProjectBean project, String reason) {
 		project.setErroDetail(reason);
-		removeProjectDir(project.getProjectName() + project.getId() + "\\" + project.getCreateTime());
+		if(project.getInfo() == 1)
+			writeInfoToDataBase(project);
 		list_failed.add(project);
 		listView_failed.setItems(list_failed);
 		listView_failed.setVisible(true);
@@ -142,8 +143,10 @@ public class TabFailedController implements Initializable {
 					public void onReturn(SettingsBean settings) {
 						project.setSettings(settings);
 						settingDialogBean.getStage().close();
-						processingController.addNewService(project);
 						removeInlist_failed(listView_failed.getSelectionModel().getSelectedIndex());
+						project.setErroDetail(null);
+						processingController.addNewService(project);
+						
 					}
 				});
 			}
@@ -177,6 +180,14 @@ public class TabFailedController implements Initializable {
 	public void removeProjectDir(String project_dir) {
 		File file = new File(System.getProperty("user.dir") + "\\logs\\" + project_dir);
 		FileUtil.deleteRunDir(file);
+	}
+	
+	/**
+	 * 将信息写进数据库
+	 */
+	private void writeInfoToDataBase(ProjectBean project) 
+	{
+		processingController.writeToDB();
 	}
 
 }

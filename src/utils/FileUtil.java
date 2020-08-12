@@ -86,7 +86,7 @@ public class FileUtil {
 			}
 			file.delete();
 		}else {
-			System.out.println("该file路径不存在！！");
+			System.out.println("我在FileUtil类中,该file路径不存在！！");
 		}
 	}
 	

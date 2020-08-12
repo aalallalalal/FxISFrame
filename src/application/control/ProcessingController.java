@@ -2,12 +2,13 @@ package application.control;
 
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXTabPane;
 
 import base.controller.ConfirmDialogController.CallBack;
+import beans.DBRecordBean;
 import beans.FinalDataBean;
 import beans.ProjectBean;
 import consts.ConstSize;
@@ -17,6 +18,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import utils.DBUtil;
 import utils.ResUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
@@ -66,6 +68,8 @@ public class ProcessingController extends BaseController implements Initializabl
 	Tab tab_failed = new Tab();
 	@FXML
 	TabFailedController tabFailedController;
+	
+	DBRecordBean dbRecord = new DBRecordBean();
 
 	/**
 	 * 开始执行程序，程序运行结束后改变页面
@@ -176,10 +180,13 @@ public class ProcessingController extends BaseController implements Initializabl
  		if(!tabRunningController.getList_running().isEmpty())
  		{
  			next = tabRunningController.getList_running().get(0);
+ 			dbRecord.setProject(next);
  			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
- 			next.setCreateTime(df.format(new Date()));// new Date()为获取当前系统时间
- 			System.out.println(next.getCreateTime());
- 			FinalDataBean.para_Exe = next.toSettingParameter() + next.getParam() + "%" + next.getProjectName() + next.getId() + "\\" + next.getCreateTime();
+ 			next.setLastUsedTime(System.currentTimeMillis());
+ 			String time = df.format(next.getLastUsedTime());
+ 			String path = System.getProperty("user.dir");
+ 			dbRecord.setResultPath(path + "\\logs\\" + next.getProjectName() + next.getId() + "\\" + time);
+ 			FinalDataBean.para_Exe = next.toSettingParameter() + next.getParam() + "%" + next.getProjectName() + next.getId() + "\\" + time;
  			System.out.println(FinalDataBean.para_Exe);
  			currentProject.setText(next.getProjectName() + " . . .");
  		}
@@ -197,6 +204,17 @@ public class ProcessingController extends BaseController implements Initializabl
 		}else {
 			listener.updateFinish();
 		}
+	}
+	
+	/*
+	 * 向数据库中写入数据
+	 */
+	public void writeToDB()
+	{
+		dbRecord.setRunTime(System.currentTimeMillis());
+		DBUtil.insert(dbRecord);
+		ArrayList<DBRecordBean> listarray = DBUtil.selectAll();
+		System.out.println(listarray.size());
 	}
 	
 	/**
@@ -274,6 +292,7 @@ public class ProcessingController extends BaseController implements Initializabl
 		}
 		else
 		{
+			
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
 					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("cancel_service"),ResUtil.gs("cancel_sure"),
 					(Stage) root.getScene().getWindow(), new CallBack() {
@@ -305,5 +324,4 @@ public class ProcessingController extends BaseController implements Initializabl
 		//更新显示的运行信息
 		void update(String lineStr);
 	}
-	
 }
