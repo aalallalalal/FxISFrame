@@ -168,8 +168,8 @@ public class TabRunningController implements Initializable
 			public void handle(ActionEvent event)
 			{
 				MyFxmlBean settingDialogBean = UIUtil.openDialog(getClass(),
-						"/application/fxml/SettingsDialog.fxml", ConstSize.Main_Frame_Width,
-						ConstSize.Main_Frame_Height, project.getProjectName(), processingController.stage);
+						"/application/fxml/SettingsDialog.fxml", ConstSize.Dialog_Frame_Width,
+						ConstSize.Dialog_Frame_Height+80, project.getProjectName(), processingController.stage);
 				SettingsDialogController settingDialogController = settingDialogBean.getFxmlLoader().getController();
 				settingDialogController.initExtraData(0, null, project.getSettings());
 				settingDialogController.setCallBack(new application.control.SettingsDialogController.CallBack() {

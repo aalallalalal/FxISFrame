@@ -503,7 +503,7 @@ public class GoogleMapFlightLineController implements Initializable {
 							Region region = (Region) textArea_place.lookup(".content");
 							region.setBackground(
 									new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-							region.setStyle("-fx-background-color: rgba(56,56,56,0.4)");
+							region.setStyle("-fx-background-color: rgba(56,56,56,0.8)");
 							textArea_place.setText(
 									ResUtil.gs("flight_geo") + aMapGeocodingBean.getRegeocode().getFormatted_address());
 						}
@@ -517,7 +517,7 @@ public class GoogleMapFlightLineController implements Initializable {
 						Region region = (Region) textArea_tip.lookup(".content");
 						region.setBackground(
 								new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-						region.setStyle("-fx-background-color: rgba(56,56,56,0.4)");
+						region.setStyle("-fx-background-color: rgba(56,56,56,0.8)");
 					}
 				} catch (Exception e) {
 					e.printStackTrace();

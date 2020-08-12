@@ -67,7 +67,7 @@
 							<BorderPane.margin>
 								<Insets bottom="10.0" />
 								<Insets top="10.0" />
-								<Insets right="50.0" />
+								<Insets left="50.0" />
 							</BorderPane.margin>
 						</JFXButton>
 					</left>
@@ -80,7 +80,7 @@
 							<BorderPane.margin>
 								<Insets bottom="10.0" />
 								<Insets top="10.0" />
-								<Insets left="50.0" />
+								<Insets right="50.0" />
 							</BorderPane.margin>
 						</JFXButton>
 					</right>
