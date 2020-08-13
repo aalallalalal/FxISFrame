@@ -45,7 +45,7 @@
       </ProgressIndicator>
       <JFXButton fx:id="paramDetail" text="%ParamDetail">
          <HBox.margin>
-            <Insets left="350.0" />
+            <Insets left="330.0" />
          </HBox.margin></JFXButton>
       <JFXButton fx:id="close" style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">
       	 <tooltip>
@@ -60,7 +60,7 @@
 			</ImageView>
 		 </graphic>
          <HBox.margin>
-            <Insets left="20.0" />
+            <Insets left="30.0" />
          </HBox.margin>
       </JFXButton>
    </children>
