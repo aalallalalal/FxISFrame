@@ -268,7 +268,7 @@ public class MainController implements Initializable {
 		@Override
 		public void updateFinish() {
 			processingController.setState(false);
-			processingController.currentProject.setText("");
+			processingController.currentProject.setText(ResUtil.gs("finish"));
 			processingController.updatecontrol();
 			changeBottomBtnsView(currentController, 3);
 		}

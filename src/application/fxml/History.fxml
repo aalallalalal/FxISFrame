@@ -71,27 +71,43 @@
    <top>
       <HBox prefHeight="35.0" prefWidth="1280.0" BorderPane.alignment="CENTER">
          <children>
-            <JFXButton fx:id="clear" onAction="#onClear" text="%clearsome">
-            	<styleClass>
-            		<String fx:value="btn-level-projects" />
-            	</styleClass>
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin>
-            </JFXButton>
-            <JFXButton fx:id="open" onAction="#onOpenFileSystem" text="%openhistory">
-	                  <styleClass>
-	            		<String fx:value="btn-level-projects" />
-	            	  </styleClass>
-               <HBox.margin>
-                  <Insets left="20.0" />
-               </HBox.margin>
-	              </JFXButton>
-            <Label fx:id="tip" alignment="CENTER_RIGHT" prefHeight="20.0" prefWidth="950.0" text="%multiseletedtip" style="-fx-font-style:oblique; -fx-text-fill:#4f4f4f; -fx-font-size:14px;">
-               <HBox.margin>
-                  <Insets top="20.0" />
-               </HBox.margin>
-            </Label>
+            <HBox prefHeight="39.0" prefWidth="842.0">
+               <children>
+                  <JFXButton fx:id="clear" onAction="#onClear" text="%clearsome">
+                  	<styleClass>
+                  		<String fx:value="btn-level-projects" />
+                  	</styleClass>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </JFXButton>
+                  <JFXButton fx:id="open" onAction="#onOpenFileSystem" text="%openhistory">
+      	                  <styleClass>
+      	            		<String fx:value="btn-level-projects" />
+      	            	  </styleClass>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+      	              </JFXButton>
+                  <JFXButton fx:id="paramdetail" onAction="#onparamDetail" text="%paramisvisable">
+                  		<styleClass>
+      	            		<String fx:value="btn-level-projects" />
+      	            	</styleClass>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
+                  </JFXButton>
+               </children>
+            </HBox>
+            <HBox prefHeight="39.0" prefWidth="374.0">
+               <children>
+                  <Label fx:id="tip" alignment="CENTER_RIGHT" prefHeight="19.0" prefWidth="808.0" style="-fx-font-style:oblique; -fx-text-fill:#4f4f4f; -fx-font-size:14px;" text="%multiseletedtip">
+                     <HBox.margin>
+                        <Insets top="20.0" />
+                     </HBox.margin>
+                  </Label>
+               </children>
+            </HBox>
          </children>
          <BorderPane.margin>
             <Insets top="5.0" />

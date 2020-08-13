@@ -167,6 +167,8 @@ public class ProcessingController extends BaseController implements Initializabl
 							tabRunningController.updatecontrol();
 							listener.updateFinish();
 							tabPane.getSelectionModel().select(tab_failed);
+							currentProject.setText(ResUtil.gs("all_close"));
+							listener.update("\n" + ResUtil.gs("all_close_succ"));
 						}
 					});
 		}
@@ -213,7 +215,6 @@ public class ProcessingController extends BaseController implements Initializabl
 	{
 		dbRecord.setRunTime(System.currentTimeMillis());
 		DBUtil.insert(dbRecord);
-		ArrayList<DBRecordBean> listarray = DBUtil.selectAll();
 	}
 	
 	/**

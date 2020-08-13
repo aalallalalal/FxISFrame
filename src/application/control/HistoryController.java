@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXButton;
 import base.controller.ConfirmDialogController.CallBack;
 import beans.DBRecordBean;
 import consts.ConstSize;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -39,6 +40,7 @@ import utils.ResUtil;
 import utils.StrUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
+import java.util.concurrent.atomic.*; 
 
 public class HistoryController implements Initializable
 {
@@ -94,6 +96,12 @@ public class HistoryController implements Initializable
 	@FXML
 	private JFXButton open;
 	
+	@FXML
+	private JFXButton paramdetail;
+	
+	private boolean param_hide;
+	
+	
 	Image image = new Image("/resources/wushuju.png");
 	ImageView imageView = new ImageView(image);
 	
@@ -135,8 +143,10 @@ public class HistoryController implements Initializable
 	 */
 	private void initTableView()
 	{
-		HistoryTableView.setTableMenuButtonVisible(true);
+		HistoryTableView.setTableMenuButtonVisible(false);
 		HistoryTableView.setEditable(false);
+		paramInfogroup.setVisible(false);
+		param_hide = true;
 		HistoryTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		HistoryTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		HistoryTableView.setPlaceholder(imageView);
@@ -161,6 +171,7 @@ public class HistoryController implements Initializable
 				return picture_dir;
 			}
 		});
+		pictures_dir.setSortable(false);
 		
 		inputway.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,String>, ObservableValue<String>>()
 		{
@@ -386,4 +397,19 @@ public class HistoryController implements Initializable
 		}
 		
 	}
+	
+	@FXML
+	void onparamDetail() {
+		if(param_hide)
+		{
+			paramInfogroup.setVisible(true);
+			paramdetail.setText(ResUtil.gs("Hide_parameters"));
+			param_hide = false;
+		}else {
+			paramInfogroup.setVisible(false);
+			paramdetail.setText(ResUtil.gs("paramisvisable"));
+			param_hide = true;
+		}
+	}
+	
 }
