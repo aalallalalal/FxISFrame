@@ -10,19 +10,19 @@
 visibility: hidden;
 }
 .bar-main{
-	-fx-background-color: linear-gradient(to right,#4952E8 0.0%,#608DFA 40.0%,#608DFA 60.0%,#4952E8 100.0%); -fx-pref-height: 70.0; -fx-padding: 10.0;-fx-spacing:1.0;
+	-fx-background-color: linear-gradient(to right,#2564FD 0.0%,#608DFA 40.0%,#608DFA 60.0%,#2564FD 100.0%); -fx-pref-height: 70.0; -fx-padding: 10.0;-fx-spacing:1.0;
 }
 .bar-sub{
-	-fx-background-color: linear-gradient(to right,#4952E8 0.0%,#608DFA 40.0%,#608DFA 60.0%,#4952E8 100.0%); -fx-pref-height: 50.0; -fx-padding: 8.0;-fx-spacing:1.0;
+	-fx-background-color: linear-gradient(to right,#2564FD 0.0%,#608DFA 40.0%,#608DFA 60.0%,#2564FD 100.0%); -fx-pref-height: 50.0; -fx-padding: 8.0;-fx-spacing:1.0;
 }
 .bar-dialog{
-	-fx-background-color:  linear-gradient(to right,#4952E8 0.0%,#608DFA 40.0%,#608DFA 60.0%,#4952E8 100.0%); -fx-pref-height: 30.0; -fx-padding: 6.0;-fx-spacing:1.0;
+	-fx-background-color:  linear-gradient(to right,#2564FD 0.0%,#608DFA 40.0%,#608DFA 60.0%,#2564FD 100.0%); -fx-pref-height: 30.0; -fx-padding: 6.0;-fx-spacing:1.0;
 }
 .bar-confirm-dialog{
-	-fx-background-color:   linear-gradient(to right,#4952E8 0.0%,#608DFA 40.0%,#608DFA 60.0%,#4952E8 100.0%);-fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
+	-fx-background-color:   linear-gradient(to right,#2564FD 0.0%,#608DFA 40.0%,#608DFA 60.0%,#2564FD 100.0%);-fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
 }
 .bar-notice-dialog{
-	-fx-background-color:   linear-gradient(to right,#4952E8 0.0%,#608DFA 40.0%,#608DFA 60.0%,#4952E8 100.0%); -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
+	-fx-background-color:   linear-gradient(to right,#2564FD 0.0%,#608DFA 40.0%,#608DFA 60.0%,#2564FD 100.0%); -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
 }
 .frame-pane{
 	-fx-background-radius: 10.0; -fx-background-color: #ffffff;-fx-border-radius:10.0;
@@ -188,6 +188,10 @@ visibility: hidden;
     -fx-background-color: transparent, white, transparent, white;
 }
 
+
+.jfx-tab-pane:top .depth-container .tab-header-area .headers-region .tab-selected-line {
+    -fx-background-color: #FF9500;
+}
 
 .jfx-tab-pane *.tab-header-area *.tab-header-background {
   -fx-background-color:white;

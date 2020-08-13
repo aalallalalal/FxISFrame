@@ -50,6 +50,7 @@ public abstract class BaseApplication extends Application {
 	public void stop() throws Exception {
 		super.stop();
 		DBUtil.close();
+		System.exit(0);
 	}
 
 	protected double frameWidth() {

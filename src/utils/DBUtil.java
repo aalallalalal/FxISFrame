@@ -73,12 +73,11 @@ public class DBUtil {
 		int num = 0;
 		try {
 			String deleteSql = "delete  from table_history where project_new_id =?";
-			System.out.println("dele"+deleteSql);
 			PreparedStatement stmt = conn.prepareStatement(deleteSql);
 			for (DBRecordBean item : list) {
 				// 1是占位符的位置，i是取代占位符的值
 				stmt.setString(1, item.getProject().getId() +""+ item.getRunTime() + "");
-				System.out.println("clearearerara"+item.getProject().getId() +""+ item.getRunTime() + "");
+				System.out.println("clear db 的id"+item.getProject().getId() +""+ item.getRunTime() + "");
 				// 添加到批量
 				stmt.addBatch();
 			}
