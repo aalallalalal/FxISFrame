@@ -26,6 +26,9 @@ import utils.ProgressTask.ExeService;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Service;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 
 /**
@@ -214,7 +217,37 @@ public class ProcessingController extends BaseController implements Initializabl
 	public void writeToDB()
 	{
 		dbRecord.setRunTime(System.currentTimeMillis());
-		DBUtil.insert(dbRecord);
+		
+		Task<Boolean> task = new Task<Boolean>()
+		{
+			@Override
+			protected Boolean call() throws Exception
+			{
+				if(DBUtil.insert(dbRecord) == 0)
+					return false;
+				return true;
+			}
+
+			@Override
+			protected void succeeded()
+			{
+				// TODO Auto-generated method stub
+				super.succeeded();
+				if(!getValue())
+					ToastUtil.toast(ResUtil.gs("failed_to_writeDB"));
+			}
+		};
+		task.exceptionProperty().addListener(new ChangeListener<Throwable>()
+		{
+			@Override
+			public void changed(ObservableValue<? extends Throwable> observable, Throwable oldValue, Throwable newValue)
+			{
+				ToastUtil.toast(ResUtil.gs("DB_is_abnormal"));
+			}
+		});
+		Thread write = new Thread(task);
+		write.start();
+		
 	}
 	
 	/**

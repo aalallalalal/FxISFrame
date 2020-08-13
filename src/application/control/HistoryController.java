@@ -15,9 +15,11 @@ import beans.DBRecordBean;
 import consts.ConstSize;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -104,10 +106,38 @@ public class HistoryController implements Initializable {
 	ObservableList<DBRecordBean> list = FXCollections.observableArrayList();
 
 	@Override
-	public void initialize(URL location, ResourceBundle resources) {
+	public void initialize(URL location, ResourceBundle resources)
+	{
 		ArrayList<DBRecordBean> listarray = DBUtil.selectAll();
 		for (DBRecordBean temp : listarray)
 			list.add(temp);
+		Task<ArrayList<DBRecordBean>> task = new Task<ArrayList<DBRecordBean>>()
+		{
+			@Override
+			protected ArrayList<DBRecordBean> call() throws Exception
+			{
+				return DBUtil.selectAll();
+			}
+
+			@Override
+			protected void succeeded()
+			{
+				super.succeeded();
+				for(DBRecordBean temp : getValue())
+					list.add(temp);
+			}
+		};
+		task.exceptionProperty().addListener(new ChangeListener<Throwable>()
+		{
+			@Override
+			public void changed(ObservableValue<? extends Throwable> observable, Throwable oldValue, Throwable newValue)
+			{
+				ToastUtil.toast(ResUtil.gs("DB_is_abnormal"));
+			}
+		});
+		Thread read = new Thread(task);
+		read.start();
+		
 		HistoryTableView.setItems(list);
 
 		initTableView();
