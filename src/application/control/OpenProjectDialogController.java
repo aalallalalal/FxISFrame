@@ -17,6 +17,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -42,7 +44,7 @@ public class OpenProjectDialogController implements Initializable {
 	private TableColumn<ProjectBean, String> path_projects;
 	private TableColumn<ProjectBean, String> time_createProject;
 	private ObservableList<ProjectBean> projectListData = FXCollections.observableArrayList();
-
+	ImageView imageView = new ImageView(new Image("/resources/wushuju.png"));
 	private CallBack callBack;
 
 	public void initData() {
@@ -105,6 +107,7 @@ public class OpenProjectDialogController implements Initializable {
 				onTestMouse(event);
 			}
 		});
+		projectTableView.setPlaceholder(imageView);
 	}
 
 	protected void onTestMouse(MouseEvent event) {

@@ -24,6 +24,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -96,6 +98,8 @@ public class SettingController extends BaseController implements Initializable {
 	Label label_project_name;
 	private Stage stage;
 
+	ImageView imageView = new ImageView(new Image("/resources/wushuju.png"));
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initCheckBox();
@@ -148,6 +152,8 @@ public class SettingController extends BaseController implements Initializable {
 	}
 
 	private void initListView() {
+		listView_projects.setPlaceholder(imageView);
+		listView_settings.setPlaceholder(imageView);
 		listView_projects.setItems(listViewData_proj);
 		listView_projects.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Object>() {
 
@@ -512,6 +518,10 @@ public class SettingController extends BaseController implements Initializable {
 	}
 
 	private boolean checkFinalData() {
+		if (projectListData == null || projectListData.size() <= 0) {
+			ToastUtil.toast(ResUtil.gs("no_projects"));
+			return false;
+		}
 		boolean isOk = true;
 		for (ProjectBean project : projectListData) {
 			if (project == null) {

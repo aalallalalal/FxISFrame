@@ -23,6 +23,8 @@ import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.MouseEvent;
@@ -66,6 +68,7 @@ public class ProjectsController extends BaseController implements Initializable 
 	private ObservableList<ProjectBean> projectListData = FXCollections.observableArrayList();
 	@FXML
 	BorderPane root;
+	ImageView imageView = new ImageView(new Image("/resources/wushuju.png"));
 
 	/**
 	 * 添加项目
@@ -172,6 +175,7 @@ public class ProjectsController extends BaseController implements Initializable 
 				}
 			}
 		});
+		projectTableView.setPlaceholder(imageView);
 	}
 
 	// 添加工程的事件响应

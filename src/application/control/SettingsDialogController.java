@@ -22,6 +22,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
@@ -85,6 +87,8 @@ public class SettingsDialogController implements Initializable {
 	private ObservableList<ProjectBean> projectListData;
 	private SettingsBean returnSettings;
 	@FXML HBox hbox_name;
+	
+	ImageView imageView = new ImageView(new Image("/resources/wushuju.png"));
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -321,6 +325,7 @@ public class SettingsDialogController implements Initializable {
 	}
 
 	private void initListView() {
+		listView_projects.setPlaceholder(imageView);
 		listView_projects.setItems(listView_proj);
 		listView_proj.clear();
 		int selectCount = 0;

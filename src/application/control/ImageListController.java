@@ -92,7 +92,9 @@ public class ImageListController implements Initializable {
 	ImageView imageview;
 
 	private ArrayList<HashMap<String, String>> analysingGps;
-
+	
+	ImageView imageViewPlace = new ImageView(new Image("/resources/wushuju.png"));
+	
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTableView();
@@ -412,6 +414,7 @@ public class ImageListController implements Initializable {
 				onTestMouse(event);
 			}
 		});
+		tableView.setPlaceholder(imageViewPlace);
 	}
 
 	/**
