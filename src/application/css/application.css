@@ -165,7 +165,7 @@ visibility: hidden;
 
 .label-detailInfo
 {
-	-fx-text-fill: black;
+	-fx-text-fill: #4f4f4f;
 	-fx-background-color: #E6E6E6;
 	-fx-font-size:13.0pt; 
 }
@@ -209,8 +209,9 @@ visibility: hidden;
 }
 
 .tab:selected {
-    -fx-background-color:white ;
+    -fx-background-color:blue;
 }
+
 
 .list-cell:even {
     -fx-background-color: #f1f1f1;

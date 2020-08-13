@@ -11,7 +11,7 @@
 <?import java.lang.String?>
 <?import views.MyToolTip?>
 
-<HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
@@ -40,12 +40,12 @@
       </VBox>
       <ProgressIndicator fx:id="run" prefHeight="16.0" prefWidth="20.0" visible="false">
          <HBox.margin>
-            <Insets left="50.0" />
+            <Insets left="60.0" />
          </HBox.margin>
       </ProgressIndicator>
       <JFXButton fx:id="paramDetail" text="%ParamDetail">
          <HBox.margin>
-            <Insets left="300.0" />
+            <Insets left="330.0" />
          </HBox.margin></JFXButton>
       <JFXButton fx:id="close" style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">
       	 <tooltip>
@@ -60,7 +60,7 @@
 			</ImageView>
 		 </graphic>
          <HBox.margin>
-            <Insets left="20.0" />
+            <Insets left="30.0" />
          </HBox.margin>
       </JFXButton>
    </children>

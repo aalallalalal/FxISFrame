@@ -10,8 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import java.lang.String?>
 <?import views.MyToolTip?>
+<?import javafx.scene.layout.HBox?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="730.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="imageView_Achieve" fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
@@ -38,32 +39,36 @@
             <Insets left="10.0" />
          </HBox.margin>
       </VBox>
-      <JFXButton fx:id="view_result" text="%Result_Final">
-         <HBox.margin>
-            <Insets left="30.0" />
-         </HBox.margin>
-      </JFXButton>
-      <JFXButton fx:id="midresult" text="%Result_Mid">
-         <HBox.margin>
-            <Insets left="10.0" />
-         </HBox.margin>
-      </JFXButton>
-      <JFXButton fx:id="paramDetail" text="%ParamDetail">
-         <HBox.margin>
-            <Insets left="10.0" />
-         </HBox.margin>
-      </JFXButton>
-      <JFXButton fx:id="restart" text="%Param&amp;Restart">
-         <HBox.margin>
-            <Insets left="10.0" />
-         </HBox.margin>
-      </JFXButton>
-      <JFXButton fx:id="openfile">
-      	 <tooltip>
-			<MyToolTip text="%openfile"></MyToolTip>
-		 </tooltip>
-         <HBox.margin>
-            <Insets left="10.0" />
-         </HBox.margin></JFXButton>
+      <HBox alignment="CENTER_RIGHT" prefHeight="50.0"  prefWidth="540.0">
+      	<children>
+		      <JFXButton fx:id="view_result" text="%Result_Final">
+		         <HBox.margin>
+		            <Insets right="10.0" />
+		         </HBox.margin>
+		      </JFXButton>
+		      <JFXButton fx:id="midresult" text="%Result_Mid">
+		         <HBox.margin>
+		            <Insets right="10.0" />
+		         </HBox.margin>
+		      </JFXButton>
+		      <JFXButton fx:id="paramDetail" text="%ParamDetail">
+		         <HBox.margin>
+		            <Insets right="10.0" />
+		         </HBox.margin>
+		      </JFXButton>
+		      <JFXButton fx:id="restart" text="%Param&amp;Restart">
+		         <HBox.margin>
+		            <Insets right="10.0" />
+		         </HBox.margin>
+		      </JFXButton>
+		      <JFXButton fx:id="openfile">
+		      	 <tooltip>
+					<MyToolTip text="%openfile"></MyToolTip>
+				 </tooltip>
+		         <HBox.margin>
+		            <Insets right="10.0" />
+		         </HBox.margin></JFXButton>
+	      </children>
+      </HBox>
    </children>
 </HBox>

@@ -207,6 +207,12 @@ public class TabRunningController implements Initializable
 		list_running.remove(i);
 		listView_running.setItems(list_running);
 	}
+	
+	public void updateRemove(ProjectBean project)
+	{
+		list_running.remove(project);
+		listView_running.setItems(list_running);
+	}
 
 	public void updatecontrol()
 	{

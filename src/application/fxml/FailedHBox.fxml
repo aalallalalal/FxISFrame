@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <ImageView fx:id="imageView_failed" fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
@@ -49,12 +49,12 @@
       </VBox>
       <JFXButton fx:id="paramDetail" text="%ParamDetail">
          <HBox.margin>
-            <Insets left="10.0" />
+            <Insets left="40.0" />
          </HBox.margin>
       </JFXButton>
       <JFXButton fx:id="restart" text="%Param&amp;Restart">
          <HBox.margin>
-            <Insets left="10.0" />
+            <Insets left="20.0" />
          </HBox.margin>
       </JFXButton>
    </children>

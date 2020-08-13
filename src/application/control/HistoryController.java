@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXButton;
 import base.controller.ConfirmDialogController.CallBack;
 import beans.DBRecordBean;
 import consts.ConstSize;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
@@ -36,8 +37,10 @@ import javafx.util.Callback;
 import utils.DBUtil;
 import utils.FileUtil;
 import utils.ResUtil;
+import utils.StrUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
+import java.util.concurrent.atomic.*; 
 
 public class HistoryController implements Initializable
 {
@@ -93,6 +96,12 @@ public class HistoryController implements Initializable
 	@FXML
 	private JFXButton open;
 	
+	@FXML
+	private JFXButton paramdetail;
+	
+	private boolean param_hide;
+	
+	
 	Image image = new Image("/resources/wushuju.png");
 	ImageView imageView = new ImageView(image);
 	
@@ -126,7 +135,7 @@ public class HistoryController implements Initializable
 				}
 			}
 		});
-		label.setText(ResUtil.gs("total") + list.size() + ResUtil.gs("historyitem"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
+		label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
 	}
 
 	/**
@@ -134,8 +143,10 @@ public class HistoryController implements Initializable
 	 */
 	private void initTableView()
 	{
-		HistoryTableView.setTableMenuButtonVisible(true);
+		HistoryTableView.setTableMenuButtonVisible(false);
 		HistoryTableView.setEditable(false);
+		paramInfogroup.setVisible(false);
+		param_hide = true;
 		HistoryTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		HistoryTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 		HistoryTableView.setPlaceholder(imageView);
@@ -160,6 +171,7 @@ public class HistoryController implements Initializable
 				return picture_dir;
 			}
 		});
+		pictures_dir.setSortable(false);
 		
 		inputway.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,String>, ObservableValue<String>>()
 		{
@@ -282,7 +294,7 @@ public class HistoryController implements Initializable
 			@Override
 			public ObservableValue<Boolean> call(CellDataFeatures<DBRecordBean, Boolean> param)
 			{
-				SimpleBooleanProperty flag = new SimpleBooleanProperty(param.getValue().getProject().getErroDetail() == null);
+				SimpleBooleanProperty flag = new SimpleBooleanProperty(StrUtil.isEmpty(param.getValue().getProject().getErroDetail()));
 				return flag;
 			}
 		});
@@ -320,6 +332,7 @@ public class HistoryController implements Initializable
 						}
 						ToastUtil.toast(ResUtil.gs("clear") + DBUtil.clearAll() + ResUtil.gs("historyitem"));
 						list.clear();
+						label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));
 					}
 				});
 		
@@ -351,6 +364,7 @@ public class HistoryController implements Initializable
 							ToastUtil.toast(ResUtil.gs("clear") + " " + DBUtil.clear(list_temp) + " " + ResUtil.gs("historyitem"));
 							for(DBRecordBean tempbean : list_temp)
 								list.remove(tempbean);
+							label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));
 						}
 					});
 			
@@ -383,4 +397,19 @@ public class HistoryController implements Initializable
 		}
 		
 	}
+	
+	@FXML
+	void onparamDetail() {
+		if(param_hide)
+		{
+			paramInfogroup.setVisible(true);
+			paramdetail.setText(ResUtil.gs("Hide_parameters"));
+			param_hide = false;
+		}else {
+			paramInfogroup.setVisible(false);
+			paramdetail.setText(ResUtil.gs("paramisvisable"));
+			param_hide = true;
+		}
+	}
+	
 }
