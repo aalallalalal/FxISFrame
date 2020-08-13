@@ -108,9 +108,6 @@ public class HistoryController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources)
 	{
-		ArrayList<DBRecordBean> listarray = DBUtil.selectAll();
-		for (DBRecordBean temp : listarray)
-			list.add(temp);
 		Task<ArrayList<DBRecordBean>> task = new Task<ArrayList<DBRecordBean>>()
 		{
 			@Override
@@ -125,6 +122,7 @@ public class HistoryController implements Initializable {
 				super.succeeded();
 				for(DBRecordBean temp : getValue())
 					list.add(temp);
+				label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
 			}
 		};
 		task.exceptionProperty().addListener(new ChangeListener<Throwable>()
@@ -159,7 +157,7 @@ public class HistoryController implements Initializable {
 				}
 			}
 		});
-		label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));// 初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
+//		label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
 	}
 
 	/**
