@@ -22,7 +22,7 @@ import utils.ProgressTask.ProgressTask;
  *
  */
 public class SaveProjectsUtil {
-	private static String path = System.getProperty("user.dir") + "/Datas";
+	private static String path = System.getProperty("user.dir") + "/datas";
 	private static String fileName = "Projects_Data";
 
 	private static final int MAX_SIZE = 50;// 最大保存项目数量50

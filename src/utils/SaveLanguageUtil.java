@@ -9,7 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class SaveLanguageUtil {
-	private static String path = System.getProperty("user.dir") + "/Datas";
+	private static String path = System.getProperty("user.dir") + "/datas";
 	private static String fileName = "Language_Data";
 
 	static {

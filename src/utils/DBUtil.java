@@ -12,7 +12,7 @@ import java.util.ArrayList;
 import beans.DBRecordBean;
 
 public class DBUtil {
-	private static final String DB_VERSION = "v4";
+	private static final String DB_VERSION = "v1";
 
 	private static final String SQL_CreateTable_History = "create table if not exists table_history("
 			+ "project_new_id varchar(50),project_name varchar(20) , run_time VARCHAR(30) , create_time VARCHAR(30),"
@@ -31,7 +31,7 @@ public class DBUtil {
 					conn.close();
 				}
 			}
-			File folder = new File(System.getProperty("user.dir") + "/Datas");
+			File folder = new File(System.getProperty("user.dir") + "/datas");
 			if (!folder.exists()) {
 				folder.mkdirs();
 			}
@@ -139,7 +139,7 @@ public class DBUtil {
 		Connection conn = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:Datas\\db_" + DB_VERSION);
+			conn = DriverManager.getConnection("jdbc:sqlite:datas\\db_" + DB_VERSION);
 			conn.setAutoCommit(false);
 			System.out.println("DB 链接成功");
 		} catch (SQLException e) {
