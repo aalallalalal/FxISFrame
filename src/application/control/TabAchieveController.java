@@ -14,6 +14,7 @@ import com.jfoenix.controls.JFXButton;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
 import beans.SettingsBean;
+import consts.ConstRes;
 import consts.ConstSize;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -128,7 +129,7 @@ public class TabAchieveController implements Initializable {
 			public void handle(ActionEvent event) {
 				listView_achieve.getSelectionModel().select(project);
 				try {
-					String path = System.getProperty("user.dir");
+					String path = System.getProperty("user.home")+ConstRes.SOFT_PATH;
 					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
 					String lastRunTime = df.format(project.getLastRuntime());
 					Desktop.getDesktop().open(new File(
@@ -168,7 +169,7 @@ public class TabAchieveController implements Initializable {
 				System.out.println(listView_achieve.getSelectionModel().getSelectedIndex());
 				Runtime runtime = Runtime.getRuntime();
 				try {
-					String path = System.getProperty("user.dir");
+					String path = System.getProperty("user.home")+ConstRes.SOFT_PATH;
 					int i = project.getProjectDir().lastIndexOf("/");
 					String name_dir = project.getProjectDir().substring(i + 1);
 					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
@@ -193,7 +194,7 @@ public class TabAchieveController implements Initializable {
 				if (list_achieve.get(listView_achieve.getSelectionModel().getSelectedIndex()).getSettings()
 						.isSaveMiddle()) {
 					try {
-						String path = System.getProperty("user.dir");
+						String path = System.getProperty("user.home")+ConstRes.SOFT_PATH;
 						int i = project.getProjectDir().lastIndexOf("/");
 						String name_dir = project.getProjectDir().substring(i + 1);
 						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式

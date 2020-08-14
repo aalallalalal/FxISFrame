@@ -1,6 +1,8 @@
 package consts;
 
 public final class ConstRes {
+	
+	public static final String SOFT_PATH = "\\.ISTIRS";
 	// css文件路径
 	public static final String CSS_Path = "/application/css/application.css";
 	// 含有bar的界面路径,且bar有最小化界面按钮

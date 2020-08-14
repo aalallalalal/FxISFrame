@@ -1,6 +1,7 @@
 package application.control;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,6 +12,7 @@ import com.jfoenix.controls.JFXButton;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
 import beans.SettingsBean;
+import consts.ConstRes;
 import consts.ConstSize;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -179,7 +181,7 @@ public class TabFailedController implements Initializable {
 	 * 删除失败项目对应的文件目录
 	 */
 	public void removeProjectDir(String project_dir) {
-		File file = new File(System.getProperty("user.dir") + "\\logs\\" + project_dir);
+		File file = new File(System.getProperty("user.home")+ConstRes.SOFT_PATH+ "\\logs\\" + project_dir);
 		FileUtil.deleteDir(file);
 	}
 	

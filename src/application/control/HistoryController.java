@@ -762,7 +762,7 @@ public class HistoryController implements Initializable {
 								list.remove(tempbean);
 							label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));
 							HistoryTableView.getSelectionModel().clearSelection();
-							HistoryTableView.refresh();
+//							HistoryTableView.refresh();
 						}
 					});
 

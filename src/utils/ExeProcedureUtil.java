@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.nio.charset.Charset;
 import application.control.ProcessingController.ProcessingListener;
+import consts.ConstRes;
 import javafx.application.Platform;
 
 /**
@@ -34,7 +35,7 @@ public class ExeProcedureUtil
 		
 		int i = para_Exe.lastIndexOf("%");
 		String dir_currentproject = para_Exe.substring(i + 1);
-		File workDir = new File(System.getProperty("user.dir") + "\\logs\\" + dir_currentproject);
+		File workDir = new File(System.getProperty("user.home")+ConstRes.SOFT_PATH+ "\\logs\\" + dir_currentproject);
 		if(!workDir.exists())
 			workDir.mkdirs();
 		para_Exe = para_Exe.substring(0, i);

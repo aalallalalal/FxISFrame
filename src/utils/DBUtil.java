@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.File;
+import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,6 +11,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import beans.DBRecordBean;
+import consts.ConstRes;
 import javafx.concurrent.Task;
 
 public class DBUtil {
@@ -31,7 +33,7 @@ public class DBUtil {
 				@Override
 				protected Boolean call() throws Exception
 				{
-					FileUtil.deleteNullDir(new File(System.getProperty("user.dir") + "\\logs"));
+					FileUtil.deleteNullDir(new File(System.getProperty("user.home")+ConstRes.SOFT_PATH + "\\logs"));
 					return null;
 				}
 			};
@@ -43,7 +45,7 @@ public class DBUtil {
 					conn.close();
 				}
 			}
-			File folder = new File(System.getProperty("user.dir") + "/datas");
+			File folder = new File(System.getProperty("user.home")+ConstRes.SOFT_PATH+ "\\datas");
 			if (!folder.exists()) {
 				folder.mkdirs();
 			}

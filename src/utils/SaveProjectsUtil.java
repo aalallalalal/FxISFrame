@@ -12,6 +12,7 @@ import java.util.Comparator;
 import java.util.concurrent.ExecutionException;
 
 import beans.ProjectBean;
+import consts.ConstRes;
 import javafx.stage.Stage;
 import utils.ProgressTask.ProgressTask;
 
@@ -22,7 +23,7 @@ import utils.ProgressTask.ProgressTask;
  *
  */
 public class SaveProjectsUtil {
-	private static String path = System.getProperty("user.dir") + "/datas";
+	private static String path = System.getProperty("user.home")+ConstRes.SOFT_PATH+ "/datas";
 	private static String fileName = "Projects_Data";
 
 	private static final int MAX_SIZE = 50;// 最大保存项目数量50

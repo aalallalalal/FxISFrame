@@ -8,8 +8,10 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
+import consts.ConstRes;
+
 public class SaveLanguageUtil {
-	private static String path = System.getProperty("user.dir") + "/datas";
+	private static String path = System.getProperty("user.home")+ConstRes.SOFT_PATH+ "/datas";
 	private static String fileName = "Language_Data";
 
 	static {

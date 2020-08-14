@@ -1,5 +1,7 @@
 package application.control;
 
+import java.io.File;
+import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ import base.controller.ConfirmDialogController.CallBack;
 import beans.DBRecordBean;
 import beans.FinalDataBean;
 import beans.ProjectBean;
+import consts.ConstRes;
 import consts.ConstSize;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -189,7 +192,7 @@ public class ProcessingController extends BaseController implements Initializabl
  			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
  			next.setLastRuntime(System.currentTimeMillis());
  			String time = df.format(next.getLastRuntime());
- 			String path = System.getProperty("user.dir");
+ 			String path =System.getProperty("user.home")+ConstRes.SOFT_PATH;
  			dbRecord.setResultPath(path + "\\logs\\" + next.getProjectName() + next.getId() + "\\" + time);
  			FinalDataBean.para_Exe = next.toSettingParameter() + next.getParam() + "%" + next.getProjectName() + next.getId() + "\\" + time;
  			System.out.println(FinalDataBean.para_Exe);

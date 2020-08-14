@@ -74,7 +74,7 @@ public abstract class BaseApplication extends Application {
 	 */
 	@SuppressWarnings({ "resource" })
 	private static void checkIfRunning() {
-		File flagFile = new File(System.getProperty("user.dir") + "/datas");
+		File flagFile = new File(System.getProperty("user.home")+ConstRes.SOFT_PATH+ "\\datas");
 		if (!flagFile.exists()) {
 			flagFile.mkdirs();
 		}

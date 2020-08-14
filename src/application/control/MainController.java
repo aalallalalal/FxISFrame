@@ -15,8 +15,8 @@ import beans.MyFxmlBean;
 import beans.ProjectBean;
 import beans.SettingsBean;
 import beans.SoftwareSettingsBean;
+import consts.ConstRes;
 import consts.ConstSize;
-import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -262,7 +262,7 @@ public class MainController implements Initializable {
 		@Override
 		public void openResultFromFileSystem() {
 			try {
-				String path = System.getProperty("user.dir");
+				String path = System.getProperty("user.home")+ConstRes.SOFT_PATH;
 				Desktop.getDesktop().open(new File(path + "\\Run\\Result"));
 			} catch (IOException e) {
 				e.printStackTrace();
