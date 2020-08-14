@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -25,13 +26,19 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.SelectionMode;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableView.ResizeFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -159,15 +166,18 @@ public class HistoryController implements Initializable {
 				}
 			}
 		});
+		
 //		label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
-		HistoryTableView.hoverProperty().addListener(new ChangeListener<Boolean>()
+		HistoryTableView.setOnKeyPressed(new EventHandler<KeyEvent>()
 		{
-
+	
 			@Override
-			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+			public void handle(KeyEvent event)
 			{
-				// TODO Auto-generated method stub
-				
+				if(event.getCode() == KeyCode.DELETE) {
+					onClear();
+					root.requestFocus();
+				}
 			}
 		});
 	}
@@ -181,7 +191,20 @@ public class HistoryController implements Initializable {
 		paramInfogroup.setVisible(false);
 		param_hide = true;
 		HistoryTableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-		HistoryTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		//HistoryTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+		HistoryTableView.setColumnResizePolicy(new Callback<TableView.ResizeFeatures, Boolean>()
+		{
+			
+			@Override
+			public Boolean call(ResizeFeatures param)
+			{
+				if(param.getColumn() != null) {
+					double w = param.getDelta();
+					param.getColumn().setPrefWidth(param.getColumn().getWidth() + w);
+				}
+				return true;
+			}
+		});
 		HistoryTableView.setPlaceholder(imageView);
 		project_name.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
@@ -193,17 +216,64 @@ public class HistoryController implements Initializable {
 						return name;
 					}
 				});
-
-		pictures_dir.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
+		project_name.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
 
 					@Override
-					public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param) {
-						SimpleStringProperty picture_dir = new SimpleStringProperty(
-								param.getValue().getProject().getProjectDir());
-						return picture_dir;
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item !=null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(item));
+						}
+							
 					}
-				});
+					
+				};
+				return cell;
+			}
+		});
+
+		pictures_dir.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<DBRecordBean,String>, ObservableValue<String>>()
+		{
+			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param)
+			{
+				SimpleStringProperty temp = new SimpleStringProperty(param.getValue().getProject().getProjectDir());
+				return temp;
+			}
+		});
+		pictures_dir.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
+
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
 		pictures_dir.setSortable(false);
 
 		inputway.setCellValueFactory(
@@ -217,7 +287,31 @@ public class HistoryController implements Initializable {
 						return temp;
 					}
 				});
+		
+		inputway.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
 
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
+		
 		location_dir.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
 
@@ -228,6 +322,29 @@ public class HistoryController implements Initializable {
 						return dir;
 					}
 				});
+		location_dir.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
+
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(StrUtil.isEmpty(item) == true ? ResUtil.gs("don't_have_path") : item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
 
 		height_net.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
@@ -239,6 +356,29 @@ public class HistoryController implements Initializable {
 						return str;
 					}
 				});
+		height_net.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
+
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
 
 		width_net.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
@@ -250,6 +390,29 @@ public class HistoryController implements Initializable {
 						return width;
 					}
 				});
+		width_net.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
+
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
 
 		isPreCheck.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<DBRecordBean, Boolean>, ObservableValue<Boolean>>() {
@@ -261,17 +424,41 @@ public class HistoryController implements Initializable {
 						return pre;
 					}
 				});
-
+		
 		flyHeight.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param) {
 						SimpleStringProperty fly = new SimpleStringProperty(
-								param.getValue().getProject().getSettings().getFlyHeight());
+								param.getValue().getProject().getSettings().getFlyHeight().equals("null") ? null : param.getValue().getProject().getSettings().getFlyHeight());
+						System.out.println(fly);
 						return fly;
 					}
 				});
+		flyHeight.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
+
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
 
 		CameraSize.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
@@ -279,11 +466,67 @@ public class HistoryController implements Initializable {
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param) {
 						SimpleStringProperty size = new SimpleStringProperty(
-								param.getValue().getProject().getSettings().getCameraSize());
+								param.getValue().getProject().getSettings().getCameraSize().equals("null") ? null: param.getValue().getProject().getSettings().getCameraSize());
 						return size;
 					}
 				});
+		CameraSize.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
 
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
+
+		Gsd.setCellValueFactory(
+				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
+
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param) {
+						SimpleStringProperty size = new SimpleStringProperty(
+								param.getValue().getProject().getSettings().getGsd().equals("null") ? null : param.getValue().getProject().getSettings().getGsd());
+						return size;
+					}
+				});
+		Gsd.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
+
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
 		isSave_middle.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<DBRecordBean, Boolean>, ObservableValue<Boolean>>() {
 
@@ -306,6 +549,29 @@ public class HistoryController implements Initializable {
 						return time;
 					}
 				});
+		starttime.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
+
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
 
 		endtime.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
@@ -318,6 +584,29 @@ public class HistoryController implements Initializable {
 						return time;
 					}
 				});
+		endtime.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
+
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
 
 		state.setCellValueFactory(
 				new Callback<TableColumn.CellDataFeatures<DBRecordBean, Boolean>, ObservableValue<Boolean>>() {
@@ -340,6 +629,30 @@ public class HistoryController implements Initializable {
 						return temp;
 					}
 				});
+		failreason.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()
+		{
+			
+			@Override
+			public TableCell<DBRecordBean, String> call(TableColumn<DBRecordBean, String> param)
+			{
+				TableCell<DBRecordBean, String> cell = new TableCell<DBRecordBean, String>(){
+
+					@Override
+					protected void updateItem(String item, boolean empty)
+					{
+						// TODO Auto-generated method stub
+						super.updateItem(item, empty);
+						if(empty == false && item != null) {
+							this.setText(item);
+							this.setTooltip(new Tooltip(
+									StrUtil.isEmpty(item) == true ? ResUtil.gs("don't_have_fail_reason") : item));
+						}
+					}
+					
+				};
+				return cell;
+			}
+		});
 
 	}
 
@@ -357,9 +670,19 @@ public class HistoryController implements Initializable {
 
 					@Override
 					public void onConfirm() {
-						for (DBRecordBean temp : list) {
-							FileUtil.deleteDir(new File(temp.getResultPath()));
-						}
+						Task<Boolean> task = new Task<Boolean>()
+						{
+							
+							@Override
+							protected Boolean call() throws Exception
+							{
+								for (DBRecordBean temp : list) 
+									FileUtil.deleteDir(new File(temp.getResultPath()));
+								return true;
+							}
+						};
+						Thread clear = new Thread(task);
+						clear.start();
 						ToastUtil.toast(ResUtil.gs("clear") + DBUtil.clearAll() + ResUtil.gs("historyitem"));
 						list.clear();
 						label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));
@@ -388,9 +711,18 @@ public class HistoryController implements Initializable {
 
 						@Override
 						public void onConfirm() {
-							for (DBRecordBean t : temp) {
-								FileUtil.deleteDir(new File(t.getResultPath()));
-							}
+							Task<Boolean> task = new Task<Boolean>()
+							{
+								@Override
+								protected Boolean call() throws Exception
+								{
+									for (DBRecordBean t : temp) 
+										FileUtil.deleteDir(new File(t.getResultPath()));
+									return true;
+								}
+							};
+							Thread clear = new Thread(task);
+							clear.start();
 							ToastUtil.toast(ResUtil.gs("clear") + " " + DBUtil.clear(list_temp) + " "
 									+ ResUtil.gs("historyitem"));
 							for (DBRecordBean tempbean : list_temp)
@@ -435,10 +767,12 @@ public class HistoryController implements Initializable {
 			paramInfogroup.setVisible(true);
 			paramdetail.setText(ResUtil.gs("Hide_parameters"));
 			param_hide = false;
+			HistoryTableView.refresh();
 		} else {
 			paramInfogroup.setVisible(false);
 			paramdetail.setText(ResUtil.gs("paramisvisable"));
 			param_hide = true;
+			HistoryTableView.refresh();
 		}
 	}
 	
