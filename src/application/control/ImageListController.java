@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.ResourceBundle;
 
 import com.drew.imaging.ImageProcessingException;
@@ -17,10 +18,12 @@ import beans.ImageBean;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
 import consts.ConstSize;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
@@ -28,6 +31,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
+import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
@@ -37,6 +41,8 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseDragEvent;
 import javafx.scene.input.MouseEvent;
@@ -54,6 +60,7 @@ import utils.ToastUtil;
 import utils.UIUtil;
 import utils.ProgressTask.ProgressTask;
 import views.MyToolTip;
+import com.jfoenix.controls.JFXButton;
 
 /**
  * 点击项目进入，图片列表界面controller
@@ -92,9 +99,19 @@ public class ImageListController implements Initializable {
 	ImageView imageview;
 
 	private ArrayList<HashMap<String, String>> analysingGps;
-	
+
 	ImageView imageViewPlace = new ImageView(new Image("/resources/wushuju.png"));
-	
+
+	private Callback callBack;
+	private GoogleMapFlightLineController flightController;
+	@FXML
+	Label bottomLabel_all;
+	@FXML
+	Label bottomLabel_selected;
+	private ObservableList<ImageBean> selectedItems;
+	@FXML
+	JFXButton btn_delete;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTableView();
@@ -269,28 +286,60 @@ public class ImageListController implements Initializable {
 
 	@FXML
 	public void onDeleteImg() {
-		ImageBean selectedItem = tableView.getSelectionModel().getSelectedItem();
-		if (selectedItem == null) {
+		if (selectedItems == null || selectedItems.size() <= 0) {
 			return;
 		}
-		UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
-				ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
-				ResUtil.gs("imageList_remove_image_confirm", selectedItem.getName()),
-				(Stage) root.getScene().getWindow(), new CallBack() {
-					@Override
-					public void onCancel() {
-					}
-
-					@Override
-					public void onConfirm() {
-						listData.remove(selectedItem);
-						if(flightController!=null) {
-							flightController.onImageDelete(selectedItem);
+		if (selectedItems.size() == 1) {
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
+					ResUtil.gs("imageList_remove_image_confirm", selectedItems.get(0).getName()),
+					(Stage) root.getScene().getWindow(), new CallBack() {
+						@Override
+						public void onCancel() {
 						}
-						FileUtil.deleteImage(selectedItem.getPath());
-						FileUtil.deleteTxt(project.getProjectDir());
-					}
-				});
+
+						@Override
+						public void onConfirm() {
+							ImageBean imageBean = selectedItems.get(0);
+							if (flightController != null) {
+								flightController.onImageDelete(imageBean);
+							}
+							FileUtil.deleteImage(imageBean.getPath());
+							FileUtil.deleteTxt(project.getProjectDir());
+							listData.remove(imageBean);
+						}
+					});
+		} else {
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
+					ResUtil.gs("imageList_remove_lot_image_confirm", selectedItems.size()),
+					(Stage) root.getScene().getWindow(), new CallBack() {
+
+						@Override
+						public void onCancel() {
+						}
+
+						@Override
+						public void onConfirm() {
+							ArrayList<ImageBean> deleteList = new ArrayList<ImageBean>();
+							deleteList.addAll(selectedItems);
+							if (flightController != null) {
+								flightController.onImageDelete(deleteList);
+							}
+							listData.removeAll(deleteList);
+							for (ImageBean item : deleteList) {
+								FileUtil.deleteImage(item.getPath());
+							}
+							FileUtil.deleteTxt(project.getProjectDir());
+							tableView.getSelectionModel().clearSelection();
+							if (flightController != null) {
+								flightController.onImageClearFocus(null);
+								System.out.println("clarwanle ");
+							}
+//							tableView.getSelectionModel().select(0);
+						}
+					});
+		}
 	}
 
 	@FXML
@@ -310,12 +359,61 @@ public class ImageListController implements Initializable {
 
 	@SuppressWarnings("unchecked")
 	private void initTableView() {
+		tableView.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.DELETE) {
+					onDeleteImg();
+				}
+			}
+		});
+
+		listData.addListener(new ListChangeListener<ImageBean>() {
+			@Override
+			public void onChanged(Change<? extends ImageBean> c) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						bottomLabel_all.setText(ResUtil.gs("image_num", listData.size() + ""));
+					}
+				});
+			}
+		});
+		selectedItems = tableView.getSelectionModel().getSelectedItems();
+		selectedItems.addListener(new ListChangeListener<ImageBean>() {
+			@Override
+			public void onChanged(Change<? extends ImageBean> c) {
+				while (c.next()) {
+					if (c.wasPermutated()) {
+					} else if (c.wasUpdated()) {
+					} else {
+						int addOrMove = -1;
+						List<ImageBean> subListAdd = new ArrayList<ImageBean>();
+						List<ImageBean> subListRemove = new ArrayList<ImageBean>();
+						if (c.getAddedSize() > 0 && c.wasAdded() && selectedItems.size() > 0) {
+							addOrMove = 1;
+							subListAdd.addAll(c.getAddedSubList());
+						}
+						if (c.getRemovedSize() > 0 && c.wasRemoved()) {
+							addOrMove = 0;
+							subListRemove.addAll(c.getRemoved());
+						}
+						if (addOrMove == -1) {
+							return;
+						}
+						Platform.runLater(new MyRunnable(subListAdd, subListRemove));
+					}
+				}
+			}
+		});
+
+		tableView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
 		TableColumn<ImageBean, String> path = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_name"));
 		longtitudeCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_long"));
 		latitudeCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_lat"));
 		heightCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_height"));
 		tableView.getColumns().addAll(path, latitudeCol, longtitudeCol, heightCol);
-		path.setPrefWidth(142);
+		path.setPrefWidth(130);
 		longtitudeCol.setPrefWidth(180);
 		latitudeCol.setPrefWidth(180);
 		heightCol.setPrefWidth(100);
@@ -397,12 +495,21 @@ public class ImageListController implements Initializable {
 			@Override
 			public void changed(ObservableValue<? extends ImageBean> observable, ImageBean oldValue,
 					ImageBean newValue) {
-				if (newValue != null) {
-					vbox_rightButtons.setDisable(false);
+
+//				if(oldValue==null&&selectedItems.size()==1) {
+//					if (flightController != null) {
+//						flightController.onImageClearFocus(newValue);
+//					}
+//				}
+
+				if (selectedItems.size() >= 1) {
 					initImageView(newValue);
-					if(flightController!=null) {
-						flightController.onImageSelected(oldValue,newValue);
-					}
+				} else if (selectedItems.size() <= 0) {
+					initImageView(null);
+				}
+				bottomLabel_selected.setText(ResUtil.gs("selected_image_num", selectedItems.size() + ""));
+				if (selectedItems.size() > 0) {
+					vbox_rightButtons.setDisable(false);
 				} else {
 					vbox_rightButtons.setDisable(true);
 				}
@@ -423,6 +530,10 @@ public class ImageListController implements Initializable {
 	 * @param newValue
 	 */
 	private void initImageView(ImageBean newValue) {
+		if (newValue == null) {
+			imageview.setImage(null);
+			return;
+		}
 		String path = "file:" + newValue.getPath();
 		Image image = new Image(path);
 		imageview.setImage(image);
@@ -474,17 +585,16 @@ public class ImageListController implements Initializable {
 		flightController.setCallback(new FlightLineCallBack() {
 			@Override
 			public void onDeleteImage(ImageBean image) {
+				listData.remove(image);
 				FileUtil.deleteImage(image.getPath());
 				FileUtil.deleteTxt(project.getProjectDir());
 			}
+
 			@Override
 			public void onFocusChange(String imageName, boolean isEnter) {
 			}
 		});
 	}
-
-	private Callback callBack;
-	private GoogleMapFlightLineController flightController;
 
 	public void setCallBack(Callback callBack) {
 		this.callBack = callBack;
@@ -492,6 +602,36 @@ public class ImageListController implements Initializable {
 
 	public interface Callback {
 		void onProjectChange(ProjectBean project);
+	}
+
+	class MyRunnable implements Runnable {
+		private List<? extends ImageBean> subListAdd;
+		private List<? extends ImageBean> subListRemove;
+
+		public MyRunnable(List<? extends ImageBean> subListAdd, List<ImageBean> subListRemove) {
+			this.subListAdd = subListAdd;
+			this.subListRemove = subListRemove;
+		}
+
+		public void run() {
+			bottomLabel_selected.setText(ResUtil.gs("selected_image_num", selectedItems.size() + ""));
+			if (selectedItems != null) {
+				if (selectedItems.size() >= 1) {
+					vbox_rightButtons.setDisable(false);
+				} else if (selectedItems.size() <= 0) {
+					vbox_rightButtons.setDisable(true);
+					initImageView(null);
+				}
+			}
+			if (flightController != null) {
+				if (selectedItems.size() > 0) {
+					flightController.onImageSelected(subListAdd, 1);
+				}
+			}
+			if (flightController != null) {
+				flightController.onImageSelected(subListRemove, 0);
+			}
+		}
 	}
 
 }

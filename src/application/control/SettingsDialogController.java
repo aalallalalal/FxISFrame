@@ -249,6 +249,7 @@ public class SettingsDialogController implements Initializable {
 		} else {
 			if (type == 2) {
 				this.returnSettings = settings;
+				this.returnSettings.setSettingType(2);
 			} else if (type == 1) {
 				this.returnSettings = settings.copyToANew("");
 				this.returnSettings.setSettingType(1);
@@ -407,7 +408,7 @@ public class SettingsDialogController implements Initializable {
 			settingBtn.setText(setting.getName());
 			if (setting.getSettingType() == 1) {
 				settingBtn.setStyle(SettingController.style_unname);
-			} else {
+			} else if(setting.getSettingType()==2){
 				settingBtn.setStyle(SettingController.style_temp);
 			}
 			toolTip.setText(setting.transToTipStr());

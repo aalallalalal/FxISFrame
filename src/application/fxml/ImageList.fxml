@@ -8,18 +8,33 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.TableView?>
 <?import views.MyToolTip?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.layout.FlowPane?>
 
 <BorderPane fx:id="root" style="-fx-background-color:#fff"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.ImageListController">
 	<center>
-		<TableView fx:id="tableView"
-			style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;"
-			BorderPane.alignment="CENTER">
+		<VBox BorderPane.alignment="CENTER" style="-fx-padding: 5;">
+			<children>
+				<TableView fx:id="tableView"
+					style="-fx-background-color: #fff; -fx-border-width: 2; -fx-border-color: #fafafa;">
+				</TableView>
+				<HBox alignment="CENTER_LEFT" style="-fx-spacing: 10;">
+					<children>
+						<Label fx:id="bottomLabel_all" text="" textFill="#4f4f4f"
+							style="-fx-font-size:14.0;">
+						</Label>
+						<Label fx:id="bottomLabel_selected" text=""
+							textFill="#4f4f4f" style="-fx-font-size:14.0;">
+						</Label>
+					</children>
+				</HBox>
+			</children>
 			<BorderPane.margin>
 				<Insets left="10.0" top="10.0" />
 			</BorderPane.margin>
-		</TableView>
+		</VBox>
 	</center>
 	<right>
 		<VBox alignment="TOP_CENTER" prefHeight="175.0" prefWidth="140.0"
@@ -29,7 +44,7 @@
 				<VBox fx:id="vbox_rightButtons" disable="true"
 					alignment="TOP_CENTER" style="-fx-spacing: 10; "
 					BorderPane.alignment="CENTER">
-					<JFXButton onAction="#onDeleteImg"
+					<JFXButton onAction="#onDeleteImg" fx:id="btn_delete"
 						text="%imageList_remove_image">
 						<styleClass>
 							<String fx:value="btn-level-projects" />

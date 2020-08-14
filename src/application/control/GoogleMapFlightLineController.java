@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 
@@ -14,6 +16,7 @@ import consts.ConstSize;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -70,8 +73,8 @@ public class GoogleMapFlightLineController implements Initializable {
 			20, false, true);
 	private final Image cameraDeleted = new Image(getClass().getResourceAsStream("/resources/camera-fill-deleted.png"),
 			20, 20, false, true);
-	private final Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight_uav.png"), 25, 25, false,
-			true);
+	private final Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight_uav.png"), 25, 25,
+			false, true);
 	private final Image imageSwitchOn = new Image(getClass().getResourceAsStream("/resources/icon_switch_on.png"), 35,
 			35, false, true);
 	private final Image imageSwitchOff = new Image(getClass().getResourceAsStream("/resources/icon_switch_off.png"), 35,
@@ -110,7 +113,7 @@ public class GoogleMapFlightLineController implements Initializable {
 
 	private boolean isShowFlightPane = true;
 
-	private ObservableList<ImageBean> listData;
+	private ObservableList<ImageBean> listData = FXCollections.observableArrayList();
 	private AMapGeocodingBean aMapGeocodingBean;
 	private PathTransition pathTransition;
 	@FXML
@@ -129,8 +132,8 @@ public class GoogleMapFlightLineController implements Initializable {
 		initTextData();
 	}
 
-	public void setData(ObservableList<ImageBean> listData) {
-		this.listData = listData;
+	public void setData(ObservableList<ImageBean> listDat) {
+		this.listData.addAll(listDat);
 		if (listData == null || listData.size() == 0) {
 			System.out.println("飞机界面数据：" + listData.size());
 			ToastUtil.toast(ResUtil.gs("load_data_error"));
@@ -153,7 +156,7 @@ public class GoogleMapFlightLineController implements Initializable {
 				// 画线
 //				LinearGradient linearGradient1 = new LinearGradient(0, 0, 1, 1, true, CycleMethod.NO_CYCLE,
 //						new Stop[] { new Stop(0, Color.LIGHTGREEN), new Stop(1, Color.LIGHTSKYBLUE) });
-				gc.setStroke( Color.LIGHTGREEN);
+				gc.setStroke(Color.LIGHTGREEN);
 				gc.setLineWidth(3);
 				gc.setLineJoin(StrokeLineJoin.ROUND);
 				gc.strokePolyline(xList, yList, size);
@@ -583,6 +586,8 @@ public class GoogleMapFlightLineController implements Initializable {
 		isShowFlightPane = !isShowFlightPane;
 	}
 
+	private ImageView preLabelView ;
+	
 	/**
 	 * 鼠标移入监听
 	 * 
@@ -597,6 +602,7 @@ public class GoogleMapFlightLineController implements Initializable {
 
 		@Override
 		public void handle(Event event) {
+			preLabelView = (ImageView) label.getGraphic();
 			label.setGraphic(new ImageView(cameraFocus));
 			if (callback != null) {
 				callback.onFocusChange(label.getId(), true);
@@ -618,7 +624,11 @@ public class GoogleMapFlightLineController implements Initializable {
 
 		@Override
 		public void handle(Event event) {
-			label.setGraphic(new ImageView(camera));
+			if(preLabelView!=null) {
+				label.setGraphic(preLabelView);
+			}else {
+				label.setGraphic(new ImageView(camera));
+			}
 			if (callback != null) {
 				callback.onFocusChange(label.getId(), false);
 			}
@@ -637,25 +647,6 @@ public class GoogleMapFlightLineController implements Initializable {
 				label.setDisable(true);
 				label.setGraphic(new ImageView(cameraDeleted));
 				labelMap.remove(selectedItem);
-			}
-		}
-	}
-
-	/**
-	 * 图片列表界面选择了某个image
-	 * 
-	 * @param oldValue
-	 * @param newValue
-	 */
-	public void onImageSelected(ImageBean oldValue, ImageBean newValue) {
-		if (labelMap.size() > 0) {
-			Label old = labelMap.get(oldValue);
-			Label newLabel = labelMap.get(newValue);
-			if (old != null) {
-				old.setGraphic(new ImageView(camera));
-			}
-			if (newLabel != null) {
-				newLabel.setGraphic(new ImageView(cameraFocus));
 			}
 		}
 	}
@@ -683,8 +674,8 @@ public class GoogleMapFlightLineController implements Initializable {
 				public void handle(ActionEvent event) {
 					UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
 							ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
-							ResUtil.gs("imageList_remove_image_confirm", bean.getName()), (Stage) root.getScene().getWindow(),
-							new CallBack() {
+							ResUtil.gs("imageList_remove_image_confirm", bean.getName()),
+							(Stage) root.getScene().getWindow(), new CallBack() {
 								@Override
 								public void onCancel() {
 								}
@@ -706,6 +697,88 @@ public class GoogleMapFlightLineController implements Initializable {
 				}
 			});
 			getItems().addAll(delete);
+		}
+	}
+
+	/**
+	 * 多删
+	 * 
+	 * @param selectedItem
+	 */
+	public void onImageDelete(ArrayList<ImageBean> selectedItem) {
+		if (labelMap.size() > 0) {
+			if (selectedItem != null && selectedItem.size() > 0) {
+				for (ImageBean item : selectedItem) {
+					Label label = labelMap.get(item);
+					if (label != null) {
+						label.setDisable(true);
+						label.setGraphic(new ImageView(cameraDeleted));
+						labelMap.remove(item);
+					}
+				}
+			}
+//			for (Map.Entry<ImageBean, Label> entry : labelMap.entrySet()) {
+//				Label label = entry.getValue();
+//				if (!label.isDisable()) {
+//					label.setGraphic(new ImageView(camera));
+//				}
+//			}
+		}
+	}
+
+	/**
+	 * 图片列表界面选择了某个image
+	 */
+	public void onImageSelected(List<? extends ImageBean> list, int addOrRemove) {
+		if (labelMap.size() > 0) {
+			if (addOrRemove == 1) {
+				// 添加
+				if (list != null && list.size() > 0) {
+					for (ImageBean item : list) {
+						Label newLabel = labelMap.get(item);
+						if (newLabel != null) {
+							newLabel.setGraphic(new ImageView(cameraFocus));
+						}
+					}
+				}
+			} else if (addOrRemove == 0) {
+				// 删除
+				if (list != null && list.size() > 0) {
+					for (ImageBean item : list) {
+						Label old = labelMap.get(item);
+						if (old != null) {
+							old.setGraphic(new ImageView(camera));
+						}else {
+							System.out.println("hash map no"+item.getName());
+						}
+					}
+				}
+			}
+		}
+	}
+
+	public void onImageSelected(ImageBean oldValue, ImageBean newValue) {
+		// 单选时
+		Label old = labelMap.get(oldValue);
+		if (old != null) {
+			old.setGraphic(new ImageView(camera));
+		}
+		Label newLabel = labelMap.get(newValue);
+		if (newLabel != null) {
+			newLabel.setGraphic(new ImageView(cameraFocus));
+		}
+	}
+
+	public void onImageClearFocus(ImageBean newValue) {
+		for (Map.Entry<ImageBean, Label> entry : labelMap.entrySet()) {
+			Label label = entry.getValue();
+			if (!label.isDisable()) {
+				label.setGraphic(new ImageView(camera));
+			}
+		}
+		Label newLabel = labelMap.get(newValue);
+		if (newLabel != null) {
+			newLabel.setGraphic(new ImageView(cameraFocus));
 		}
 	}
 

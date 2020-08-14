@@ -27,6 +27,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.DragEvent;
 import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
@@ -112,6 +114,15 @@ public class ProjectsController extends BaseController implements Initializable 
 //		name_projects.setEditable(true);
 //		name_projects.setCellFactory(TextFieldTableCell.forTableColumn());
 
+		projectTableView.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.DELETE) {
+					onRemove();
+				}
+			}
+		});
+		
 		path_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("project_path_simple"));
 		location_path_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("locationpath"));
 		time_createProject = new TableColumn<ProjectBean, String>(ResUtil.gs("project_create_time"));

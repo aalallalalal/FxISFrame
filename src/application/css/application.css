@@ -49,8 +49,8 @@ visibility: hidden;
 
 
 .custom-text-field{
-	-fx-text-fill: #4f4f4f; -fx-border-color:#fafafa;-fx-border-width:2.0;-fx-border-style:solid;
-	-fx-font-size: 14.0; -fx-padding:2.0;-jfx-focus-color:#FFA500;-jfx-unfocus-color:#fafafa00;
+	-fx-text-fill: #4f4f4f; -fx-border-color:#f2f2f2;-fx-border-width:1.0;-fx-border-style:solid;
+	-fx-font-size: 14.0; -fx-padding:2.0;-jfx-focus-color:#FFA500;-jfx-unfocus-color:#eaeaea00;
 }
 
 .text-area .scroll-bar:vertical {

@@ -24,6 +24,7 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import utils.AnimatorUtil;
+import utils.ResUtil;
 import utils.UIUtil;
 
 /**
@@ -124,7 +125,7 @@ public class BaseBarController implements Initializable {
 	public void onClickHistory(ActionEvent event) {
 		MyFxmlBean  history = UIUtil.openDialog(getClass(),
 				"/application/fxml/History.fxml", ConstSize.Main_Frame_Width + 420,
-				ConstSize.Main_Frame_Height + 50, "历史记录", (Stage) root.getScene().getWindow());
+				ConstSize.Main_Frame_Height + 50, ResUtil.gs("stitching_history"), (Stage) root.getScene().getWindow());
 	}
 
 }
