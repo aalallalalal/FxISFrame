@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -38,7 +37,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.Background;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import javafx.util.Callback;
@@ -232,6 +230,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item !=null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 							
 					}
@@ -267,6 +268,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item != null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -304,6 +308,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item != null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -338,6 +345,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item != null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(StrUtil.isEmpty(item) == true ? ResUtil.gs("don't_have_path") : item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -372,6 +382,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item != null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -406,6 +419,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item != null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -432,7 +448,6 @@ public class HistoryController implements Initializable {
 					public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param) {
 						SimpleStringProperty fly = new SimpleStringProperty(
 								param.getValue().getProject().getSettings().getFlyHeight().equals("null") ? null : param.getValue().getProject().getSettings().getFlyHeight());
-						System.out.println(fly);
 						return fly;
 					}
 				});
@@ -452,6 +467,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item != null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -486,6 +504,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item != null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -520,6 +541,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item != null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -565,6 +589,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item != null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -600,6 +627,9 @@ public class HistoryController implements Initializable {
 						if(empty == false && item != null) {
 							this.setText(item);
 							this.setTooltip(new Tooltip(item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -646,6 +676,9 @@ public class HistoryController implements Initializable {
 							this.setText(item);
 							this.setTooltip(new Tooltip(
 									StrUtil.isEmpty(item) == true ? ResUtil.gs("don't_have_fail_reason") : item));
+						}else {
+							this.setText(null);
+							this.setTooltip(null);
 						}
 					}
 					
@@ -729,6 +762,7 @@ public class HistoryController implements Initializable {
 								list.remove(tempbean);
 							label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));
 							HistoryTableView.getSelectionModel().clearSelection();
+							HistoryTableView.refresh();
 						}
 					});
 
@@ -767,12 +801,10 @@ public class HistoryController implements Initializable {
 			paramInfogroup.setVisible(true);
 			paramdetail.setText(ResUtil.gs("Hide_parameters"));
 			param_hide = false;
-			HistoryTableView.refresh();
 		} else {
 			paramInfogroup.setVisible(false);
 			paramdetail.setText(ResUtil.gs("paramisvisable"));
 			param_hide = true;
-			HistoryTableView.refresh();
 		}
 	}
 	
