@@ -4,7 +4,6 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.security.acl.LastOwnerException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -36,6 +35,7 @@ import javafx.scene.layout.BackgroundSize;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 import utils.ResUtil;
+import utils.SysUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
 import views.MyToolTip;
@@ -129,7 +129,7 @@ public class TabAchieveController implements Initializable {
 			public void handle(ActionEvent event) {
 				listView_achieve.getSelectionModel().select(project);
 				try {
-					String path = System.getProperty("user.home")+ConstRes.SOFT_PATH;
+					String path = System.getProperty("user.home") + ConstRes.SOFT_PATH;
 					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
 					String lastRunTime = df.format(project.getLastRuntime());
 					Desktop.getDesktop().open(new File(
@@ -168,18 +168,15 @@ public class TabAchieveController implements Initializable {
 				listView_achieve.getSelectionModel().select(project);
 				System.out.println(listView_achieve.getSelectionModel().getSelectedIndex());
 				Runtime runtime = Runtime.getRuntime();
-				try {
-					String path = System.getProperty("user.home")+ConstRes.SOFT_PATH;
-					int i = project.getProjectDir().lastIndexOf("/");
-					String name_dir = project.getProjectDir().substring(i + 1);
-					SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
-					String lastRunTime = df.format(project.getLastRuntime());
-					path = path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + lastRunTime
-							+ "\\Result\\0_results\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
-					runtime.exec("cmd /c " + path);
-				} catch (IOException e) {
+				String path = System.getProperty("user.home") + ConstRes.SOFT_PATH;
+				int i = project.getProjectDir().lastIndexOf("/");
+				String name_dir = project.getProjectDir().substring(i + 1);
+				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
+				String lastRunTime = df.format(project.getLastRuntime());
+				path = path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + lastRunTime
+						+ "\\Result\\0_results\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
+				if (!SysUtil.exeOpenFile(path)) {
 					ToastUtil.toast(ResUtil.gs("open_image_error"));
-					e.printStackTrace();
 				}
 			}
 		});
@@ -194,7 +191,7 @@ public class TabAchieveController implements Initializable {
 				if (list_achieve.get(listView_achieve.getSelectionModel().getSelectedIndex()).getSettings()
 						.isSaveMiddle()) {
 					try {
-						String path = System.getProperty("user.home")+ConstRes.SOFT_PATH;
+						String path = System.getProperty("user.home") + ConstRes.SOFT_PATH;
 						int i = project.getProjectDir().lastIndexOf("/");
 						String name_dir = project.getProjectDir().substring(i + 1);
 						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式

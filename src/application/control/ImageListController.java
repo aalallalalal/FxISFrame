@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import com.drew.imaging.ImageProcessingException;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXRadioButton;
 import com.jfoenix.controls.JFXTextField;
 
@@ -56,11 +57,11 @@ import utils.GpsUtil;
 import utils.ImageUtil;
 import utils.ResUtil;
 import utils.SaveProjectsUtil;
+import utils.SysUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
 import utils.ProgressTask.ProgressTask;
 import views.MyToolTip;
-import com.jfoenix.controls.JFXButton;
 
 /**
  * 点击项目进入，图片列表界面controller
@@ -343,12 +344,8 @@ public class ImageListController implements Initializable {
 		if (selectedItem == null) {
 			return;
 		}
-		Runtime runtime = Runtime.getRuntime();
-		try {
-			runtime.exec("cmd /c " + selectedItem.getPath());
-		} catch (IOException e) {
+		if (!SysUtil.exeOpenFile(selectedItem.getPath())) {
 			ToastUtil.toast(ResUtil.gs("open_image_error"));
-			e.printStackTrace();
 		}
 	}
 

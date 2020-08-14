@@ -153,7 +153,7 @@ public class DBUtil {
 		Connection conn = null;
 		try {
 			Class.forName("org.sqlite.JDBC");
-			conn = DriverManager.getConnection("jdbc:sqlite:datas\\db_" + DB_VERSION);
+			conn = DriverManager.getConnection("jdbc:sqlite:"+System.getProperty("user.home")+ConstRes.SOFT_PATH+ "\\datas\\db_" + DB_VERSION);
 			conn.setAutoCommit(false);
 			System.out.println("DB 链接成功");
 		} catch (SQLException e) {

@@ -1,6 +1,5 @@
 package application.control;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -33,6 +32,7 @@ import javafx.scene.paint.Stop;
 import javafx.scene.shape.Polyline;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import utils.SysUtil;
 import utils.ToastUtil;
 import utils.ProgressTask.ProgressTask;
 import views.MyToolTip;
@@ -194,12 +194,8 @@ public class FlightLineController implements Initializable {
 		item.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
-				Runtime runtime = Runtime.getRuntime();
-				try {
-					runtime.exec("cmd /c " + imageBean.getPath());
-				} catch (IOException e) {
+				if (!SysUtil.exeOpenFile(imageBean.getPath())) {
 					ToastUtil.toast("打开图片失败！");
-					e.printStackTrace();
 				}
 			}
 		});

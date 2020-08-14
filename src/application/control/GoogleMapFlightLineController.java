@@ -1,6 +1,5 @@
 package application.control;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -52,6 +51,7 @@ import net.kurobako.gesturefx.GesturePane;
 import utils.AnimatorUtil;
 import utils.GoogleMapUtil;
 import utils.ResUtil;
+import utils.SysUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
 import utils.ProgressTask.ProgressTask;
@@ -240,12 +240,8 @@ public class GoogleMapFlightLineController implements Initializable {
 							double nowY = e.getScreenY();
 							if (Math.abs(oldScreenX - nowX) <= GAP && Math.abs(oldScreenY - nowY) <= GAP) {
 								if (labelMap.get(imageBean) != null) {
-									Runtime runtime = Runtime.getRuntime();
-									try {
-										runtime.exec("cmd /c " + imageBean.getPath());
-									} catch (IOException exc) {
+									if (!SysUtil.exeOpenFile(imageBean.getPath())) {
 										ToastUtil.toast(ResUtil.gs("open_image_error"));
-										exc.printStackTrace();
 									}
 								}
 							}
@@ -586,8 +582,8 @@ public class GoogleMapFlightLineController implements Initializable {
 		isShowFlightPane = !isShowFlightPane;
 	}
 
-	private ImageView preLabelView ;
-	
+	private ImageView preLabelView;
+
 	/**
 	 * 鼠标移入监听
 	 * 
@@ -624,9 +620,9 @@ public class GoogleMapFlightLineController implements Initializable {
 
 		@Override
 		public void handle(Event event) {
-			if(preLabelView!=null) {
+			if (preLabelView != null) {
 				label.setGraphic(preLabelView);
-			}else {
+			} else {
 				label.setGraphic(new ImageView(camera));
 			}
 			if (callback != null) {
@@ -748,8 +744,8 @@ public class GoogleMapFlightLineController implements Initializable {
 						Label old = labelMap.get(item);
 						if (old != null) {
 							old.setGraphic(new ImageView(camera));
-						}else {
-							System.out.println("hash map no"+item.getName());
+						} else {
+							System.out.println("hash map no" + item.getName());
 						}
 					}
 				}
