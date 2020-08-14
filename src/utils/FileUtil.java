@@ -1,6 +1,7 @@
 package utils;
 
 import java.io.File;
+import java.util.ArrayList;
 
 import javax.activation.MimetypesFileTypeMap;
 
@@ -90,4 +91,14 @@ public class FileUtil {
 		}
 	}
 	
+	/**
+	 * 删除某一目录下的空文件夹
+	 */
+	public static void deleteNullDir(File file) {
+		if(file.exists()) {
+			File[] list = file.listFiles();
+			for(int i = 0 ; i < list.length ; i++)
+				list[i].delete();
+		}
+	}
 }
