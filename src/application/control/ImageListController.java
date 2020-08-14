@@ -332,11 +332,6 @@ public class ImageListController implements Initializable {
 							}
 							FileUtil.deleteTxt(project.getProjectDir());
 							tableView.getSelectionModel().clearSelection();
-							if (flightController != null) {
-								flightController.onImageClearFocus(null);
-								System.out.println("clarwanle ");
-							}
-//							tableView.getSelectionModel().select(0);
 						}
 					});
 		}

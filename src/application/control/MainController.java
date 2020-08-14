@@ -95,7 +95,16 @@ public class MainController implements Initializable {
 
 		@Override
 		public void onClickHelp() {
-
+//			UIUtil.openFrame(getClass(), "/application/fxml/Help.fxml", ConstSize.Second_Frame_Width,
+//				720, ResUtil.gs("createProject_help"));
+			File file = new File(System.getProperty("user.dir") + "\\help\\help.html");
+			Runtime ce=Runtime.getRuntime();
+			System.out.println(file.getAbsolutePath());
+			try {
+				ce.exec("cmd /c start "+file.getAbsolutePath());
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 		}
 
 		@Override

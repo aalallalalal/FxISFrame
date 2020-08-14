@@ -278,3 +278,50 @@ visibility: hidden;
      -fx-background-color: #fff;
 }
 
+
+.web-view > .scroll-bar:horizontal{
+    -fx-background-color: #f1f1f1;
+    -fx-background-radius: 5.0;
+    -fx-pref-height:12.0
+}
+ .web-view > .scroll-bar:horizontal .track{
+    -fx-background-color: #f1f1f1;
+    -fx-pref-height:12.0
+}
+ .web-view > .scroll-bar:horizontal .thumb{
+    -fx-background-color: #608DFA;
+     -fx-pref-height:12.0
+}
+ .web-view > .scroll-bar:vertical{
+    -fx-background-color: #f1f1f1;
+    -fx-background-radius: 5.0;
+    -fx-pref-width: 12.0
+}
+ .web-view > .scroll-bar:vertical .track{
+    -fx-background-color: #f1f1f1;
+     -fx-pref-width: 12.0
+}
+ .web-view > .scroll-bar:vertical .thumb{
+    -fx-background-color: #608DFA;
+    -fx-pref-width: 12.0
+}
+ .web-view > .scroll-bar:vertical .decrement-button {
+    -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+    -fx-background-color: #fff;
+}
+ .web-view > .scroll-bar:horizontal  .decrement-button{
+   -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+     -fx-background-color: #fff;
+}
+ .web-view > .scroll-bar:vertical  .increment-button{
+   -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+     -fx-background-color: #fff;
+}
+ .list-view > .scroll-bar:horizontal   .increment-button{
+   -fx-pref-width: 4.0;
+    -fx-pref-height: 4.0;
+     -fx-background-color: #fff;
+}

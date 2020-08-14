@@ -5,8 +5,6 @@ import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
 
-import application.control.HistoryController;
-import application.control.SettingsDialogController;
 import beans.MyFxmlBean;
 import consts.ConstSize;
 import javafx.animation.RotateTransition;
@@ -18,6 +16,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -52,8 +52,10 @@ public class BaseBarController implements Initializable {
 	protected TranslateTransition translateExit;
 	private ScaleTransition scaleEnter;
 	private TranslateTransition translateEnter;
-	@FXML ImageView img_hide;
-	@FXML ImageView img_history;
+	@FXML
+	ImageView img_hide;
+	@FXML
+	ImageView img_history;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -102,6 +104,14 @@ public class BaseBarController implements Initializable {
 				translateExit = AnimatorUtil.translate(img_hide, 350, 3, 0);
 			}
 		});
+		root.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.ESCAPE) {
+					onClickClose(null);
+				}
+			}
+		});
 	}
 
 	public BaseBarController() {
@@ -120,12 +130,12 @@ public class BaseBarController implements Initializable {
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 	}
-	
+
 	@FXML
 	public void onClickHistory(ActionEvent event) {
-		MyFxmlBean  history = UIUtil.openDialog(getClass(),
-				"/application/fxml/History.fxml", ConstSize.Main_Frame_Width + 420,
-				ConstSize.Main_Frame_Height + 50, ResUtil.gs("stitching_history"), (Stage) root.getScene().getWindow());
+		MyFxmlBean history = UIUtil.openDialog(getClass(), "/application/fxml/History.fxml",
+				ConstSize.Main_Frame_Width + 420, ConstSize.Main_Frame_Height + 50, ResUtil.gs("stitching_history"),
+				(Stage) root.getScene().getWindow());
 	}
 
 }

@@ -12,6 +12,8 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -58,6 +60,14 @@ public class NoticeDialogController implements Initializable {
 					rotateEnter.stop();
 				}
 				rotateExit = AnimatorUtil.rotate(btn_close, 350, 90, 0);
+			}
+		});
+		root.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.ESCAPE || event.getCode() == KeyCode.ENTER) {
+					onClickClose();
+				}
 			}
 		});
 	}
