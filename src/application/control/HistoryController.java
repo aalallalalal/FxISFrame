@@ -151,6 +151,8 @@ public class HistoryController implements Initializable {
 							if (event.getClickCount() == 2 && (!row.isEmpty())) {
 								onOpenFileSystem();
 							}
+							if(row.isEmpty())
+								HistoryTableView.getSelectionModel().clearSelection();
 						}
 					});
 					return row;
@@ -158,6 +160,16 @@ public class HistoryController implements Initializable {
 			}
 		});
 //		label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));//初始化总共多少条历史记录，仅限于点击时刻数据库中拥有的。
+		HistoryTableView.hoverProperty().addListener(new ChangeListener<Boolean>()
+		{
+
+			@Override
+			public void changed(ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue)
+			{
+				// TODO Auto-generated method stub
+				
+			}
+		});
 	}
 
 	/**
@@ -384,6 +396,7 @@ public class HistoryController implements Initializable {
 							for (DBRecordBean tempbean : list_temp)
 								list.remove(tempbean);
 							label.setText(ResUtil.gs("total") + " " + list.size() + " " + ResUtil.gs("historyitem"));
+							HistoryTableView.getSelectionModel().clearSelection();
 						}
 					});
 
@@ -428,5 +441,7 @@ public class HistoryController implements Initializable {
 			param_hide = true;
 		}
 	}
+	
+	
 
 }
