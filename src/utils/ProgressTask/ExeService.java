@@ -1,11 +1,7 @@
 package utils.ProgressTask;
 
-import java.io.File;
-import java.io.IOException;
-
 import application.control.ProcessingController.ProcessingListener;
 import beans.FinalDataBean;
-import consts.ConstRes;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import utils.ExeProcedureUtil;
@@ -26,7 +22,7 @@ public class ExeService extends Service<String>
 			@Override
 			protected String call() throws Exception
 			{
-				String path = System.getProperty("user.home")+ConstRes.SOFT_PATH;
+				String path = System.getProperty("user.dir");
 		    	String path_Exe = path + "\\ExeProcedure\\ImageStitching.exe";//exe文件的结果路径
 		    	String lastLine = ExeProcedureUtil.execute(path_Exe, FinalDataBean.para_Exe, listener);//参数
 				return	lastLine;
