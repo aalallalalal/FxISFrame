@@ -10,6 +10,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import beans.DBRecordBean;
+import javafx.concurrent.Task;
 
 public class DBUtil {
 	private static final String DB_VERSION = "v1";
@@ -25,6 +26,17 @@ public class DBUtil {
 	private static Connection conn;
 	public static void initDB() {
 		try {
+			Task<Boolean> task = new Task<Boolean>()
+			{
+				@Override
+				protected Boolean call() throws Exception
+				{
+					FileUtil.deleteNullDir(new File(System.getProperty("user.dir") + "\\logs"));
+					return null;
+				}
+			};
+			Thread clear = new Thread(task);
+			clear.start();
 			if (conn != null) {
 				if (!conn.isClosed()) {
 					System.out.println("db启动前，先断开链接");
