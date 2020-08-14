@@ -615,13 +615,14 @@ public class ImageListController implements Initializable {
 					initImageView(null);
 				}
 			}
+//			System.out.println("add;"+subListAdd.size()+"  remo"+subListRemove.size() +"selec"+selectedItems.size());
+			if (flightController != null) {
+				flightController.onImageSelected(subListRemove, 0);
+			}
 			if (flightController != null) {
 				if (selectedItems.size() > 0) {
 					flightController.onImageSelected(subListAdd, 1);
 				}
-			}
-			if (flightController != null) {
-				flightController.onImageSelected(subListRemove, 0);
 			}
 		}
 	}
