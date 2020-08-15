@@ -303,11 +303,12 @@ public class ImageListController implements Initializable {
 						public void onConfirm() {
 							ImageBean imageBean = selectedItems.get(0);
 							if (flightController != null) {
-								flightController.onImageDelete(imageBean);
+								flightController.onImageDeleteFromImageList(imageBean);
 							}
 							FileUtil.deleteImage(imageBean.getPath());
 							FileUtil.deleteTxt(project.getProjectDir());
 							listData.remove(imageBean);
+							tableView.getSelectionModel().clearSelection();
 						}
 					});
 		} else {
@@ -325,7 +326,7 @@ public class ImageListController implements Initializable {
 							ArrayList<ImageBean> deleteList = new ArrayList<ImageBean>();
 							deleteList.addAll(selectedItems);
 							if (flightController != null) {
-								flightController.onImageDelete(deleteList);
+								flightController.onImageDeleteFromImageList(deleteList);
 							}
 							listData.removeAll(deleteList);
 							for (ImageBean item : deleteList) {
@@ -573,13 +574,14 @@ public class ImageListController implements Initializable {
 				ConstSize.Flight_Width, ConstSize.Flight_Height,
 				project.getProjectName() + " " + ResUtil.gs("imageList_flight"));
 		flightController = openFrame.getFxmlLoader().getController();
-		flightController.setData(listData);
+		flightController.setData(listData, this);
 		flightController.setCallback(new FlightLineCallBack() {
 			@Override
 			public void onDeleteImage(ImageBean image) {
 				listData.remove(image);
 				FileUtil.deleteImage(image.getPath());
 				FileUtil.deleteTxt(project.getProjectDir());
+				tableView.getSelectionModel().clearSelection();
 			}
 
 			@Override
@@ -616,13 +618,37 @@ public class ImageListController implements Initializable {
 				}
 			}
 //			System.out.println("add;"+subListAdd.size()+"  remo"+subListRemove.size() +"selec"+selectedItems.size());
-			if (flightController != null) {
-				flightController.onImageSelected(subListRemove, 0);
-			}
-			if (flightController != null) {
-				if (selectedItems.size() > 0) {
-					flightController.onImageSelected(subListAdd, 1);
+			Stage stage=  (Stage) root.getScene().getWindow();
+			if ( stage.isFocused()) {
+				if (flightController != null) {
+					flightController.onImageSelectedFromImageList(subListRemove, 0);
 				}
+				if (flightController != null) {
+					if (selectedItems.size() > 0) {
+						flightController.onImageSelectedFromImageList(subListAdd, 1);
+					}
+				}
+			} else {
+				System.out.println("imageList界面不是焦点");
+			}
+		}
+	}
+
+	public void onImageSelectedFromFlightLine(List<? extends ImageBean> subList, int i) {
+		if (subList == null || subList.size() <= 0) {
+			return;
+		}
+		if (i == 1) {
+			// 添加
+			for (ImageBean item : subList) {
+				tableView.getSelectionModel().select(item);
+			}
+			tableView.scrollTo(subList.get(subList.size()-1));
+		} else {
+			// 减少
+			for (ImageBean item : subList) {
+				int indexOf = listData.indexOf(item);
+				tableView.getSelectionModel().clearSelection(indexOf);
 			}
 		}
 	}

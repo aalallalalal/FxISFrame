@@ -15,7 +15,9 @@ import consts.ConstSize;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
@@ -29,19 +31,16 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.StrokeLineJoin;
@@ -90,7 +89,7 @@ public class GoogleMapFlightLineController implements Initializable {
 	@FXML
 	GesturePane gesturePane;
 	@FXML
-	TextArea textArea_tip;
+	Label textArea_tip;
 	@FXML
 	Pane pane_Canvas;
 	@FXML
@@ -117,9 +116,12 @@ public class GoogleMapFlightLineController implements Initializable {
 	private AMapGeocodingBean aMapGeocodingBean;
 	private PathTransition pathTransition;
 	@FXML
-	TextArea textArea_place;
+	Label textArea_place;
 	@FXML
 	GesturePane largePane;
+	private ImageBean preSelectImage;
+	private boolean preLabelIschange = false;
+	private ImageListController imageListController;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -130,10 +132,58 @@ public class GoogleMapFlightLineController implements Initializable {
 		dropShadow.setColor(Color.LIGHTBLUE);
 		initGesturePane();
 		initTextData();
+		root.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			@Override
+			public void handle(KeyEvent event) {
+				if (event.getCode() == KeyCode.DELETE) {
+					deleteImages();
+				}
+			}
+		});
+		selectedList.addListener(new ListChangeListener<ImageBean>() {
+			@Override
+			public void onChanged(Change<? extends ImageBean> c) {
+				while (c.next()) {
+					if (c.wasPermutated()) {
+					} else if (c.wasUpdated()) {
+					} else {
+						int addOrMove = -1;
+						List<ImageBean> subListAdd = new ArrayList<ImageBean>();
+						List<ImageBean> subListRemove = new ArrayList<ImageBean>();
+						if (c.getAddedSize() > 0 && c.wasAdded() && selectedList.size() > 0) {
+							addOrMove = 1;
+							subListAdd.addAll(c.getAddedSubList());
+						}
+						if (c.getRemovedSize() > 0 && c.wasRemoved()) {
+							addOrMove = 0;
+							subListRemove.addAll(c.getRemoved());
+						}
+						if (addOrMove == -1) {
+							return;
+						}
+						Platform.runLater(new MyRunnable(subListAdd, subListRemove));
+					}
+				}
+			}
+		});
 	}
 
-	public void setData(ObservableList<ImageBean> listDat) {
-		this.listData.addAll(listDat);
+	public void setData(ObservableList<ImageBean> listDat, ImageListController imageListController) {
+//		this.listData.addAll(listDat);
+		listData = listDat;
+		bottomLabel_all.setText(ResUtil.gs("image_num", listData.size() + ""));
+		listData.addListener(new ListChangeListener<ImageBean>() {
+			@Override
+			public void onChanged(Change<? extends ImageBean> c) {
+				Platform.runLater(new Runnable() {
+					@Override
+					public void run() {
+						bottomLabel_all.setText(ResUtil.gs("image_num", listData.size() + ""));
+					}
+				});
+			}
+		});
+		this.imageListController = imageListController;
 		if (listData == null || listData.size() == 0) {
 			System.out.println("飞机界面数据：" + listData.size());
 			ToastUtil.toast(ResUtil.gs("load_data_error"));
@@ -224,6 +274,7 @@ public class GoogleMapFlightLineController implements Initializable {
 //				item.setEffect(dropShadow);
 				item.addEventHandler(MouseEvent.MOUSE_ENTERED, new EnteredHandler(item));
 				item.addEventHandler(MouseEvent.MOUSE_EXITED, new ExitHandler(item));
+
 				item.addEventHandler(MouseEvent.ANY, new EventHandler<MouseEvent>() {
 					private double oldScreenY;
 					private double oldScreenX;
@@ -240,8 +291,77 @@ public class GoogleMapFlightLineController implements Initializable {
 							double nowY = e.getScreenY();
 							if (Math.abs(oldScreenX - nowX) <= GAP && Math.abs(oldScreenY - nowY) <= GAP) {
 								if (labelMap.get(imageBean) != null) {
-									if (!SysUtil.exeOpenFile(imageBean.getPath())) {
-										ToastUtil.toast(ResUtil.gs("open_image_error"));
+									if (!e.isControlDown() && !e.isShiftDown()) {
+										// 没按ctrl并且没按shift，打开图片
+										if (!SysUtil.exeOpenFile(imageBean.getPath())) {
+											ToastUtil.toast(ResUtil.gs("open_image_error"));
+										}
+									} else {
+										System.out.println("else");
+										preLabelIschange = true;
+										if (e.isControlDown()) {
+											// 按了ctrl,添加或删除
+											System.out.println("isControlDown");
+											if (selectedList.contains(imageBean)) {
+												selectedList.remove(imageBean);
+												labelMap.get(imageBean).setGraphic(new ImageView(camera));
+											} else {
+												selectedList.add(imageBean);
+												labelMap.get(imageBean).setGraphic(new ImageView(cameraFocus));
+											}
+										} else if (e.isShiftDown()) {
+											// 按了shift。如果点击的是选择的，那么与pre中间都变为未选择；
+											// 如果点击是未选择,那么与pre中间都变为已选择
+											if (preSelectImage == null) {
+												if (selectedList.size() > 0) {
+													preSelectImage = selectedList.get(selectedList.size() - 1);
+												} else {
+													preSelectImage = listData.get(0);
+												}
+											}
+											int preIndex = listData.indexOf(preSelectImage);
+											if (preIndex < 0) {
+												preIndex = 0;
+											}
+											int toIndex = listData.indexOf(imageBean);
+											System.out.println("isShiftDown:  " + preIndex + ":" + toIndex);
+											if (selectedList.contains(imageBean)) {
+												// 如果点击的是选择的，那么与pre中间都变为未选择；
+												if (preIndex <= toIndex) {
+													for (int i = preIndex; i <= toIndex; i++) {
+														ImageBean item = listData.get(i);
+														selectedList.remove(item);
+														labelMap.get(item).setGraphic(new ImageView(camera));
+													}
+												} else {
+													for (int i = toIndex; i <= preIndex; i++) {
+														ImageBean item = listData.get(i);
+														selectedList.remove(item);
+														labelMap.get(item).setGraphic(new ImageView(camera));
+													}
+												}
+											} else {
+												// 点击是未选择,那么与pre中间都变为已选择
+												if (preIndex <= toIndex) {
+													for (int i = preIndex; i <= toIndex; i++) {
+														ImageBean item = listData.get(i);
+														if (!selectedList.contains(item)) {
+															selectedList.add(item);
+															labelMap.get(item).setGraphic(new ImageView(cameraFocus));
+														}
+													}
+												} else {
+													for (int i = toIndex; i <= preIndex; i++) {
+														ImageBean item = listData.get(i);
+														if (!selectedList.contains(item)) {
+															selectedList.add(item);
+															labelMap.get(item).setGraphic(new ImageView(cameraFocus));
+														}
+													}
+												}
+											}
+										}
+										preSelectImage = imageBean;
 									}
 								}
 							}
@@ -496,10 +616,6 @@ public class GoogleMapFlightLineController implements Initializable {
 								&& !"".equals(aMapGeocodingBean.getRegeocode().getFormatted_address())) {
 							textArea_place.setVisible(true);
 							// 设置place背景透明
-							Region region = (Region) textArea_place.lookup(".content");
-							region.setBackground(
-									new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-							region.setStyle("-fx-background-color: rgba(56,56,56,0.8)");
 							textArea_place.setText(
 									ResUtil.gs("flight_geo") + aMapGeocodingBean.getRegeocode().getFormatted_address());
 						}
@@ -509,11 +625,6 @@ public class GoogleMapFlightLineController implements Initializable {
 					if (imageMap != null) {
 						imageView.setImage(imageMap);
 						textArea_tip.setVisible(true);
-						// 设置tip背景透明
-						Region region = (Region) textArea_tip.lookup(".content");
-						region.setBackground(
-								new Background(new BackgroundFill(Color.BROWN, CornerRadii.EMPTY, Insets.EMPTY)));
-						region.setStyle("-fx-background-color: rgba(56,56,56,0.8)");
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -598,6 +709,7 @@ public class GoogleMapFlightLineController implements Initializable {
 
 		@Override
 		public void handle(Event event) {
+			preLabelIschange = false;
 			preLabelView = (ImageView) label.getGraphic();
 			label.setGraphic(new ImageView(cameraFocus));
 			if (callback != null) {
@@ -620,10 +732,12 @@ public class GoogleMapFlightLineController implements Initializable {
 
 		@Override
 		public void handle(Event event) {
-			if (preLabelView != null) {
-				label.setGraphic(preLabelView);
-			} else {
-				label.setGraphic(new ImageView(camera));
+			if (!preLabelIschange) {
+				if (preLabelView != null) {
+					label.setGraphic(preLabelView);
+				} else {
+					label.setGraphic(new ImageView(camera));
+				}
 			}
 			if (callback != null) {
 				callback.onFocusChange(label.getId(), false);
@@ -636,12 +750,13 @@ public class GoogleMapFlightLineController implements Initializable {
 	 * 
 	 * @param selectedItem
 	 */
-	public void onImageDelete(ImageBean selectedItem) {
+	public void onImageDeleteFromImageList(ImageBean selectedItem) {
 		if (labelMap.size() > 0) {
 			Label label = labelMap.get(selectedItem);
 			if (label != null) {
 				label.setDisable(true);
 				label.setGraphic(new ImageView(cameraDeleted));
+				selectedList.remove(selectedItem);
 				labelMap.remove(selectedItem);
 			}
 		}
@@ -668,31 +783,73 @@ public class GoogleMapFlightLineController implements Initializable {
 			delete.setStyle("-fx-font-size:12;");
 			delete.setOnAction(new EventHandler<ActionEvent>() {
 				public void handle(ActionEvent event) {
-					UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
-							ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
-							ResUtil.gs("imageList_remove_image_confirm", bean.getName()),
-							(Stage) root.getScene().getWindow(), new CallBack() {
-								@Override
-								public void onCancel() {
-								}
-
-								@Override
-								public void onConfirm() {
-									Label label = labelMap.get(bean);
-									if (label != null) {
-										label.setDisable(true);
-										if (callback != null) {
-											callback.onDeleteImage(bean);
-										}
-										listData.remove(bean);
-										labelMap.remove(bean);
-										label.setGraphic(new ImageView(cameraDeleted));
-									}
-								}
-							});
+					deleteImages();
 				}
 			});
 			getItems().addAll(delete);
+		}
+	}
+
+	/**
+	 * 删除图片
+	 */
+	private void deleteImages() {
+		if (selectedList == null || selectedList.size() <= 0) {
+			return;
+		}
+		if (selectedList.size() == 1) {
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
+					ResUtil.gs("imageList_remove_image_confirm", selectedList.get(0).getName()),
+					(Stage) root.getScene().getWindow(), new CallBack() {
+						@Override
+						public void onCancel() {
+						}
+
+						@Override
+						public void onConfirm() {
+							preSelectImage = null;
+							ImageBean bean = selectedList.get(0);
+							Label label = labelMap.get(bean);
+							if (label != null) {
+								label.setDisable(true);
+								if (callback != null) {
+									callback.onDeleteImage(bean);
+								}
+								listData.remove(bean);
+								labelMap.remove(bean);
+								label.setGraphic(new ImageView(cameraDeleted));
+								selectedList.remove(bean);
+							}
+						}
+					});
+		} else {
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
+					ResUtil.gs("imageList_remove_lot_image_confirm", selectedList.size()),
+					(Stage) root.getScene().getWindow(), new CallBack() {
+						@Override
+						public void onCancel() {
+						}
+
+						@Override
+						public void onConfirm() {
+							preSelectImage = null;
+							for (ImageBean bean : selectedList) {
+								Label label = labelMap.get(bean);
+								if (label != null) {
+									label.setDisable(true);
+									if (callback != null) {
+										callback.onDeleteImage(bean);
+									}
+									listData.remove(bean);
+									labelMap.remove(bean);
+									label.setGraphic(new ImageView(cameraDeleted));
+								}
+							}
+							selectedList.clear();
+						}
+					});
 		}
 	}
 
@@ -701,7 +858,7 @@ public class GoogleMapFlightLineController implements Initializable {
 	 * 
 	 * @param selectedItem
 	 */
-	public void onImageDelete(ArrayList<ImageBean> selectedItem) {
+	public void onImageDeleteFromImageList(ArrayList<ImageBean> selectedItem) {
 		if (labelMap.size() > 0) {
 			if (selectedItem != null && selectedItem.size() > 0) {
 				for (ImageBean item : selectedItem) {
@@ -709,6 +866,7 @@ public class GoogleMapFlightLineController implements Initializable {
 					if (label != null) {
 						label.setDisable(true);
 						label.setGraphic(new ImageView(cameraDeleted));
+						selectedList.remove(item);
 						labelMap.remove(item);
 					}
 				}
@@ -725,7 +883,7 @@ public class GoogleMapFlightLineController implements Initializable {
 	/**
 	 * 图片列表界面选择了某个image
 	 */
-	public void onImageSelected(List<? extends ImageBean> list, int addOrRemove) {
+	public void onImageSelectedFromImageList(List<? extends ImageBean> list, int addOrRemove) {
 		if (labelMap.size() > 0) {
 			if (addOrRemove == 1) {
 				// 添加
@@ -736,6 +894,7 @@ public class GoogleMapFlightLineController implements Initializable {
 							newLabel.setGraphic(new ImageView(cameraFocus));
 						}
 					}
+					selectedList.addAll(list);
 				}
 			} else if (addOrRemove == 0) {
 				// 删除
@@ -748,6 +907,7 @@ public class GoogleMapFlightLineController implements Initializable {
 							System.out.println("hash map no" + item.getName());
 						}
 					}
+					selectedList.removeAll(list);
 				}
 			}
 		}
@@ -758,10 +918,12 @@ public class GoogleMapFlightLineController implements Initializable {
 		Label old = labelMap.get(oldValue);
 		if (old != null) {
 			old.setGraphic(new ImageView(camera));
+			selectedList.remove(oldValue);
 		}
 		Label newLabel = labelMap.get(newValue);
 		if (newLabel != null) {
 			newLabel.setGraphic(new ImageView(cameraFocus));
+			selectedList.add(newValue);
 		}
 	}
 
@@ -770,12 +932,47 @@ public class GoogleMapFlightLineController implements Initializable {
 			Label label = entry.getValue();
 			if (!label.isDisable()) {
 				label.setGraphic(new ImageView(camera));
+				selectedList.remove(entry.getKey());
 			}
 		}
 		Label newLabel = labelMap.get(newValue);
 		if (newLabel != null) {
 			newLabel.setGraphic(new ImageView(cameraFocus));
+			selectedList.clear();
+			selectedList.add(newValue);
 		}
 	}
 
+	private ObservableList<ImageBean> selectedList = FXCollections.observableArrayList();
+	@FXML
+	Label bottomLabel_all;
+	@FXML
+	Label bottomLabel_selected;
+
+	class MyRunnable implements Runnable {
+		private List<? extends ImageBean> subListAdd;
+		private List<? extends ImageBean> subListRemove;
+
+		public MyRunnable(List<? extends ImageBean> subListAdd, List<ImageBean> subListRemove) {
+			this.subListAdd = subListAdd;
+			this.subListRemove = subListRemove;
+		}
+
+		public void run() {
+			Stage stage=  (Stage) root.getScene().getWindow();
+			if ( stage.isFocused()) {
+				bottomLabel_selected.setText(ResUtil.gs("selected_image_num", selectedList.size() + ""));
+				if (imageListController != null) {
+					imageListController.onImageSelectedFromFlightLine(subListRemove, 0);
+				}
+				if (imageListController != null) {
+					if (selectedList.size() > 0) {
+						imageListController.onImageSelectedFromFlightLine(subListAdd, 1);
+					}
+				}
+			} else {
+				System.out.println("飞行界不是焦点");
+			}
+		}
+	}
 }

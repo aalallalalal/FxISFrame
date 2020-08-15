@@ -32,19 +32,30 @@
 							fitHeight="626" fitWidth="976" />
 					</GesturePane>
 
-					<TextArea fx:id="textArea_tip" prefHeight="80.0"
-						prefWidth="160" editable="false" wrapText="true"
-						AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="5.0"
-						visible="false"
-						style="-fx-font-size:10;-fx-padding:3;-fx-text-fill: #fff;-fx-background-color:rgba(56,56,56,0.4);-fx-border-radius: 10;-fx-background-radius: 10">
-					</TextArea>
+					<HBox alignment="CENTER_LEFT" style="-fx-spacing: 10;"
+						AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+						<children>
+							<Label fx:id="bottomLabel_all" text="" textFill="#4f4f4f"
+								style="-fx-font-size:14.0;">
+							</Label>
+							<Label fx:id="bottomLabel_selected" text=""
+								textFill="#4f4f4f" style="-fx-font-size:14.0;">
+							</Label>
+						</children>
+					</HBox>
+
+					<Label fx:id="textArea_tip" prefHeight="80.0"
+						prefWidth="160"  wrapText="true"
+						AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
+						visible="true"
+						style="-fx-font-size:10;-fx-padding:3;-fx-text-fill: #000;">
+					</Label>
 
 
-					<TextArea fx:id="textArea_place" prefHeight="50.0"
-						prefWidth="220" editable="false" wrapText="true"
-						AnchorPane.rightAnchor="5.0" AnchorPane.bottomAnchor="5.0"
-						visible="false" style="-fx-font-size:13;-fx-text-fill: #fff;">
-					</TextArea>
+					<Label fx:id="textArea_place" wrapText="true" AnchorPane.leftAnchor="5.0"
+						AnchorPane.bottomAnchor="5.0" visible="false"
+						style="-fx-font-size:13;-fx-text-fill: #000;">
+					</Label>
 
 					<JFXButton onAction="#onClickPaneSwitch" visible="false"
 						AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="5.0"
@@ -62,9 +73,8 @@
 						</graphic>
 					</JFXButton>
 
-					<Pane fx:id="gesturePaneFlight"
-						AnchorPane.bottomAnchor="0.0" prefHeight="450" prefWidth="450"
-						AnchorPane.leftAnchor="0.0">
+					<Pane fx:id="gesturePaneFlight" AnchorPane.bottomAnchor="0.0"
+						prefHeight="450" prefWidth="450" AnchorPane.leftAnchor="0.0">
 						<Pane fx:id="pane_Canvas" prefHeight="450" prefWidth="450" />
 					</Pane>
 				</children>
