@@ -41,10 +41,13 @@
 							<Label fx:id="bottomLabel_selected" text=""
 								textFill="#4f4f4f" style="-fx-font-size:14.0;">
 							</Label>
+							<Label fx:id="bottomLabel_current" text=""
+								textFill="#2564FD" style="-fx-font-size:14.0;">
+							</Label>
 						</children>
 					</HBox>
 
-					<Label fx:id="textArea_tip" prefHeight="80.0"
+					<Label fx:id="textArea_tip" 
 						prefWidth="160"  wrapText="true"
 						AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
 						visible="true"

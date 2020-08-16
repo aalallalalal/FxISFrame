@@ -367,13 +367,21 @@ public class GoogleMapFlightLineController implements Initializable {
 							}
 							oldScreenX = nowX;
 							oldScreenY = nowY;
+						}else if (e.getEventType() == MouseEvent.MOUSE_CLICKED
+								&& e.getButton() == MouseButton.SECONDARY) {
+							if(!selectedList.contains(imageBean)) {
+								item.setContextMenu(null); 
+							}else {
+								item.setContextMenu(new MyContextMenu(imageBean)); 
+							}
+							e.consume();
 						}
 					}
 				});
 				MyToolTip myToolTip = new MyToolTip(generateToolTipInfo(imageBean));
 				item.setTooltip(myToolTip);
 
-				item.setContextMenu(new MyContextMenu(imageBean));
+//				item.setContextMenu(new MyContextMenu(imageBean));
 
 				labelMap.put(imageBean, item);
 				return item;
@@ -709,6 +717,7 @@ public class GoogleMapFlightLineController implements Initializable {
 
 		@Override
 		public void handle(Event event) {
+			bottomLabel_current.setText(ResUtil.gs("flightLine_current_img",label.getId()));
 			preLabelIschange = false;
 			preLabelView = (ImageView) label.getGraphic();
 			label.setGraphic(new ImageView(cameraFocus));
@@ -732,6 +741,7 @@ public class GoogleMapFlightLineController implements Initializable {
 
 		@Override
 		public void handle(Event event) {
+			bottomLabel_current.setText("");
 			if (!preLabelIschange) {
 				if (preLabelView != null) {
 					label.setGraphic(preLabelView);
@@ -788,6 +798,9 @@ public class GoogleMapFlightLineController implements Initializable {
 			});
 			getItems().addAll(delete);
 		}
+		
+		
+		
 	}
 
 	/**
@@ -948,6 +961,7 @@ public class GoogleMapFlightLineController implements Initializable {
 	Label bottomLabel_all;
 	@FXML
 	Label bottomLabel_selected;
+	@FXML Label bottomLabel_current;
 
 	class MyRunnable implements Runnable {
 		private List<? extends ImageBean> subListAdd;
@@ -959,9 +973,9 @@ public class GoogleMapFlightLineController implements Initializable {
 		}
 
 		public void run() {
+			bottomLabel_selected.setText(ResUtil.gs("selected_image_num", selectedList.size() + ""));
 			Stage stage=  (Stage) root.getScene().getWindow();
 			if ( stage.isFocused()) {
-				bottomLabel_selected.setText(ResUtil.gs("selected_image_num", selectedList.size() + ""));
 				if (imageListController != null) {
 					imageListController.onImageSelectedFromFlightLine(subListRemove, 0);
 				}
@@ -971,7 +985,7 @@ public class GoogleMapFlightLineController implements Initializable {
 					}
 				}
 			} else {
-				System.out.println("飞行界不是焦点");
+//				System.out.println("飞行界不是焦点");
 			}
 		}
 	}

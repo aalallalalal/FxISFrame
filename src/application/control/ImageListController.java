@@ -629,7 +629,7 @@ public class ImageListController implements Initializable {
 					}
 				}
 			} else {
-				System.out.println("imageList界面不是焦点");
+//				System.out.println("imageList界面不是焦点");
 			}
 		}
 	}
