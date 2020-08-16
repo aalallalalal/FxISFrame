@@ -68,6 +68,8 @@ public class GoogleMapFlightLineController implements Initializable {
 
 	private final Image camera = new Image(getClass().getResourceAsStream("/resources/camera-fill-normal.png"), 20, 20,
 			false, true);
+	private final Image cameraHover = new Image(getClass().getResourceAsStream("/resources/camera-hover.png"), 20, 20,
+			false, true);
 	private final Image cameraFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill-focus.png"), 20,
 			20, false, true);
 	private final Image cameraDeleted = new Image(getClass().getResourceAsStream("/resources/camera-fill-deleted.png"),
@@ -720,7 +722,7 @@ public class GoogleMapFlightLineController implements Initializable {
 			bottomLabel_current.setText(ResUtil.gs("flightLine_current_img",label.getId()));
 			preLabelIschange = false;
 			preLabelView = (ImageView) label.getGraphic();
-			label.setGraphic(new ImageView(cameraFocus));
+			label.setGraphic(new ImageView(cameraHover));
 			if (callback != null) {
 				callback.onFocusChange(label.getId(), true);
 			}
