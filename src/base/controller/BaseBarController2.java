@@ -44,7 +44,7 @@ public class BaseBarController2 implements Initializable {
 				if (rotateExit != null) {
 					rotateExit.stop();
 				}
-				rotateEnter = AnimatorUtil.rotate(close, 350, 0, 90);
+				rotateEnter = AnimatorUtil.rotate(close.getGraphic(), 350, 0, 90);
 			}
 		});
 		close.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
@@ -53,7 +53,7 @@ public class BaseBarController2 implements Initializable {
 				if (rotateEnter != null) {
 					rotateEnter.stop();
 				}
-				rotateExit = AnimatorUtil.rotate(close, 350, 90, 0);
+				rotateExit = AnimatorUtil.rotate(close.getGraphic(), 350, 90, 0);
 			}
 		});
 		root.setOnKeyPressed(new EventHandler<KeyEvent>() {

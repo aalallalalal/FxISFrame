@@ -68,7 +68,7 @@ public class GoogleMapFlightLineController implements Initializable {
 
 	private final Image camera = new Image(getClass().getResourceAsStream("/resources/camera-fill-normal.png"), 20, 20,
 			false, true);
-	private final Image cameraHover = new Image(getClass().getResourceAsStream("/resources/camera-hover.png"), 20, 20,
+	private final Image cameraHover = new Image(getClass().getResourceAsStream("/resources/camera-hover3.png"), 20, 20,
 			false, true);
 	private final Image cameraFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill-focus.png"), 20,
 			20, false, true);
@@ -76,10 +76,10 @@ public class GoogleMapFlightLineController implements Initializable {
 			20, 20, false, true);
 	private final Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight_uav.png"), 25, 25,
 			false, true);
-	private final Image imageSwitchOn = new Image(getClass().getResourceAsStream("/resources/icon_switch_on.png"), 35,
-			35, false, true);
-	private final Image imageSwitchOff = new Image(getClass().getResourceAsStream("/resources/icon_switch_off.png"), 35,
-			35, false, true);
+	private final Image imageSwitchOn = new Image(getClass().getResourceAsStream("/resources/eye_open.png"), 20,
+			20, false, true);
+	private final Image imageSwitchOff = new Image(getClass().getResourceAsStream("/resources/eye_close.png"), 20,
+			20, false, true);
 	private DropShadow dropShadow;
 
 	@FXML
@@ -112,7 +112,7 @@ public class GoogleMapFlightLineController implements Initializable {
 	private double scale;
 	private int radioType;
 
-	private boolean isShowFlightPane = true;
+	private boolean isShowTipsPane = true;
 
 	private ObservableList<ImageBean> listData = FXCollections.observableArrayList();
 	private AMapGeocodingBean aMapGeocodingBean;
@@ -687,20 +687,14 @@ public class GoogleMapFlightLineController implements Initializable {
 
 	@FXML
 	public void onClickPaneSwitch() {
-		if (isShowFlightPane) {
-			if (pathTransition != null) {
-				pathTransition.stop();
-			}
-			gesturePaneFlight.setVisible(false);
+		if (isShowTipsPane) {
+			textArea_tip.setVisible(false);
 			btn_switch.setImage(imageSwitchOn);
 		} else {
-			if (pathTransition != null) {
-				pathTransition.play();
-			}
-			gesturePaneFlight.setVisible(true);
+			textArea_tip.setVisible(true);
 			btn_switch.setImage(imageSwitchOff);
 		}
-		isShowFlightPane = !isShowFlightPane;
+		isShowTipsPane = !isShowTipsPane;
 	}
 
 	private ImageView preLabelView;

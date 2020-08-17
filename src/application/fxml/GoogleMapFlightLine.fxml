@@ -51,7 +51,7 @@
 						prefWidth="160"  wrapText="true"
 						AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
 						visible="true"
-						style="-fx-font-size:10;-fx-padding:3;-fx-text-fill: #000;">
+						style="-fx-font-size:12;-fx-padding:3;-fx-text-fill: #000;">
 					</Label>
 
 
@@ -60,17 +60,17 @@
 						style="-fx-font-size:13;-fx-text-fill: #000;">
 					</Label>
 
-					<JFXButton onAction="#onClickPaneSwitch" visible="false"
-						AnchorPane.bottomAnchor="25.0" AnchorPane.leftAnchor="5.0"
-						style="-fx-padding:4;-fx-pref-width:26; -fx-focus-color:transparent;">
+					<JFXButton onAction="#onClickPaneSwitch" visible="true"
+						AnchorPane.topAnchor="85.0" AnchorPane.rightAnchor="5.0"
+						style="-fx-padding:2;-fx-pref-width:20; -fx-focus-color:transparent;">
 						<tooltip>
 							<MyToolTip text="%flight_switcher_pane"></MyToolTip>
 						</tooltip>
 						<graphic>
-							<ImageView fx:id="btn_switch" fitWidth="35.0"
+							<ImageView fx:id="btn_switch" fitWidth="20.0"
 								preserveRatio="true" smooth="true">
 								<image>
-									<Image url="/resources/icon_switch_off.png" />
+									<Image url="/resources/eye_close.png" />
 								</image>
 							</ImageView>
 						</graphic>

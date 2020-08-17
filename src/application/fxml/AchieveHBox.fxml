@@ -14,7 +14,7 @@
 
 <HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ImageView fx:id="imageView_Achieve" fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="imageView_Achieve" fitHeight="40.0" pickOnBounds="true" preserveRatio="true">
          <HBox.margin>
             <Insets left="10.0" />
          </HBox.margin>
@@ -24,15 +24,9 @@
       </ImageView>
       <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="200.0">
          <children>
-            <Label fx:id="project_name" prefHeight="20.0" prefWidth="150.0">
-               <font>
-                  <Font size="16.0" />
-               </font>
+            <Label fx:id="project_name" prefHeight="20.0" prefWidth="150.0" style="-fx-font-size:16;-fx-text-fill: #4f4f4f;">
             </Label>
-            <Label fx:id="achieve_time" prefHeight="20.0" prefWidth="150.0">
-               <font>
-                  <Font size="13.0" />
-               </font>
+            <Label fx:id="achieve_time" prefHeight="20.0" prefWidth="150.0" style="-fx-font-size:13;-fx-text-fill: #4f4f4f;">
             </Label>
          </children>
          <HBox.margin>

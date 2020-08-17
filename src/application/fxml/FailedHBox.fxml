@@ -9,53 +9,55 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<HBox alignment="CENTER_LEFT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="50.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ImageView fx:id="imageView_failed" fitHeight="40.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
-         <HBox.margin>
-            <Insets left="10.0" />
-         </HBox.margin>
-         <image>
-            <Image url="/resources/shibai1.png" />
-         </image>
-      </ImageView>
-      <VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="450.0">
-         <children>
-            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <Label fx:id="project_name" prefHeight="22.0" prefWidth="150.0" >
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Label>
-                  <Label fx:id="currenttime" prefHeight="20.0" prefWidth="150.0" >
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Label>
-               </children>
-            </HBox>
-            <Label fx:id="faildetailinfo" prefHeight="20.0" prefWidth="450.0" >
-               <font>
-                  <Font size="13.0" />
-               </font></Label>
-         </children>
-         <HBox.margin>
-            <Insets left="5.0" />
-         </HBox.margin>
-      </VBox>
-      <JFXButton fx:id="paramDetail" text="%ParamDetail">
-         <HBox.margin>
-            <Insets left="40.0" />
-         </HBox.margin>
-      </JFXButton>
-      <JFXButton fx:id="restart" text="%Param&amp;Restart">
-         <HBox.margin>
-            <Insets left="20.0" />
-         </HBox.margin>
-      </JFXButton>
-   </children>
+<HBox alignment="CENTER_LEFT" maxHeight="-Infinity"
+	maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+	prefHeight="50.0" prefWidth="790.0" xmlns="http://javafx.com/javafx/8"
+	xmlns:fx="http://javafx.com/fxml/1">
+	<children>
+		<ImageView fx:id="imageView_failed" fitHeight="40.0"
+			pickOnBounds="true" preserveRatio="true">
+			<HBox.margin>
+				<Insets left="10.0" />
+			</HBox.margin>
+			<image>
+				<Image url="/resources/renwuUnsucceed.png" />
+			</image>
+		</ImageView>
+		<VBox alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="450.0">
+			<children>
+				<HBox alignment="CENTER_LEFT" prefHeight="100.0"
+					prefWidth="200.0">
+					<children>
+						<Label fx:id="project_name" prefHeight="22.0"
+							prefWidth="150.0"
+							style="-fx-font-size:16;-fx-text-fill: #4f4f4f;">
+						</Label>
+						<Label fx:id="currenttime" prefHeight="20.0"
+							prefWidth="150.0"
+							style="-fx-font-size:14;-fx-text-fill: #4f4f4f;">
+							<HBox.margin>
+								<Insets left="10.0" />
+							</HBox.margin>
+						</Label>
+					</children>
+				</HBox>
+				<Label fx:id="faildetailinfo" prefHeight="20.0"
+					prefWidth="450.0" style="-fx-font-size:13;-fx-text-fill: #4f4f4f;">
+				</Label>
+			</children>
+			<HBox.margin>
+				<Insets left="10.0" />
+			</HBox.margin>
+		</VBox>
+		<JFXButton fx:id="paramDetail" text="%ParamDetail">
+			<HBox.margin>
+				<Insets left="40.0" />
+			</HBox.margin>
+		</JFXButton>
+		<JFXButton fx:id="restart" text="%Param&amp;Restart">
+			<HBox.margin>
+				<Insets left="20.0" />
+			</HBox.margin>
+		</JFXButton>
+	</children>
 </HBox>

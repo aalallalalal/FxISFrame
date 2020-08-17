@@ -38,7 +38,7 @@ public class MyDialogController implements Initializable {
 				if (rotateExit != null) {
 					rotateExit.stop();
 				}
-				rotateEnter = AnimatorUtil.rotate(btn_close, 350, 0, 90);
+				rotateEnter = AnimatorUtil.rotate(btn_close.getGraphic(), 350, 0, 90);
 			}
 		});
 		btn_close.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
@@ -47,7 +47,7 @@ public class MyDialogController implements Initializable {
 				if (rotateEnter != null) {
 					rotateEnter.stop();
 				}
-				rotateExit = AnimatorUtil.rotate(btn_close, 350, 90, 0);
+				rotateExit = AnimatorUtil.rotate(btn_close.getGraphic(), 350, 90, 0);
 			}
 		});
 		root.setOnKeyPressed(new EventHandler<KeyEvent>() {

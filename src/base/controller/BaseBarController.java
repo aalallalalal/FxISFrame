@@ -48,6 +48,8 @@ public class BaseBarController implements Initializable {
 	JFXButton btn_history;
 	private RotateTransition rotateEnter;
 	private RotateTransition rotateExit;
+	private RotateTransition rotateEnter2;
+	private RotateTransition rotateExit2;
 	protected ScaleTransition scaleExit;
 	protected TranslateTransition translateExit;
 	private ScaleTransition scaleEnter;
@@ -66,7 +68,7 @@ public class BaseBarController implements Initializable {
 				if (rotateExit != null) {
 					rotateExit.stop();
 				}
-				rotateEnter = AnimatorUtil.rotate(btn_close, 350, 0, 90);
+				rotateEnter = AnimatorUtil.rotate(btn_close.getGraphic(), 350, 0, 90);
 			}
 		});
 		btn_close.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
@@ -75,7 +77,25 @@ public class BaseBarController implements Initializable {
 				if (rotateEnter != null) {
 					rotateEnter.stop();
 				}
-				rotateExit = AnimatorUtil.rotate(btn_close, 350, 90, 0);
+				rotateExit = AnimatorUtil.rotate(btn_close.getGraphic(), 350, 90, 0);
+			}
+		});
+		btn_history.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (rotateExit2 != null) {
+					rotateExit2.stop();
+				}
+				rotateEnter2 = AnimatorUtil.rotate(btn_history.getGraphic(), 350, 0, 45);
+			}
+		});
+		btn_history.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (rotateEnter2 != null) {
+					rotateEnter2.stop();
+				}
+				rotateExit2 = AnimatorUtil.rotate(btn_history.getGraphic(), 350,45, 0);
 			}
 		});
 		btn_hide.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
