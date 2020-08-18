@@ -33,7 +33,7 @@
 					</GesturePane>
 
 					<HBox alignment="CENTER_LEFT" style="-fx-spacing: 10;"
-						AnchorPane.leftAnchor="5.0" AnchorPane.topAnchor="5.0">
+						AnchorPane.leftAnchor="0" AnchorPane.topAnchor="0">
 						<children>
 							<Label fx:id="bottomLabel_all" text="" textFill="#4f4f4f"
 								style="-fx-font-size:14.0;">
@@ -55,13 +55,13 @@
 					</Label>
 
 
-					<Label fx:id="textArea_place" wrapText="true" AnchorPane.leftAnchor="5.0"
-						AnchorPane.bottomAnchor="5.0" visible="false"
+					<Label fx:id="textArea_place" wrapText="true" AnchorPane.leftAnchor="0"
+						AnchorPane.bottomAnchor="0" visible="false"
 						style="-fx-font-size:13;-fx-text-fill: #000;">
 					</Label>
 
 					<JFXButton onAction="#onClickPaneSwitch" visible="true"
-						AnchorPane.topAnchor="85.0" AnchorPane.rightAnchor="5.0"
+						AnchorPane.topAnchor="85.0" AnchorPane.rightAnchor="0"
 						style="-fx-padding:2;-fx-pref-width:20; -fx-focus-color:transparent;">
 						<tooltip>
 							<MyToolTip text="%flight_switcher_pane"></MyToolTip>

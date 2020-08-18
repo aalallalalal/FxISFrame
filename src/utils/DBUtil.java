@@ -1,7 +1,6 @@
 package utils;
 
 import java.io.File;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -116,7 +115,7 @@ public class DBUtil {
 	public static ArrayList<DBRecordBean> selectAll() {
 		ArrayList<DBRecordBean> datas = new ArrayList<DBRecordBean>();
 		try {
-			ResultSet rs = conn.createStatement().executeQuery("select * from table_history;");
+			ResultSet rs = conn.createStatement().executeQuery("select * from table_history ORDER BY run_time DESC;");
 			while (rs.next()) { // 将查询到的数据打印出来
 				DBRecordBean bean = new DBRecordBean();
 				bean.resToBean(rs);

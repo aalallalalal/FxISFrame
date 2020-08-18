@@ -68,7 +68,7 @@ public class GoogleMapFlightLineController implements Initializable {
 
 	private final Image camera = new Image(getClass().getResourceAsStream("/resources/camera-fill-normal.png"), 20, 20,
 			false, true);
-	private final Image cameraHover = new Image(getClass().getResourceAsStream("/resources/camera-hover3.png"), 20, 20,
+	private final Image cameraHover = new Image(getClass().getResourceAsStream("/resources/camera-hover4.png"), 20, 20,
 			false, true);
 	private final Image cameraFocus = new Image(getClass().getResourceAsStream("/resources/camera-fill-focus.png"), 20,
 			20, false, true);

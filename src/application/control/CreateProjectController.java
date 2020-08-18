@@ -6,6 +6,7 @@ import java.util.ResourceBundle;
 import com.jfoenix.controls.JFXButton;
 
 import javafx.animation.Transition;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -89,7 +90,7 @@ public class CreateProjectController extends BaseController implements Initializ
 	}
 
 	private void initButtonEffect() {
-		final Transition animation = new Transition() {
+		final Transition animationOn = new Transition() {
 			{
 				setCycleDuration(Duration.millis(200));
 			}
@@ -98,6 +99,16 @@ public class CreateProjectController extends BaseController implements Initializ
 				effectOn.setRadius((double) 12 * (double) frac);
 			}
 		};
+		final Transition animationGo = new Transition() {
+			{
+				setCycleDuration(Duration.millis(200));
+			}
+
+			protected void interpolate(double frac) {
+				effectOn.setRadius((double) 12 * (double) (1-frac));
+			}
+		};
+		
 		effectOn = new DropShadow();
 		effectOn.setColor(Color.DEEPSKYBLUE);
 		effectOn.setRadius(0);
@@ -106,26 +117,38 @@ public class CreateProjectController extends BaseController implements Initializ
 			@Override
 			public void handle(MouseEvent event) {
 				btn_create.setEffect(effectOn);
-				animation.play();
+				animationOn.play();
 			}
 		});
 		btn_create.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				btn_create.setEffect(null);
+				animationGo.play();
+				animationGo.setOnFinished(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						btn_create.setEffect(null);	
+					}
+				});
 			}
 		});
 		btn_open.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
 				btn_open.setEffect(effectOn);
-				animation.play();
+				animationOn.play();
 			}
 		});
 		btn_open.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
-				btn_open.setEffect(null);
+				animationGo.play();
+				animationGo.setOnFinished(new EventHandler<ActionEvent>() {
+					@Override
+					public void handle(ActionEvent event) {
+						btn_open.setEffect(null);	
+					}
+				});
 			}
 		});
 	}
