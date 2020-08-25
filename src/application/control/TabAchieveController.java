@@ -174,7 +174,7 @@ public class TabAchieveController implements Initializable {
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
 				String lastRunTime = df.format(project.getLastRuntime());
 				path = path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + lastRunTime
-						+ "\\Result\\0_results\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
+						+ "\\Result\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
 				if (!SysUtil.exeOpenFile(path)) {
 					ToastUtil.toast(ResUtil.gs("open_image_error"));
 				}
@@ -197,7 +197,7 @@ public class TabAchieveController implements Initializable {
 						SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
 						String lastRunTime = df.format(project.getLastRuntime());
 						Desktop.getDesktop().open(new File(path + "\\logs\\" + project.getProjectName()
-								+ project.getId() + "\\" + lastRunTime + "\\Result\\1_debugs\\" + name_dir + "-debug"));
+								+ project.getId() + "\\" + lastRunTime + "\\Result\\" + name_dir + "-Mid_Result"));
 					} catch (IOException e) {
 						e.printStackTrace();
 					}
