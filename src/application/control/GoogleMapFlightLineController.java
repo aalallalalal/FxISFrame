@@ -997,6 +997,7 @@ public class GoogleMapFlightLineController implements Initializable {
 			Label label = labelMap.get(imageBean);
 			if (label != null) {
 				label.setGraphic(new ImageView(camera));
+				selectedList.remove(imageBean);
 			}
 		}
 	}
@@ -1013,6 +1014,7 @@ public class GoogleMapFlightLineController implements Initializable {
 					Label label = labelMap.get(item);
 					if (label != null) {
 						label.setGraphic(new ImageView(camera));
+						selectedList.remove(item);
 					}
 				}
 			}
