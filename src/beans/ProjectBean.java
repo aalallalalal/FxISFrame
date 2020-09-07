@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import utils.ImagesMapToFileUtil;
 import utils.ResUtil;
 
 /**
@@ -18,22 +19,22 @@ public class ProjectBean implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 	private long id;
-	private String projectName="";
-	private String projectDir="";
-	private String projectLocationFile="";
-	private String createTime="";
-	private long lastUsedTime;     //工程最后导入时间
+	private String projectName = "";
+	private String projectDir = "";
+	private String projectLocationFile = "";
+	private String createTime = "";
+	private long lastUsedTime; // 工程最后导入时间
 	private long lastRuntime;
-	private String path_result=""; // 结果图片路径
+	private String path_result = ""; // 结果图片路径
 	private int locationFrom; // 0:从图片，1：从文件
 	private SettingsBean settings;
 	private int info;
-	private String erroDetail="";
+	private String erroDetail = "";
 
 	public ProjectBean() {
 		super();
 	}
-	
+
 	public ProjectBean(String projectName, String projectDir, int locationFrom, String projectLocationFile) {
 		super();
 		this.projectName = projectName;
@@ -46,7 +47,7 @@ public class ProjectBean implements Serializable {
 		this.createTime = df.format(new Date());// new Date()为获取当前系统时间
 		this.info = 0;
 	}
-	
+
 	public String getErroDetail() {
 		return erroDetail;
 	}
@@ -54,14 +55,12 @@ public class ProjectBean implements Serializable {
 	public void setErroDetail(String erroDetail) {
 		this.erroDetail = erroDetail;
 	}
-	
-	public long getLastRuntime()
-	{
+
+	public long getLastRuntime() {
 		return lastRuntime;
 	}
 
-	public void setLastRuntime(long lastRuntime)
-	{
+	public void setLastRuntime(long lastRuntime) {
 		this.lastRuntime = lastRuntime;
 	}
 
@@ -149,6 +148,7 @@ public class ProjectBean implements Serializable {
 			parameter += "\" ";
 		}
 		parameter += '"' + this.getProjectDir() + '"';
+		parameter += '"' + ImagesMapToFileUtil.getDeletedFilePath(this) + '"';
 		return parameter;
 	}
 

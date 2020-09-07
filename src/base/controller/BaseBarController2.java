@@ -17,6 +17,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import utils.AnimatorUtil;
 
 /**
@@ -74,6 +75,7 @@ public class BaseBarController2 implements Initializable {
 	public void onClickClose(ActionEvent event) {
 		// 这里是取到Stage的具体代码
 		Stage stage = (Stage) root.getScene().getWindow();
+		stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 		stage.close();
 		System.out.println("仅关闭此窗口");
 	}

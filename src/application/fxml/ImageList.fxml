@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.FlowPane?>
 
-<BorderPane fx:id="root" style="-fx-background-color:#fff"
+<BorderPane fx:id="root1" style="-fx-background-color:#fff"
 	xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
 	fx:controller="application.control.ImageListController">
 	<center>
@@ -46,6 +46,12 @@
 					BorderPane.alignment="CENTER">
 					<JFXButton onAction="#onDeleteImg" fx:id="btn_delete"
 						text="%imageList_remove_image">
+						<styleClass>
+							<String fx:value="btn-level-projects" />
+						</styleClass>
+					</JFXButton>
+					<JFXButton onAction="#onRecallImg"
+						text="%imageList_recall_image">
 						<styleClass>
 							<String fx:value="btn-level-projects" />
 						</styleClass>

@@ -59,7 +59,6 @@ public class FileUtil {
 	public static void deleteFile(String txtPath) {
 		File txtFile = new File(txtPath);
 		if (txtFile == null || !txtFile.exists()) {
-			System.out.println("返回");
 			return;
 		}
 		else

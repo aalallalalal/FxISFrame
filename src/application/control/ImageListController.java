@@ -50,13 +50,17 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import utils.FileChooserUtil;
 import utils.FileUtil;
 import utils.GpsUtil;
 import utils.ImageUtil;
+import utils.ImagesMapToFileUtil;
 import utils.ResUtil;
 import utils.SaveProjectsUtil;
+import utils.StrUtil;
 import utils.SysUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
@@ -82,7 +86,7 @@ public class ImageListController implements Initializable {
 	@FXML
 	VBox vbox_rightButtons;
 	@FXML
-	BorderPane root;
+	BorderPane root1;
 	@FXML
 	JFXTextField textField_projectName;
 
@@ -96,6 +100,7 @@ public class ImageListController implements Initializable {
 	private TableColumn<ImageBean, String> longtitudeCol;
 	private TableColumn<ImageBean, String> latitudeCol;
 	private TableColumn<ImageBean, String> heightCol;
+	private TableColumn<ImageBean, String> isDeletedCol;
 	@FXML
 	ImageView imageview;
 
@@ -113,10 +118,28 @@ public class ImageListController implements Initializable {
 	@FXML
 	JFXButton btn_delete;
 
+	private HashMap<String, Boolean> labelMap = new HashMap<String, Boolean>();// 存放图片删除情况
+	private Stage flightStage; // 飞行路径界面的stage
+
+	private int deletedNum = 0;
+
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTableView();
 		initRadioView();
+	}
+
+	private void initView() {
+		Stage stage = (Stage) root1.getParent().getScene().getWindow();
+		stage.addEventFilter(WindowEvent.WINDOW_CLOSE_REQUEST, new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent arg0) {
+				if (flightStage != null && flightStage.isShowing()) {
+					flightStage.close();
+				}
+				ImagesMapToFileUtil.saveMap(project, labelMap, null);
+			}
+		});
 	}
 
 	/**
@@ -128,11 +151,12 @@ public class ImageListController implements Initializable {
 		if (project == null) {
 			return;
 		}
+		initView();
 		this.project = project;
 		initDataView();
-		refreshListData();
+		refreshListData(true);
 
-		Node close = root.getParent().lookup("#close");
+		Node close = root1.getParent().lookup("#close");
 		close.addEventFilter(MouseDragEvent.MOUSE_PRESSED, new EventHandler<Event>() {
 			@Override
 			public void handle(Event event) {
@@ -157,6 +181,15 @@ public class ImageListController implements Initializable {
 	}
 
 	/**
+	 * 从label文件中读取删除图片map数据
+	 */
+	private void initLabelMap() {
+		String deletedFilePath = ImagesMapToFileUtil.getDeletedFilePath(project);
+		labelMap = ImagesMapToFileUtil.fileToMap(deletedFilePath, project);
+		System.out.println("lamapsize" + labelMap.size());
+	}
+
+	/**
 	 * 解析location文件
 	 * 
 	 * @param proj
@@ -170,51 +203,67 @@ public class ImageListController implements Initializable {
 	/**
 	 * 刷新图片数据。
 	 */
-	private void refreshListData() {
-		try {
-			listData.clear();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		task = new ProgressTask(new ProgressTask.MyTask<Integer>() {
-			@Override
-			protected void succeeded() {
-				super.succeeded();
+	private void refreshListData(boolean isClear) {
+		if (!isClear) {
+			tableView.getColumns().get(0).setVisible(false);
+			tableView.getColumns().get(0).setVisible(true);
+		}else {
+			if(flightStage!=null&&flightStage.isShowing()) {
+				flightStage.close();
 			}
-
-			@Override
-			protected Integer call() {
-				File file = new File(project.getProjectDir());
-				if (file != null && file.exists()) {
-					ArrayList<ImageBean> processList = new ArrayList<ImageBean>();
-					File[] itemFiles = file.listFiles();
-					for (File item : itemFiles) {
-						if (!item.isDirectory() && FileUtil.isImage(item)) {
-							// 不是文件夹，并且是图片
-							ImageBean imageBean = new ImageBean(item.getAbsolutePath(), item.getName());
-							if (project.getLocationFrom() == 0) {
-								// 从图片中读取经纬度才解析图片数据
-								try {
-									ImageUtil.printImageTags(item.getAbsolutePath(), imageBean);
-								} catch (ImageProcessingException e) {
-									e.printStackTrace();
-								} catch (IOException e) {
-									e.printStackTrace();
-								}
-							}
-							processList.add(imageBean);
-						}
+			task = new ProgressTask(new ProgressTask.MyTask<Integer>() {
+				@Override
+				protected void succeeded() {
+					super.succeeded();
+//					bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num", deletedNum + ""));
+					if (flightController != null) {
+						flightController.updataDeletedNum(deletedNum);
 					}
-					if (project.getLocationFrom() == 1) {
-						analysingGps(project);
-						processList = setImageDataFromFile(processList);
-					}
-					listData.addAll(processList);
 				}
-				return 1;
-			}
-		}, (Stage) root.getScene().getWindow());
-		task.start();
+
+				@Override
+				protected Integer call() {
+					if (labelMap == null || labelMap.isEmpty()) {
+						initLabelMap();
+					}
+					File file = new File(project.getProjectDir());
+					if (file != null && file.exists()) {
+						ArrayList<ImageBean> processList = new ArrayList<ImageBean>();
+						File[] itemFiles = file.listFiles();
+						for (File item : itemFiles) {
+							if (!item.isDirectory() && FileUtil.isImage(item)) {
+								// 不是文件夹，并且是图片
+								ImageBean imageBean = new ImageBean(item.getAbsolutePath(), item.getName());
+								if (project.getLocationFrom() == 0) {
+									// 从图片中读取经纬度才解析图片数据
+									try {
+										ImageUtil.printImageTags(item.getAbsolutePath(), imageBean);
+									} catch (ImageProcessingException e) {
+										e.printStackTrace();
+									} catch (IOException e) {
+										e.printStackTrace();
+									}
+								}
+								processList.add(imageBean);
+							}
+						}
+						if (project.getLocationFrom() == 1) {
+							analysingGps(project);
+							processList = setImageDataFromFile(processList);
+						}
+						try {
+							listData.clear();
+							deletedNum = 0;
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						listData.addAll(processList);
+					}
+					return 1;
+				}
+			}, (Stage) root1.getScene().getWindow());
+			task.start();
+		}
 	}
 
 	private void initDataView() {
@@ -252,7 +301,7 @@ public class ImageListController implements Initializable {
 							project.setLocationFrom(1);
 						}
 					}
-					refreshListData();
+					refreshListData(true);
 				}
 			}
 		});
@@ -272,7 +321,7 @@ public class ImageListController implements Initializable {
 							if (project != null) {
 								project.setLocationFrom(1);
 								project.setProjectLocationFile(path);
-								refreshListData();
+								refreshListData(true);
 							}
 						}
 					}
@@ -282,7 +331,61 @@ public class ImageListController implements Initializable {
 	@FXML
 	public void onClickHelp() {
 		UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
-				ResUtil.gs("tips"), ResUtil.gs("Text_LocationFile_Notice"), (Stage) root.getScene().getWindow());
+				ResUtil.gs("tips"), ResUtil.gs("Text_LocationFile_Notice"), (Stage) root1.getScene().getWindow());
+	}
+
+	@FXML
+	public void onRecallImg() {
+		if (selectedItems == null || selectedItems.size() <= 0) {
+			return;
+		}
+		if (selectedItems.size() == 1) {
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_recall_image"),
+					ResUtil.gs("imageList_recall_image_confirm", selectedItems.get(0).getName()),
+					(Stage) root1.getScene().getWindow(), new CallBack() {
+						@Override
+						public void onCancel() {
+						}
+
+						@Override
+						public void onConfirm() {
+							ImageBean imageBean = selectedItems.get(0);
+							if (flightController != null) {
+								flightController.onImageRecallFromImageList(imageBean);
+							}
+							labelMap.replace(imageBean.getName(), true);
+							FileUtil.deleteTxt(project.getProjectDir());
+							tableView.getSelectionModel().clearSelection();
+							refreshListData(false);
+						}
+					});
+		} else {
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_recall_image"),
+					ResUtil.gs("imageList_recall_lot_image_confirm", selectedItems.size()),
+					(Stage) root1.getScene().getWindow(), new CallBack() {
+
+						@Override
+						public void onCancel() {
+						}
+
+						@Override
+						public void onConfirm() {
+							ArrayList<ImageBean> list = new ArrayList<ImageBean>();
+							list.addAll(selectedItems);
+							if (flightController != null) {
+								flightController.onImageRecallFromImageList(list);
+							}
+							for (ImageBean item : list) {
+								labelMap.replace(item.getName(), true);
+							}
+							FileUtil.deleteTxt(project.getProjectDir());
+							tableView.getSelectionModel().clearSelection();
+							refreshListData(false);
+						}
+					});
+		}
 	}
 
 	@FXML
@@ -294,7 +397,7 @@ public class ImageListController implements Initializable {
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
 					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
 					ResUtil.gs("imageList_remove_image_confirm", selectedItems.get(0).getName()),
-					(Stage) root.getScene().getWindow(), new CallBack() {
+					(Stage) root1.getScene().getWindow(), new CallBack() {
 						@Override
 						public void onCancel() {
 						}
@@ -305,17 +408,19 @@ public class ImageListController implements Initializable {
 							if (flightController != null) {
 								flightController.onImageDeleteFromImageList(imageBean);
 							}
-							FileUtil.deleteImage(imageBean.getPath());
+//							FileUtil.deleteImage(imageBean.getPath());
+							labelMap.replace(imageBean.getName(), false);
 							FileUtil.deleteTxt(project.getProjectDir());
-							listData.remove(imageBean);
+//							listData.remove(imageBean);
 							tableView.getSelectionModel().clearSelection();
+							refreshListData(false);
 						}
 					});
 		} else {
 			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
 					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_remove_image"),
 					ResUtil.gs("imageList_remove_lot_image_confirm", selectedItems.size()),
-					(Stage) root.getScene().getWindow(), new CallBack() {
+					(Stage) root1.getScene().getWindow(), new CallBack() {
 
 						@Override
 						public void onCancel() {
@@ -328,12 +433,14 @@ public class ImageListController implements Initializable {
 							if (flightController != null) {
 								flightController.onImageDeleteFromImageList(deleteList);
 							}
-							listData.removeAll(deleteList);
+//							listData.removeAll(deleteList);
 							for (ImageBean item : deleteList) {
-								FileUtil.deleteImage(item.getPath());
+//								FileUtil.deleteImage(item.getPath());
+								labelMap.replace(item.getName(), false);
 							}
 							FileUtil.deleteTxt(project.getProjectDir());
 							tableView.getSelectionModel().clearSelection();
+							refreshListData(false);
 						}
 					});
 		}
@@ -405,16 +512,19 @@ public class ImageListController implements Initializable {
 		longtitudeCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_long"));
 		latitudeCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_lat"));
 		heightCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_image_height"));
-		tableView.getColumns().addAll(path, latitudeCol, longtitudeCol, heightCol);
+		isDeletedCol = new TableColumn<ImageBean, String>(ResUtil.gs("imageList_isDeleted"));
+		tableView.getColumns().addAll(path, latitudeCol, longtitudeCol, heightCol, isDeletedCol);
 		path.setPrefWidth(130);
-		longtitudeCol.setPrefWidth(180);
-		latitudeCol.setPrefWidth(180);
+		longtitudeCol.setPrefWidth(125);
+		latitudeCol.setPrefWidth(125);
 		heightCol.setPrefWidth(100);
+		isDeletedCol.setPrefWidth(80);
 
 		path.setSortable(false);
 		longtitudeCol.setSortable(false);
 		latitudeCol.setSortable(false);
 		heightCol.setSortable(false);
+		isDeletedCol.setSortable(false);
 		path.setCellValueFactory(new PropertyValueFactory<ImageBean, String>("name"));
 		path.setCellFactory(new javafx.util.Callback<TableColumn<ImageBean, String>, TableCell<ImageBean, String>>() {
 			@Override
@@ -460,6 +570,54 @@ public class ImageListController implements Initializable {
 								re.set(arg0.getValue().getLatitude() + "");
 							} else {
 								re.set(arg0.getValue().getLatitudeRef() + ":" + arg0.getValue().getLatitude());
+							}
+						} catch (Exception e) {
+							re.set("");
+						}
+						return re;
+					}
+				});
+		isDeletedCol.setCellFactory(
+				new javafx.util.Callback<TableColumn<ImageBean, String>, TableCell<ImageBean, String>>() {
+					@Override
+					public TableCell<ImageBean, String> call(TableColumn<ImageBean, String> param) {
+						return new TableCell<ImageBean, String>() {
+							@Override
+							protected void updateItem(String item, boolean empty) {
+								super.updateItem(item, empty);
+								if (!empty && !StrUtil.isEmpty(item)) {
+									setText(item);
+									if (item.equals(ResUtil.gs("no"))) {
+										setTextFill(Color.RED);
+									} else {
+										setTextFill(Color.BLUE);
+									}
+								} else {
+									setText("");
+									setTextFill(Color.BLUE);
+								}
+							}
+						};
+					}
+				});
+		isDeletedCol.setCellValueFactory(
+				new javafx.util.Callback<TableColumn.CellDataFeatures<ImageBean, String>, ObservableValue<String>>() {
+					@Override
+					public ObservableValue<String> call(CellDataFeatures<ImageBean, String> arg0) {
+						SimpleStringProperty re = null;
+						try {
+							re = new SimpleStringProperty();
+							String name = arg0.getValue().getName();
+							if (!labelMap.containsKey(name)) {
+								re.set("");
+							} else {
+								boolean isExist = labelMap.get(name);
+								if (isExist) {
+									re.set(ResUtil.gs("yes"));
+								} else {
+									re.set(ResUtil.gs("no"));
+									deletedNum++;
+								}
 							}
 						} catch (Exception e) {
 							re.set("");
@@ -573,19 +731,40 @@ public class ImageListController implements Initializable {
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/GoogleMapFlightLine.fxml",
 				ConstSize.Flight_Width, ConstSize.Flight_Height,
 				project.getProjectName() + " " + ResUtil.gs("imageList_flight"));
+		flightStage = openFrame.getStage();
 		flightController = openFrame.getFxmlLoader().getController();
-		flightController.setData(listData, this);
+		flightController.setData(listData, labelMap, this, deletedNum);
 		flightController.setCallback(new FlightLineCallBack() {
 			@Override
 			public void onDeleteImage(ImageBean image) {
-				listData.remove(image);
-				FileUtil.deleteImage(image.getPath());
+//				listData.remove(image);
+//				FileUtil.deleteImage(image.getPath());
+				labelMap.replace(image.getName(), false);
 				FileUtil.deleteTxt(project.getProjectDir());
 				tableView.getSelectionModel().clearSelection();
+				refreshListData(false);
 			}
 
 			@Override
 			public void onFocusChange(String imageName, boolean isEnter) {
+			}
+
+			@Override
+			public void onRecallImage(ImageBean image) {
+				labelMap.replace(image.getName(), true);
+				FileUtil.deleteTxt(project.getProjectDir());
+				tableView.getSelectionModel().clearSelection();
+				refreshListData(false);
+			}
+
+			@Override
+			public void onRecallImage(ObservableList<ImageBean> selectedList) {
+				for (ImageBean bean : selectedList) {
+					labelMap.replace(bean.getName(), true);
+				}
+				FileUtil.deleteTxt(project.getProjectDir());
+				tableView.getSelectionModel().clearSelection();
+				refreshListData(false);
 			}
 		});
 	}
@@ -618,8 +797,8 @@ public class ImageListController implements Initializable {
 				}
 			}
 //			System.out.println("add;"+subListAdd.size()+"  remo"+subListRemove.size() +"selec"+selectedItems.size());
-			Stage stage=  (Stage) root.getScene().getWindow();
-			if ( stage.isFocused()) {
+			Stage stage = (Stage) root1.getScene().getWindow();
+			if (stage.isFocused()) {
 				if (flightController != null) {
 					flightController.onImageSelectedFromImageList(subListRemove, 0);
 				}
@@ -643,7 +822,7 @@ public class ImageListController implements Initializable {
 			for (ImageBean item : subList) {
 				tableView.getSelectionModel().select(item);
 			}
-			tableView.scrollTo(subList.get(subList.size()-1));
+			tableView.scrollTo(subList.get(subList.size() - 1));
 		} else {
 			// 减少
 			for (ImageBean item : subList) {

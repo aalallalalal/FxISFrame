@@ -1,6 +1,7 @@
 package application.control;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
@@ -34,6 +35,7 @@ import javafx.scene.input.TransferMode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import javafx.util.Callback;
 import utils.ResUtil;
 import utils.SaveProjectsUtil;
@@ -71,6 +73,8 @@ public class ProjectsController extends BaseController implements Initializable 
 	@FXML
 	BorderPane root;
 	ImageView imageView = new ImageView(new Image("/resources/wushuju.png"));
+	
+	private ArrayList<Stage> projectsDetailStage = new ArrayList<Stage>();
 
 	/**
 	 * 添加项目
@@ -207,6 +211,7 @@ public class ProjectsController extends BaseController implements Initializable 
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml",
 				ConstSize.Main_Frame_Width-80, ConstSize.Main_Frame_Height,
 				ResUtil.gs("project") + project.getProjectName());
+		projectsDetailStage.add(openFrame.getStage());
 		ImageListController controller = openFrame.getFxmlLoader().getController();
 		controller.setProjectInfo(project);
 		controller.setCallBack(new ImageListController.Callback() {
@@ -268,6 +273,15 @@ public class ProjectsController extends BaseController implements Initializable 
 
 	@Override
 	protected void onClickRightBtn() {
+		if(projectsDetailStage!=null&&projectsDetailStage.size()>=1) {
+			for(Stage stage: projectsDetailStage) {
+				if(stage.isShowing()) {
+					stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+					stage.close();
+				}
+			}
+			projectsDetailStage.clear();
+		}
 		if (listener != null) {
 			listener.onClickRightBtn(projectListData);
 		}

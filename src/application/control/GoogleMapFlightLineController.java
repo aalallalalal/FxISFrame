@@ -76,10 +76,10 @@ public class GoogleMapFlightLineController implements Initializable {
 			20, 20, false, true);
 	private final Image imageTarget = new Image(getClass().getResourceAsStream("/resources/flight_uav.png"), 25, 25,
 			false, true);
-	private final Image imageSwitchOn = new Image(getClass().getResourceAsStream("/resources/eye_open.png"), 20,
-			20, false, true);
-	private final Image imageSwitchOff = new Image(getClass().getResourceAsStream("/resources/eye_close.png"), 20,
-			20, false, true);
+	private final Image imageSwitchOn = new Image(getClass().getResourceAsStream("/resources/eye_open.png"), 20, 20,
+			false, true);
+	private final Image imageSwitchOff = new Image(getClass().getResourceAsStream("/resources/eye_close.png"), 20, 20,
+			false, true);
 	private DropShadow dropShadow;
 
 	@FXML
@@ -124,6 +124,15 @@ public class GoogleMapFlightLineController implements Initializable {
 	private ImageBean preSelectImage;
 	private boolean preLabelIschange = false;
 	private ImageListController imageListController;
+//	private HashMap<String, Boolean> deletedLabelMap;
+	private ObservableList<ImageBean> selectedList = FXCollections.observableArrayList();
+	@FXML
+	Label bottomLabel_all;
+	@FXML
+	Label bottomLabel_selected;
+	@FXML
+	Label bottomLabel_current;
+	private HashMap<String, Boolean> deletedLabelMap;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -170,10 +179,12 @@ public class GoogleMapFlightLineController implements Initializable {
 		});
 	}
 
-	public void setData(ObservableList<ImageBean> listDat, ImageListController imageListController) {
-//		this.listData.addAll(listDat);
+	public void setData(ObservableList<ImageBean> listDat, HashMap<String, Boolean> deletedLabelMap,
+			ImageListController imageListController, int deletedNum) {
 		listData = listDat;
+		this.deletedLabelMap = deletedLabelMap;
 		bottomLabel_all.setText(ResUtil.gs("image_num", listData.size() + ""));
+//		bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num",deletedNum+""));
 		listData.addListener(new ListChangeListener<ImageBean>() {
 			@Override
 			public void onChanged(Change<? extends ImageBean> c) {
@@ -265,14 +276,19 @@ public class GoogleMapFlightLineController implements Initializable {
 			 */
 			private Label generateLabel(ImageBean imageBean) {
 				Label item = new Label();
-				item.setId(imageBean.getName());
+				String name = imageBean.getName();
+				item.setId(name);
 				item.setPrefHeight(14);
 				item.setPrefWidth(14);
 				item.setMaxWidth(14);
 				item.setMaxHeight(14);
 				Insets insets = new Insets(0);
 				item.setPadding(insets);
-				item.setGraphic(new ImageView(camera));
+				if (deletedLabelMap.containsKey(name) && !deletedLabelMap.get(name)) {
+					item.setGraphic(new ImageView(cameraDeleted));
+				} else {
+					item.setGraphic(new ImageView(camera));
+				}
 //				item.setEffect(dropShadow);
 				item.addEventHandler(MouseEvent.MOUSE_ENTERED, new EnteredHandler(item));
 				item.addEventHandler(MouseEvent.MOUSE_EXITED, new ExitHandler(item));
@@ -306,7 +322,12 @@ public class GoogleMapFlightLineController implements Initializable {
 											System.out.println("isControlDown");
 											if (selectedList.contains(imageBean)) {
 												selectedList.remove(imageBean);
-												labelMap.get(imageBean).setGraphic(new ImageView(camera));
+												if (deletedLabelMap.containsKey(imageBean.getName())
+														&& !deletedLabelMap.get(imageBean.getName())) {
+													labelMap.get(imageBean).setGraphic(new ImageView(cameraDeleted));
+												} else {
+													labelMap.get(imageBean).setGraphic(new ImageView(camera));
+												}
 											} else {
 												selectedList.add(imageBean);
 												labelMap.get(imageBean).setGraphic(new ImageView(cameraFocus));
@@ -333,13 +354,23 @@ public class GoogleMapFlightLineController implements Initializable {
 													for (int i = preIndex; i <= toIndex; i++) {
 														ImageBean item = listData.get(i);
 														selectedList.remove(item);
-														labelMap.get(item).setGraphic(new ImageView(camera));
+														if (deletedLabelMap.containsKey(item.getName())
+																&& !deletedLabelMap.get(item.getName())) {
+															labelMap.get(item).setGraphic(new ImageView(cameraDeleted));
+														} else {
+															labelMap.get(item).setGraphic(new ImageView(camera));
+														}
 													}
 												} else {
 													for (int i = toIndex; i <= preIndex; i++) {
 														ImageBean item = listData.get(i);
 														selectedList.remove(item);
-														labelMap.get(item).setGraphic(new ImageView(camera));
+														if (deletedLabelMap.containsKey(item.getName())
+																&& !deletedLabelMap.get(item.getName())) {
+															labelMap.get(item).setGraphic(new ImageView(cameraDeleted));
+														} else {
+															labelMap.get(item).setGraphic(new ImageView(camera));
+														}
 													}
 												}
 											} else {
@@ -369,12 +400,12 @@ public class GoogleMapFlightLineController implements Initializable {
 							}
 							oldScreenX = nowX;
 							oldScreenY = nowY;
-						}else if (e.getEventType() == MouseEvent.MOUSE_CLICKED
+						} else if (e.getEventType() == MouseEvent.MOUSE_CLICKED
 								&& e.getButton() == MouseButton.SECONDARY) {
-							if(!selectedList.contains(imageBean)) {
-								item.setContextMenu(null); 
-							}else {
-								item.setContextMenu(new MyContextMenu(imageBean)); 
+							if (!selectedList.contains(imageBean)) {
+								item.setContextMenu(null);
+							} else {
+								item.setContextMenu(new MyContextMenu(imageBean));
 							}
 							e.consume();
 						}
@@ -713,7 +744,7 @@ public class GoogleMapFlightLineController implements Initializable {
 
 		@Override
 		public void handle(Event event) {
-			bottomLabel_current.setText(ResUtil.gs("flightLine_current_img",label.getId()));
+			bottomLabel_current.setText(ResUtil.gs("flightLine_current_img", label.getId()));
 			preLabelIschange = false;
 			preLabelView = (ImageView) label.getGraphic();
 			label.setGraphic(new ImageView(cameraHover));
@@ -752,18 +783,18 @@ public class GoogleMapFlightLineController implements Initializable {
 	}
 
 	/**
-	 * 图片列表界面删除数据
+	 * 图片列表界面删除数据,调用此方法，来改变飞行路线界面
 	 * 
 	 * @param selectedItem
 	 */
-	public void onImageDeleteFromImageList(ImageBean selectedItem) {
+	public void onImageDeleteFromImageList(ImageBean deletedItem) {
 		if (labelMap.size() > 0) {
-			Label label = labelMap.get(selectedItem);
+			Label label = labelMap.get(deletedItem);
 			if (label != null) {
-				label.setDisable(true);
+//				label.setDisable(true);
 				label.setGraphic(new ImageView(cameraDeleted));
-				selectedList.remove(selectedItem);
-				labelMap.remove(selectedItem);
+				selectedList.remove(deletedItem);
+//				labelMap.remove(selectedItem);
 			}
 		}
 	}
@@ -778,6 +809,10 @@ public class GoogleMapFlightLineController implements Initializable {
 		void onDeleteImage(ImageBean image);
 
 		void onFocusChange(String id, boolean b);
+
+		void onRecallImage(ImageBean bean);
+
+		void onRecallImage(ObservableList<ImageBean> selectedList);
 	}
 
 	class MyContextMenu extends ContextMenu {
@@ -792,11 +827,80 @@ public class GoogleMapFlightLineController implements Initializable {
 					deleteImages();
 				}
 			});
-			getItems().addAll(delete);
+			MenuItem recall = new MenuItem(ResUtil.gs("recall"));
+			recall.setStyle("-fx-font-size:12;");
+			recall.setOnAction(new EventHandler<ActionEvent>() {
+				public void handle(ActionEvent event) {
+					recallImages();
+				}
+			});
+
+			getItems().addAll(delete, recall);
 		}
-		
-		
-		
+
+	}
+
+	/**
+	 * 添加图片进入此项目
+	 */
+	private void recallImages() {
+		if (selectedList == null || selectedList.size() <= 0) {
+			return;
+		}
+		if (selectedList.size() == 1) {
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_recall_image"),
+					ResUtil.gs("imageList_recall_image_confirm", selectedList.get(0).getName()),
+					(Stage) root.getScene().getWindow(), new CallBack() {
+						@Override
+						public void onCancel() {
+						}
+
+						@Override
+						public void onConfirm() {
+							preSelectImage = null;
+							ImageBean bean = selectedList.get(0);
+							Label label = labelMap.get(bean);
+							if (label != null) {
+//								label.setDisable(true);
+								if (callback != null) {
+									callback.onRecallImage(bean);
+								}
+//								listData.remove(bean);
+//								labelMap.remove(bean);
+								label.setGraphic(new ImageView(camera));
+								selectedList.remove(bean);
+							}
+						}
+					});
+		} else {
+			UIUtil.openConfirmDialog(getClass(), ConstSize.Confirm_Dialog_Frame_Width,
+					ConstSize.Confirm_Dialog_Frame_Height, ResUtil.gs("imageList_recall_image"),
+					ResUtil.gs("imageList_recall_lot_image_confirm", selectedList.size()),
+					(Stage) root.getScene().getWindow(), new CallBack() {
+						@Override
+						public void onCancel() {
+						}
+
+						@Override
+						public void onConfirm() {
+							preSelectImage = null;
+							for (ImageBean bean : selectedList) {
+								Label label = labelMap.get(bean);
+								if (label != null) {
+//									label.setDisable(true);
+//									listData.remove(bean);
+//									labelMap.remove(bean);
+									label.setGraphic(new ImageView(camera));
+								}
+							}
+							if (callback != null) {
+								callback.onRecallImage(selectedList);
+							}
+							selectedList.clear();
+						}
+					});
+		}
 	}
 
 	/**
@@ -821,12 +925,12 @@ public class GoogleMapFlightLineController implements Initializable {
 							ImageBean bean = selectedList.get(0);
 							Label label = labelMap.get(bean);
 							if (label != null) {
-								label.setDisable(true);
+//								label.setDisable(true);
 								if (callback != null) {
 									callback.onDeleteImage(bean);
 								}
-								listData.remove(bean);
-								labelMap.remove(bean);
+//								listData.remove(bean);
+//								labelMap.remove(bean);
 								label.setGraphic(new ImageView(cameraDeleted));
 								selectedList.remove(bean);
 							}
@@ -847,12 +951,12 @@ public class GoogleMapFlightLineController implements Initializable {
 							for (ImageBean bean : selectedList) {
 								Label label = labelMap.get(bean);
 								if (label != null) {
-									label.setDisable(true);
+//									label.setDisable(true);
 									if (callback != null) {
 										callback.onDeleteImage(bean);
 									}
-									listData.remove(bean);
-									labelMap.remove(bean);
+//									listData.remove(bean);
+//									labelMap.remove(bean);
 									label.setGraphic(new ImageView(cameraDeleted));
 								}
 							}
@@ -873,19 +977,45 @@ public class GoogleMapFlightLineController implements Initializable {
 				for (ImageBean item : selectedItem) {
 					Label label = labelMap.get(item);
 					if (label != null) {
-						label.setDisable(true);
+//						label.setDisable(true);
 						label.setGraphic(new ImageView(cameraDeleted));
 						selectedList.remove(item);
-						labelMap.remove(item);
+//						labelMap.remove(item);
 					}
 				}
 			}
-//			for (Map.Entry<ImageBean, Label> entry : labelMap.entrySet()) {
-//				Label label = entry.getValue();
-//				if (!label.isDisable()) {
-//					label.setGraphic(new ImageView(camera));
-//				}
-//			}
+		}
+	}
+
+	/**
+	 * 从图片列表界面传来的控制。来重新添加某图片
+	 * 
+	 * @param imageBean
+	 */
+	public void onImageRecallFromImageList(ImageBean imageBean) {
+		if (labelMap.size() > 0) {
+			Label label = labelMap.get(imageBean);
+			if (label != null) {
+				label.setGraphic(new ImageView(camera));
+			}
+		}
+	}
+
+	/**
+	 * 从图片列表界面传来的控制。来重新添加某些图片
+	 * 
+	 * @param deleteList
+	 */
+	public void onImageRecallFromImageList(ArrayList<ImageBean> deleteList) {
+		if (labelMap.size() > 0) {
+			if (deleteList != null && deleteList.size() > 0) {
+				for (ImageBean item : deleteList) {
+					Label label = labelMap.get(item);
+					if (label != null) {
+						label.setGraphic(new ImageView(camera));
+					}
+				}
+			}
 		}
 	}
 
@@ -911,7 +1041,11 @@ public class GoogleMapFlightLineController implements Initializable {
 					for (ImageBean item : list) {
 						Label old = labelMap.get(item);
 						if (old != null) {
-							old.setGraphic(new ImageView(camera));
+							if (deletedLabelMap.containsKey(item.getName()) && !deletedLabelMap.get(item.getName())) {
+								old.setGraphic(new ImageView(cameraDeleted));
+							} else {
+								old.setGraphic(new ImageView(camera));
+							}
 						} else {
 							System.out.println("hash map no" + item.getName());
 						}
@@ -926,7 +1060,11 @@ public class GoogleMapFlightLineController implements Initializable {
 		// 单选时
 		Label old = labelMap.get(oldValue);
 		if (old != null) {
-			old.setGraphic(new ImageView(camera));
+			if (deletedLabelMap.containsKey(oldValue.getName()) && !deletedLabelMap.get(oldValue.getName())) {
+				old.setGraphic(new ImageView(cameraDeleted));
+			} else {
+				old.setGraphic(new ImageView(camera));
+			}
 			selectedList.remove(oldValue);
 		}
 		Label newLabel = labelMap.get(newValue);
@@ -952,13 +1090,6 @@ public class GoogleMapFlightLineController implements Initializable {
 		}
 	}
 
-	private ObservableList<ImageBean> selectedList = FXCollections.observableArrayList();
-	@FXML
-	Label bottomLabel_all;
-	@FXML
-	Label bottomLabel_selected;
-	@FXML Label bottomLabel_current;
-
 	class MyRunnable implements Runnable {
 		private List<? extends ImageBean> subListAdd;
 		private List<? extends ImageBean> subListRemove;
@@ -970,8 +1101,8 @@ public class GoogleMapFlightLineController implements Initializable {
 
 		public void run() {
 			bottomLabel_selected.setText(ResUtil.gs("selected_image_num", selectedList.size() + ""));
-			Stage stage=  (Stage) root.getScene().getWindow();
-			if ( stage.isFocused()) {
+			Stage stage = (Stage) root.getScene().getWindow();
+			if (stage.isFocused()) {
 				if (imageListController != null) {
 					imageListController.onImageSelectedFromFlightLine(subListRemove, 0);
 				}
@@ -985,4 +1116,9 @@ public class GoogleMapFlightLineController implements Initializable {
 			}
 		}
 	}
+
+	public void updataDeletedNum(int deletedNum) {
+//		bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num",deletedNum+""));
+	}
+
 }

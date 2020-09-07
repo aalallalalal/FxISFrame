@@ -97,7 +97,6 @@ visibility: hidden;
      -fx-background-color: #fff;    
 }
  .table-view .table-cell {
-	 -fx-text-fill:#4f4f4f; 
         -fx-font-size:14.0
 } 
  .table-view .table-row-cell {
