@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
 
 import com.drew.imaging.ImageProcessingException;
@@ -75,6 +76,7 @@ import views.MyToolTip;
  */
 public class ImageListController implements Initializable {
 
+	public static final int MAX_SHOW_DELETENUM = 400;
 	@FXML
 	HBox hbox_location;
 	@FXML
@@ -114,6 +116,8 @@ public class ImageListController implements Initializable {
 	Label bottomLabel_all;
 	@FXML
 	Label bottomLabel_selected;
+	@FXML
+	Label bottomLabel_deleted;
 	private ObservableList<ImageBean> selectedItems;
 	@FXML
 	JFXButton btn_delete;
@@ -121,7 +125,7 @@ public class ImageListController implements Initializable {
 	private HashMap<String, Boolean> labelMap = new HashMap<String, Boolean>();// 存放图片删除情况
 	private Stage flightStage; // 飞行路径界面的stage
 
-	private int deletedNum = 0;
+	private int deletedNum;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -186,7 +190,6 @@ public class ImageListController implements Initializable {
 	private void initLabelMap() {
 		String deletedFilePath = ImagesMapToFileUtil.getDeletedFilePath(project);
 		labelMap = ImagesMapToFileUtil.fileToMap(deletedFilePath, project);
-		System.out.println("lamapsize" + labelMap.size());
 	}
 
 	/**
@@ -204,21 +207,19 @@ public class ImageListController implements Initializable {
 	 * 刷新图片数据。
 	 */
 	private void refreshListData(boolean isClear) {
+		refreshDeletedNum();
 		if (!isClear) {
 			tableView.getColumns().get(0).setVisible(false);
 			tableView.getColumns().get(0).setVisible(true);
-		}else {
-			if(flightStage!=null&&flightStage.isShowing()) {
+		} else {
+			if (flightStage != null && flightStage.isShowing()) {
 				flightStage.close();
 			}
 			task = new ProgressTask(new ProgressTask.MyTask<Integer>() {
 				@Override
 				protected void succeeded() {
 					super.succeeded();
-//					bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num", deletedNum + ""));
-					if (flightController != null) {
-						flightController.updataDeletedNum(deletedNum);
-					}
+					refreshDeletedNum();
 				}
 
 				@Override
@@ -723,10 +724,11 @@ public class ImageListController implements Initializable {
 
 	@FXML
 	public void onSeeLine() {
-//		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/FlightLine.fxml",
-//				ConstSize.Second_Frame_Width, ConstSize.Second_Frame_Height, project.getProjectName() + "飞行路径");
-//		FlightLineController controller = openFrame.getFxmlLoader().getController();
-//		controller.setData(listData);
+
+		if (labelMap == null || labelMap.size() <= 0) {
+			ToastUtil.toast(ResUtil.gs("data_error"));
+			return;
+		}
 
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/GoogleMapFlightLine.fxml",
 				ConstSize.Flight_Width, ConstSize.Flight_Height,
@@ -832,4 +834,32 @@ public class ImageListController implements Initializable {
 		}
 	}
 
+	/**
+	 * 更新已删除的图片数量
+	 */
+	private void refreshDeletedNum() {
+		if (labelMap.size() >= MAX_SHOW_DELETENUM) {// 如果数量过大，则屏蔽此功能，免得卡顿。
+			bottomLabel_deleted.setVisible(false);
+			if (flightController != null) {
+				flightController.updataDeletedNum(0, false);
+			}
+			return;
+		}
+		deletedNum = 0;
+		bottomLabel_deleted.setVisible(true);
+		if (labelMap != null) {
+			for (Entry<String, Boolean> entry : labelMap.entrySet()) {
+				Boolean mapValue = entry.getValue();
+				if (!mapValue) {
+					deletedNum++;
+				}
+			}
+			bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num", deletedNum + ""));
+		} else {
+			bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num", deletedNum + ""));
+		}
+		if (flightController != null) {
+			flightController.updataDeletedNum(deletedNum, true);
+		}
+	}
 }

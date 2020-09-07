@@ -131,6 +131,8 @@ public class GoogleMapFlightLineController implements Initializable {
 	@FXML
 	Label bottomLabel_selected;
 	@FXML
+	Label bottomLabel_deleted;
+	@FXML
 	Label bottomLabel_current;
 	private HashMap<String, Boolean> deletedLabelMap;
 
@@ -184,7 +186,7 @@ public class GoogleMapFlightLineController implements Initializable {
 		listData = listDat;
 		this.deletedLabelMap = deletedLabelMap;
 		bottomLabel_all.setText(ResUtil.gs("image_num", listData.size() + ""));
-//		bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num",deletedNum+""));
+		updataDeletedNum(deletedNum, deletedLabelMap.size() <= ImageListController.MAX_SHOW_DELETENUM ? true : false);
 		listData.addListener(new ListChangeListener<ImageBean>() {
 			@Override
 			public void onChanged(Change<? extends ImageBean> c) {
@@ -1119,8 +1121,15 @@ public class GoogleMapFlightLineController implements Initializable {
 		}
 	}
 
-	public void updataDeletedNum(int deletedNum) {
-//		bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num",deletedNum+""));
+	/**
+	 * 图片列表通知来进行修改已删除的图片数量
+	 * 
+	 * @param deletedNum
+	 * @param isVisible
+	 */
+	public void updataDeletedNum(int deletedNum, boolean isVisible) {
+		bottomLabel_deleted.setVisible(isVisible);
+		bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num", deletedNum + ""));
 	}
 
 }

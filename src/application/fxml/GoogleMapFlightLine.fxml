@@ -38,6 +38,9 @@
 							<Label fx:id="bottomLabel_all" text="" textFill="#4f4f4f"
 								style="-fx-font-size:14.0;">
 							</Label>
+							<Label fx:id="bottomLabel_deleted" text=""
+								textFill="#4f4f4f" style="-fx-font-size:14.0;">
+							</Label>
 							<Label fx:id="bottomLabel_selected" text=""
 								textFill="#4f4f4f" style="-fx-font-size:14.0;">
 							</Label>
@@ -47,17 +50,15 @@
 						</children>
 					</HBox>
 
-					<Label fx:id="textArea_tip" 
-						prefWidth="160"  wrapText="true"
-						AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
-						visible="true"
+					<Label fx:id="textArea_tip" prefWidth="160" wrapText="true"
+						AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" visible="true"
 						style="-fx-font-size:12;-fx-padding:3;-fx-text-fill: #000;">
 					</Label>
 
 
-					<Label fx:id="textArea_place" wrapText="true" AnchorPane.leftAnchor="0"
-						AnchorPane.bottomAnchor="0" visible="false"
-						style="-fx-font-size:13;-fx-text-fill: #000;">
+					<Label fx:id="textArea_place" wrapText="true"
+						AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0"
+						visible="false" style="-fx-font-size:13;-fx-text-fill: #000;">
 					</Label>
 
 					<JFXButton onAction="#onClickPaneSwitch" visible="true"

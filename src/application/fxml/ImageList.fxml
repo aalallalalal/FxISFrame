@@ -25,6 +25,9 @@
 						<Label fx:id="bottomLabel_all" text="" textFill="#4f4f4f"
 							style="-fx-font-size:14.0;">
 						</Label>
+						<Label fx:id="bottomLabel_deleted" text=""
+							textFill="#4f4f4f" style="-fx-font-size:14.0;">
+						</Label>
 						<Label fx:id="bottomLabel_selected" text=""
 							textFill="#4f4f4f" style="-fx-font-size:14.0;">
 						</Label>
