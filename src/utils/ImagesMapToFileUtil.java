@@ -231,7 +231,7 @@ public class ImagesMapToFileUtil {
 		if (project == null || StrUtil.isEmpty(project.getProjectDir())) {
 			return "";
 		}
-		String filePath = project.getProjectDir() + "\\" + "Label_" + project.getId() + "";
+		String filePath = project.getProjectDir() + "/" + "ISTIRS_" + project.getId() + "";
 		return filePath;
 	}
 

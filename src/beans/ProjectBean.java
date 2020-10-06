@@ -148,7 +148,6 @@ public class ProjectBean implements Serializable {
 			parameter += "\" ";
 		}
 		parameter += '"' + this.getProjectDir() + '"';
-		parameter += '"' + ImagesMapToFileUtil.getDeletedFilePath(this) + '"';
 		return parameter;
 	}
 
@@ -226,5 +225,11 @@ public class ProjectBean implements Serializable {
 			sb.append(getSettings().transToTipStr());
 		}
 		return sb.toString();
+	}
+
+	public String getLabelFile() {
+		String para = "\"_img_label\"" + " ";
+		para += '"' + ImagesMapToFileUtil.getDeletedFilePath(this) + '"' + " ";
+		return para;
 	}
 }
