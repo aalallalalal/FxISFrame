@@ -84,7 +84,6 @@ public class CreateProjectDialogController implements Initializable {
 
 	@FXML
 	public void onClickSelectLocation() {
-		// TODO
 		FileChooserUtil.OpenFileChooserUtil(ResUtil.gs("choose_location_file"), labelLocation, new Callback() {
 			@Override
 			public void onResult(boolean isChoose, File file) {
