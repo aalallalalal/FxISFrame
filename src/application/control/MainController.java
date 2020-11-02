@@ -266,6 +266,7 @@ public class MainController implements Initializable {
 
 		@Override
 		public void update(String lineStr) {
+			//TODO 在这把中英文错误信息分割显示
 			processingController.textarea.appendText(lineStr);
 		}
 

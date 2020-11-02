@@ -45,11 +45,13 @@
 			</children>
 			<children>
 				<BorderPane prefHeight="40.0" fx:id="bottomBtnsPane"
-					style="-fx-background-color: #FAFAFA;-fx-padding: 10;"
+					style="-fx-background-color: #FAFAFA;-fx-padding: 15;"
 					BorderPane.alignment="CENTER">
+					
 					<left>
 						<JFXButton fx:id="btn_pre" buttonType="RAISED"
 							onAction="#leftBtn" text="%pre_step"
+							prefWidth="120.0"
 							BorderPane.alignment="CENTER">
 							<graphic>
 								<ImageView fitHeight="16.0" fitWidth="16.0"
@@ -66,6 +68,7 @@
 					</left>
 					<right>
 						<JFXButton fx:id="btn_next" buttonType="RAISED"
+							prefWidth="120.0"
 							onAction="#rightBtn" text="%next_step"
 							BorderPane.alignment="CENTER">
 							<styleClass>

@@ -6,6 +6,7 @@ import java.util.Date;
 
 import utils.ImagesMapToFileUtil;
 import utils.ResUtil;
+import utils.StrUtil;
 
 /**
  * 项目实体类
@@ -49,6 +50,11 @@ public class ProjectBean implements Serializable {
 	}
 
 	public String getErroDetail() {
+		if(ResUtil.gsAll("this-service-have-cancelled").contains(erroDetail)) {
+			erroDetail = ResUtil.gs(ResUtil.getLanguage(),"this-service-have-cancelled");
+		}else {
+			//TODO 这进行分割 显示
+		}
 		return erroDetail;
 	}
 

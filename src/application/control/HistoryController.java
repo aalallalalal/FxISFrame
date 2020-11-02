@@ -13,7 +13,6 @@ import com.jfoenix.controls.JFXButton;
 import base.controller.ConfirmDialogController.CallBack;
 import beans.DBRecordBean;
 import consts.ConstSize;
-import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -28,9 +27,9 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableColumn.CellDataFeatures;
-import javafx.scene.control.TableView.ResizeFeatures;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TableView.ResizeFeatures;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -68,7 +67,7 @@ public class HistoryController implements Initializable {
 	@FXML
 	private TableColumn<DBRecordBean, String> width_net;
 	@FXML
-	private TableColumn<DBRecordBean, Boolean> isPreCheck;
+	private TableColumn<DBRecordBean, String> isPreCheck;
 	@FXML
 	private TableColumn<DBRecordBean, String> flyHeight;
 	@FXML
@@ -76,7 +75,7 @@ public class HistoryController implements Initializable {
 	@FXML
 	private TableColumn<DBRecordBean, String> Gsd;
 	@FXML
-	private TableColumn<DBRecordBean, Boolean> isSave_middle;
+	private TableColumn<DBRecordBean, String> isSave_middle;
 	@FXML
 	private TableColumn<DBRecordBean, Object> runinfo;
 	@FXML
@@ -84,7 +83,7 @@ public class HistoryController implements Initializable {
 	@FXML
 	private TableColumn<DBRecordBean, String> endtime;
 	@FXML
-	private TableColumn<DBRecordBean, Boolean> state;
+	private TableColumn<DBRecordBean, String> state;
 	@FXML
 	private TableColumn<DBRecordBean, String> failreason;
 
@@ -431,12 +430,13 @@ public class HistoryController implements Initializable {
 		});
 
 		isPreCheck.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<DBRecordBean, Boolean>, ObservableValue<Boolean>>() {
+				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<Boolean> call(CellDataFeatures<DBRecordBean, Boolean> param) {
-						SimpleBooleanProperty pre = new SimpleBooleanProperty(
-								param.getValue().getProject().getSettings().isPreCheck());
+					public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param) {
+						SimpleStringProperty pre = new SimpleStringProperty(
+								param.getValue().getProject().getSettings().isPreCheck()?
+										ResUtil.gs("yes"):ResUtil.gs("no"));
 						return pre;
 					}
 				});
@@ -552,12 +552,13 @@ public class HistoryController implements Initializable {
 			}
 		});
 		isSave_middle.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<DBRecordBean, Boolean>, ObservableValue<Boolean>>() {
+				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<Boolean> call(CellDataFeatures<DBRecordBean, Boolean> param) {
-						SimpleBooleanProperty flag = new SimpleBooleanProperty(
-								param.getValue().getProject().getSettings().isSaveMiddle());
+					public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param) {
+						SimpleStringProperty flag = new SimpleStringProperty(
+								param.getValue().getProject().getSettings().isSaveMiddle()?
+								ResUtil.gs("yes"):ResUtil.gs("no"));
 						return flag;
 					}
 				});
@@ -639,12 +640,14 @@ public class HistoryController implements Initializable {
 		});
 
 		state.setCellValueFactory(
-				new Callback<TableColumn.CellDataFeatures<DBRecordBean, Boolean>, ObservableValue<Boolean>>() {
+				new Callback<TableColumn.CellDataFeatures<DBRecordBean, String>, ObservableValue<String>>() {
 
 					@Override
-					public ObservableValue<Boolean> call(CellDataFeatures<DBRecordBean, Boolean> param) {
-						SimpleBooleanProperty flag = new SimpleBooleanProperty(
-								StrUtil.isEmpty(param.getValue().getProject().getErroDetail()));
+					public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param) {
+						boolean isSuccessed = StrUtil.isEmpty(param.getValue().getProject().getErroDetail());
+						SimpleStringProperty flag = new SimpleStringProperty(
+								isSuccessed?ResUtil.gs("successed"):ResUtil.gs("failed")
+								);
 						return flag;
 					}
 				});
