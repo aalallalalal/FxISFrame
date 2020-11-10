@@ -32,6 +32,8 @@ import javafx.util.Callback;
 import utils.DBUtil;
 import utils.MyPlatform;
 import utils.ResUtil;
+import utils.SaveLanguageUtil;
+import utils.StrUtil;
 import utils.SysUtil;
 import utils.ToastUtil;
 import utils.UIUtil;
@@ -60,7 +62,7 @@ public class MainController implements Initializable {
 	private BorderPane createProjPane, projectsPane, settingPane, ProcessingPane;
 	private BorderPane currentPane;
 	@FXML
-	FlowPane bottomGroupPane;
+	BorderPane bottomGroupPane;
 	@FXML
 	BorderPane bottomBtnsPane;
 	@FXML
@@ -267,7 +269,22 @@ public class MainController implements Initializable {
 		@Override
 		public void update(String lineStr) {
 			//TODO 在这把中英文错误信息分割显示
-			processingController.textarea.appendText(lineStr);
+			if(!StrUtil.isEmpty(lineStr)) {
+				if(lineStr.contains(ConstRes.ERROR_DIVIDER)) {
+					String str = "";
+					if(SaveLanguageUtil.getData()== 0) {
+						//中文
+						str =lineStr.split(ConstRes.ERROR_DIVIDER)[0];
+					}else {
+						//英文
+						str =lineStr.split(ConstRes.ERROR_DIVIDER)[1];
+					}
+					processingController.textarea.appendText(str);
+				}
+				else {
+					processingController.textarea.appendText(lineStr);
+				}
+			}
 		}
 
 		@Override

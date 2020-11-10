@@ -517,6 +517,11 @@ public class SettingController extends BaseController implements Initializable {
 		}
 	}
 
+	@FXML
+	private void onClickHelpCamera() {
+		ToastUtil.toast(ResUtil.gs("setting_camera_tip"));
+	}
+	
 	private boolean checkFinalData() {
 		if (projectListData == null || projectListData.size() <= 0) {
 			ToastUtil.toast(ResUtil.gs("no_projects"));

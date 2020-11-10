@@ -185,6 +185,7 @@ public class GoogleMapFlightLineController implements Initializable {
 			ImageListController imageListController, int deletedNum) {
 		listData = listDat;
 		this.deletedLabelMap = deletedLabelMap;
+		System.out.println("deleleleele:"+deletedNum);
 		bottomLabel_all.setText(ResUtil.gs("image_num", listData.size() + ""));
 		updataDeletedNum(deletedNum, deletedLabelMap.size() <= ImageListController.MAX_SHOW_DELETENUM ? true : false);
 		listData.addListener(new ListChangeListener<ImageBean>() {

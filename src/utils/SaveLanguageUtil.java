@@ -13,12 +13,19 @@ import consts.ConstRes;
 public class SaveLanguageUtil {
 	private static String path = System.getProperty("user.home")+ConstRes.SOFT_PATH+ "/datas";
 	private static String fileName = "Language_Data";
-
+	private static int data = -1;
 	static {
 		checkFile();
 	}
 
+	/**
+	 * 
+	 * @return 0:中文,1:英文
+	 */
 	public static int getData() {
+		if(data!=-1) {
+			return data;
+		}
 		File writeName = checkFile();
 		if (!writeName.exists() || writeName.length() == 0) {
 			return 0;
@@ -47,7 +54,12 @@ public class SaveLanguageUtil {
 		return data;
 	}
 
+	/**
+	 * 
+	 * @param i 0:中文,1:英文
+	 */
 	public static void saveData(int i) {
+		data = i;
 		ObjectOutputStream objectOutputStream = null;
 		try {
 			File writeName = checkFile();

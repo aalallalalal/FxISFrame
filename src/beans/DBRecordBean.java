@@ -87,7 +87,7 @@ public class DBRecordBean {
 		sb.append("'" + getProject().getSettings().getCameraSize() + "',");
 		sb.append("'" + getProject().getSettings().getGsd() + "',");
 		sb.append("'" + placeOneCom(getResultPath()) + "',");
-		sb.append("'" + (getProject().getErroDetail()) + "',");
+		sb.append("'" + (getProject().getErroDetailAll()) + "',");
 		sb.append("'" + getProject().getLastRuntime() + "',");
 		sb.append("'" + getProject().getId() + "',");
 		sb.append("'');");

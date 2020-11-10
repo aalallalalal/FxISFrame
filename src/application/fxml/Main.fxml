@@ -30,18 +30,40 @@
 	<bottom>
 		<StackPane prefHeight="40.0" BorderPane.alignment="CENTER">
 			<children>
-				<FlowPane fx:id="bottomGroupPane" alignment="CENTER_RIGHT"
+				<BorderPane fx:id="bottomGroupPane"  
 					style="-fx-background-color:linear-gradient(to right, #909090 0.0%,#A5A2A2 40.0%,#A5A2A2 60.0%, #909090 100.0%);-fx-padding: 10;"
 					prefHeight="30.0" prefWidth="200.0">
-					<children>
+					<right>
 						<Label text="Made by UAV-TIR Team"
-							style="-fx-text-fill: #ffffff; -fx-font-size:15;">
+							BorderPane.alignment="CENTER"
+							style="-fx-text-fill: #ffffff; -fx-font-size:14;">
 							<effect>
 								<DropShadow color="#FAFAFA" radius="10" />
 							</effect>
+							<BorderPane.margin>
+								<Insets right="5.0" />
+							</BorderPane.margin>
 						</Label>
-					</children>
-				</FlowPane>
+					</right>
+					<left>
+						<Label BorderPane.alignment="CENTER">
+							<effect>
+								<DropShadow color="#5A5A5A" radius="0.2" />
+							</effect>
+							<graphic>
+								<ImageView fitWidth="240" fitHeight="40" pickOnBounds="true"
+									preserveRatio="true" smooth="true">
+									<image>
+										<Image url="/resources/school_logo_text.png" />
+									</image>
+								</ImageView>
+							</graphic>
+							<BorderPane.margin>
+								<Insets left="5.0" />
+							</BorderPane.margin>
+						</Label>
+					</left>
+				</BorderPane>
 			</children>
 			<children>
 				<BorderPane prefHeight="40.0" fx:id="bottomBtnsPane"

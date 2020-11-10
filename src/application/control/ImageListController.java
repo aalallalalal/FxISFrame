@@ -190,6 +190,15 @@ public class ImageListController implements Initializable {
 	private void initLabelMap() {
 		String deletedFilePath = ImagesMapToFileUtil.getDeletedFilePath(project);
 		labelMap = ImagesMapToFileUtil.fileToMap(deletedFilePath, project);
+		deletedNum = 0;
+		if (labelMap != null) {
+			for (Entry<String, Boolean> entry : labelMap.entrySet()) {
+				Boolean mapValue = entry.getValue();
+				if (!mapValue) {
+					deletedNum++;
+				}
+			}
+		}
 	}
 
 	/**
@@ -617,7 +626,7 @@ public class ImageListController implements Initializable {
 									re.set(ResUtil.gs("yes"));
 								} else {
 									re.set(ResUtil.gs("no"));
-									deletedNum++;
+//									deletedNum++;
 								}
 							}
 						} catch (Exception e) {

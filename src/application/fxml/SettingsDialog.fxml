@@ -9,6 +9,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.image.*?>
 <?import views.MyToolTip?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import views.myTextField.DecimalField?>
@@ -84,12 +85,26 @@
 					</children>
 				</HBox>
 				<VBox spacing="15">
-					<JFXCheckBox fx:id="checkBox_preCheck" selected="false"
-						text="%setting_pre_check">
-						<styleClass>
-							<String fx:value="custom-jfx-check-box" />
-						</styleClass>
-					</JFXCheckBox>
+					<HBox alignment="CENTER_LEFT"
+						 prefHeight="60.0" spacing="5.0">
+						<JFXCheckBox fx:id="checkBox_preCheck" selected="false"
+							text="%setting_pre_check">
+							<styleClass>
+								<String fx:value="custom-jfx-check-box" />
+							</styleClass>
+						</JFXCheckBox>
+						<JFXButton buttonType="RAISED" onAction="#onClickHelpCamera">
+							<graphic>
+								<ImageView fitHeight="25.0" fitWidth="25.0"
+									pickOnBounds="true" preserveRatio="true">
+									<image>
+										<Image url="/resources/help_dark.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
+					</HBox>
+					
 					<VBox spacing="5" fx:id="Vbox_prechecks" disable="true">
 						<HBox fx:id="hbox_preCheckDetail1" alignment="CENTER_LEFT"
 							prefHeight="10.0" spacing="6.0">

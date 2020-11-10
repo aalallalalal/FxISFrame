@@ -11,6 +11,7 @@ import com.jfoenix.controls.JFXTextField;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
 import beans.SettingsBean;
+import consts.ConstSize;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,6 +30,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import utils.ResUtil;
 import utils.StrUtil;
 import utils.ToastUtil;
@@ -128,6 +130,11 @@ public class SettingsDialogController implements Initializable {
 		});
 	}
 
+	@FXML
+	private void onClickHelpCamera() {
+		ToastUtil.toast(ResUtil.gs("setting_camera_tip"));
+	}
+	
 	private void initToggleGroup() {
 		group = new ToggleGroup();
 		radioButton_way1.setToggleGroup(group);

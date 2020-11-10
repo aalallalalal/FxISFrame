@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import consts.ConstRes;
 import utils.ImagesMapToFileUtil;
 import utils.ResUtil;
+import utils.SaveLanguageUtil;
 import utils.StrUtil;
 
 /**
@@ -54,10 +56,34 @@ public class ProjectBean implements Serializable {
 			erroDetail = ResUtil.gs(ResUtil.getLanguage(),"this-service-have-cancelled");
 		}else {
 			//TODO 这进行分割 显示
+			if(!StrUtil.isEmpty(erroDetail)) {
+				if(erroDetail.contains(ConstRes.ERROR_DIVIDER)) {
+					String str = "";
+					if(SaveLanguageUtil.getData()== 0) {
+						//中文
+						str =erroDetail.split(ConstRes.ERROR_DIVIDER)[0];
+					}else {
+						//英文
+						str =erroDetail.split(ConstRes.ERROR_DIVIDER)[1];
+					}
+					return str;
+				}
+				else {
+					return erroDetail;
+				}
+			}
 		}
 		return erroDetail;
 	}
 
+	public String getErroDetailAll() {
+		if(ResUtil.gsAll("this-service-have-cancelled").contains(erroDetail)) {
+			erroDetail = ResUtil.gs(ResUtil.getLanguage(),"this-service-have-cancelled");
+		}
+		return erroDetail;
+	}
+
+	
 	public void setErroDetail(String erroDetail) {
 		this.erroDetail = erroDetail;
 	}

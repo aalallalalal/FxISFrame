@@ -18,4 +18,7 @@ public final class ConstRes {
 
 	// 界面渐显时长
 	public static final double SHOW_TIME = 400;
+	
+	//exe错误信息分割符
+	public static final String ERROR_DIVIDER="###";
 }
