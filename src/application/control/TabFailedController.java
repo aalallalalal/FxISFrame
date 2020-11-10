@@ -85,6 +85,7 @@ public class TabFailedController implements Initializable {
 
 	public void addFailedHBox(ProjectBean project, String reason) {
 		project.setErroDetail(reason);
+		project.setError(true);
 		if(project.getInfo() == 1)
 			writeInfoToDataBase(project);
 		list_failed.add(project);
@@ -148,6 +149,7 @@ public class TabFailedController implements Initializable {
 						settingDialogBean.getStage().close();
 						removeInlist_failed(listView_failed.getSelectionModel().getSelectedIndex());
 						project.setErroDetail("");
+						project.setError(false);
 						processingController.addNewService(project);
 						
 					}

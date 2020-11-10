@@ -61,6 +61,11 @@
 						visible="false" style="-fx-font-size:13;-fx-text-fill: #000;">
 					</Label>
 
+					<Pane fx:id="gesturePaneFlight" AnchorPane.bottomAnchor="0.0"
+						prefHeight="450" prefWidth="450" AnchorPane.leftAnchor="0.0">
+						<Pane fx:id="pane_Canvas" prefHeight="450" prefWidth="450" />
+					</Pane>
+					
 					<JFXButton onAction="#onClickPaneSwitch" visible="true"
 						AnchorPane.topAnchor="85.0" AnchorPane.rightAnchor="0"
 						style="-fx-padding:2;-fx-pref-width:20; -fx-focus-color:transparent;">
@@ -76,11 +81,6 @@
 							</ImageView>
 						</graphic>
 					</JFXButton>
-
-					<Pane fx:id="gesturePaneFlight" AnchorPane.bottomAnchor="0.0"
-						prefHeight="450" prefWidth="450" AnchorPane.leftAnchor="0.0">
-						<Pane fx:id="pane_Canvas" prefHeight="450" prefWidth="450" />
-					</Pane>
 				</children>
 			</AnchorPane>
 		</GesturePane>

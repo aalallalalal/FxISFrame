@@ -4,6 +4,8 @@ import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
+import consts.ConstRes;
+
 public final class ResUtil {
 	/**
 	 * language 资源
@@ -110,9 +112,9 @@ public final class ResUtil {
 		try {
 			String res1 = resource1.getString(key);
 			String res0 = resource0.getString(key);
-			return res0+"!@#"+res1;
+			return res0+ConstRes.ERROR_DIVIDER+res1;
 		} catch (Exception e) {
-			return "--";
+			return "";
 		}
 	}
 	

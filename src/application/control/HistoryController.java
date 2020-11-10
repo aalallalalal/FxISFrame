@@ -644,7 +644,7 @@ public class HistoryController implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param) {
-						boolean isSuccessed = StrUtil.isEmpty(param.getValue().getProject().getErroDetail());
+						boolean isSuccessed = StrUtil.isEmpty(param.getValue().getProject().getErroDetailAll());
 						SimpleStringProperty flag = new SimpleStringProperty(
 								isSuccessed?ResUtil.gs("successed"):ResUtil.gs("failed")
 								);
@@ -657,9 +657,16 @@ public class HistoryController implements Initializable {
 
 					@Override
 					public ObservableValue<String> call(CellDataFeatures<DBRecordBean, String> param) {
-						SimpleStringProperty temp = new SimpleStringProperty(
-								param.getValue().getProject().getErroDetail());
-						return temp;
+						boolean isSuccessed = StrUtil.isEmpty(param.getValue().getProject().getErroDetailAll());
+						if(!isSuccessed) {
+							SimpleStringProperty temp = new SimpleStringProperty(
+									param.getValue().getProject().getErroDetail());
+							return temp;
+						}else {
+							SimpleStringProperty temp = new SimpleStringProperty(
+									"");
+							return temp;
+						}
 					}
 				});
 		failreason.setCellFactory(new Callback<TableColumn<DBRecordBean,String>, TableCell<DBRecordBean,String>>()

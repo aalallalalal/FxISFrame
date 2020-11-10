@@ -33,6 +33,7 @@ public class ProjectBean implements Serializable {
 	private SettingsBean settings;
 	private int info;
 	private String erroDetail = "";
+	private boolean isError = true; //暂时不用
 
 	public ProjectBean() {
 		super();
@@ -52,9 +53,13 @@ public class ProjectBean implements Serializable {
 	}
 
 	public String getErroDetail() {
-		if(ResUtil.gsAll("this-service-have-cancelled").contains(erroDetail)) {
+		if(ResUtil.gsAll("this-service-have-cancelled").contains(erroDetail)&&!StrUtil.isEmpty(erroDetail)) {
 			erroDetail = ResUtil.gs(ResUtil.getLanguage(),"this-service-have-cancelled");
-		}else {
+		}
+		else if(StrUtil.isEmpty(erroDetail)) {
+			return "";
+		}
+		else {
 			//TODO 这进行分割 显示
 			if(!StrUtil.isEmpty(erroDetail)) {
 				if(erroDetail.contains(ConstRes.ERROR_DIVIDER)) {
@@ -76,10 +81,14 @@ public class ProjectBean implements Serializable {
 		return erroDetail;
 	}
 
+	/**
+	 * 如果返回为空,那么则运行成功.否则为失败状态
+	 * @return
+	 */
 	public String getErroDetailAll() {
-		if(ResUtil.gsAll("this-service-have-cancelled").contains(erroDetail)) {
-			erroDetail = ResUtil.gs(ResUtil.getLanguage(),"this-service-have-cancelled");
-		}
+//		if(ResUtil.gsAll("this-service-have-cancelled").contains(erroDetail)&&!StrUtil.isEmpty(erroDetail)) {
+//			erroDetail = ResUtil.gs(ResUtil.getLanguage(),"this-service-have-cancelled");
+//		}
 		return erroDetail;
 	}
 
@@ -263,5 +272,13 @@ public class ProjectBean implements Serializable {
 		String para = "\"_img_label\"" + " ";
 		para += '"' + ImagesMapToFileUtil.getDeletedFilePath(this) + '"' + " ";
 		return para;
+	}
+
+	public boolean isError() {
+		return isError;
+	}
+
+	public void setError(boolean isError) {
+		this.isError = isError;
 	}
 }
