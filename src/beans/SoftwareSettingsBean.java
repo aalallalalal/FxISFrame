@@ -7,8 +7,8 @@ package beans;
  *
  */
 public class SoftwareSettingsBean {
-	private int language = 0; // 0中文，1英文
-
+	private int language = 0; // 0中文，1英
+	
 	public int getLanguage() {
 		return language;
 	}
@@ -16,5 +16,8 @@ public class SoftwareSettingsBean {
 	public void setLanguage(int language) {
 		this.language = language;
 	}
+	
+	
+	
 
 }
