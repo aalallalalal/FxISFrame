@@ -12,6 +12,8 @@ import base.controller.ConfirmDialogController.CallBack;
 import beans.AMapGeocodingBean;
 import beans.ImageBean;
 import consts.ConstSize;
+import javafx.animation.Animation.Status;
+import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
 import javafx.animation.PathTransition;
 import javafx.animation.Timeline;
@@ -722,10 +724,28 @@ public class GoogleMapFlightLineController implements Initializable {
 	@FXML
 	public void onClickPaneSwitch() {
 		if (isShowTipsPane) {
-			textArea_tip.setVisible(false);
+			if(fadeShow!=null) {
+				if(fadeShow.getStatus()==Status.RUNNING) {
+					fadeShow.stop();
+				}
+			}
+			fadeHide = AnimatorUtil.fadeHide(textArea_tip, 350);
+			fadeHide.setOnFinished(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					textArea_tip.setVisible(false);
+				}
+			});
 			btn_switch.setImage(imageSwitchOn);
 		} else {
+			fadeShow = AnimatorUtil.fadeShow(textArea_tip, 350);
 			textArea_tip.setVisible(true);
+			fadeShow.setOnFinished(new EventHandler<ActionEvent>() {
+				@Override
+				public void handle(ActionEvent event) {
+					textArea_tip.setVisible(true);
+				}
+			});
 			btn_switch.setImage(imageSwitchOff);
 		}
 		isShowTipsPane = !isShowTipsPane;
@@ -807,6 +827,8 @@ public class GoogleMapFlightLineController implements Initializable {
 	}
 
 	private FlightLineCallBack callback;
+	private FadeTransition fadeHide;
+	private FadeTransition fadeShow;
 
 	public interface FlightLineCallBack {
 		void onDeleteImage(ImageBean image);

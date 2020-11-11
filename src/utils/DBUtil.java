@@ -14,7 +14,7 @@ import consts.ConstRes;
 import javafx.concurrent.Task;
 
 public class DBUtil {
-	private static final String DB_VERSION = "v1";
+	private static final String DB_VERSION = "v2";
 
 	private static final String SQL_CreateTable_History = "create table if not exists table_history("
 			+ "project_new_id varchar(50),project_name varchar(20) , run_time VARCHAR(30) , create_time VARCHAR(30),"

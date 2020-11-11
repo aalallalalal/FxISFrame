@@ -53,4 +53,12 @@ public class AnimatorUtil {
 		return tt;
 	}
 
+	public static FadeTransition fadeHide(Node pane, double time) {
+		FadeTransition fadeTransition = new FadeTransition(Duration.millis(time), pane);
+		fadeTransition.setFromValue(1);
+		fadeTransition.setToValue(0);
+		fadeTransition.setCycleCount(1);
+		fadeTransition.play();
+		return fadeTransition;
+	}
 }

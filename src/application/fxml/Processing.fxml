@@ -14,11 +14,11 @@
    <bottom>
       <VBox prefHeight="82.0" prefWidth="800.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="currentProject" prefHeight="20.0" prefWidth="800.0" styleClass="currentproject">
+            <Label fx:id="currentProject" prefHeight="2.0" prefWidth="800.0" styleClass="currentproject">
                <VBox.margin>
                   <Insets left="8.0" />
                </VBox.margin></Label>
-            <TextArea fx:id="textarea" editable="false" prefHeight="60.0" prefWidth="800.0" styleClass="text-area" wrapText="true" />
+            <TextArea fx:id="textarea" editable="false" prefHeight="80.0" prefWidth="800.0" styleClass="text-area" wrapText="true" />
          </children>
       </VBox>
    </bottom>

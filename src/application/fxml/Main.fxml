@@ -38,7 +38,7 @@
 							BorderPane.alignment="CENTER"
 							style="-fx-text-fill: #ffffff; -fx-font-size:14;">
 							<effect>
-								<DropShadow color="#FAFAFA" radius="10" />
+								<DropShadow color="#DADADA" radius="2" />
 							</effect>
 							<BorderPane.margin>
 								<Insets right="5.0" />

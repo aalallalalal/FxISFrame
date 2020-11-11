@@ -8,6 +8,8 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.effect.Shadow;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -56,15 +58,15 @@ public class ToastUtil {
 	private static void init(String msg) {
 		Label label = new Label(msg);// 默认信息
 		label.setText(msg);
-		label.setPrefWidth(240);
+		label.setPrefWidth(350);
 		label.setStyle(
 				"-fx-text-fill: #fff;-fx-background: rgba(56,56,56,0.4);-fx-border-radius: 25;-fx-background-radius: 25");// label透明,圆角
-		label.setPrefHeight(50);
-		label.setMaxWidth(300);
+		label.setPrefHeight(90);
+		label.setMaxWidth(600);
 		label.setWrapText(true);
 		label.setPadding(new Insets(5));
 		label.setAlignment(Pos.CENTER);// 居中
-		label.setFont(new Font(12));// 字体大小
+		label.setFont(new Font(14));// 字体大小
 		
 		
 //		textArea = new TextArea(msg);
@@ -77,7 +79,7 @@ public class ToastUtil {
 //		textArea.setStyle(
 //				"-fx-text-fill: #fff;-fx-background: rgba(56,56,56,0.4);-fx-border-radius: 25;-fx-background-radius: 25");// label透明,圆角
 
-		Scene scene = new Scene(label, 240, 50);
+		Scene scene = new Scene(label, 350, 90);
 		scene.setFill(null);// 场景透明
 		stage.setScene(scene);
 	}
