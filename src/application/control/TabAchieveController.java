@@ -175,7 +175,7 @@ public class TabAchieveController implements Initializable {
 				SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");// 设置日期格式
 				String lastRunTime = df.format(project.getLastRuntime());
 				path = path + "\\logs\\" + project.getProjectName() + project.getId() + "\\" + lastRunTime
-						+ "\\Result\\" + name_dir + "-result\\" + name_dir + "-[TIRS].png";
+						+ "\\Result\\" + name_dir + "-result\\" + name_dir + "-[ISTIRS].png";
 				if (!SysUtil.exeOpenFile(path)) {
 					ToastUtil.toast(ResUtil.gs("open_image_error"));
 				}
