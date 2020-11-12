@@ -20,7 +20,7 @@
 	<top>
 		<AnchorPane>
 			<BorderPane BorderPane.alignment="CENTER"
-				AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0"
+				AnchorPane.rightAnchor="0" AnchorPane.topAnchor="16"
 				AnchorPane.leftAnchor="0.0" AnchorPane.bottomAnchor="0.0">
 				<center>
 					<Label alignment="CENTER" contentDisplay="CENTER"
@@ -64,7 +64,7 @@
 				<JFXButton buttonType="FLAT" fx:id="btn_create"
 					text="%createProject_createproject" prefWidth="210"
 					onAction="#createProject" prefHeight="75"
-					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:35;-fx-background-radius:10;
+					style="-fx-background-color: #3D99FF;-fx-text-fill: white;-fx-padding:35;-fx-background-radius:10;
 					-fx-font-size:20; "
 					BorderPane.alignment="CENTER">
 					<graphic>
@@ -81,7 +81,7 @@
 				<JFXButton buttonType="FLAT" fx:id="btn_open"
 					text="%createProject_openproject" prefWidth="210" prefHeight="75"
 					onAction="#openProject"
-					style="-fx-background-color: #00BFFF;-fx-text-fill: white;-fx-padding:35;-fx-background-radius:10;
+					style="-fx-background-color: #3D99FF;-fx-text-fill: white;-fx-padding:35;-fx-background-radius:10;
 					-fx-font-size:20; "
 					BorderPane.alignment="CENTER">
 					<graphic>
@@ -95,7 +95,7 @@
 				</JFXButton>
 			</right>
 			<BorderPane.margin>
-				<Insets left="150.0" right="150.0" />
+				<Insets left="150.0" right="150.0" top="20"/>
 			</BorderPane.margin>
 		</BorderPane>
 	</center>

@@ -1,28 +1,31 @@
 /* JavaFX CSS - Leave this comment until you have at least create one rule which uses -fx-Property */
+
+
 .root {
  -fx-font-size:16.0pt; 
  -fx-font-family:"Microsoft YaHei"; 
  -fx-base:#4f4f4f; 
 } 
-  
+
+
 
 .pagination .pagination-control{
 visibility: hidden;
 }
 .bar-main{
-	-fx-background-color: linear-gradient(to right,#2564FD 0.0%,#408DFA 40.0%,#408DFA 60.0%,#2564FD 100.0%); -fx-pref-height: 70.0; -fx-padding: 10.0;-fx-spacing:1.0;
+	-fx-background-color: linear-gradient(to right,#0078FF 0.0%,#1885FF 30.0%,#1885FF 70.0%,#0078FF 100.0%); -fx-pref-height: 70.0; -fx-padding: 10.0;-fx-spacing:1.0;
 }
 .bar-sub{
-	-fx-background-color: linear-gradient(to right,#2564FD 0.0%,#408DFA 40.0%,#408DFA 60.0%,#2564FD 100.0%); -fx-pref-height: 50.0; -fx-padding: 8.0;-fx-spacing:1.0;
+	-fx-background-color: linear-gradient(to right,#0078FF 0.0%,#1885FF 40.0%,#1885FF 60.0%,#0078FF 100.0%); -fx-pref-height: 50.0; -fx-padding: 8.0;-fx-spacing:1.0;
 }
 .bar-dialog{
-	-fx-background-color:  linear-gradient(to right,#2564FD 0.0%,#408DFA 40.0%,#408DFA 60.0%,#2564FD 100.0%); -fx-pref-height: 30.0; -fx-padding: 6.0;-fx-spacing:1.0;
+	-fx-background-color:  linear-gradient(to right,#0078FF 0.0%,#1885FF 40.0%,#1885FF 60.0%,#0078FF 100.0%); -fx-pref-height: 30.0; -fx-padding: 6.0;-fx-spacing:1.0;
 }
 .bar-confirm-dialog{
-	-fx-background-color:   linear-gradient(to right,#2564FD 0.0%,#408DFA 40.0%,#408DFA 60.0%,#2564FD 100.0%);-fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
+	-fx-background-color:   linear-gradient(to right,#0078FF 0.0%,#1885FF 40.0%,#1885FF 60.0%,#0078FF 100.0%);-fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
 }
 .bar-notice-dialog{
-	-fx-background-color:   linear-gradient(to right,#2564FD 0.0%,#408DFA 40.0%,#408DFA 60.0%,#2564FD 100.0%); -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
+	-fx-background-color:   linear-gradient(to right,#0078FF 0.0%,#1885FF 40.0%,#1885FF 60.0%,#0078FF 100.0%); -fx-pref-height: 25.0; -fx-padding: 5.0;-fx-spacing:1.0;
 }
 .frame-pane{
 	-fx-background-radius: 10.0; -fx-background-color: #ffffff;-fx-border-radius:10.0;
@@ -31,15 +34,15 @@ visibility: hidden;
 	-fx-background-color: linear-gradient(to right,#FF9500 0.0%,#FFA500 50.0%,#FF9500 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-weight:bold;-fx-font-size:16.0;
 }
 .btn-level-normal{
-	-fx-background-color: linear-gradient(to right,#3389FC 0.0%,#408DFA 50.0%,#3389FC 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-size:16.0;
+	-fx-background-color: linear-gradient(to right,#3389FC 0.0%,#1885FF 50.0%,#3389FC 100.0%); -fx-text-fill: white;-fx-padding:10.0;-fx-font-size:16.0;
 }
 .btn-level-projects{
-	-fx-background-color:linear-gradient(to right,#3389FC 0.0%,#408DFA 50.0%,#3389FC 100.0%);-fx-text-fill: white;-fx-padding:10.0;-fx-font-size:16.0;-fx-min-width: 83
+	-fx-background-color:linear-gradient(to right,#3389FC 0.0%,#1885FF 50.0%,#3389FC 100.0%);-fx-text-fill: white;-fx-padding:10.0;-fx-font-size:16.0;-fx-min-width: 83
 }
 
 .custom-jfx-check-box{
    -jfx-checked-color: #FFA500;  
-   -jfx-unchecked-color: #408DFA;
+   -jfx-unchecked-color: #1885FF;
    -fx-text-fill:  #5f5f5f; -fx-font-size: 14.0; -fx-wrap-text:true 
 }
 
@@ -77,7 +80,7 @@ visibility: hidden;
 } 
 
  /**
- * 表头背景颜色变化
+ * 琛ㄥご鑳屾櫙棰滆壊鍙樺寲
  */
 .table-column .label{
     -fx-background-color: #fff;
@@ -122,7 +125,7 @@ visibility: hidden;
     -fx-background-color: #f1f1f1;
 }
  .table-view > .virtual-flow >:horizontal .thumb{
-    -fx-background-color: #408DFA;
+    -fx-background-color: #1885FF;
 }
  .table-view > .virtual-flow >.scroll-bar:vertical{
     -fx-background-color: #f1f1f1;
@@ -133,7 +136,7 @@ visibility: hidden;
     -fx-background-color: #f1f1f1;
 }
  .table-view > .virtual-flow >:vertical .thumb{
-    -fx-background-color: #408DFA;
+    -fx-background-color: #1885FF;
 }
 .table-row-cell:selected {
     -fx-background-color: #87CEEB;
@@ -214,7 +217,7 @@ visibility: hidden;
     -fx-background-color: white;
 }
 .list-cell:selected {
-    -fx-background-color: #1ABDE6;
+    -fx-background-color: #87CEEB;
 }
 
 .list-cell *.button{
@@ -240,7 +243,7 @@ visibility: hidden;
     -fx-pref-height:12.0
 }
  .list-view > .virtual-flow >.scroll-bar:horizontal .thumb{
-    -fx-background-color: #408DFA;
+    -fx-background-color: #1885FF;
      -fx-pref-height:12.0
 }
  .list-view > .virtual-flow >.scroll-bar:vertical{
@@ -253,7 +256,7 @@ visibility: hidden;
      -fx-pref-width: 12.0
 }
  .list-view > .virtual-flow >.scroll-bar:vertical .thumb{
-    -fx-background-color: #408DFA;
+    -fx-background-color: #1885FF;
     -fx-pref-width: 12.0
 }
  .list-view > .virtual-flow >.scroll-bar:vertical .decrement-button {
@@ -288,7 +291,7 @@ visibility: hidden;
     -fx-pref-height:12.0
 }
  .web-view > .scroll-bar:horizontal .thumb{
-    -fx-background-color: #408DFA;
+    -fx-background-color: #1885FF;
      -fx-pref-height:12.0
 }
  .web-view > .scroll-bar:vertical{
@@ -301,7 +304,7 @@ visibility: hidden;
      -fx-pref-width: 12.0
 }
  .web-view > .scroll-bar:vertical .thumb{
-    -fx-background-color: #408DFA;
+    -fx-background-color: #1885FF;
     -fx-pref-width: 12.0
 }
  .web-view > .scroll-bar:vertical .decrement-button {

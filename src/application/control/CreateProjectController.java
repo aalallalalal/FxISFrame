@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import com.jfoenix.controls.JFXButton;
+import com.sun.javafx.scene.control.skin.ColorPalette;
 
 import javafx.animation.Transition;
 import javafx.event.ActionEvent;
@@ -110,7 +111,7 @@ public class CreateProjectController extends BaseController implements Initializ
 		};
 		
 		effectOn = new DropShadow();
-		effectOn.setColor(Color.DEEPSKYBLUE);
+		effectOn.setColor(Color.web("#71B4FF"));
 		effectOn.setRadius(0);
 
 		btn_create.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
