@@ -33,7 +33,7 @@
 					<children>
 						<Label fx:id="bar_title" maxWidth="Infinity"
 							text="%software_title"
-							style="-fx-font-weight: normal; -fx-font-size:18;"
+							style="-fx-font-weight: normal; -fx-font-size:20;"
 							graphicTextGap="8" HBox.hgrow="ALWAYS">
 							<effect>
 								<DropShadow color="#1A1A1A" radius="2" />

@@ -2,7 +2,10 @@ package application.control;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map.Entry;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import com.jfoenix.controls.JFXButton;
 
@@ -74,7 +77,7 @@ public class ProjectsController extends BaseController implements Initializable 
 	BorderPane root;
 	ImageView imageView = new ImageView(new Image("/resources/wushuju.png"));
 	
-	private ArrayList<Stage> projectsDetailStage = new ArrayList<Stage>();
+	private HashMap<Long,Stage> projectsDetailStage = new HashMap<Long,Stage>();
 
 	/**
 	 * 添加项目
@@ -208,10 +211,17 @@ public class ProjectsController extends BaseController implements Initializable 
 			return;
 		}
 		ProjectBean project = projectListData.get(index);
+		if(projectsDetailStage.containsKey(project.getId())) {
+			Stage stage2 = projectsDetailStage.get(project.getId());
+			stage2.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+			stage2.close();
+			projectsDetailStage.remove(project.getId());
+		}
+		
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml",
 				ConstSize.Main_Frame_Width-80, ConstSize.Main_Frame_Height,
 				ResUtil.gs("project") + project.getProjectName());
-		projectsDetailStage.add(openFrame.getStage());
+		projectsDetailStage.put(project.getId(),openFrame.getStage());
 		ImageListController controller = openFrame.getFxmlLoader().getController();
 		controller.setProjectInfo(project);
 		controller.setCallBack(new ImageListController.Callback() {
@@ -274,10 +284,11 @@ public class ProjectsController extends BaseController implements Initializable 
 	@Override
 	protected void onClickRightBtn() {
 		if(projectsDetailStage!=null&&projectsDetailStage.size()>=1) {
-			for(Stage stage: projectsDetailStage) {
-				if(stage.isShowing()) {
-					stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
-					stage.close();
+			Set<Entry<Long, Stage>> entrySet = projectsDetailStage.entrySet();
+			for(Entry<Long, Stage> entry: entrySet) {
+				if(entry.getValue().isShowing()) {
+					entry.getValue().fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
+					entry.getValue().close();
 				}
 			}
 			projectsDetailStage.clear();

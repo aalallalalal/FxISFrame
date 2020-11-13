@@ -34,14 +34,16 @@
 					style="-fx-background-color:linear-gradient(to right, #adadad 0.0%,#bdbdbd 40.0%,#bdbdbd 70.0%, #b4b4b4 100.0%);-fx-padding: 10;"
 					prefHeight="30.0" prefWidth="200.0">
 					<right>
-						<Label text="Made by UAV-TIR Team"
+						<Label 
+						text="%team"
 							BorderPane.alignment="CENTER"
-							style="-fx-text-fill: #ffffff; -fx-font-size:14;">
+							style="-fx-text-fill: #1f1f1f; -fx-font-size:17;-fx-font-weight:italic;">
 							<effect>
-								<DropShadow color="#1A1A1A" radius="2" />
+								<DropShadow color="#5A5A5A" radius="1.6" />
 							</effect>
+		
 							<BorderPane.margin>
-								<Insets right="5.0" />
+								<Insets right="8.0" />
 							</BorderPane.margin>
 						</Label>
 					</right>

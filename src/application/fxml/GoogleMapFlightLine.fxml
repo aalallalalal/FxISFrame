@@ -52,13 +52,13 @@
 
 					<Label fx:id="textArea_tip" prefWidth="160" wrapText="true"
 						AnchorPane.rightAnchor="0" AnchorPane.topAnchor="0" visible="true"
-						style="-fx-font-size:12;-fx-padding:3;-fx-text-fill: #000;">
+						style="-fx-font-size:12;-fx-padding:3;-fx-text-fill: #4f4f4f;">
 					</Label>
 
 
 					<Label fx:id="textArea_place" wrapText="true"
 						AnchorPane.leftAnchor="0" AnchorPane.bottomAnchor="0"
-						visible="false" style="-fx-font-size:13;-fx-text-fill: #000;">
+						visible="false" style="-fx-font-size:13;-fx-text-fill: #4f4f4f;">
 					</Label>
 
 					<Pane fx:id="gesturePaneFlight" AnchorPane.bottomAnchor="0.0"
@@ -66,8 +66,64 @@
 						<Pane fx:id="pane_Canvas" prefHeight="450" prefWidth="450" />
 					</Pane>
 					
+					<VBox 
+						fx:id="vbox_tip"
+						AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="30"
+						>
+						<children>
+							<Label text="%point_normal_tip"
+								style="-fx-font-size:12;-fx-text-fill: #4f4f4f;"
+								>
+								<graphic>
+									<ImageView fx:id="img_icon" fitWidth="20.0"
+										preserveRatio="true" smooth="true">
+										<image>
+											<Image url="/resources/camera-fill-normal.png" />
+										</image>
+									</ImageView>
+								</graphic>
+							</Label>
+							<Label text="%point_hover_tip"
+								style="-fx-font-size:12;-fx-text-fill: #4f4f4f;"
+								>
+								<graphic>
+									<ImageView fx:id="img_icon" fitWidth="20.0"
+										preserveRatio="true" smooth="true">
+										<image>
+											<Image url="/resources/camera-hover4.png" />
+										</image>
+									</ImageView>
+								</graphic>
+							</Label>
+							<Label text="%point_selected_tip"
+								style="-fx-font-size:12;-fx-text-fill: #4f4f4f;"
+								>
+								<graphic>
+									<ImageView fx:id="img_icon" fitWidth="20.0"
+										preserveRatio="true" smooth="true">
+										<image>
+											<Image url="/resources/camera-fill-focus.png" />
+										</image>
+									</ImageView>
+								</graphic>
+							</Label>
+							<Label text="%point_deleted_tip"
+								style="-fx-font-size:12;-fx-text-fill: #4f4f4f;"
+								>
+								<graphic>
+									<ImageView fx:id="img_icon" fitWidth="20.0"
+										preserveRatio="true" smooth="true">
+										<image>
+											<Image url="/resources/camera-fill-deleted.png" />
+										</image>
+									</ImageView>
+								</graphic>
+							</Label>
+						</children>
+					</VBox>
+					
 					<JFXButton onAction="#onClickPaneSwitch" visible="true"
-						AnchorPane.topAnchor="85.0" AnchorPane.rightAnchor="0"
+						AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0"
 						style="-fx-padding:2;-fx-pref-width:20; -fx-focus-color:transparent;">
 						<tooltip>
 							<MyToolTip text="%flight_switcher_pane"></MyToolTip>

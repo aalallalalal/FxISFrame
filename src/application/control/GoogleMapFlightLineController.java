@@ -43,6 +43,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Polyline;
 import javafx.scene.shape.StrokeLineJoin;
@@ -136,6 +137,8 @@ public class GoogleMapFlightLineController implements Initializable {
 	Label bottomLabel_deleted;
 	@FXML
 	Label bottomLabel_current;
+	@FXML
+	VBox vbox_tip;
 	private HashMap<String, Boolean> deletedLabelMap;
 
 	@Override
@@ -671,6 +674,7 @@ public class GoogleMapFlightLineController implements Initializable {
 					if (imageMap != null) {
 						imageView.setImage(imageMap);
 						textArea_tip.setVisible(true);
+						vbox_tip.setVisible(true);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -730,20 +734,25 @@ public class GoogleMapFlightLineController implements Initializable {
 				}
 			}
 			fadeHide = AnimatorUtil.fadeHide(textArea_tip, 350);
+			AnimatorUtil.fadeHide(vbox_tip, 350);
 			fadeHide.setOnFinished(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
 					textArea_tip.setVisible(false);
+					vbox_tip.setVisible(false);
 				}
 			});
 			btn_switch.setImage(imageSwitchOn);
 		} else {
 			fadeShow = AnimatorUtil.fadeShow(textArea_tip, 350);
+			fadeShow = AnimatorUtil.fadeShow(vbox_tip, 350);
 			textArea_tip.setVisible(true);
+			vbox_tip.setVisible(true);
 			fadeShow.setOnFinished(new EventHandler<ActionEvent>() {
 				@Override
 				public void handle(ActionEvent event) {
 					textArea_tip.setVisible(true);
+					vbox_tip.setVisible(true);
 				}
 			});
 			btn_switch.setImage(imageSwitchOff);

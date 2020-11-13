@@ -126,6 +126,7 @@ public class ImageListController implements Initializable {
 	private Stage flightStage; // 飞行路径界面的stage
 
 	private int deletedNum;
+	private List<? extends ImageBean> initSelectedList;
 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
@@ -733,11 +734,17 @@ public class ImageListController implements Initializable {
 
 	@FXML
 	public void onSeeLine() {
-
+		if (flightStage != null && flightStage.isShowing()) {
+			flightStage.close();
+			flightStage = null;
+			flightController = null;
+		}
+		
 		if (labelMap == null || labelMap.size() <= 0) {
 			ToastUtil.toast(ResUtil.gs("data_error"));
 			return;
 		}
+		tableView.getSelectionModel().clearSelection();
 
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/GoogleMapFlightLine.fxml",
 				ConstSize.Flight_Width, ConstSize.Flight_Height,
@@ -745,6 +752,7 @@ public class ImageListController implements Initializable {
 		flightStage = openFrame.getStage();
 		flightController = openFrame.getFxmlLoader().getController();
 		flightController.setData(listData, labelMap, this, deletedNum);
+//		flightController.onImageSelectedFromImageList(initSelectedList, 1);
 		flightController.setCallback(new FlightLineCallBack() {
 			@Override
 			public void onDeleteImage(ImageBean image) {
@@ -794,6 +802,7 @@ public class ImageListController implements Initializable {
 
 		public MyRunnable(List<? extends ImageBean> subListAdd, List<ImageBean> subListRemove) {
 			this.subListAdd = subListAdd;
+			initSelectedList = subListAdd; 
 			this.subListRemove = subListRemove;
 		}
 
