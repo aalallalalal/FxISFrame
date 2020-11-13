@@ -61,12 +61,7 @@
 						visible="false" style="-fx-font-size:13;-fx-text-fill: #4f4f4f;">
 					</Label>
 
-					<Pane fx:id="gesturePaneFlight" AnchorPane.bottomAnchor="0.0"
-						prefHeight="450" prefWidth="450" AnchorPane.leftAnchor="0.0">
-						<Pane fx:id="pane_Canvas" prefHeight="450" prefWidth="450" />
-					</Pane>
-					
-					<VBox 
+<VBox 
 						fx:id="vbox_tip"
 						AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="30"
 						>
@@ -121,6 +116,13 @@
 							</Label>
 						</children>
 					</VBox>
+
+					<Pane fx:id="gesturePaneFlight" AnchorPane.bottomAnchor="0.0"
+						prefHeight="450" prefWidth="450" AnchorPane.leftAnchor="0.0">
+						<Pane fx:id="pane_Canvas" prefHeight="450" prefWidth="450" />
+					</Pane>
+					
+					
 					
 					<JFXButton onAction="#onClickPaneSwitch" visible="true"
 						AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0"
