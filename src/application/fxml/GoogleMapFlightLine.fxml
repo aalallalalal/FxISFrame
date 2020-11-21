@@ -61,7 +61,7 @@
 						visible="false" style="-fx-font-size:13;-fx-text-fill: #4f4f4f;">
 					</Label>
 
-<VBox 
+					<VBox 
 						fx:id="vbox_tip"
 						AnchorPane.rightAnchor="0" AnchorPane.bottomAnchor="30"
 						>

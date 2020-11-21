@@ -47,6 +47,21 @@
 								</ImageView>
 							</graphic>
 						</Label>
+						<JFXButton fx:id="btn_help" onAction="#onClickHelp"
+							style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;"
+							visible ="false">
+							<tooltip>
+								<MyToolTip text="%createProject_help"></MyToolTip>
+							</tooltip>
+							<graphic>
+								<ImageView fx:id="img_help" fitWidth="24.0"
+									preserveRatio="true" smooth="true">
+									<image>
+										<Image url="/resources/help2.png" />
+									</image>
+								</ImageView>
+							</graphic>
+						</JFXButton>
 						<JFXButton fx:id="btn_history" onAction="#onClickHistory"
 							style="-fx-padding: 4;-fx-pref-width:26 ;-fx-focus-color: transparent;">
 							<tooltip>

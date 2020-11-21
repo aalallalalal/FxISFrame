@@ -34,14 +34,10 @@
 					style="-fx-background-color:linear-gradient(to right, #adadad 0.0%,#bdbdbd 40.0%,#bdbdbd 70.0%, #b4b4b4 100.0%);-fx-padding: 10;"
 					prefHeight="30.0" prefWidth="200.0">
 					<right>
-						<Label 
-						text="%team"
+						<Label fx:id="label_team" text="%team"
 							BorderPane.alignment="CENTER"
-							style="-fx-text-fill: #1f1f1f; -fx-font-size:17;-fx-font-weight:italic;">
-							<effect>
-								<DropShadow color="#5A5A5A" radius="1.6" />
-							</effect>
-		
+							style="-fx-text-fill: #FF9500; -fx-font-size:19;-fx-font-weight:bold;">
+							
 							<BorderPane.margin>
 								<Insets right="8.0" />
 							</BorderPane.margin>

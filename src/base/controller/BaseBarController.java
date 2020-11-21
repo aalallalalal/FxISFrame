@@ -1,5 +1,6 @@
 package base.controller;
 
+import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -25,6 +26,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import utils.AnimatorUtil;
 import utils.ResUtil;
+import utils.SysUtil;
 import utils.UIUtil;
 
 /**
@@ -46,6 +48,8 @@ public class BaseBarController implements Initializable {
 	JFXButton btn_hide;
 	@FXML
 	JFXButton btn_history;
+	@FXML
+	JFXButton btn_help;
 	private RotateTransition rotateEnter;
 	private RotateTransition rotateExit;
 	private RotateTransition rotateEnter2;
@@ -54,6 +58,8 @@ public class BaseBarController implements Initializable {
 	protected TranslateTransition translateExit;
 	private ScaleTransition scaleEnter;
 	private TranslateTransition translateEnter;
+	private ScaleTransition scaleExitHelp;
+	private ScaleTransition scaleEnterHelp;
 	@FXML
 	ImageView img_hide;
 	@FXML
@@ -62,6 +68,24 @@ public class BaseBarController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		AnimatorUtil.fadeShow(root, 1500);
+		btn_help.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (scaleExitHelp != null) {
+					scaleExitHelp.stop();
+				}
+				scaleEnterHelp = AnimatorUtil.scale(btn_help, 200, 1, 1.2);
+			}
+		});
+		btn_help.addEventFilter(MouseEvent.MOUSE_EXITED, new EventHandler<MouseEvent>() {
+			@Override
+			public void handle(MouseEvent event) {
+				if (scaleEnterHelp != null) {
+					scaleEnterHelp.stop();
+				}
+				scaleExitHelp = AnimatorUtil.scale(btn_help, 200, 1.2, 1);
+			}
+		});
 		btn_close.addEventFilter(MouseEvent.MOUSE_ENTERED, new EventHandler<MouseEvent>() {
 			@Override
 			public void handle(MouseEvent event) {
@@ -139,9 +163,14 @@ public class BaseBarController implements Initializable {
 
 	@FXML
 	public void onClickHide(ActionEvent event) {
-		System.out.println("缩小");
 		Stage stage = (Stage) root.getScene().getWindow();
 		stage.setIconified(true);
+	}
+	
+	@FXML
+	public void onClickHelp(ActionEvent event) {
+		File file = SysUtil.openHelpFile();
+		SysUtil.exeOpenFile(file.getAbsolutePath());
 	}
 
 	@FXML

@@ -17,6 +17,7 @@ import beans.SettingsBean;
 import beans.SoftwareSettingsBean;
 import consts.ConstRes;
 import consts.ConstSize;
+import javafx.animation.Transition;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -25,10 +26,13 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Pagination;
+import javafx.scene.effect.DropShadow;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import javafx.util.Duration;
 import utils.DBUtil;
 import utils.MyPlatform;
 import utils.ResUtil;
@@ -69,6 +73,8 @@ public class MainController implements Initializable {
 	JFXButton btn_pre;
 	@FXML
 	JFXButton btn_next;
+	@FXML
+	Label label_team;
 	private Label title;
 
 	/**
@@ -100,7 +106,7 @@ public class MainController implements Initializable {
 		public void onClickHelp() {
 //			UIUtil.openFrame(getClass(), "/application/fxml/Help.fxml", ConstSize.Second_Frame_Width,
 //				720, ResUtil.gs("createProject_help"));
-			File file = new File(System.getProperty("user.dir") + "\\help\\help.html");
+			File file = SysUtil.openHelpFile();
 			SysUtil.exeOpenFile(file.getAbsolutePath());
 		}
 
@@ -410,6 +416,9 @@ public class MainController implements Initializable {
 	}
 
 	private void nextPage() {
+		if(animationOn!=null) {
+			animationOn.stop();
+		}
 		System.out.println("下一页");
 		int nextIndex = mPagination.getCurrentPageIndex() + 1;
 		if (nextIndex >= MAX_PAGE_SIZE) {
@@ -440,6 +449,29 @@ public class MainController implements Initializable {
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initPagination();
+		initAnimation();
+	}
+
+	
+	private DropShadow effectOn;
+	private Transition animationOn;
+	private void initAnimation() {
+		animationOn = new Transition() {
+			{
+				setCycleDuration(Duration.millis(1800));
+			}
+
+			protected void interpolate(double frac) {
+				effectOn.setRadius((double) (20 * (double) frac)+4);
+				
+			}
+		};
+		effectOn = new DropShadow();
+		effectOn.setColor(Color.web("#FFF7D8"));
+		label_team.setEffect(effectOn);
+		animationOn.setAutoReverse(true);
+		animationOn.setCycleCount(-1);
+		animationOn.play();
 	}
 
 	/**

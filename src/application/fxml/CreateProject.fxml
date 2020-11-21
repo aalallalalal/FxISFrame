@@ -27,10 +27,10 @@
 						style="-fx-font-weight: bold;"
 						BorderPane.alignment="CENTER">
 						<graphic>
-							<ImageView fitHeight="230" pickOnBounds="true"
+							<ImageView fitHeight="240" pickOnBounds="true"
 								preserveRatio="true" smooth="true">
 								<image>
-									<Image url="/resources/software_big_simple.png" />
+									<Image url="/resources/software_big_icon2.png" />
 								</image>
 							</ImageView>
 						</graphic>
