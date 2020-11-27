@@ -231,7 +231,7 @@ public class UIUtil {
 	 * @param stage
 	 * @param ownStage
 	 */
-	private static void setFrameIsModal(Stage stage, Stage ownStage) {
+	public static void setFrameIsModal(Stage stage, Stage ownStage) {
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.initOwner(ownStage);
 	}

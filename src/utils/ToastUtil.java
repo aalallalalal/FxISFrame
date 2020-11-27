@@ -8,8 +8,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.effect.Shadow;
-import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
@@ -82,5 +80,15 @@ public class ToastUtil {
 		Scene scene = new Scene(label, 350, 90);
 		scene.setFill(null);// 场景透明
 		stage.setScene(scene);
+	}
+
+
+	public static void setOwnerStage(Stage ownerStage) {
+		try {
+			stage.initOwner(ownerStage);
+		} catch (Exception e) {
+			System.out.println("toast");
+		}
+		
 	}
 }

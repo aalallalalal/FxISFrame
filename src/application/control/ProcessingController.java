@@ -209,6 +209,7 @@ public class ProcessingController extends BaseController implements Initializabl
 			tabRunningController.toRunning();
 			service.reset();
 			service.start();
+			listener.updateStart();
 		}else {
 			listener.updateFinish();
 		}
@@ -364,6 +365,7 @@ public class ProcessingController extends BaseController implements Initializabl
 	public interface ProcessingListener {
 		//转到项目列表界面
 		void toprojects();
+		void updateStart();
 		//更新成功界面
 		void updateSuccBox();
 		//更新失败界面

@@ -134,7 +134,7 @@ public class MainController implements Initializable {
 										e.printStackTrace();
 									}
 								}
-							}, 2000);
+							}, 3000);
 						}
 					}
 				});
@@ -298,7 +298,13 @@ public class MainController implements Initializable {
 			processingController.setState(false);
 			processingController.currentProject.setText(ResUtil.gs("finish"));
 			processingController.updatecontrol();
+			processingController.stage.setTitle("ISTIRS-"+ResUtil.gs("stitching_state_finish"));
 			changeBottomBtnsView(currentController, 3);
+		}
+
+		@Override
+		public void updateStart() {
+			processingController.stage.setTitle("ISTIRS-"+ResUtil.gs("stitching_state_running"));
 		}
 	}
 

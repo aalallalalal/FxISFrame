@@ -4,6 +4,8 @@ import com.jfoenix.controls.JFXButton;
 
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import utils.ToastUtil;
+import utils.UIUtil;
 
 public abstract class BaseController {
 	protected JFXButton leftBtn, rightBtn;
@@ -19,6 +21,7 @@ public abstract class BaseController {
 
 	public void setMainStage(Stage stage) {
 		this.stage = stage;
+		ToastUtil.setOwnerStage(stage);
 	}
 
 	protected abstract void onSetBottomBtnsAndTitle();
