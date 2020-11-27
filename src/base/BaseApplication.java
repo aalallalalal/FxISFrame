@@ -31,6 +31,7 @@ public abstract class BaseApplication extends Application {
 			Scene scene = getScene(uiPane, primaryStage);
 			scene.setFill(null);
 			primaryStage.setScene(scene);
+			primaryStage.setTitle("ISTIRS");
 			scene.getStylesheets().add(getClass().getResource(getCSSPath()).toExternalForm());
 			primaryStage.initStyle(StageStyle.TRANSPARENT);// 设定窗口无边框
 			primaryStage.setOnCloseRequest(new WindowsCloseEvent(primaryStage));// 注册主框架关闭监听

@@ -330,7 +330,7 @@ public class MainController implements Initializable {
 			}
 			currentController = createProjectController;
 			currentPane = createProjPane;
-			System.out.println("donknow:+" + pageIndex);
+			currentController.stage.setTitle("ISTIRS");
 			break;
 		case 1:// 工程列表界面
 			if (projectsPane == null) {
@@ -345,7 +345,7 @@ public class MainController implements Initializable {
 			}
 			currentController = projectsController;
 			currentPane = projectsPane;
-			System.out.println("donknow:+" + pageIndex);
+			currentController.stage.setTitle("ISTIRS-"+ResUtil.gs("project"));
 			break;
 		case 2:// 其他参数配置界面
 			if (settingPane == null) {
@@ -360,7 +360,7 @@ public class MainController implements Initializable {
 			}
 			currentController = settingController;
 			currentPane = settingPane;
-			System.out.println("donknow:+" + pageIndex);
+			currentController.stage.setTitle("ISTIRS-"+ResUtil.gs("settings"));
 			break;
 		case 3:// 计算中、计算结果界面
 			if (ProcessingPane == null) {
@@ -375,12 +375,11 @@ public class MainController implements Initializable {
 			}
 			currentController = processingController;
 			currentPane = ProcessingPane;
-			System.out.println("donknow:+" + pageIndex);
+			currentController.stage.setTitle("ISTIRS-"+ResUtil.gs("splicing-service"));
 			break;
 		default:
 			break;
 		}
-
 		changeBottomBtnsView(currentController, pageIndex);
 		return currentPane;
 	}

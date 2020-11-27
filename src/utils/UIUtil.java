@@ -81,6 +81,7 @@ public class UIUtil {
 			setFrameCss(clz, scene);
 			Stage anotherStage = new Stage();
 			anotherStage.setScene(scene);
+			anotherStage.setTitle(title);
 			setFrameCanDrag(framePane, anotherStage);
 			transparentFrame(anotherStage, scene);
 			anotherStage.show();
@@ -122,6 +123,7 @@ public class UIUtil {
 
 			setFrameCss(clz, scene);
 			anotherStage.setScene(scene);
+			anotherStage.setTitle(title);
 			transparentFrame(anotherStage, scene);
 			setFrameCanDrag(framePane, anotherStage);
 			anotherStage.show();
@@ -160,6 +162,7 @@ public class UIUtil {
 
 			setFrameCss(clz, scene);
 			anotherStage.setScene(scene);
+			anotherStage.setTitle(title);
 			transparentFrame(anotherStage, scene);
 			setFrameCanDrag(root, anotherStage);
 			anotherStage.show();
@@ -202,6 +205,7 @@ public class UIUtil {
 
 			setFrameCss(clz, scene);
 			anotherStage.setScene(scene);
+			anotherStage.setTitle(title);
 			transparentFrame(anotherStage, scene);
 			setFrameCanDrag(root, anotherStage);
 			anotherStage.show();
