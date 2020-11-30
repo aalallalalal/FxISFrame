@@ -34,6 +34,7 @@ public class ProjectBean implements Serializable {
 	private int info;
 	private String erroDetail = "";
 	private boolean isError = true; //暂时不用
+	private long finishTime;
 
 	public ProjectBean() {
 		super();
@@ -280,5 +281,13 @@ public class ProjectBean implements Serializable {
 
 	public void setError(boolean isError) {
 		this.isError = isError;
+	}
+
+	public long getFinishTime() {
+		return finishTime;
+	}
+
+	public void setFinishTime(long finishTime) {
+		this.finishTime = finishTime;
 	}
 }

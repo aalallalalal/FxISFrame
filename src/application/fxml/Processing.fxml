@@ -10,18 +10,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.control.Label?>
 
-<BorderPane fx:id="root" prefHeight="480.0" prefWidth="800.0" style="-fx-background-color:#fff" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.ProcessingController">
-   <bottom>
-      <VBox prefHeight="100" prefWidth="800.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label fx:id="currentProject"  prefWidth="800.0" styleClass="currentproject">
-               <VBox.margin>
-                  <Insets left="8.0" />
-               </VBox.margin></Label>
-            <TextArea fx:id="textarea" editable="false" prefHeight="78.0" prefWidth="800.0" styleClass="text-area" wrapText="true" />
-         </children>
-      </VBox>
-   </bottom>
+<BorderPane fx:id="root"  prefWidth="800.0" style="-fx-background-color:#fff" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.control.ProcessingController">
    <center>
       <JFXTabPane fx:id="tabPane" BorderPane.alignment="CENTER">
          <tabs>
@@ -36,8 +25,19 @@
             </Tab>
          </tabs>
          <BorderPane.margin>
-            <Insets left="10.0" right="10.0" top="10.0" />
+            <Insets left="10.0" right="10.0" top="5.0" />
          </BorderPane.margin>
       </JFXTabPane>
    </center>
+   <bottom>
+      <VBox prefHeight="100" prefWidth="800.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="currentProject"  prefWidth="800.0" styleClass="currentproject">
+               <VBox.margin>
+                  <Insets left="8.0" />
+               </VBox.margin></Label>
+            <TextArea fx:id="textarea" editable="false" prefHeight="78.0" prefWidth="800.0" styleClass="text-area" wrapText="true" />
+         </children>
+      </VBox>
+   </bottom>
 </BorderPane>

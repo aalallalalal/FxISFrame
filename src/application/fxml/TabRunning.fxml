@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.BorderPane?>
 
 <AnchorPane fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" 
-		minHeight="-Infinity" minWidth="-Infinity" prefHeight="380.0" prefWidth="840.0" 
+		minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="840.0" 
 		xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" 
 		fx:controller="application.control.TabRunningController">
    <children>

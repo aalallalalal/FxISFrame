@@ -35,9 +35,6 @@
 							text="%software_title"
 							style="-fx-font-weight: normal; -fx-font-size:20;"
 							graphicTextGap="8" HBox.hgrow="ALWAYS">
-							<effect>
-								<DropShadow color="#1A1A1A" radius="2" />
-							</effect>
 							<graphic>
 								<ImageView fx:id="img_icon" fitWidth="30.0"
 									preserveRatio="true" smooth="true">

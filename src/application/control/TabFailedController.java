@@ -86,6 +86,7 @@ public class TabFailedController implements Initializable {
 	public void addFailedHBox(ProjectBean project, String reason) {
 		project.setErroDetail(reason);
 		project.setError(true);
+		project.setFinishTime(System.currentTimeMillis());
 		if(project.getInfo() == 1)
 			writeInfoToDataBase(project);
 		list_failed.add(project);
@@ -108,7 +109,7 @@ public class TabFailedController implements Initializable {
 		faileddetail.setTooltip(new MyToolTip(project.getErroDetail()));
 		Label currenttime = (Label) temp.lookup("#currenttime");
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");// 设置日期格式
-		String time = df.format(new Date());// new Date()为获取当前系统时间
+		String time = df.format(project.getFinishTime());
 		currenttime.setText(time);
 
 		// 查看参数

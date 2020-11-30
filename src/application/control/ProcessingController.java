@@ -193,8 +193,8 @@ public class ProcessingController extends BaseController implements Initializabl
  			next.setLastRuntime(System.currentTimeMillis());
  			String time = df.format(next.getLastRuntime());
  			String path =System.getProperty("user.home")+ConstRes.SOFT_PATH;
- 			dbRecord.setResultPath(path + "\\logs\\" + next.getProjectName() + next.getId() + "\\" + time);
- 			FinalDataBean.para_Exe = next.getLabelFile() + next.toSettingParameter() + next.getParam() + "%" + next.getProjectName() + next.getId() + "\\" + time;
+ 			dbRecord.setResultPath(path + "\\logs\\" + next.getProjectName() +"_"+ next.getId() + "\\" + time);
+ 			FinalDataBean.para_Exe = next.getLabelFile() + next.toSettingParameter() + next.getParam() + "%" + next.getProjectName() +"_"+ next.getId() + "\\" + time;
  			System.out.println(FinalDataBean.para_Exe);
  			currentProject.setText(next.getProjectName() + " . . .");
  		}

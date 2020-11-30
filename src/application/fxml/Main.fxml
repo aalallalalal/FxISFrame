@@ -36,7 +36,7 @@
 					<right>
 						<Label fx:id="label_team" text="%team"
 							BorderPane.alignment="CENTER"
-							style="-fx-text-fill: #FF9500; -fx-font-size:19;-fx-font-weight:bold;">
+							style="-fx-text-fill: #2f2f2f; -fx-font-size:20;">
 							
 							<BorderPane.margin>
 								<Insets right="8.0" />

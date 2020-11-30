@@ -473,10 +473,10 @@ public class MainController implements Initializable {
 		};
 		effectOn = new DropShadow();
 		effectOn.setColor(Color.web("#FFF7D8"));
-		label_team.setEffect(effectOn);
+//		label_team.setEffect(effectOn);
 		animationOn.setAutoReverse(true);
 		animationOn.setCycleCount(-1);
-		animationOn.play();
+//		animationOn.play();
 	}
 
 	/**
