@@ -36,7 +36,7 @@
 					<right>
 						<Label fx:id="label_team" text="%team"
 							BorderPane.alignment="CENTER"
-							style="-fx-text-fill: #2f2f2f; -fx-font-size:21; ">
+							style="-fx-text-fill: #2f2f2f; -fx-font-size:14; ">
 							
 							<BorderPane.margin>
 								<Insets right="8.0" />
@@ -49,7 +49,7 @@
 								<DropShadow color="#5A5A5A" radius="0.2" />
 							</effect>
 							<graphic>
-								<ImageView fitWidth="260"  pickOnBounds="true"
+								<ImageView fitWidth="200"  pickOnBounds="true"
 									preserveRatio="true" smooth="true">
 									<image>
 										<Image url="/resources/school_logo_text.png" />

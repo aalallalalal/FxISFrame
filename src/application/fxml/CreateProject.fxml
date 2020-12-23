@@ -30,7 +30,7 @@
 							<ImageView fitHeight="240" pickOnBounds="true"
 								preserveRatio="true" smooth="true">
 								<image>
-									<Image url="/resources/software_big_icon2.png" />
+									<Image url="/resources/software_big_icon3.png" />
 								</image>
 							</ImageView>
 						</graphic>
@@ -58,12 +58,12 @@
 		</AnchorPane>
 	</top>
 	<center>
-		<BorderPane prefHeight="185.0" prefWidth="200.0"
+		<BorderPane prefHeight="165.0" prefWidth="200.0"
 			BorderPane.alignment="CENTER">
 			<left>
 				<JFXButton buttonType="FLAT" fx:id="btn_create"
 					text="%createProject_createproject" prefWidth="210"
-					onAction="#createProject" prefHeight="75"
+					onAction="#createProject" prefHeight="70"
 					style="-fx-background-color: #3D99FF;-fx-text-fill: white;-fx-padding:35;-fx-background-radius:10;
 					-fx-font-size:21; "
 					BorderPane.alignment="CENTER">
@@ -79,7 +79,7 @@
 			</left>
 			<right>
 				<JFXButton buttonType="FLAT" fx:id="btn_open"
-					text="%createProject_openproject" prefWidth="210" prefHeight="75"
+					text="%createProject_openproject" prefWidth="210" prefHeight="70"
 					onAction="#openProject"
 					style="-fx-background-color: #3D99FF;-fx-text-fill: white;-fx-padding:35;-fx-background-radius:10;
 					-fx-font-size:21; "
@@ -100,19 +100,40 @@
 		</BorderPane>
 	</center>
 	<bottom>
-		<JFXButton fx:id="button_help" buttonType="RAISED"
-			BorderPane.alignment="BOTTOM_RIGHT" onAction="#onClickHelp">
-			<tooltip>
-				<MyToolTip text="%createProject_help"></MyToolTip>
-			</tooltip>
-			<graphic>
-				<ImageView fitHeight="25.0" fitWidth="25.0"
-					pickOnBounds="true" preserveRatio="true" smooth="true">
-					<image>
-						<Image url="/resources/help.png" />
-					</image>
-				</ImageView>
-			</graphic>
-		</JFXButton>
+	
+		<AnchorPane> 
+				<JFXButton fx:id="button_email" buttonType="RAISED" AnchorPane.rightAnchor="5.0" AnchorPane.bottomAnchor="40.0"
+				style="-fx-padding:2"
+					 onAction="#onClickEmail">
+					<tooltip>
+						<MyToolTip text="%createProject_email"></MyToolTip>
+					</tooltip>
+					<graphic>
+						<ImageView fitHeight="25.0" fitWidth="25.0"
+							pickOnBounds="true" preserveRatio="true" smooth="true">
+							<image>
+								<Image url="/resources/email.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</JFXButton>
+			
+				<JFXButton fx:id="button_help" buttonType="RAISED" AnchorPane.rightAnchor="5.0" AnchorPane.bottomAnchor="5.0"
+				style="-fx-padding:2"
+					onAction="#onClickHelp">
+					<tooltip>
+						<MyToolTip text="%createProject_help"></MyToolTip>
+					</tooltip>
+					<graphic>
+						<ImageView fitHeight="25.0" fitWidth="25.0"
+							pickOnBounds="true" preserveRatio="true" smooth="true">
+							<image>
+								<Image url="/resources/help.png" />
+							</image>
+						</ImageView>
+					</graphic>
+				</JFXButton>
+		</AnchorPane>
+		
 	</bottom>
 </BorderPane>

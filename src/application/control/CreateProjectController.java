@@ -178,6 +178,8 @@ public class CreateProjectController extends BaseController implements Initializ
 		void onClearData();
 
 		void onClickHelp();
+		
+		void onClickEmail();
 
 		void onClickSet();
 
@@ -210,6 +212,13 @@ public class CreateProjectController extends BaseController implements Initializ
 		}
 	}
 
+	@FXML
+	public void onClickEmail() {
+		if (listener != null) {
+			listener.onClickEmail();
+		}
+	}
+	
 	@FXML
 	public void onClickHelp() {
 		if (listener != null) {

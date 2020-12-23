@@ -163,6 +163,12 @@ public class MainController implements Initializable {
 		public void onOpenProject(String projectPath) {
 			openCreateProjectDialog(true, projectPath);
 		}
+
+		@Override
+		public void onClickEmail() {
+			UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
+					ResUtil.gs("createProject_email"), ResUtil.gs("Text_contact_us"), (Stage) root.getScene().getWindow());
+		}
 	}
 
 	/**
