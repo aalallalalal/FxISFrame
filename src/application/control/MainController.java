@@ -291,6 +291,10 @@ public class MainController implements Initializable {
 						//英文
 						str =lineStr.split(ConstRes.ERROR_DIVIDER)[1];
 					}
+					if((!StrUtil.isEmpty(str))&&str.contains("该版本仅支持 200 幅以内的图像拼接任务")
+							||(!StrUtil.isEmpty(str))&&str.contains("This version only supports the mosaic task of less than 200 images")) {
+						ToastUtil.toast(ResUtil.gs("over_size_tip"),5000);
+					}
 					processingController.textarea.appendText(str);
 				}
 				else {
@@ -452,6 +456,12 @@ public class MainController implements Initializable {
 		currentController.onClickLeftBtn();
 	}
 
+	@FXML
+	public void onClickNoticeSize() {
+		UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
+				ResUtil.gs("tips"), ResUtil.gs("over_size_notice"), (Stage) root.getScene().getWindow());
+	}
+	
 	@FXML
 	public void rightBtn() {
 		currentController.onClickRightBtn();
