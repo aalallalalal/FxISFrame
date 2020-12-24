@@ -58,7 +58,7 @@ public class ToastUtil {
 		label.setText(msg);
 		label.setPrefWidth(350);
 		label.setStyle(
-				"-fx-text-fill: #fff;-fx-background: rgba(56,56,56,0.4);-fx-border-radius: 25;-fx-background-radius: 25");// label透明,圆角
+				"-fx-text-fill: #fff;-fx-background: rgba(56,56,56,0.7);-fx-border-radius: 25;-fx-background-radius: 25");// label透明,圆角
 		label.setPrefHeight(90);
 		label.setMaxWidth(600);
 		label.setWrapText(true);

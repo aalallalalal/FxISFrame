@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.concurrent.ExecutionException;
@@ -65,7 +66,7 @@ public class ImagesMapToFileUtil {
 				try {
 					map = get();
 					if (map != null && callback != null) {
-						callback.onGetData(map);
+						callback.onGetData(project,map);
 					}
 				} catch (InterruptedException e) {
 					e.printStackTrace();
@@ -84,6 +85,18 @@ public class ImagesMapToFileUtil {
 		task.start();
 	}
 
+	/**
+	 * 同步加载map
+	 * @param project
+	 * @return
+	 */
+	public static HashMap<String,Boolean> getMap(ProjectBean project){
+		String deletedFilePath = getDeletedFilePath(project);
+		HashMap<String, Boolean> fileToMap = fileToMap(deletedFilePath, project);
+		return fileToMap;
+	}
+	
+	
 	/**
 	 * 将label文件转为map
 	 * 
@@ -130,6 +143,28 @@ public class ImagesMapToFileUtil {
 		}
 		return map;
 	}
+	
+	/**
+	 * 获取map有多少include图像
+	 * @param map
+	 * @return
+	 */
+	public static int getIncludeCounts(HashMap<String,Boolean> map) {
+		if(map==null) {
+			return 0;
+		}
+		int count = 0;
+		Collection<Boolean> list = map.values();
+		if(list!=null) {
+			for(Boolean item:list) {
+				if(item) {
+					count++;
+				}
+			}
+		}
+		return count;
+	}
+	
 
 	/**
 	 * 初始化label文件，默认图片全部存在
@@ -236,7 +271,7 @@ public class ImagesMapToFileUtil {
 	}
 
 	public interface Callback {
-		void onGetData(HashMap<String, Boolean> map);
+		void onGetData(ProjectBean project,HashMap<String, Boolean> map);
 	}
 
 }

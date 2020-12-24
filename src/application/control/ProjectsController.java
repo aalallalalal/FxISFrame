@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map.Entry;
 import java.util.ResourceBundle;
 import java.util.Set;
+import java.util.concurrent.ExecutionException;
 
 import com.jfoenix.controls.JFXButton;
 
@@ -40,9 +41,12 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import javafx.util.Callback;
+import utils.ImagesMapToFileUtil;
 import utils.ResUtil;
 import utils.SaveProjectsUtil;
+import utils.ToastUtil;
 import utils.UIUtil;
+import utils.ProgressTask.ProgressTask;
 
 /**
  * 项目列表界面controller
@@ -76,8 +80,8 @@ public class ProjectsController extends BaseController implements Initializable 
 	@FXML
 	BorderPane root;
 	ImageView imageView = new ImageView(new Image("/resources/wushuju.png"));
-	
-	private HashMap<Long,Stage> projectsDetailStage = new HashMap<Long,Stage>();
+
+	private HashMap<Long, Stage> projectsDetailStage = new HashMap<Long, Stage>();
 
 	/**
 	 * 添加项目
@@ -94,7 +98,7 @@ public class ProjectsController extends BaseController implements Initializable 
 	@Override
 	public void initialize(URL location, ResourceBundle resources) {
 		initTableView();
-		 initDragFile() ;
+		initDragFile();
 		projectTableView.setRowFactory(new Callback<TableView<ProjectBean>, TableRow<ProjectBean>>() {
 			@Override
 			public TableRow<ProjectBean> call(TableView<ProjectBean> param) {
@@ -129,13 +133,13 @@ public class ProjectsController extends BaseController implements Initializable 
 				}
 			}
 		});
-		
+
 		path_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("project_path_simple"));
 		location_path_projects = new TableColumn<ProjectBean, String>(ResUtil.gs("locationpath"));
 		time_createProject = new TableColumn<ProjectBean, String>(ResUtil.gs("project_create_time"));
-		projectTableView.getColumns().addAll(name_projects, path_projects, time_createProject,location_path_projects);
+		projectTableView.getColumns().addAll(name_projects, path_projects, time_createProject, location_path_projects);
 		projectTableView.setItems(projectListData);
-		
+
 		name_projects.setPrefWidth(100);
 		path_projects.setPrefWidth(310);
 		location_path_projects.setPrefWidth(145);
@@ -143,7 +147,8 @@ public class ProjectsController extends BaseController implements Initializable 
 		path_projects.setSortable(false);
 
 		name_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectName"));
-		location_path_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectLocationFile"));
+		location_path_projects
+				.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectLocationFile"));
 		time_createProject.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("createTime"));
 		path_projects.setCellValueFactory(new PropertyValueFactory<ProjectBean, String>("projectDir"));
 		time_createProject
@@ -159,12 +164,13 @@ public class ProjectsController extends BaseController implements Initializable 
 				return new ToolTipTableCell<ProjectBean>();
 			}
 		});
-		location_path_projects.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
-			@Override
-			public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
-				return new ToolTipTableCell<ProjectBean>();
-			}
-		});
+		location_path_projects
+				.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
+					@Override
+					public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
+						return new ToolTipTableCell<ProjectBean>();
+					}
+				});
 		path_projects.setCellFactory(new Callback<TableColumn<ProjectBean, String>, TableCell<ProjectBean, String>>() {
 			@Override
 			public TableCell<ProjectBean, String> call(TableColumn<ProjectBean, String> param) {
@@ -211,17 +217,17 @@ public class ProjectsController extends BaseController implements Initializable 
 			return;
 		}
 		ProjectBean project = projectListData.get(index);
-		if(projectsDetailStage.containsKey(project.getId())) {
+		if (projectsDetailStage.containsKey(project.getId())) {
 			Stage stage2 = projectsDetailStage.get(project.getId());
 			stage2.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 			stage2.close();
 			projectsDetailStage.remove(project.getId());
 		}
-		
+
 		MyFxmlBean openFrame = UIUtil.openFrame(getClass(), "/application/fxml/ImageList.fxml",
-				ConstSize.Main_Frame_Width-80, ConstSize.Main_Frame_Height,
+				ConstSize.Main_Frame_Width - 80, ConstSize.Main_Frame_Height,
 				ResUtil.gs("project") + project.getProjectName());
-		projectsDetailStage.put(project.getId(),openFrame.getStage());
+		projectsDetailStage.put(project.getId(), openFrame.getStage());
 		ImageListController controller = openFrame.getFxmlLoader().getController();
 		controller.setProjectInfo(project);
 		controller.setCallBack(new ImageListController.Callback() {
@@ -281,21 +287,62 @@ public class ProjectsController extends BaseController implements Initializable 
 		title.setText(ResUtil.gs("project"));
 	}
 
+	int count = 0;
+	ProjectBean overSizeProj;
+
 	@Override
 	protected void onClickRightBtn() {
-		if(projectsDetailStage!=null&&projectsDetailStage.size()>=1) {
+		if (projectsDetailStage != null && projectsDetailStage.size() >= 1) {
 			Set<Entry<Long, Stage>> entrySet = projectsDetailStage.entrySet();
-			for(Entry<Long, Stage> entry: entrySet) {
-				if(entry.getValue().isShowing()) {
+			for (Entry<Long, Stage> entry : entrySet) {
+				if (entry.getValue().isShowing()) {
 					entry.getValue().fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
 					entry.getValue().close();
 				}
 			}
 			projectsDetailStage.clear();
 		}
-		if (listener != null) {
-			listener.onClickRightBtn(projectListData);
-		}
+		count = 0;
+		overSizeProj = null;
+		ProgressTask task = new ProgressTask(new ProgressTask.MyTask<Integer>() {
+			@Override
+			protected Integer call() throws Exception {
+				for (int j = 0; j < projectListData.size(); j++) {
+					HashMap<String, Boolean> map = ImagesMapToFileUtil.getMap(projectListData.get(j));
+					int ins = ImagesMapToFileUtil.getIncludeCounts(map);
+					if (ins <= 200) {
+						count++;
+					} else {
+						overSizeProj = projectListData.get(j);
+					}
+				}
+				return count;
+			}
+
+			@Override
+			protected void succeeded() {
+				super.succeeded();
+				int include = 0;
+				try {
+					include = get().intValue();
+				} catch (InterruptedException | ExecutionException e) {
+					e.printStackTrace();
+					include = projectListData.size() + 1;
+				}
+				if (listener != null) {
+					if (include >= projectListData.size()) {
+						listener.onClickRightBtn(projectListData);
+					} else {
+						if (overSizeProj != null) {
+							ToastUtil.toast(ResUtil.gs("over_size_toast", overSizeProj.getProjectName()));
+						} else {
+							ToastUtil.toast(ResUtil.gs("over_size_toast", ""));
+						}
+					}
+				}
+			}
+		});
+		task.start();
 	}
 
 	@Override
@@ -360,5 +407,5 @@ public class ProjectsController extends BaseController implements Initializable 
 			}
 		});
 	}
-	
+
 }

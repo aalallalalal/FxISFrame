@@ -76,7 +76,7 @@ import views.MyToolTip;
  */
 public class ImageListController implements Initializable {
 
-	public static final int MAX_SHOW_DELETENUM = 400;
+	public static final int MAX_SHOW_DELETENUM = 100000;//暂时放很大
 	@FXML
 	HBox hbox_location;
 	@FXML
@@ -872,9 +872,9 @@ public class ImageListController implements Initializable {
 					deletedNum++;
 				}
 			}
-			bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num", deletedNum + ""));
+			bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num", listData.size()-deletedNum + ""));
 		} else {
-			bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num", deletedNum + ""));
+			bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num", listData.size()-deletedNum + ""));
 		}
 		if (flightController != null) {
 			flightController.updataDeletedNum(deletedNum, true);

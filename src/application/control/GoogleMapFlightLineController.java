@@ -1161,7 +1161,7 @@ public class GoogleMapFlightLineController implements Initializable {
 	 */
 	public void updataDeletedNum(int deletedNum, boolean isVisible) {
 		bottomLabel_deleted.setVisible(isVisible);
-		bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num", deletedNum + ""));
+		bottomLabel_deleted.setText(ResUtil.gs("image_deleted_num",listData.size()- deletedNum + ""));
 	}
 
 }
