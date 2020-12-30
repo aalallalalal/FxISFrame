@@ -49,7 +49,7 @@ public class ExeProcedureUtil
             InputStreamReader in = new InputStreamReader(process.getInputStream(), Charset.forName("GBK"));
             inBr = new BufferedReader(in);
             
-            FileOutputStream fos = new FileOutputStream(workDir + "\\RuntimeDetialInfo.txt");
+            FileOutputStream fos = new FileOutputStream(workDir + "\\RuntimeDetailInfo.txt");
 			BufferedOutputStream bos  = new BufferedOutputStream(fos);
 			
             while((lineStr=inBr.readLine())!=null){
