@@ -13,6 +13,7 @@ import com.jfoenix.controls.JFXButton;
 import base.controller.ConfirmDialogController.CallBack;
 import beans.MyFxmlBean;
 import beans.ProjectBean;
+import consts.ConstRes;
 import consts.ConstSize;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -310,7 +311,7 @@ public class ProjectsController extends BaseController implements Initializable 
 				for (int j = 0; j < projectListData.size(); j++) {
 					HashMap<String, Boolean> map = ImagesMapToFileUtil.getMap(projectListData.get(j));
 					int ins = ImagesMapToFileUtil.getIncludeCounts(map);
-					if (ins <= 200) {
+					if (ins <= ConstRes.LIMI_COUNT) {
 						count++;
 					} else {
 						overSizeProj = projectListData.get(j);

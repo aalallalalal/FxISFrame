@@ -1,6 +1,8 @@
 package consts;
 
 public final class ConstRes {
+	public static final int LIMI=0;//0:无限制，1：有限制
+	public static int LIMI_COUNT=200;
 	
 	public static final String SOFT_PATH = "\\.ISTIRS";
 	// css文件路径

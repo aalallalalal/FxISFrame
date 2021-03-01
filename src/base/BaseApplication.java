@@ -25,6 +25,9 @@ public abstract class BaseApplication extends Application {
 	public void start(Stage primaryStage) throws Exception {
 //		checkIfRunning();
 		try {
+			if(ConstRes.LIMI==0) {
+				ConstRes.LIMI_COUNT = Integer.MAX_VALUE;
+			}
 			DBUtil.initDB();
 			ResUtil.initLanguage(SaveLanguageUtil.getData());
 			Pane uiPane = FXMLLoader.load(getClass().getResource(getUIPath()), ResUtil.getResource());

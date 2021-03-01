@@ -75,6 +75,8 @@ public class MainController implements Initializable {
 	JFXButton btn_next;
 	@FXML
 	Label label_team;
+	@FXML
+	JFXButton button_notice;
 	private Label title;
 
 	/**
@@ -166,8 +168,9 @@ public class MainController implements Initializable {
 
 		@Override
 		public void onClickEmail() {
-			UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
-					ResUtil.gs("createProject_email"), ResUtil.gs("Text_contact_us"), (Stage) root.getScene().getWindow());
+			UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width,
+					ConstSize.Notice_Dialog_Frame_Height, ResUtil.gs("createProject_email"),
+					ResUtil.gs("Text_contact_us"), (Stage) root.getScene().getWindow());
 		}
 	}
 
@@ -280,24 +283,23 @@ public class MainController implements Initializable {
 
 		@Override
 		public void update(String lineStr) {
-			//TODO 在这把中英文错误信息分割显示
-			if(!StrUtil.isEmpty(lineStr)) {
-				if(lineStr.contains(ConstRes.ERROR_DIVIDER)) {
+			// TODO 在这把中英文错误信息分割显示
+			if (!StrUtil.isEmpty(lineStr)) {
+				if (lineStr.contains(ConstRes.ERROR_DIVIDER)) {
 					String str = "";
-					if(SaveLanguageUtil.getData()== 0) {
-						//中文
-						str =lineStr.split(ConstRes.ERROR_DIVIDER)[0];
-					}else {
-						//英文
-						str =lineStr.split(ConstRes.ERROR_DIVIDER)[1];
+					if (SaveLanguageUtil.getData() == 0) {
+						// 中文
+						str = lineStr.split(ConstRes.ERROR_DIVIDER)[0];
+					} else {
+						// 英文
+						str = lineStr.split(ConstRes.ERROR_DIVIDER)[1];
 					}
-					if((!StrUtil.isEmpty(str))&&str.contains("该版本仅支持 200 幅以内的图像拼接任务")
-							||(!StrUtil.isEmpty(str))&&str.contains("This version only supports the mosaic task of less than 200 images")) {
-						ToastUtil.toast(ResUtil.gs("over_size_tip"),5000);
+					if ((!StrUtil.isEmpty(str)) && str.contains("该版本仅支持 "+ConstRes.LIMI_COUNT+" 幅以内的图像拼接任务") || (!StrUtil.isEmpty(str))
+							&& str.contains("This version only supports the mosaic task of less than "+ConstRes.LIMI_COUNT+" images")) {
+						ToastUtil.toast(ResUtil.gs("over_size_tip"), 5000);
 					}
 					processingController.textarea.appendText(str);
-				}
-				else {
+				} else {
 					processingController.textarea.appendText(lineStr);
 				}
 			}
@@ -308,13 +310,13 @@ public class MainController implements Initializable {
 			processingController.setState(false);
 			processingController.currentProject.setText(ResUtil.gs("finish"));
 			processingController.updatecontrol();
-			processingController.stage.setTitle("ISTIRS-"+ResUtil.gs("stitching_state_finish"));
+			processingController.stage.setTitle("ISTIRS-" + ResUtil.gs("stitching_state_finish"));
 			changeBottomBtnsView(currentController, 3);
 		}
 
 		@Override
 		public void updateStart() {
-			processingController.stage.setTitle("ISTIRS-"+ResUtil.gs("stitching_state_running"));
+			processingController.stage.setTitle("ISTIRS-" + ResUtil.gs("stitching_state_running"));
 		}
 	}
 
@@ -361,7 +363,7 @@ public class MainController implements Initializable {
 			}
 			currentController = projectsController;
 			currentPane = projectsPane;
-			currentController.stage.setTitle("ISTIRS-"+ResUtil.gs("project"));
+			currentController.stage.setTitle("ISTIRS-" + ResUtil.gs("project"));
 			break;
 		case 2:// 其他参数配置界面
 			if (settingPane == null) {
@@ -376,7 +378,7 @@ public class MainController implements Initializable {
 			}
 			currentController = settingController;
 			currentPane = settingPane;
-			currentController.stage.setTitle("ISTIRS-"+ResUtil.gs("settings"));
+			currentController.stage.setTitle("ISTIRS-" + ResUtil.gs("settings"));
 			break;
 		case 3:// 计算中、计算结果界面
 			if (ProcessingPane == null) {
@@ -391,7 +393,7 @@ public class MainController implements Initializable {
 			}
 			currentController = processingController;
 			currentPane = ProcessingPane;
-			currentController.stage.setTitle("ISTIRS-"+ResUtil.gs("splicing-service"));
+			currentController.stage.setTitle("ISTIRS-" + ResUtil.gs("splicing-service"));
 			break;
 		default:
 			break;
@@ -431,7 +433,7 @@ public class MainController implements Initializable {
 	}
 
 	private void nextPage() {
-		if(animationOn!=null) {
+		if (animationOn != null) {
 			animationOn.stop();
 		}
 		System.out.println("下一页");
@@ -461,7 +463,7 @@ public class MainController implements Initializable {
 		UIUtil.openNoticeDialog(getClass(), ConstSize.Notice_Dialog_Frame_Width, ConstSize.Notice_Dialog_Frame_Height,
 				ResUtil.gs("tips"), ResUtil.gs("over_size_notice"), (Stage) root.getScene().getWindow());
 	}
-	
+
 	@FXML
 	public void rightBtn() {
 		currentController.onClickRightBtn();
@@ -471,11 +473,21 @@ public class MainController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		initPagination();
 		initAnimation();
+		initLimition();
+
 	}
 
-	
+	private void initLimition() {
+		if (ConstRes.LIMI == 0) {
+			button_notice.setVisible(false);
+		} else {
+			button_notice.setVisible(true);
+		}
+	}
+
 	private DropShadow effectOn;
 	private Transition animationOn;
+
 	private void initAnimation() {
 		animationOn = new Transition() {
 			{
@@ -483,8 +495,8 @@ public class MainController implements Initializable {
 			}
 
 			protected void interpolate(double frac) {
-				effectOn.setRadius((double) (20 * (double) frac)+4);
-				
+				effectOn.setRadius((double) (20 * (double) frac) + 4);
+
 			}
 		};
 		effectOn = new DropShadow();
